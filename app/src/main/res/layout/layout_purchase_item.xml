@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:background="@color/LightCoral"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:padding="@dimen/_4sdp"
+            android:id="@+id/txtDate"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/White"
+            android:text="Date"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <View
+            android:background="@color/White"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:gravity="center"
+
+            android:id="@+id/txtName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Name"
+            android:textColor="@color/White"
+            android:textSize="@dimen/_12sdp" />
+
+        <View
+            android:background="@color/White"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:gravity="center"
+
+            android:id="@+id/txtProduct"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/White"
+            android:text="Product"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:background="@color/White"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:gravity="center"
+
+            android:id="@+id/txtPrice"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/White"
+            android:text="Price"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <View
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:background="@color/White"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"/>
+
+
+</LinearLayout>

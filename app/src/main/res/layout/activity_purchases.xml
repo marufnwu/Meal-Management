@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/PowderBlue"
+    android:layout_height="match_parent"
+    tools:context=".ui.PurchasesActivity">
+
+    <LinearLayout
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:background="@drawable/bottom_curve"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtTotalPurchase"
+            android:fontFamily="@font/hubballi"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_margin="8dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_25sdp"
+            android:textColor="@color/White"
+            android:text="Total Purchase 0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/txtMonthYear"
+            android:gravity="center_horizontal"
+            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+            android:layout_gravity="center"
+            android:fontFamily="@font/hubballi"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/LightBlue"
+            android:text="March 2022"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:background="@drawable/curve_line_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_3sdp"/>
+
+        <LinearLayout
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_above="@+id/btnAddPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+
+                android:background="@color/colorPrimaryTransparent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="@dimen/_4sdp"
+                    android:gravity="center"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/White"
+                    android:text="Date"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:background="@color/White"
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:background="@color/White"
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/White"
+                    android:text="Product"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="@color/White"
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/White"
+                    android:text="Price"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyPurchase"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddPurchase"
+            android:textColor="@color/White"
+            android:text="Add Purchase"
+            android:background="@drawable/button_primary"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</LinearLayout>

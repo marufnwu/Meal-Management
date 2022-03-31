@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:background="@drawable/bottom_border_curve"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="@dimen/_5sdp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:weightSum="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/man"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"/>
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@color/Black"
+            android:id="@+id/txtName"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:fontFamily="@font/hubballi"
+            android:textSize="@dimen/_16sdp"
+            android:text="Name of member"
+            android:layout_weight="2.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/txtAmount"
+            android:textStyle="bold"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/White"
+            android:padding="@dimen/_4sdp"
+            android:text="1000/="
+            android:background="@drawable/rounf_transparent_bg"
+            android:layout_margin="@dimen/_8sdp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>

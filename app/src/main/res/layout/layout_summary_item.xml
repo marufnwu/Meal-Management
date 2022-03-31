@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/Azure"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="@dimen/_5sdp"
+        android:gravity="center"
+        android:background="@color/colorPrimaryTransparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/name"
+            android:fontFamily="@font/hubballi"
+            android:textColor="@color/White"
+            android:textSize="@dimen/_15sdp"
+            android:text="Name of User"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/Black"
+                android:background="@color/NavajoWhite"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/meal"
+                android:background="@color/Beige"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/Black"
+                android:background="@color/NavajoWhite"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Meal Cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/mealCost"
+                android:background="@color/Beige"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/Black"
+                android:background="@color/NavajoWhite"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Deposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/deposit"
+                android:background="@color/Beige"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/Black"
+                android:background="@color/NavajoWhite"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Other Cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/otherCost"
+                android:background="@color/Beige"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/Black"
+                android:background="@color/NavajoWhite"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Total Cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/totalCost"
+                android:background="@color/Beige"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/Black"
+                android:background="@color/NavajoWhite"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="Due"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/due"
+                android:background="@color/Beige"
+                android:textSize="@dimen/_13sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_8sdp"/>
+
+
+</LinearLayout>

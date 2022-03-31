@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/PowderBlue"
+    tools:context=".ui.MealActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:background="@drawable/bottom_curve"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtTotalMeal"
+                    android:fontFamily="@font/hubballi"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_25sdp"
+                    android:textColor="@color/White"
+                    android:text="Total Meals 0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/hubballi"
+                    android:textSize="@dimen/_15sdp"
+                    android:textColor="@color/LightBlue"
+                    android:text="March 2022"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:background="@drawable/curve_line_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_3sdp"/>
+
+                <LinearLayout
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:weightSum="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="@dimen/_8sdp"
+                android:id="@+id/recyDayList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:textColor="@color/White"
+            android:textSize="@dimen/_14sdp"
+            android:elevation="@dimen/_8sdp"
+            android:padding="@dimen/_8sdp"
+            android:background="@drawable/primary_color_transparent_bg"
+            android:text="Add Meal"
+            android:id="@+id/addMeal"
+            app:fabCustomSize="@dimen/_40sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="16dp" />
+    </FrameLayout>
+
+
+
+
+</LinearLayout>

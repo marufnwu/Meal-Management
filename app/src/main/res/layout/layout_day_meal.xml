@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/rounf_transparent_bg"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/colorPrimaryTransparent"
+            android:ellipsize="end"
+            android:padding="@dimen/_5sdp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:id="@+id/txtDate"
+                android:layout_gravity="center"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/AliceBlue"
+                android:text="07-03-2022"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtDay"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/AliceBlue"
+                android:text="Monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_member_meal"/>
+            <View
+                android:background="@color/DarkSlateGray"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyMealList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
