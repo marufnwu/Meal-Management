@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".ui.SplashActivity">
+    tools:context=".ui.FirstActivity">
 
     <LinearLayout
         android:gravity="center"
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@drawable/meal"
+            android:src="@mipmap/ic_launcher_round"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"/>
 
@@ -22,7 +22,7 @@
             android:textStyle="bold"
             android:textSize="@dimen/_25sdp"
             android:layout_margin="@dimen/_10sdp"
-            android:textColor="@color/AliceBlue"
+            android:textColor="@color/themeColor"
             android:fontFamily="@font/hubballi"
             android:text="@string/app_name"
             android:layout_width="wrap_content"

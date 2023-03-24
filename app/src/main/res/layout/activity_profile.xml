@@ -3,93 +3,412 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/Azure"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.ProfileActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:background="@drawable/bottom_curve"
-        android:gravity="center"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_margin="@dimen/_8sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/man"
-            android:id="@+id/profileImg"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"/>
+        android:layout_height="?actionBarSize">
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_centerVertical="true"
+            android:rotation="180"
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/name"
-            android:textColor="@color/White"
+            android:textColor="@color/themeColor"
             android:textStyle="bold"
-            android:fontFamily="@font/hubballi"
-            android:textSize="@dimen/_17sdp"
-            android:text="Name Of User"
+            android:textSize="@dimen/_14sdp"
+            android:layout_centerInParent="true"
+            android:text="Profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+        <ImageView
+            android:padding="@dimen/_3sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:rotation="180"
+            android:src="@drawable/setting"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardPassChange"
-            app:cardBackgroundColor="@color/LightBlue"
-            android:layout_margin="@dimen/_5sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
-                android:id="@+id/changePassword"
-                android:padding="@dimen/_10sdp"
-                android:weightSum="4"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/Black"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:textSize="@dimen/_15sdp"
-                    android:layout_weight="3"
-                    android:text="Change Password"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp">
 
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:scaleType="centerInside"
+                        android:id="@+id/profileImg"
+                        android:layout_width="@dimen/_110sdp"
+                        android:layout_height="@dimen/_110sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:src="@drawable/man" />
+
+                    <ImageView
+                        android:id="@+id/changeImg"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/curve_line_white"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/camera" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/name"
+                        android:textColor="@color/Black"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/hubballi"
+                        android:textSize="@dimen/_17sdp"
+                        android:text="Name Of User"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/enail"
+                        android:textColor="@color/Black"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/hubballi"
+                        android:textSize="@dimen/_12sdp"
+                        android:text="Name Of User"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/phone"
+                        android:textColor="@color/Black"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/hubballi"
+                        android:textSize="@dimen/_12sdp"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:visibility="gone"
+                        android:id="@+id/btnEditProfile"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:cardBackgroundColor="#1BA351"
+                        app:cardCornerRadius="@dimen/_6sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingStart="@dimen/_20sdp"
+                                android:paddingEnd="@dimen/_20sdp"
+                                android:text="Edit Profile"
+                                android:textColor="@color/White" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/LightBlue"
-            android:layout_margin="@dimen/_5sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <LinearLayout
-                android:padding="@dimen/_4sdp"
-                android:weightSum="4"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/Black"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:textSize="@dimen/_15sdp"
-                    android:layout_weight="3"
-                    android:text="Manager"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switchManager"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    android:id="@+id/cardManager"
+                    app:cardBackgroundColor="@color/WhiteSmoke"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:padding="@dimen/_4sdp"
+                        android:weightSum="4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/Black"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_weight="3"
+                            android:text="Manager"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switchManager"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+
+
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:elevation="@dimen/_8sdp"
+                android:layout_margin="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="@dimen/_8sdp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_margin="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_14sdp"
+                            android:text="Username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#F3F1F1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+                        <TextView
+                            android:id="@+id/txtUserName"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_16sdp"
+                            android:text="maruf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_14sdp"
+                            android:text="User Role"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#F3F1F1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+
+                        <TextView
+                            android:id="@+id/txtUserRole"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Super user"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_16sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_14sdp"
+                            android:text="Gender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#F3F1F1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+
+                        <TextView
+                            android:id="@+id/txtGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_16sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_14sdp"
+                            android:text="Country"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#F3F1F1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+
+                        <TextView
+                            android:id="@+id/txtCountry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bangladesh"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_16sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_14sdp"
+                            android:text="City"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#F3F1F1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+
+                        <TextView
+                            android:id="@+id/txtCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Khulna"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_16sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_14sdp"
+                            android:text="Account Created"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#F3F1F1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+
+                        <TextView
+                            android:id="@+id/txtAccCreatedAt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12-12-1197"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_16sdp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardPassChange"
+                app:cardBackgroundColor="@color/WhiteSmoke"
+                android:layout_margin="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/changePassword"
+                    android:padding="@dimen/_10sdp"
+                    android:weightSum="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="center"
+                        android:textColor="@color/Black"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_weight="3"
+                        android:text="Change Password"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLogout"
+                app:cardBackgroundColor="@color/WhiteSmoke"
+                android:layout_margin="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="@dimen/_10sdp"
+                    android:weightSum="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/Black"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_weight="3"
+                        android:text="Logout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

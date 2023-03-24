@@ -2,25 +2,45 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'org.jetbrains.kotlin.android'
+
 }
 
 android {
-    compileSdk 32
+    signingConfigs {
+        release {
+            storeFile file('F:\\Android Projects\\MealManagement\\mydining.jks')
+            storePassword '1M@ruf21'
+            keyAlias 'maruf'
+            keyPassword '1M@ruf21'
+        }
+    }
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.maruf.messmanagement"
+        applicationId "com.logicline.mydining"
         minSdk 24
-        targetSdk 32
-        versionCode 2
-        versionName "1.0.1"
+        targetSdk 33
+        versionCode 115
+        versionName "1.1.5"
         setProperty("archivesBaseName", "Meal_Management"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+
         }
 
         buildTypes.each {
@@ -41,11 +61,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.logicline.mydining'
 }
+
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
@@ -53,7 +75,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
 
     //    for network api calling and convert to json format
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -62,21 +84,67 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.4.1"
 
     // okhttp
-    def okHttpVersion = "4.9.1"
+    def okHttpVersion = "4.10.0"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
 
     implementation 'io.github.pilgr:paperdb:2.7.2'
 
-    implementation 'com.github.bumptech.glide:glide:4.13.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'rongi.rotate-layout:rotate-layout:3.0.0'
+
+    implementation  'com.whiteelephant:monthandyearpicker:1.3.0'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    implementation 'com.whiteelephant:monthandyearpicker:1.3.0'
+    implementation 'com.karumi:dexter:6.2.3'
+    implementation 'id.zelory:compressor:3.0.1'
+
+    implementation 'com.hbb20:ccp:2.7.0'
+
+    implementation 'com.google.android.play:app-update:2.0.1'
+
+    // For Kotlin users also add the Kotlin extensions library for Play In-App Update:
+    implementation 'com.google.android.play:app-update-ktx:2.0.1'
+
+
+    implementation 'com.github.marufnwu:JDialog:1.0.4'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'com.facebook.android:facebook-core:16.0.0'
+
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
+
+    //admob
+    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    implementation 'com.google.ads.mediation:facebook:6.13.7.0'
+    implementation 'com.google.ads.mediation:unity:4.6.1.0'
+    implementation 'com.google.ads.mediation:applovin:11.7.1.0'
+
+
+    //test mediation ad
+    //implementation 'com.google.android.ads:mediation-test-suite:3.0.0'
+
+    //applovin
+    implementation 'com.applovin:applovin-sdk:11.8.2'
+    implementation 'com.applovin.mediation:facebook-adapter:6.13.7.0'
+    implementation 'com.applovin.mediation:google-adapter:21.5.0.1'
+
+
+
+
+    implementation 'com.whiteelephant:monthandyearpicker:1.3.0'
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 }
+apply plugin: 'com.google.gms.google-services'

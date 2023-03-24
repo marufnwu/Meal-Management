@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:elevation="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_8sdp"
+        android:layout_margin="@dimen/_8sdp"
+        app:cardBackgroundColor="@color/LightBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:padding="@dimen/_8sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtMonthYear"
+                android:gravity="center_horizontal"
+                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+                android:layout_gravity="center"
+                android:fontFamily="@font/hubballi"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/Black"
+                android:text="March 2022"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:background="@drawable/curve_line_white"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_3sdp"/>
+
+            <LinearLayout
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:weightSum="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <FrameLayout
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/bottom_border_curve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layoutEmpty"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/empty"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"/>
+
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
+                android:text="List is empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="@dimen/_3sdp"
+            android:id="@+id/recyclerviewRequest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

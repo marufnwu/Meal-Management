@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_8sdp"
+    android:orientation="vertical"
+    tools:context=".ui.ChangeSuperuserActivity">
+
+    <TextView
+        android:id="@+id/txtNonSuperUser"
+        android:textColor="@color/Red"
+        android:textStyle="bold"
+        android:background="@drawable/editext_bg"
+        android:textSize="@dimen/_14sdp"
+        android:padding="@dimen/_10sdp"
+        android:gravity="center"
+        android:text="You Can't change super user. Cause only super user can change super user. You are not super user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSuperuser"
+        app:cardCornerRadius="@dimen/_6sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/editext_bg"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerMember"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp" />
+            </RelativeLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnChange"
+                android:textColor="@color/White"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:background="@drawable/button_primary"
+                android:text="Change"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

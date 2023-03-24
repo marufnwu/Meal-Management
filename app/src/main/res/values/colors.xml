@@ -7,12 +7,20 @@
     <color name="teal_700">#FF018786</color>
 
 
-    <color name="colorPrimary">#06264E</color>
+    <color name="colorPrimary">#073570</color>
+    <color name="colorPrimaryDark">#FFFF</color>
+
     <color name="colorPrimaryTransparent">#CE06264E</color>
+
+    <color name="themeColor">#073570</color>
+    <color name="mainButtonTextColor">#073570</color>
+
     <color name="colorPrimaryTransparent1">#FFAB40</color>
-    <color name="colorPrimaryDark">#021F42</color>
     <color name="colorAccent">#FF1744</color>
 
+
+    <color name="jdialog_button_color">?android:colorAccent</color>
+    <color name="jdialog_body_text_color">#000000</color>
 
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "743931377033",
+    "project_id": "my-dining-31bca",
+    "storage_bucket": "my-dining-31bca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743931377033:android:7ab5a84c84817049369d58",
+        "android_client_info": {
+          "package_name": "com.logicline.mydining"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743931377033-o77stbafmui67cpukf2ou55bltq5a8ou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.logicline.mydining",
+            "certificate_hash": "77c95ac68fe8531d44ff6addae0baa71bedd7e88"
+          }
+        },
+        {
+          "client_id": "743931377033-6ak780dpead09ljo14g32lnoprnaato7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-MD_6apSU924eFsMm6wv_jPIiDG8QoXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743931377033-6ak780dpead09ljo14g32lnoprnaato7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

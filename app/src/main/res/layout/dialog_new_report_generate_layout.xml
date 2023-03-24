@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_6sdp"
+    android:layout_margin="@dimen/_8sdp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:paddingBottom="@dimen/_20sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/White"
+            android:background="@color/themeColor"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"
+            android:text="Generate Monthly Report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/txtMonth"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_14sdp"
+            android:drawablePadding="@dimen/_8sdp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawableRight="@drawable/baseline_keyboard_arrow_down_24"
+            android:text="Select Month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                android:layout_margin="@dimen/_8sdp"
+                android:textColor="@color/Black"
+                android:background="@color/Lavender"
+                android:text="Cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGenerate"
+                android:layout_margin="@dimen/_8sdp"
+                android:textColor="@color/Black"
+                android:background="@color/Lavender"
+                android:text="Generate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

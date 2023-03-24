@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    android:layout_margin="@dimen/_8sdp"
+    android:elevation="@dimen/_16sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="@dimen/_150sdp">
+
+    <androidx.cardview.widget.CardView
+        android:elevation="@dimen/_18sdp"
+        app:cardCornerRadius="@dimen/_6sdp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/imgContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:src="@drawable/loading"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imgBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.skyfishjy.library.RippleBackground
+                    android:id="@+id/rippleBg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    app:rb_color="#636200EE"
+                    app:rb_duration="3000"
+                    app:rb_radius="@dimen/_15sdp"
+                    app:rb_rippleAmount="4"
+                    app:rb_scale="6">
+                </com.skyfishjy.library.RippleBackground>
+
+            </FrameLayout>
+
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

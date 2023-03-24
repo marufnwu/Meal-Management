@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/_8sdp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="@dimen/_8sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:textSize="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:textColor="@color/themeColor"
+            android:padding="@dimen/_8sdp"
+            android:text="Edit Meal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/user"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="-10dp"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="User Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:textStyle="bold"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Maruf Ahmed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/clock"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:padding="-10dp"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Meal Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:textStyle="bold"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="12-12-2023"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+                    android:padding="@dimen/_4sdp"
+                    android:background="@color/DarkSeaGreen"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/White"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:text="Breakfast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:textColor="@color/Black"
+                        android:id="@+id/edtBreakfast"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/edittext_meal"
+                        android:gravity="center"
+                        android:text="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:padding="@dimen/_4sdp"
+                    android:background="@color/LightSalmon"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/White"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:text="Lunch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:textColor="@color/Black"
+                        android:id="@+id/edtLunch"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/edittext_meal"
+                        android:gravity="center"
+                        android:text="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:padding="@dimen/_4sdp"
+                    android:background="@color/LightSeaGreen"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/White"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:textSize="@dimen/_14sdp"
+                        android:text="Dinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:textColor="@color/Black"
+                        android:id="@+id/edtDinner"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/edittext_meal"
+                        android:gravity="center"
+                        android:text="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                android:background="@color/Lavender"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="Cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDelete"
+                android:background="@color/Lavender"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="Delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUpdate"
+                android:background="@color/Lavender"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="Update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

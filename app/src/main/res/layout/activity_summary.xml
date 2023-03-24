@@ -70,237 +70,276 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
            <LinearLayout
-               android:background="@color/WhiteSmoke"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
+               android:orientation="vertical"
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
+               <LinearLayout
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
                    android:gravity="center"
-                   android:text="Total Purchase"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Total Purchase"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
 
-               <TextView
-                   android:id="@+id/totalPurchase"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
+                   <TextView
+                       android:id="@+id/totalPurchase"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:id="@+id/layoutFund"
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
                    android:gravity="center"
-                   android:text="00" />
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Total Fund Added"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
 
+                   <TextView
+                       android:id="@+id/totalFund"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/Azure"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Total Meal"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/totalMeal"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Meal Charge"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/mealCharge"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Total Meal Cost"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/totalMealCost"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Total Deposit"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/totalDeposit"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/Azure"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Other Cost"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/otherCost"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="Total Cost"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/totalCost"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
+               <LinearLayout
+                   android:background="@color/WhiteSmoke"
+                   android:padding="@dimen/_4sdp"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:weightSum="2"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:text="In Reserved"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:id="@+id/inReserved"
+                       android:textColor="@color/Black"
+                       android:textSize="@dimen/_14sdp"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="00" />
+
+               </LinearLayout>
            </LinearLayout>
-           <LinearLayout
-               android:background="@color/Azure"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
+
+           <com.logicline.mydining.utils.Ad.MyDiningNativeAd
                android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="Total Meal"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/totalMeal"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
-           <LinearLayout
-               android:background="@color/WhiteSmoke"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="Meal Charge"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/mealCharge"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
-           <LinearLayout
-               android:background="@color/WhiteSmoke"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="Total Meal Cost"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/totalMealCost"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
-           <LinearLayout
-               android:background="@color/WhiteSmoke"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="Total Deposit"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/totalDeposit"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
-           <LinearLayout
-               android:background="@color/Azure"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="Other Cost"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/otherCost"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
-           <LinearLayout
-               android:background="@color/WhiteSmoke"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="Total Cost"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/totalCost"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
-           <LinearLayout
-               android:background="@color/WhiteSmoke"
-               android:padding="@dimen/_4sdp"
-               android:layout_gravity="center"
-               android:gravity="center"
-               android:orientation="horizontal"
-               android:weightSum="2"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <TextView
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:gravity="center"
-                   android:text="In Reserved"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"/>
-
-               <TextView
-                   android:id="@+id/inReserved"
-                   android:textColor="@color/Black"
-                   android:textSize="@dimen/_14sdp"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:gravity="center"
-                   android:text="00" />
-
-           </LinearLayout>
+               android:layout_height="wrap_content"/>
 
 
            <androidx.recyclerview.widget.RecyclerView

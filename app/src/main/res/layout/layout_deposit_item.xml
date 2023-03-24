@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginBottom="@dimen/_8sdp"
-    android:background="@drawable/bottom_border_curve"
+    android:background="@drawable/primary_color_transparent_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -44,8 +44,8 @@
             android:id="@+id/txtAmount"
             android:textStyle="bold"
             android:textSize="@dimen/_13sdp"
-            android:textColor="@color/White"
-            android:padding="@dimen/_4sdp"
+            android:textColor="@color/themeColor"
+            android:padding="@dimen/_6sdp"
             android:text="1000/="
             android:background="@drawable/rounf_transparent_bg"
             android:layout_margin="@dimen/_8sdp"

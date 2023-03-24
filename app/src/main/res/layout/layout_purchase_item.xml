@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:background="@color/LightCoral"
+        android:background="@color/WhiteSmoke"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,7 +14,7 @@
             android:padding="@dimen/_4sdp"
             android:id="@+id/txtDate"
             android:textSize="@dimen/_12sdp"
-            android:textColor="@color/White"
+            android:textColor="@color/themeColor"
             android:text="Date"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Name"
-            android:textColor="@color/White"
+            android:textColor="@color/themeColor"
             android:textSize="@dimen/_12sdp" />
 
         <View
@@ -45,7 +45,7 @@
 
             android:id="@+id/txtProduct"
             android:textSize="@dimen/_12sdp"
-            android:textColor="@color/White"
+            android:textColor="@color/themeColor"
             android:text="Product"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -57,11 +57,11 @@
             android:layout_height="match_parent"/>
 
         <TextView
+            android:drawableRight="@drawable/baseline_keyboard_arrow_down_24"
             android:gravity="center"
-
             android:id="@+id/txtPrice"
             android:textSize="@dimen/_12sdp"
-            android:textColor="@color/White"
+            android:textColor="@color/themeColor"
             android:text="Price"
             android:layout_weight="1"
             android:layout_width="0dp"

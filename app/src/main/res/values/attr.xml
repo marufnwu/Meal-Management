@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BannerView">
+        <attr name="banner" format="string" />
+        <attr name="enableAnimation" format="boolean"/>
+        <attr name="showPlayIcon" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="AdmobCustomNativeAdView">
+        <attr name="showCustomAd" format="boolean"/>
+        <attr name="showLoading" format="boolean"/>
+    </declare-styleable>
+
+</resources>

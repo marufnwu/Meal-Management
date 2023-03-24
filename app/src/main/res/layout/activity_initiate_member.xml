@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.InitiateMemberActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/bottom_curve"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtMonthYear"
+                android:layout_gravity="center"
+                android:fontFamily="@font/hubballi"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/LightBlue"
+                android:text="March 2022"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:background="@drawable/curve_line_white"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_3sdp"/>
+
+            <LinearLayout
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:weightSum="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/_14sdp"
+                    android:background="@color/colorPrimaryTransparent"
+                    android:padding="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="Already Initiated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/txtInitiate"
+                        android:textSize="@dimen/_12sdp"
+                        android:padding="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="No member initiated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyInitiate"
+                        android:padding="@dimen/_3sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </FrameLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_margin="@dimen/_5sdp"
+            app:cardElevation="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/_14sdp"
+                    android:background="@color/colorPrimaryTransparent"
+                    android:padding="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="Not Initiated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/txtNotInitiate"
+                        android:textSize="@dimen/_12sdp"
+                        android:padding="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="No member available for initiate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyNotInitiate"
+                        android:padding="@dimen/_3sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </FrameLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

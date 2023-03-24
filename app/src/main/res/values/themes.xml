@@ -1,23 +1,54 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MealManagement" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MealManagement" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/themeColor</item>
+        <item name="colorPrimaryVariant">@color/themeColor</item>
         <item name="colorOnPrimary">@color/White</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/teal_700</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/Black</item>
+
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/Black</item>
+
+        <item name="actionBarTheme">@style/ThemeOverlay.Actionbar</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowLightStatusBar" >false</item>
+
+        <item name="fontFamily">@font/hubballi</item>
+
+        <item name="textOutlineColor">@color/Black</item>
+        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
     </style>
 
-    <style name="Theme.MealManagementNoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <style name="ThemeOverlay.Actionbar" parent="Theme.MaterialComponents.Light.NoActionBar" >
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorPrimary">@color/themeColor</item>
+        <item name="colorPrimaryVariant">@color/themeColor</item>
+        <item name="android:textColorPrimary">@color/White</item>
+        <item name="colorOnPrimary">@color/White</item>
+        <item name="colorControlNormal">@color/White</item>
+
+    </style>
+
+    <style name="ActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="android:titleTextStyle">@style/ActionBarTitle</item>
+    </style>
+
+    <style name="ActionBarTitle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Theme.MealManagementNoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/White</item>
         <item name="colorOnPrimary">@color/White</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -25,12 +56,53 @@
         <item name="colorOnSecondary">@color/White</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
 
         <item name="fontFamily">@font/hubballi</item>
-        <item name="textOutlineColor">@color/White</item>
+
     </style>
 
+    <style name="mySpinnerItemStyle" parent="@style/Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/Black</item>
+    </style>
 
+    <style name="JDialog.PositiveButton" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:background">@drawable/round_background</item>
+        <item name="cornerRadius">@dimen/_10sdp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
 
+    </style>
+
+    <style name="DatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
+        <!-- just override the colors used in the default style -->
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="titleTextColor">@color/Black</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/Black</item>
+        <item name="android:textColorPrimary">@color/Black</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.AdAttribution">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:text">@string/ad_attribution</item>
+        <item name="android:background">#FFCC66</item>
+        <item name="android:width">15dp</item>
+        <item name="android:height">15dp</item>
+    </style>
+
+    <string name="ad_attribution" translatable="false">Ad</string>
 </resources>

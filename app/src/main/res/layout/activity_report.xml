@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ReportActivity">
+
+
+    <FrameLayout
+        android:layout_above="@id/btnGenerate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include  android:id="@+id/layoutEmpty" layout="@layout/layout_empty"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/layout_report_item"
+            android:id="@+id/recyReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/White"
+        android:text="Generate New Report"
+        android:background="@drawable/button_primary"
+        android:id="@+id/btnGenerate"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

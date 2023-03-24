@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.CreateMessActivity">
+
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="@dimen/_20sdp"
+            android:src="@drawable/dining"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"/>
+
+
+        <EditText
+            android:id="@+id/edtMessName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:hint="Mess Name"
+            android:inputType="textPersonName"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_16sdp" />
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:hint="Your Full Name"
+            android:inputType="textPersonName"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_16sdp" />
+
+        <EditText
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+            android:id="@+id/edtUerName"
+            android:maxLength="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:hint="User Name"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_16sdp" />
+
+        <com.hbb20.CountryCodePicker
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:id="@+id/ccp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <EditText
+            android:id="@+id/edtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_16sdp" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_16sdp" />
+
+        <EditText
+            android:id="@+id/edtCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:hint="City"
+            android:inputType="text"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/_16sdp" />
+
+        <RelativeLayout
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/editext_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Spinner
+                style="@style/mySpinnerItemStyle"
+                android:id="@+id/spinnerGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="3"
+                android:background="@drawable/editext_bg"
+                android:hint="Password"
+                android:inputType="textVisiblePassword"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_16sdp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGenPass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/button_primary"
+                android:text="Generate"
+                android:textColor="@color/White" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/button_primary"
+            android:text="Submit"
+            android:textColor="@color/White" />
+    </LinearLayout>
+
+</ScrollView>

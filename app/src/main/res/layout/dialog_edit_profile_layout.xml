@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:elevation="@dimen/_8sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="@dimen/_8sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_margin="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/themeColor"
+                android:textSize="@dimen/_15sdp"
+                android:text="Edit Profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Full Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#F3F1F1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+                <EditText
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:background="@color/WhiteSmoke"
+                    android:id="@+id/edtName"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="maruf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#F3F1F1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <EditText
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:background="@color/WhiteSmoke"
+                    android:id="@+id/edtEmail"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_16sdp"
+                    android:text="maruf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#F3F1F1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:layout_margin="@dimen/_5sdp"
+                    android:background="@drawable/edittext_white_bg"
+                    android:id="@+id/ccp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#F3F1F1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <EditText
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:background="@color/WhiteSmoke"
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_16sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:text="Gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#F3F1F1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <RelativeLayout
+                    android:background="@color/WhiteSmoke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:padding="@dimen/_6sdp"
+                        style="@style/mySpinnerItemStyle"
+                        android:id="@+id/spinnerGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/_14sdp"
+                    android:text="City"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#F3F1F1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <EditText
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:background="@color/WhiteSmoke"
+                    android:id="@+id/edtCity"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_16sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCancel"
+                    android:background="@color/LightBlue"
+                    android:text="Cancel"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnUpdate"
+                    android:textColor="@color/White"
+                    android:background="@color/themeColor"
+                    android:text="Update"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</ScrollView>
