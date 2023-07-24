@@ -20,6 +20,7 @@ import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.UserListResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
@@ -33,7 +34,7 @@ import retrofit2.Response
 import java.util.*
 import kotlin.random.Random
 
-class MembersActivity : AppCompatActivity() {
+class MembersActivity : BaseActivity() {
     lateinit var adapter: UserListAdapter
     lateinit var binding : ActivityMembersBinding
     var user: User? = null
@@ -47,6 +48,8 @@ class MembersActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = getString(R.string.members)
+
         myFullScreenAd = MyFullScreenAd(this, true)
 
         loadingDialog = LoadingDialog(this)
@@ -192,10 +195,6 @@ class MembersActivity : AppCompatActivity() {
         dialogBinding.ccp.setHintExampleNumberEnabled(true)
         dialogBinding.ccp.registerCarrierNumberEditText(dialogBinding.edtPhone)
 
-        dialogBinding.btnGenPass.setOnClickListener {
-            val pass = Random.nextInt(111111, 999999).toString()
-            dialogBinding.edtPass.setText(pass)
-        }
 
 
         ArrayAdapter.createFromResource(this, R.array.gender, R.layout.layout_spinner_item).also { adapter ->

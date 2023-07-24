@@ -1,5 +1,5 @@
 <resources>
-    <string-array name="gender">
+    <string-array name="gender" translatable="false">
         <item>Gender</item>
         <item>Male</item>
         <item>Female</item>
@@ -8,14 +8,139 @@
     </string-array>
 
     <string name="app_name" translatable="false">My Dining</string>
+    <string name="admob_Interstitial_ad_unit" translatable="false">ca-app-pub-5848923401370877/3523974080</string>
+    <string name="admob_native_ad_unit" translatable="false">ca-app-pub-5848923401370877/9463492634</string>
 
+
+    <string name="bangla_lang" translatable="false">বাংলা</string>
+    <string name="english_lang" translatable="false">English</string>
 
     <string name="facebook_app_id" translatable="false">1226582827985710</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1234</string>
     <string name="facebook_client_token" translatable="false">251ae0f389ee2a676e15c05857e607bf</string>
     <string name="initiate_member_first" formatted="false">If any user not showing in the list, please go Initiate Members page and initiate the user</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amount">Amount</string>
+    <string name="add">Add</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="add_meal">Add Meal</string>
+    <string name="price">Price</string>
+    <string name="product_description">Product Description</string>
+    <string name="purchase_type">Purchase Type</string>
+    <string name="meal_purchase">Meal Purchase</string>
+    <string name="other_purchase">Other Purchase</string>
+    <string name="change_superuser_notice">You Can\'t change super user. Cause only super user can change super user. You are not super user</string>
+    <string name="change">Change</string>
+    <string name="mess_name">Mess Name</string>
+    <string name="your_full_name">Your Full Name</string>
+    <string name="user_name">User Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="city">City</string>
+    <string name="password">Password</string>
+    <string name="generate">Generate</string>
+    <string name="submit">Submit</string>
+    <string name="total_deposit">Total Deposit</string>
+    <string name="add_deposit">Add Deposit</string>
+    <string name="date">Date</string>
+    <string name="edit">Edit</string>
+    <string name="total">Total</string>
+    <string name="total_fund_added">Total Fund Added</string>
+    <string name="add_fund">Add Fund</string>
+    <string name="already_initiated">Already Initiated</string>
+    <string name="not_initiated">Not Initiated</string>
+    <string name="login">Login</string>
+    <string name="forgot_login_password">Forgot login password?</string>
+    <string name="accept_privacy">Continue with My Dining app you must agree to My Dining privacy pilicy</string>
+    <string name="l_o_g_i_n">L o g i n</string>
+    <string name="create_new_mess">Create New Mess</string>
+    <string name="meal_charge">Meal Charge</string>
+    <string name="total_meal">Total Meal</string>
+    <string name="meal_chart">Meal Chart</string>
+    <string name="purchases">Purchases</string>
+    <string name="other_cost">Other Cost</string>
+    <string name="deposit">Deposit</string>
+    <string name="user_guide">User Guide</string>
+    <string name="members">Members</string>
+    <string name="initiate_members">Initiate Members</string>
+    <string name="add_purchase">Add Purchase</string>
+    <string name="fund">Fund</string>
+    <string name="purchase_request">Purchase Request</string>
+    <string name="monthly_summary">Monthly Summary</string>
+    <string name="total_member">Total Member</string>
+    <string name="profile">Profile</string>
+    <string name="user_role">User Role</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="account_created">Account Created</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout">Logout</string>
+    <string name="submit_purchase_request">Submit Purchase Request</string>
+    <string name="total_purchase">Total Purchase</string>
+    <string name="name">Name</string>
+    <string name="product">Product</string>
+    <string name="generate_new_report">Generate New Report</string>
+    <string name="enter_your_username">Enter Your Username</string>
+    <string name="search_account">Search Account</string>
+    <string name="enter_otp">Enter otp</string>
+    <string name="verify">Verify</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_password_again">New Password Again</string>
+    <string name="generate_report">Generate Report</string>
+    <string name="change_superuser">Change Superuser</string>
+    <string name="allow_fund_add">Allow fund add</string>
+    <string name="allow_other_user_to_add_meal">Allow other user to add meal</string>
+    <string name="reset_mess">Reset Mess</string>
+    <string name="using_product_list">Using Product List</string>
+    <string name="no_purchase_item_added">No purchase item added</string>
+    <string name="product_name">Product Name</string>
+    <string name="request_deposit_to_your_account">Request Deposit to your account</string>
+    <string name="submit_your_purchase">Submit Your Purchase</string>
+    <string name="total_meal_cost">Total Meal Cost</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="in_reserved">In Reserved</string>
+    <string name="add_new_member">Add New Member</string>
+    <string name="full_name">Full Name</string>
+    <string name="edit_deposit">Edit Deposit</string>
+    <string name="deposited_date">Deposited Date</string>
+    <string name="deposited_amount">Deposited Amount</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="edit_meal">Edit Meal</string>
+    <string name="meal_date">Meal Date</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_pcurchase">Edit Pcurchase</string>
+    <string name="purchase_date">Purchase Date</string>
+    <string name="purchase_products">Purchase Products</string>
+    <string name="generate_monthly_report">Generate Monthly Report</string>
+    <string name="select_month">Select Month</string>
+    <string name="old_password">Old Password</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_and_condition">Terms and Condition</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="save">Save</string>
+    <string name="select_your_preferred_language">Select your preferred language</string>
+    <string name="deposit_history">Deposit History</string>
+    <string name="settings">Settings</string>
+    <string name="add_other_purchase">Add Other Purchase</string>
+    <string name="change_language">Change Language</string>
+    <string name="reset_single_month">Reset Single Month</string>
+    <string name="reset_month_warning">You are about to initiate the deletion of all mess data associated with %s. This action cannot be undone and all data will be permanently lost. Please ensure that you have backed up any important data before proceeding with the deletion process.</string>
+    <string name="previous_data">Previous Month Data</string>
+    <string name="switch_mess">Switch Mess</string>
+    <string name="mess_switch_request">Switch Mess</string>
+    <string name="enter_mess_id">Enter Mess Id</string>
+    <string name="memeber_request">Member Request</string>
+    <string name="month_list">Month List</string>
+    <string name="start_new_month">Start New Month</string>
+    <string name="mess_id">Mess ID</string>
+    <string name="mess_created">Mess Created</string>
+    <string name="mess_status">Mess Status</string>
+    <string name="mess_info">Mess Info</string>
+    <string name="contact_us_text">For Any Issues/Query Contact With Us</string>
 
 
 </resources>

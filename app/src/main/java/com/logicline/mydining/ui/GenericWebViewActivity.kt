@@ -13,13 +13,14 @@ import android.view.View
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
 import com.logicline.mydining.databinding.ActivityGenericWebviewBinding
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import java.net.URISyntaxException
 
 
-class GenericWebViewActivity : AppCompatActivity() {
+class GenericWebViewActivity : BaseActivity() {
     lateinit var binding: ActivityGenericWebviewBinding
     lateinit var loadingDialog: LoadingDialog
     override fun onCreate(savedInstanceState: Bundle?) {

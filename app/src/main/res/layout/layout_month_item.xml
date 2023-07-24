@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="@dimen/_4sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
+    android:background="@drawable/bottom_line_bg"
+    android:layout_height="wrap_content">
+    
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/calendar"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"/>
+
+    <TextView
+        android:id="@+id/txtMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="March 2023"
+        android:textColor="@color/themeColor"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/next"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"/>
+
+
+</RelativeLayout>

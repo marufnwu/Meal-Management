@@ -39,7 +39,8 @@ class UserGuideActivity : BaseActivity(false) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = "User Guide"
+        supportActionBar?.title = getString(R.string.user_guide)
+
         binding = ActivityUserGuideBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

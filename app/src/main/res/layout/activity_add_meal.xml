@@ -132,7 +132,7 @@
                                 android:textColor="@color/White"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:textSize="@dimen/_14sdp"
-                                android:text="Breakfast"
+                                android:text="@string/breakfast"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -160,7 +160,7 @@
                                 android:textColor="@color/White"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:textSize="@dimen/_14sdp"
-                                android:text="Lunch"
+                                android:text="@string/lunch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -188,7 +188,7 @@
                                 android:textColor="@color/White"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:textSize="@dimen/_14sdp"
-                                android:text="Dinner"
+                                android:text="@string/dinner"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -218,7 +218,7 @@
                     android:paddingStart="@dimen/_20sdp"
                     android:background="@drawable/button_primary"
                     android:layout_margin="@dimen/_8sdp"
-                    android:text="Add Meal"
+                    android:text="@string/add_meal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

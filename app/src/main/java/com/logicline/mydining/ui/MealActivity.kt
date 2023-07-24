@@ -2,6 +2,7 @@ package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,6 +14,7 @@ import android.view.Window
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.logicline.mydining.R
 import com.logicline.mydining.adapter.DayMealListAdapter
 import com.logicline.mydining.databinding.ActivityMealBinding
 import com.logicline.mydining.databinding.DialogEditMealDialogBinding
@@ -22,6 +24,7 @@ import com.logicline.mydining.models.response.MealListResponse
 import com.logicline.mydining.models.response.UserDayMealResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.LangUtils
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDatePicker
@@ -31,7 +34,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
+class MealActivity : AppCompatActivity() {
 
     lateinit var myFullScreenAd: MyFullScreenAd
 
@@ -41,7 +44,6 @@ class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
     var dayList :  MutableList<MutableList<Meal>> = mutableListOf()
     var year = Constant.getCurrentYear()
     var month = Constant.getCurrentMonthNumber()
-    var day = Constant.getCurrentDay()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +53,7 @@ class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
         setContentView(binding.root)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.meal_chart)
 
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)
@@ -59,15 +62,32 @@ class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
             binding.addMeal.visibility = View.GONE
         }
 
+        intent?.let {
+            it.getStringExtra(Constant.YEAR)?.let {
+                year = it
+            }
+
+            it.getStringExtra(Constant.MONTH)?.let {
+                month = it
+
+            }
+        }
+
         binding.addMeal.setOnClickListener {
             startActivity(Intent(this, AddMealActivity::class.java))
         }
 
-        binding.month.setOnClickListener {
-            selectMonth()
+        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int, month: Int, year: Int) {
+                setDate(year.toString(), month.toString())
+            }
+
+            override fun dateString(date: String) {
+
+            }
+
         }
 
-        binding.month.text  = Constant.getYear(Constant.getCurrentDate())+" "+Constant.getMonthName(Constant.getCurrentDate())
 
         val recyDayMeal = binding.recyDayList
         recyDayMeal.setHasFixedSize(true)
@@ -228,12 +248,6 @@ class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
 
     }
 
-    private fun selectMonth() {
-        MyDatePicker(this, this, day.toInt(), month.toInt(), year.toInt())
-            .create()
-            .show()
-    }
-
     private fun getMealList() {
         loadingDialog.show()
         (application as MyApplication)
@@ -259,17 +273,11 @@ class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
             })
     }
 
-    override fun date(date: Int, month: Int, year: Int) {
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun dateString(date: String) {
-        binding.month.text = Constant.getMonthName(date)+" "+Constant.getYear(date)
-        year = Constant.getYear(date)
-        month = Constant.getMonthNumber(date)
+    private fun setDate(year:String, month:String){
+        this.year = year
+        this.month = month
         getMealList()
     }
-
     override fun onBackPressed() {
         myFullScreenAd.showAd()
         super.onBackPressed()
@@ -281,5 +289,13 @@ class MealActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
             return true
         }
         return false
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        if (newBase!=null) {
+            super.attachBaseContext(LangUtils.applyLanguage(newBase))
+        } else {
+            super.attachBaseContext(newBase)
+        }
     }
 }

@@ -8,7 +8,6 @@
     tools:context=".ui.DepositActivity">
 
     <LinearLayout
-        android:paddingStart="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:background="@drawable/bottom_curve"
         android:orientation="vertical"
@@ -24,29 +23,14 @@
             android:layout_gravity="center"
             android:textSize="@dimen/_25sdp"
             android:textColor="@color/White"
-            android:text="Total Deposit "
+            android:text="@string/total_deposit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/txtMonthYear"
-            android:gravity="center_horizontal"
-            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
-            android:layout_gravity="center"
-            android:fontFamily="@font/hubballi"
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/LightBlue"
-            android:text="March 2022"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_50sdp"
-            android:background="@drawable/curve_line_white"
+        <com.logicline.mydining.ui.custom_views.MonthPickerView
+            android:id="@+id/monthPicker"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_3sdp"/>
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_marginEnd="@dimen/_10sdp"
@@ -76,7 +60,7 @@
             android:id="@+id/btnAddDeposit"
             android:layout_alignParentBottom="true"
             android:textColor="@color/White"
-            android:text="Add Deposit"
+            android:text="@string/add_deposit"
             android:background="@drawable/button_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

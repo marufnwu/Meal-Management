@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.logicline.mydining.R
 import com.logicline.mydining.adapter.DepositListAdapter
 import com.logicline.mydining.databinding.ActivityDepositBinding
 import com.logicline.mydining.models.Deposit
 import com.logicline.mydining.models.response.DepositsResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
@@ -22,11 +24,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DepositActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
+class DepositActivity : BaseActivity() {
     lateinit var myFullScreenAd: MyFullScreenAd
     lateinit var binding : ActivityDepositBinding
-    lateinit var month : String
-    lateinit var year : String
+
+    private var month : String = Constant.getCurrentMonthNumber()
+    private var year : String = Constant.getCurrentYear()
+
     lateinit var loadingDialog: LoadingDialog
 
     @SuppressLint("SetTextI18n")
@@ -36,25 +40,47 @@ class DepositActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
         setContentView(binding.root)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.deposit)
+
+
 
         myFullScreenAd = MyFullScreenAd(this, true)
 
         loadingDialog = LoadingDialog(this)
 
         if(!Constant.isManagerOrSuperUser()) binding.btnAddDeposit.visibility = View.GONE
-        setDate(Constant.getCurrentDate())
+
+        intent?.let {
+            it.getStringExtra(Constant.YEAR)?.let {
+                year = it
+            }
+
+            it.getStringExtra(Constant.MONTH)?.let {
+                month = it
+
+            }
+        }
 
 
 
         binding.recyDeposit.setHasFixedSize(true)
         binding.recyDeposit.layoutManager = LinearLayoutManager(this)
 
-        binding.txtMonthYear.setOnClickListener {
-            showDateTimePicker()
-        }
 
         binding.btnAddDeposit.setOnClickListener {
             startActivity(Intent(this, AddDepositActivity::class.java))
+        }
+
+        binding.monthPicker
+            .builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1  ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int, month: Int, year: Int) {
+                setDate(year.toString(), month.toString())
+            }
+
+            override fun dateString(date: String) {
+
+            }
+
         }
 
 
@@ -116,28 +142,14 @@ class DepositActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
             .putExtra(Constant.HISTORY_TYPE, DepositHistoryActivity.Type.SINGLE_USER.name))
     }
 
-    @SuppressLint("SetTextI18n")
-    fun showDateTimePicker() {
-        MyDatePicker(this, this)
-            .create()
-            .show()
-
-    }
 
     @SuppressLint("SetTextI18n")
-    private fun setDate(date: String) {
-        month = Constant.getMonthNumber(date)
-        year = Constant.getYear(date)
-        binding.txtMonthYear.text = Constant.getYear(date)+" "+Constant.getMonthName(date)
+    private fun setDate(year:String, month:String) {
+        this.year = year
+        this.month = month
         getDeposits()
     }
 
-    override fun date(date: Int, month: Int, year: Int) {
-    }
-
-    override fun dateString(date: String) {
-        setDate(date)
-    }
 
     override fun onBackPressed() {
         myFullScreenAd.showAd()

@@ -22,7 +22,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/themeColor"
                 android:textSize="@dimen/_15sdp"
-                android:text="Edit Profile"
+                android:text="@string/edit_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_14sdp"
-                    android:text="Full Name"
+                    android:text="@string/full_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_14sdp"
-                    android:text="Email"
+                    android:text="@string/email_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_14sdp"
-                    android:text="Country"
+                    android:text="@string/country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_14sdp"
-                    android:text="Phone"
+                    android:text="@string/phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -140,7 +140,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_14sdp"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_14sdp"
-                    android:text="City"
+                    android:text="@string/city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -198,7 +198,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnCancel"
                     android:background="@color/LightBlue"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:layout_margin="@dimen/_8sdp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -208,7 +208,7 @@
                     android:id="@+id/btnUpdate"
                     android:textColor="@color/White"
                     android:background="@color/themeColor"
-                    android:text="Update"
+                    android:text="@string/update"
                     android:layout_margin="@dimen/_8sdp"
                     android:layout_weight="1"
                     android:layout_width="0dp"

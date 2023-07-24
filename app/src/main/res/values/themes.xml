@@ -21,7 +21,7 @@
         <item name="windowActionBar">true</item>
         <item name="android:windowLightStatusBar" >false</item>
 
-        <item name="fontFamily">@font/hubballi</item>
+        <item name="fontFamily">@font/app_font</item>
 
         <item name="textOutlineColor">@color/Black</item>
         <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
@@ -59,7 +59,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
 
-        <item name="fontFamily">@font/hubballi</item>
+        <item name="fontFamily">@font/app_font</item>
 
     </style>
 

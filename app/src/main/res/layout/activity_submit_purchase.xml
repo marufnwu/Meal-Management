@@ -57,7 +57,7 @@
                         android:layout_gravity="center"
                         android:checked="true"
                         android:gravity="center_vertical"
-                        android:text="Using Product List"
+                        android:text="@string/using_product_list"
                         android:textColor="@color/Black"
                         android:textSize="@dimen/_16sdp" />
                 </LinearLayout>
@@ -125,7 +125,7 @@
                                    android:textSize="@dimen/_14sdp"
                                    android:padding="@dimen/_6sdp"
                                    android:gravity="center"
-                                   android:text="Total Purchase: 00 "
+                                   android:text="@string/total_purchase"
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"/>
 
@@ -145,7 +145,7 @@
                                        android:textSize="@dimen/_12sdp"
                                        android:textStyle="bold"
                                        android:textColor="@color/colorPrimary"
-                                       android:text="No purchase item added"
+                                       android:text="@string/no_purchase_item_added"
                                        android:layout_width="wrap_content"
                                        android:layout_height="wrap_content"/>
 
@@ -173,7 +173,7 @@
                                    <EditText
                                        android:id="@+id/edtSingleName"
                                        android:textColor="@color/Black"
-                                       android:hint="Product Name"
+                                       android:hint="@string/product_name"
                                        android:layout_marginEnd="@dimen/_1sdp"
                                        android:layout_weight="3"
                                        android:layout_width="0dp"
@@ -184,7 +184,7 @@
                                        android:id="@+id/edtSinglePrice"
                                        android:inputType="number"
                                        android:gravity="center"
-                                       android:hint="Price"
+                                       android:hint="@string/price"
                                        android:layout_marginEnd="@dimen/_1sdp"
                                        android:layout_weight="2"
                                        android:layout_width="0dp"
@@ -225,7 +225,7 @@
                         android:layout_gravity="center"
                         android:checked="false"
                         android:gravity="center_vertical"
-                        android:text="Request Deposit to your account"
+                        android:text="@string/request_deposit_to_your_account"
                         android:textColor="@color/Black"
                         android:textSize="@dimen/_12sdp" />
 
@@ -244,13 +244,13 @@
                             <RadioButton
                                 android:checked="true"
                                 android:id="@+id/radioBtnMealPurchase"
-                                android:text="Meal Purchase"
+                                android:text="@string/meal_purchase"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
                             <RadioButton
                                 android:id="@+id/radioBtnOtherPurchase"
-                                android:text="Other Purchase"
+                                android:text="@string/other_purchase"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
@@ -286,7 +286,7 @@
         android:background="@drawable/button_primary"
         android:paddingStart="@dimen/_20sdp"
         android:paddingEnd="@dimen/_20sdp"
-        android:text="Submit Your Purchase"
+        android:text="@string/submit_your_purchase"
         android:textColor="@color/White" />
 
 

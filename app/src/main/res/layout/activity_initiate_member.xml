@@ -63,7 +63,7 @@
                     android:background="@color/colorPrimaryTransparent"
                     android:padding="@dimen/_8sdp"
                     android:gravity="center"
-                    android:text="Already Initiated"
+                    android:text="@string/already_initiated"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -105,7 +105,7 @@
                     android:background="@color/colorPrimaryTransparent"
                     android:padding="@dimen/_8sdp"
                     android:gravity="center"
-                    android:text="Not Initiated"
+                    android:text="@string/not_initiated"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

@@ -36,7 +36,8 @@ class ChangeSuperuserActivity : BaseActivity(false) {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = "Change Superuser"
+        supportActionBar?.title = getString(R.string.change_superuser)
+
 
         setContentView(binding.root)
 

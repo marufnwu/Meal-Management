@@ -18,6 +18,21 @@
         android:theme="@style/Theme.MealManagement"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.MessInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ActiveMonthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MemberRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SwitchMessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PreviousMonthActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.FundActivity"
             android:exported="false" />
         <activity
@@ -30,8 +45,6 @@
         <meta-data
             android:name="applovin.sdk.key"
             android:value="RATQWqcuNliMJzgxmUNkbSuxmn5O3k1DNmEePbDJuhUbcIxSLpM7HSBI9oZ6hcWLIOqdVgiaoBpdDp7_2CskMV" />
-
-
 
         <activity
             android:name=".ui.MealRequestActivity"

@@ -15,7 +15,7 @@
             android:id="@+id/txtDate"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/themeColor"
-            android:text="Date"
+            android:text="@string/date"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -30,7 +30,7 @@
             android:id="@+id/txtAmount"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/themeColor"
-            android:text="Amount"
+            android:text="@string/amount"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>

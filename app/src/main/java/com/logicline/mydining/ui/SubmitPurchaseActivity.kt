@@ -14,6 +14,7 @@ import com.logicline.mydining.adapter.PurchaseProductFieldAdapter
 import com.logicline.mydining.databinding.ActivitySubmitPurchaseBinding
 import com.logicline.mydining.models.PurchaseProduct
 import com.logicline.mydining.models.response.GenericRespose
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
@@ -23,7 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SubmitPurchaseActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
+class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener {
     lateinit var selectedDate : String
     private var isListItem = true
     private var isDepositToAcc = false

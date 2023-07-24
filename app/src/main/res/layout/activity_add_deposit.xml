@@ -75,7 +75,7 @@
                     android:textColor="@color/Black"
                     android:id="@+id/edtAmount"
                     android:textSize="@dimen/_14sdp"
-                    android:hint="Amount"
+                    android:hint="@string/amount"
                     android:inputType="numberDecimal"
                     android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/edittext_meal"
@@ -93,7 +93,7 @@
                 android:paddingStart="@dimen/_20sdp"
                 android:background="@drawable/button_primary"
                 android:layout_margin="@dimen/_8sdp"
-                android:text="Add"
+                android:text="@string/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

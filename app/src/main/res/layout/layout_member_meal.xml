@@ -16,7 +16,7 @@
             android:padding="@dimen/_4sdp"
             android:background="@color/MediumSeaGreen"
             android:textSize="@dimen/_10sdp"
-            android:text="Name"
+            android:text="@string/name"
             android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -30,7 +30,7 @@
             android:padding="@dimen/_4sdp"
             android:background="@color/LightSalmon"
             android:textSize="@dimen/_10sdp"
-            android:text="Breakfast"
+            android:text="@string/breakfast"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -44,7 +44,7 @@
             android:padding="@dimen/_4sdp"
             android:background="@color/DeepSkyBlue"
             android:textSize="@dimen/_10sdp"
-            android:text="Lunch"
+            android:text="@string/lunch"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
@@ -57,7 +57,7 @@
             android:padding="@dimen/_4sdp"
             android:background="@color/HotPink"
             android:textSize="@dimen/_10sdp"
-            android:text="Dinner"
+            android:text="@string/dinner"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>

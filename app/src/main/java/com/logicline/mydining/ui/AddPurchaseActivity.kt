@@ -24,7 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener, AdapterView.OnItemSelectedListener {
+class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListener, AdapterView.OnItemSelectedListener {
     private lateinit var myFullScreenAd: MyFullScreenAd
     var selectedUser : User? = null
     lateinit var binding : ActivityAddPurchaseBinding
@@ -49,18 +49,20 @@ class AddPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener, A
         type = intent.getIntExtra(Constant.PURCHASE_TYPE, 0)
 
         if(type==1){
-            supportActionBar?.title = "Meal Purchase"
-            binding.btnAddPurchase.text = "Add Meal Purchase"
+            supportActionBar?.title = getString(com.logicline.mydining.R.string.add_purchase)
+
+            binding.btnAddPurchase.text = getString(com.logicline.mydining.R.string.add_purchase)
 
             binding.rGroupPurchaseType.check(com.logicline.mydining.R.id.rButtonMealPurchase)
 
         }else if(type==2){
-            supportActionBar?.title ="Others Cost"
-            binding.btnAddPurchase.text = "Add Others Cost"
+            supportActionBar?.title = getString(com.logicline.mydining.R.string.other_purchase)
+
+            binding.btnAddPurchase.text = getString(com.logicline.mydining.R.string.add_other_purchase)
             binding.rGroupPurchaseType.check(com.logicline.mydining.R.id.rButtonOtherPurchase)
         }else{
-            supportActionBar?.title = "Purchase"
-            binding.btnAddPurchase.text = "Add Purchase"
+            supportActionBar?.title = getString(com.logicline.mydining.R.string.purchases)
+            binding.btnAddPurchase.text = getString(com.logicline.mydining.R.string.add_purchase)
         }
 
         loadingDialog = LoadingDialog(this)

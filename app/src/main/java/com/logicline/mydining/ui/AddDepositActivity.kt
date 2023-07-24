@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddDepositBinding
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.GenericRespose
@@ -22,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddDepositActivity : BaseActivity() , MyDatePicker.OnDateSelectListener, AdapterView.OnItemSelectedListener {
+class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListener, AdapterView.OnItemSelectedListener {
     lateinit var binding: ActivityAddDepositBinding
     lateinit var loadingDialog : LoadingDialog
     private var userList: List<User>? = null
@@ -38,6 +39,7 @@ class AddDepositActivity : BaseActivity() , MyDatePicker.OnDateSelectListener, A
 
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.add_deposit)
         myFullScreenAd = MyFullScreenAd(this, true)
 
         loadingDialog = LoadingDialog(this)

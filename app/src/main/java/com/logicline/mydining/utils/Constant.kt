@@ -1,11 +1,16 @@
 package com.logicline.mydining.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.net.Uri
+import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +18,7 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import com.bumptech.glide.Glide
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.R
@@ -22,12 +28,14 @@ import com.logicline.mydining.network.MyApi
 import com.logicline.mydining.ui.GenericWebViewActivity
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 object Constant {
 
+    val APP_LANG_KEY: String = "APPLANGUAGE"
     const val MONTH: String = "Month"
     const val YEAR: String = "Year"
     const val HISTORY_TYPE: String = "HISTORY_TYPE"
@@ -54,6 +62,11 @@ object Constant {
      enum class VIEW_TYPE{
         NORMAL_ITEM,
         NATIVE_AD_ITEM
+    }
+
+    enum class LANGUAGE{
+        en_US,
+        bn
     }
 
     fun isManager():Boolean{
@@ -88,10 +101,10 @@ object Constant {
 
     @SuppressLint("SimpleDateFormat")
     fun getDayNameFromDate(date:String) : String{
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
 
         val myDate: Date = inFormat.parse(date)
-        val simpleDateFormat = SimpleDateFormat("EEEE")
+        val simpleDateFormat = SimpleDateFormat("EEEE", Locale("en"))
         val dayName: String = simpleDateFormat.format(myDate)
 
         return  dayName
@@ -99,10 +112,10 @@ object Constant {
 
     @SuppressLint("SimpleDateFormat")
     fun dateFormat(date:String) : String{
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
 
         val myDate: Date = inFormat.parse(date)
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
         val dayName: String = simpleDateFormat.format(myDate)
 
         return  dayName
@@ -111,23 +124,27 @@ object Constant {
     @SuppressLint("SimpleDateFormat")
     fun getCurrentDate() : String{
         val cal = Calendar.getInstance()
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
         return inFormat.format(Date())
     }
     @SuppressLint("SimpleDateFormat")
     fun getTomorrowDate() : String{
         val cal = Calendar.getInstance()
         cal.add(Calendar.DATE ,1)
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
         return inFormat.format(cal.time)
     }
 
     @SuppressLint("SimpleDateFormat")
     fun getMonthName(date:String):String{
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd",Locale("en"))
 
         val myDate: Date = inFormat.parse(date)
-        val simpleDateFormat = SimpleDateFormat("MMMM")
+        val simpleDateFormat = SimpleDateFormat("MMMM", Locale("en"))
+
+        val c = Calendar.getInstance()
+        c.time = myDate
+
         val dayName: String = simpleDateFormat.format(myDate)
 
         return  dayName
@@ -135,10 +152,10 @@ object Constant {
 
     @SuppressLint("SimpleDateFormat")
     fun getMonthNumber(date:String):String{
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd",Locale("en"))
 
         val myDate: Date = inFormat.parse(date)
-        val simpleDateFormat = SimpleDateFormat("MM")
+        val simpleDateFormat = SimpleDateFormat("MM", Locale("en"))
         val month: Int = simpleDateFormat.format(myDate).toInt()
 
         return  month.toString()
@@ -146,10 +163,10 @@ object Constant {
 
     @SuppressLint("SimpleDateFormat")
     fun getYear(date:String):String{
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd",Locale("en"))
 
         val myDate: Date = inFormat.parse(date)
-        val simpleDateFormat = SimpleDateFormat("yyyy")
+        val simpleDateFormat = SimpleDateFormat("yyyy",Locale("en"))
         val dayName: String = simpleDateFormat.format(myDate)
 
         return dayName
@@ -157,10 +174,10 @@ object Constant {
 
     @SuppressLint("SimpleDateFormat")
     fun getDay(date:String):String{
-        val inFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inFormat = SimpleDateFormat("yyyy-MM-dd",Locale("en"))
 
         val myDate: Date = inFormat.parse(date)
-        val simpleDateFormat = SimpleDateFormat("dd")
+        val simpleDateFormat = SimpleDateFormat("dd",Locale("en"))
         val dayName: String = simpleDateFormat.format(myDate)
 
         return dayName
@@ -436,6 +453,20 @@ object Constant {
 
     fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
+    }
+
+    fun getActivity(context: Context?): Activity? {
+        if (context == null) return null
+        if (context is Activity) return context
+        return if (context is ContextWrapper) getActivity(context.baseContext) else null
+    }
+
+     fun checkWriteStoragePermission(context: Context):Boolean {
+        return if(Build.VERSION.SDK_INT< Build.VERSION_CODES.R){
+            context.checkCallingOrSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED
+        }else{
+            true
+        }
     }
 
 

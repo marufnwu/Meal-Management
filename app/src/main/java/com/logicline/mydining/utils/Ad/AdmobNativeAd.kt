@@ -19,14 +19,14 @@ import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.R
 
 class AdmobNativeAd(val context: Context, val listener: Listener)  {
-    companion object{
-        //private val adId = "ca-app-pub-3940256099942544/2247696110" //test
-        private val adId = "ca-app-pub-5848923401370877/7980504125"; //real
-    }
+
     private var nativeAd : NativeAd? = null
+    private var addId: String
+
     interface Listener{
         fun onAdLoaded()
         fun forNativeAd(ad :NativeAd, adView:NativeAdView)
@@ -34,6 +34,12 @@ class AdmobNativeAd(val context: Context, val listener: Listener)  {
     }
     init {
         //MobileAds.initialize(context) {}
+        addId = if (BuildConfig.DEBUG){
+            "ca-app-pub-3940256099942544/2247696110" //test
+        }else{
+            "ca-app-pub-5848923401370877/9463492634" //real
+        }
+
         loadAd()
     }
 
@@ -49,7 +55,7 @@ class AdmobNativeAd(val context: Context, val listener: Listener)  {
             .build()
 
 
-        val builder = AdLoader.Builder(context, adId)
+        val builder = AdLoader.Builder(context, addId)
             .withNativeAdOptions(adOptions)
             .forNativeAd { ad ->
                 // Assumes that your ad layout is in a file call native_ad_layout.xml

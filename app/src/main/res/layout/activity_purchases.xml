@@ -8,7 +8,6 @@
     tools:context=".ui.PurchasesActivity">
 
     <LinearLayout
-        android:paddingStart="@dimen/_10sdp"
         android:paddingBottom="@dimen/_10sdp"
         android:background="@drawable/bottom_curve"
         android:orientation="vertical"
@@ -24,29 +23,14 @@
             android:layout_gravity="center"
             android:textSize="@dimen/_25sdp"
             android:textColor="@color/White"
-            android:text="Total Purchase 0"
+            android:text="@string/total_purchase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/txtMonthYear"
-            android:gravity="center_horizontal"
-            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
-            android:layout_gravity="center"
-            android:fontFamily="@font/hubballi"
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/LightBlue"
-            android:text="March 2022"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:background="@drawable/curve_line_white"
+        <com.logicline.mydining.ui.custom_views.MonthPickerView
+            android:id="@+id/monthPicker"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_3sdp"/>
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_marginEnd="@dimen/_10sdp"
@@ -82,7 +66,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/_15sdp"
                     android:textColor="@color/White"
-                    android:text="Date"
+                    android:text="@string/date"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
@@ -96,7 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textColor="@color/White"
                     android:textSize="@dimen/_15sdp" />
 
@@ -109,7 +93,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/_15sdp"
                     android:textColor="@color/White"
-                    android:text="Product"
+                    android:text="@string/product"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
@@ -123,7 +107,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/_15sdp"
                     android:textColor="@color/White"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
@@ -158,7 +142,7 @@
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:background="@drawable/button_primary"
-                    android:text="Add Purchase"
+                    android:text="@string/add_purchase"
                     android:textColor="@color/White" />
 
             </LinearLayout>

@@ -2,19 +2,27 @@ package com.logicline.mydining.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.view.View
+import com.dibyendu.picker.listener.PickerListener
+import com.dibyendu.picker.util.PickerUtils
+import com.dibyendu.picker.view.MonthYearPickerDialog
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivitySettingsBinding
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.LanguageSelectorDialog
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
+import com.whiteelephant.monthpicker.MonthPickerDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 
 class SettingsActivity : BaseActivity(false) {
     lateinit var binding: ActivitySettingsBinding
@@ -28,7 +36,7 @@ class SettingsActivity : BaseActivity(false) {
 
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Settings"
+        supportActionBar?.title = getString(R.string.settings)
 
         initViews()
 
@@ -69,6 +77,10 @@ class SettingsActivity : BaseActivity(false) {
             startActivity(Intent(this, ReportActivity::class.java))
        }
 
+        binding.cardSwitchMess.setOnClickListener {
+            startActivity(Intent(this, SwitchMessActivity::class.java))
+       }
+
         binding.cardResetMess.setOnClickListener {
             if(Constant.isSuperUser()){
                 showResetDialog()
@@ -76,6 +88,83 @@ class SettingsActivity : BaseActivity(false) {
                 showOtherUserDialog()
             }
         }
+        binding.cardChangeLanguage.setOnClickListener {
+            LanguageSelectorDialog.Builder(this)
+                .build()
+                .show()
+        }
+
+        binding.cardResetMonth.setOnClickListener {
+
+            showDateSelectionDialog()
+            JDialog.make(this)
+                .setCancelable(true)
+                .setIconType(JDialog.IconType.WARNING)
+                .setBodyText(getString(R.string.reset_month_warning))
+        }
+
+        if(Constant.isManagerOrSuperUser()){
+            binding.cardMemberRequest.visibility  =View.VISIBLE
+            binding.cardMemberRequest.setOnClickListener {
+                startActivity(Intent(this, MemberRequestActivity::class.java))
+            }
+        }
+
+        binding.cardMessInfo.setOnClickListener {
+            startActivity(Intent(this, MessInfoActivity::class.java))
+        }
+
+    }
+
+    private fun showDateSelectionDialog() {
+        val  builder = MonthPickerDialog.Builder(this, { m, y ->
+            showWarningDialog( y, m+1)
+
+
+        },Constant.getCurrentYear().toInt(), Constant.getCurrentMonthNumber().toInt()-1)
+
+        builder.setTitle("Select Month")
+            .build()
+            .show()
+    }
+
+    private fun showWarningDialog(year:Int, month:Int) {
+        JDialog.make(this)
+            .setCancelable(true)
+            .setIconType(JDialog.IconType.WARNING)
+            .setBodyText(getString(R.string.reset_month_warning).format(Constant.getMonthName("$year-$month-01")+" $year"))
+            .setPositiveButton(getString(R.string.delete)){
+                it.hideDialog()
+                processMonthDelete(year, month)
+
+            }.setNegativeButton(getString(R.string.cancel)){
+                it.hideDialog()
+            }
+            .build()
+            .showDialog()
+    }
+
+    private fun processMonthDelete(year: Int, month: Int) {
+        loadingDialog.show()
+        (application as MyApplication)
+            .myApi
+            .resetByMonth(year, month)
+            .enqueue(object : Callback<GenericRespose> {
+                override fun onResponse(
+                    call: Call<GenericRespose>,
+                    response: Response<GenericRespose>
+                ) {
+                    loadingDialog.hide()
+                    if(response.isSuccessful && response.body()!=null){
+                        shortToast(message = response.body()!!.msg)
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                    loadingDialog.hide()
+                }
+
+            })
     }
 
     private fun changeFundAdd(checked: Boolean) {

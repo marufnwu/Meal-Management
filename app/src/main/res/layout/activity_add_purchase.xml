@@ -75,7 +75,7 @@
                     android:textColor="@color/Black"
                     android:id="@+id/edtPrice"
                     android:textSize="@dimen/_14sdp"
-                    android:hint="Price"
+                    android:hint="@string/price"
                     android:inputType="numberDecimal"
                     android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/edittext_meal"
@@ -88,7 +88,7 @@
                     android:minEms="@integer/material_motion_duration_medium_2"
                     android:minLines="3"
                     android:textSize="@dimen/_14sdp"
-                    android:hint="Product Description"
+                    android:hint="@string/product_description"
                     android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/edittext_meal"
                     android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_13sdp"
                     android:layout_margin="@dimen/_4sdp"
-                    android:text="Purchase Type"
+                    android:text="@string/purchase_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -123,7 +123,7 @@
                         android:textStyle="bold"
                         android:layout_margin="@dimen/_4sdp"
                         android:id="@+id/rButtonMealPurchase"
-                        android:text="Meal Purchase"
+                        android:text="@string/meal_purchase"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -131,7 +131,7 @@
                         android:textStyle="bold"
                         android:layout_margin="@dimen/_4sdp"
                         android:id="@+id/rButtonOtherPurchase"
-                        android:text="Other Purchase"
+                        android:text="@string/other_purchase"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -167,7 +167,7 @@
                 android:paddingStart="@dimen/_20sdp"
                 android:background="@drawable/button_primary"
                 android:layout_margin="@dimen/_8sdp"
-                android:text="Add"
+                android:text="@string/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

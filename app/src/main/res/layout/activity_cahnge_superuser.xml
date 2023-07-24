@@ -16,7 +16,7 @@
         android:textSize="@dimen/_14sdp"
         android:padding="@dimen/_10sdp"
         android:gravity="center"
-        android:text="You Can't change super user. Cause only super user can change super user. You are not super user"
+        android:text="@string/change_superuser_notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -56,7 +56,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold"
                 android:background="@drawable/button_primary"
-                android:text="Change"
+                android:text="@string/change"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

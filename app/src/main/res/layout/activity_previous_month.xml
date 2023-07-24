@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.PreviousMonthActivity">
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSelectDate"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="@color/White"
+                android:background="@drawable/button_primary"
+                android:text="@string/select_month"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <LinearLayout
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/mealChart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounf_transparent_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:scaleType="fitXY"
+                        android:padding="@dimen/_8sdp"
+                        android:background="@drawable/round"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:src="@drawable/chart" />
+
+                    <View
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/curve_line_black" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/meal_chart"
+                        android:textColor="@color/themeColor"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/purchases"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounf_transparent_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:scaleType="fitXY"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:src="@drawable/shopping_bag" />
+
+                    <View
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/curve_line_black" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/purchases"
+                        android:textColor="@color/themeColor"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/otherCost"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounf_transparent_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:scaleType="fitXY"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:src="@drawable/expense" />
+
+                    <View
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/curve_line_black" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/other_cost"
+                        android:textColor="@color/themeColor"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deposit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounf_transparent_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:padding="@dimen/_8sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:src="@drawable/wallet" />
+
+                    <View
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="7dp"
+                        android:background="@drawable/curve_line_black" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/deposit"
+                        android:textColor="@color/themeColor"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--Native Ad-->
+            <com.logicline.mydining.utils.Ad.MyDiningNativeAd
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <!--Native Ad -->
+
+            <LinearLayout
+                android:id="@+id/summary"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounf_transparent_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/round"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:src="@drawable/chart" />
+
+                <View
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="7dp"
+                    android:background="@drawable/curve_line_black" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/monthly_summary"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

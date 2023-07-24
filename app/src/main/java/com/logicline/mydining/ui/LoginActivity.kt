@@ -10,8 +10,11 @@ import com.logicline.mydining.databinding.ActivityLoginBinding
 import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.response.CheckLoginResponse
 import com.logicline.mydining.models.response.ServerResponse
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.Coroutines
+import com.logicline.mydining.utils.LangUtils
+import com.logicline.mydining.utils.LanguageSelectorDialog
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
@@ -23,7 +26,7 @@ import retrofit2.Response
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     lateinit var binding : ActivityLoginBinding
     lateinit var loadingDialog: LoadingDialog
@@ -51,6 +54,13 @@ class LoginActivity : AppCompatActivity() {
         binding.txtForgotPassword.setOnClickListener {
             startActivity(Intent(this, ResetPasswordActivity::class.java))
         }
+
+//        binding.txtLang.setText(LangUtils.getFullLanguage(this, LangUtils.getLanguage(this)))
+//        binding.txtLang.setOnClickListener {
+//            LanguageSelectorDialog.Builder(this)
+//                .build()
+//                .show()
+//        }
     }
 
     private fun getSupport() {
