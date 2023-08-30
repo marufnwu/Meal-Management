@@ -446,7 +446,6 @@ class MainActivity : BaseActivity() {
             binding.addFund.visibility = View.GONE
         }else{
             binding.addFund.visibility = View.VISIBLE
-
         }
 
     }
