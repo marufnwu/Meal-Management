@@ -3,18 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ui.ActiveMonthActivity">
 
-    <androidx.cardview.widget.CardView
-        app:cardCornerRadius="@dimen/_8sdp"
-        android:layout_margin="@dimen/_4sdp"
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content" />
+
+    </androidx.viewpager.widget.ViewPager>
+
+
 
 </LinearLayout>

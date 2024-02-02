@@ -11,5 +11,5 @@ data class Mess(
     @SerializedName("status") val status: Int,
     @SerializedName("super_user_id") val superUserId: Int,
     @SerializedName("fund") var fundStatus: Int = 0,
-    @SerializedName("type") var type : Int = 0
+    @SerializedName("type") var type : Int = 0,
 )

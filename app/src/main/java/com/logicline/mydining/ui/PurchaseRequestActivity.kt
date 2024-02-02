@@ -27,9 +27,6 @@ import java.util.*
 
 class PurchaseRequestActivity : BaseActivity() {
     lateinit var binding : ActivityPurchaseRequestBinding
-
-    lateinit var month : String
-    lateinit var year : String
     lateinit var loadingDialog: LoadingDialog
 
     val framgents = listOf(

@@ -3,12 +3,14 @@ package com.logicline.mydining.utils
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.logicline.mydining.R
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import java.time.Year
 import java.util.*
 
+private const val TAG = "MyDatePicker"
 class MyDatePicker(
         val context: Context,
         val onDateSelectListener: OnDateSelectListener?,
@@ -59,8 +61,10 @@ class MyDatePicker(
 
 
     interface OnDateSelectListener{
-        fun date(date:Int, month:Int, year: Int)
+        fun date(date:Int?, month:Int?, year: Int?)
+        fun month(monthId : Int) {
 
+        }
         fun dateString(date:String)
     }
 }

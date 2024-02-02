@@ -28,8 +28,6 @@ class DepositActivity : BaseActivity() {
     lateinit var myFullScreenAd: MyFullScreenAd
     lateinit var binding : ActivityDepositBinding
 
-    private var month : String = Constant.getCurrentMonthNumber()
-    private var year : String = Constant.getCurrentYear()
 
     lateinit var loadingDialog: LoadingDialog
 
@@ -72,13 +70,18 @@ class DepositActivity : BaseActivity() {
         }
 
         binding.monthPicker
-            .builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1  ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
+            .builder(null, mYear = year?.toInt(), mMonth = month?.toInt(), mDay = 1  )
+            .onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int?, month: Int?, year: Int?) {
                 setDate(year.toString(), month.toString())
             }
 
             override fun dateString(date: String) {
 
+            }
+
+            override fun month(monthId: Int) {
+                getDeposits(monthId)
             }
 
         }
@@ -92,11 +95,11 @@ class DepositActivity : BaseActivity() {
 
     }
 
-    private fun getDeposits() {
+    private fun getDeposits(monthId: Int? =null) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getDeposit(year, month)
+            .getDeposit(year, month, monthId)
             .enqueue(object: Callback<DepositsResponse> {
                 override fun onResponse(
                     call: Call<DepositsResponse>,

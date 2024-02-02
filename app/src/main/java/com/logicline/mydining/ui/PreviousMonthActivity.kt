@@ -18,8 +18,7 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
 
     lateinit var myFullScreenAd: MyFullScreenAd
     lateinit var binding : ActivityPreviousMonthBinding
-    var year : Int? = null
-    var month : Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +30,11 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
 
         intent?.let {
             it.getStringExtra(Constant.YEAR)?.let {
-                year = it.toInt()
+                year = it
             }
 
             it.getStringExtra(Constant.MONTH)?.let {
-                month = it.toInt()
+                month = it
 
             }
 
@@ -43,6 +42,15 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
                 setButtonText(year!!, month!!)
             }
 
+            it.getStringExtra(Constant.MONTH_NAME)?.let {
+                monthName = it
+            }
+
+            it.getIntExtra(Constant.MONTH_ID, 0)?.let {
+                if(it!=0){
+                    monthId = it
+                }
+            }
 
         }
 
@@ -56,8 +64,8 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
 
         binding.btnSelectDate.setOnClickListener {
             MonthPickerDialog.Builder(this, { m, y ->
-                year = y
-                month = m+1
+                year = y.toString()
+                month = (m+1).toString()
 
                 setButtonText(year!!, month!!)
 
@@ -72,7 +80,7 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
 
     }
 
-    private fun setButtonText(year:Int, month:Int){
+    private fun setButtonText(year:String, month:String){
         binding.btnSelectDate.text = Constant.getMonthName("$year-$month-01")+" $year"
     }
 
@@ -83,13 +91,24 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
         }
 
         when(v?.id){
-            R.id.summary -> startActivity(Intent(this, SummaryActivity::class.java).putExtra(Constant.YEAR, year.toString()).putExtra(Constant.MONTH, month.toString()))
-            R.id.deposit -> startActivity(Intent(this, DepositActivity::class.java).putExtra(Constant.YEAR, year.toString()).putExtra(Constant.MONTH, month.toString()))
-            R.id.mealChart -> startActivity(Intent(this, MealActivity::class.java).putExtra(Constant.YEAR, year.toString()).putExtra(Constant.MONTH, month.toString()))
+            R.id.summary -> startActivity(Intent(this, SummaryActivity::class.java)
+                .putExtra(Constant.FORCE, true)
+                .putExtra(Constant.YEAR, year.toString()).putExtra(Constant.MONTH, month.toString()))
+            R.id.deposit -> startActivity(Intent(this, DepositActivity::class.java)
+                .putExtra(Constant.FORCE, true)
+                .putExtra(Constant.YEAR, year.toString()).putExtra(Constant.MONTH, month.toString()))
+            R.id.mealChart -> startActivity(Intent(this, MealActivity::class.java)
+                .putExtra(Constant.FORCE, true)
+                .putExtra(Constant.YEAR, year.toString()).putExtra(Constant.MONTH, month.toString()))
+
             R.id.purchases -> startActivity(Intent(this, PurchasesActivity::class.java)
-                .putExtra(Constant.PURCHASE_TYPE, 1).putExtra(Constant.YEAR, year.toString()
+                .putExtra(Constant.FORCE, true)
+                .putExtra(Constant.PURCHASE_TYPE, 1)
+                .putExtra(Constant.YEAR, year.toString()
                 ).putExtra(Constant.MONTH, month.toString()))
             R.id.otherCost -> startActivity(Intent(this, PurchasesActivity::class.java)
+                .putExtra(Constant.FORCE, true)
+
                 .putExtra(Constant.PURCHASE_TYPE, 2)
                 .putExtra(Constant.YEAR, year.toString())
                 .putExtra(Constant.MONTH, month.toString()))

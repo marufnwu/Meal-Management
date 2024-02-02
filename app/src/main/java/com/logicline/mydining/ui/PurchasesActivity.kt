@@ -1,12 +1,10 @@
 package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
@@ -14,7 +12,6 @@ import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.common.internal.service.Common
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.PurchaseListAdapter
 import com.logicline.mydining.databinding.ActivityPurchasesBinding
@@ -40,8 +37,7 @@ class PurchasesActivity : BaseActivity() {
     private var purchaseList : MutableList<Purchase> = mutableListOf()
     lateinit var adpter: PurchaseListAdapter
     lateinit var binding : ActivityPurchasesBinding
-    var month : String = Constant.getCurrentMonthNumber()
-    var year : String = Constant.getCurrentYear()
+
     lateinit var loadingDialog: LoadingDialog
     var type = 0
     @SuppressLint("SetTextI18n")
@@ -110,13 +106,17 @@ class PurchasesActivity : BaseActivity() {
 
         binding.recyPurchase.adapter = adpter
 
-        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
+        binding.monthPicker.builder(null, mYear = year?.toInt(), mMonth = month?.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int?, month: Int?, year: Int?) {
 
                 setDate(year.toString(), month.toString())
             }
 
             override fun dateString(date: String) {
+            }
+
+            override fun month(monthId: Int) {
+                getPurchaseList(monthId)
             }
 
         }
@@ -158,13 +158,17 @@ class PurchasesActivity : BaseActivity() {
             MyDatePicker(
                 this,
                 object : MyDatePicker.OnDateSelectListener {
-                    override fun date(date: Int, month: Int, year: Int) {
+                    override fun date(date: Int?, month: Int?, year: Int?) {
 
                     }
 
                     override fun dateString(date: String) {
                         purchase.date = date
                         editBinding.txtDate.text = date
+                    }
+
+                    override fun month(monthId: Int) {
+                        super.month(monthId)
                     }
 
                 },
@@ -301,11 +305,11 @@ class PurchasesActivity : BaseActivity() {
 
     }
 
-    fun getPurchaseList(){
+    fun getPurchaseList(monthId: Int? = null) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getPurchasetByDate(year, month, type)
+            .getPurchasetByDate(year, month, type, monthId)
             .enqueue(object: Callback<PurchaseListResponse> {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(

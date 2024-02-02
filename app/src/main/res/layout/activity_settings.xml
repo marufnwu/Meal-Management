@@ -13,6 +13,38 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/editext_bg"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:id="@+id/cardMessType"
+            app:cardBackgroundColor="@color/AliceBlue"
+            app:cardCornerRadius="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/Black"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/change_mess_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <LinearLayout
             android:background="@drawable/editext_bg"
             android:layout_marginBottom="@dimen/_8sdp"

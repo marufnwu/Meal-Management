@@ -12,6 +12,7 @@ import com.logicline.mydining.databinding.ActivitySettingsBinding
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.DialogMaker
 import com.logicline.mydining.utils.LanguageSelectorDialog
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
@@ -112,6 +113,14 @@ class SettingsActivity : BaseActivity(false) {
 
         binding.cardMessInfo.setOnClickListener {
             startActivity(Intent(this, MessInfoActivity::class.java))
+        }
+
+        binding.cardMessType.setOnClickListener {
+//            DialogMaker.SelectMessTypeDialog(this, LocalDB.getInitialData()?.messData?.type!!, onSubmit = { dialog, type ->
+//
+//            })
+
+            startActivity(Intent(this, MessTypeActivity::class.java))
         }
 
     }

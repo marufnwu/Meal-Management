@@ -14,9 +14,11 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.R
 import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.response.InitialDataResponse
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.JDialog
 import com.logicline.mydining.utils.LocalDB
@@ -170,7 +172,8 @@ class FirstActivity : AppCompatActivity() {
                                 if(!body.error){
                                     body.data?.let {
                                         LocalDB.saveUser(it)
-                                        gotoMainActivity()
+                                        //gotoMainActivity()
+                                        getInitialData()
                                     }
                                 }else{
                                     LocalDB.logout()
@@ -199,6 +202,41 @@ class FirstActivity : AppCompatActivity() {
 
             }
 
+    }
+
+    private fun getInitialData() {
+        (application as MyApplication)
+            .myApi
+            .getInitialData(BuildConfig.VERSION_CODE)
+            .enqueue(object : Callback<InitialDataResponse> {
+                override fun onResponse(
+                    call: Call<InitialDataResponse>,
+                    response: Response<InitialDataResponse>) {
+                    if(response.isSuccessful){
+                        response.body()?.let { initialDataResponse ->
+                            if(!initialDataResponse.error){
+                                initialDataResponse.initialData?.let {
+                                    LocalDB.saveInitialData(it)
+                                    gotoMainActivity()
+                                }
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<InitialDataResponse>, t: Throwable) {
+                    com.maruf.jdialog.JDialog.make(this@FirstActivity)
+                        .setCancelable(false)
+                        .setBodyText("Something went wrong! Please try again.")
+                        .setIconType(com.maruf.jdialog.JDialog.IconType.ERROR)
+                        .setPositiveButton("Try Again"){
+                            it.hideDialog()
+                            getInitialData()
+                        }.build()
+                        .showDialog()
+                }
+
+            })
     }
 
 

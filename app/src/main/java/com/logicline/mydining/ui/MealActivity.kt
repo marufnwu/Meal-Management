@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -23,6 +24,7 @@ import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.MealListResponse
 import com.logicline.mydining.models.response.UserDayMealResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LangUtils
 import com.logicline.mydining.utils.LoadingDialog
@@ -34,7 +36,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MealActivity : AppCompatActivity() {
+private const val TAG = "MealActivity"
+class MealActivity : BaseActivity() {
 
     lateinit var myFullScreenAd: MyFullScreenAd
 
@@ -42,8 +45,8 @@ class MealActivity : AppCompatActivity() {
     lateinit var binding: ActivityMealBinding
     lateinit var loadingDialog: LoadingDialog
     var dayList :  MutableList<MutableList<Meal>> = mutableListOf()
-    var year = Constant.getCurrentYear()
-    var month = Constant.getCurrentMonthNumber()
+
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,16 +72,24 @@ class MealActivity : AppCompatActivity() {
 
             it.getStringExtra(Constant.MONTH)?.let {
                 month = it
-
             }
+
+
+
+            it.getIntExtra(Constant.MONTH_ID, 0).let {
+                monthId = if(it==0) null else it
+            }
+
+            it.getBooleanExtra(Constant.FORCE, false).let {
+                force =  it
+            }
+
+
         }
 
-        binding.addMeal.setOnClickListener {
-            startActivity(Intent(this, AddMealActivity::class.java))
-        }
-
-        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
+        binding.monthPicker.builder(null, mYear = year?.toInt(), mMonth = month?.toInt(), mDay = 1, force = force )
+            .onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int?, month: Int?, year: Int?) {
                 setDate(year.toString(), month.toString())
             }
 
@@ -86,7 +97,28 @@ class MealActivity : AppCompatActivity() {
 
             }
 
+            override fun month(id: Int) {
+                monthId = id
+                year = null
+                month =null
+                getMealList()
+            }
+
         }
+        if(!force){
+            if(Constant.getMessType() == Constant.MessType.MANUALLY){
+                monthId = Constant.getMonthId()
+            }else{
+                year = Constant.getCurrentYear()
+                month = Constant.getCurrentMonthNumber()
+            }
+        }
+
+
+        binding.addMeal.setOnClickListener {
+            startActivity(Intent(this, AddMealActivity::class.java))
+        }
+
 
 
         val recyDayMeal = binding.recyDayList
@@ -101,7 +133,7 @@ class MealActivity : AppCompatActivity() {
 
         }
         recyDayMeal.adapter = adapter
-
+        getMealList()
     }
 
     private fun showEditMealDialog(meal: Meal) {
@@ -135,7 +167,7 @@ class MealActivity : AppCompatActivity() {
             MyDatePicker(
                 this,
                 object : MyDatePicker.OnDateSelectListener {
-                    override fun date(date: Int, month: Int, year: Int) {
+                    override fun date(date: Int?, month: Int?, year: Int?) {
 
                     }
 
@@ -249,10 +281,13 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun getMealList() {
+        if(monthId==null && year==null && month ==null){
+            return
+        }
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getMealByMonth(year, month)
+            .getMealByMonth(year, month, monthId)
             .enqueue(object : Callback<MealListResponse> {
                 override fun onResponse(call: Call<MealListResponse>, response: Response<MealListResponse>) {
                     loadingDialog.hide()
@@ -276,6 +311,7 @@ class MealActivity : AppCompatActivity() {
     private fun setDate(year:String, month:String){
         this.year = year
         this.month = month
+        this.monthId= null
         getMealList()
     }
     override fun onBackPressed() {

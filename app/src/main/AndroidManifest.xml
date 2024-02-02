@@ -18,6 +18,9 @@
         android:theme="@style/Theme.MealManagement"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.MessTypeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MessInfoActivity"
             android:exported="false" />
         <activity

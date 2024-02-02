@@ -1,15 +1,20 @@
 package com.logicline.mydining.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.MonthAdapter
 import com.logicline.mydining.databinding.ActivityActiveMonthBinding
+import com.logicline.mydining.databinding.FragmentMonthListBinding
 import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.models.response.ServerResponse
+import com.logicline.mydining.ui.fragments.MONTH_TYPE
+import com.logicline.mydining.ui.fragments.MonthListFragment
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -39,50 +44,23 @@ class ActiveMonthActivity : BaseActivity() {
 
         initViews()
 
-        getMonthList()
+
     }
 
     private fun initViews() {
-        adapter = MonthAdapter(this, months)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.adapter = adapter
 
-        adapter.onClick = {
-            startActivity(Intent(this, PreviousMonthActivity::class.java)
-                .putExtra(Constant.YEAR, it.year)
-                .putExtra(Constant.MONTH, it.month.toString()))
-        }
+        val items = listOf<Item>(
+            Item(MonthListFragment.newInstance(MONTH_TYPE.AUTO), "Auto"),
+            Item(MonthListFragment.newInstance(MONTH_TYPE.MANUAL), "Manual"),
+
+        )
+
+        val adapter = PagerAdapter(items, supportFragmentManager)
+        binding.pager.adapter = adapter
+        binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
-    private fun getMonthList() {
-        loadingDialog.show()
-        (application as MyApplication)
-            .myApi
-            .getActiveMonthList()
-            .enqueue(object : Callback<ServerResponse<MutableList<MonthOfYear>>> {
-                override fun onResponse(
-                    call: Call<ServerResponse<MutableList<MonthOfYear>>>,
-                    response: Response<ServerResponse<MutableList<MonthOfYear>>>
-                ) {
-                    loadingDialog.hide()
-                    if (response.isSuccessful && response.body()!=null){
-                        if(!response.body()!!.error){
-                            months.addAll(response.body()!!.data!!)
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-                }
 
-                override fun onFailure(
-                    call: Call<ServerResponse<MutableList<MonthOfYear>>>,
-                    t: Throwable
-                ) {
-                    loadingDialog.hide()
-                }
-
-            })
-    }
 
     override fun onBackPressed() {
         myFullScreenAd.showAd()
@@ -95,4 +73,20 @@ class ActiveMonthActivity : BaseActivity() {
         }
         return false
     }
+
+    data class Item(val fragment : Fragment, val title : String)
+
+
+    class PagerAdapter(val items : List<Item>, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+        override fun getCount(): Int  = items.size
+
+        override fun getItem(i: Int): Fragment {
+            return items[i].fragment
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            return items[position].title
+        }
+    }
+
 }

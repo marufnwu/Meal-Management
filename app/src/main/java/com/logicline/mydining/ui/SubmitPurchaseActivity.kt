@@ -287,7 +287,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
     }
 
-    override fun date(date: Int, month: Int, year: Int) {
+    override fun date(date: Int?, month: Int?, year: Int?) {
 
     }
 

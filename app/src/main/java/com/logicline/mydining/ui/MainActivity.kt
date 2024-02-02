@@ -5,12 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -18,13 +19,13 @@ import com.google.firebase.messaging.ktx.messaging
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.adapter.MainSliderAdapter
 import com.logicline.mydining.databinding.ActivityMainBinding
+import com.logicline.mydining.databinding.DialogStartNewMonthLayoutBinding
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.UserGuide
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.InitialDataResponse
-import com.logicline.mydining.models.response.Paging
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -35,7 +36,7 @@ import retrofit2.Response
 
 
 class MainActivity : BaseActivity() {
-
+    private val TAG = "MainActivity"
 
     companion object {
         const val HOME_MAIN_BANNER: String = "homeMain"
@@ -79,7 +80,6 @@ class MainActivity : BaseActivity() {
                 Glide.with(this)
                     .load(BuildConfig.BASE_URL+it)
                     .into(binding.imgProPic)
-
             }
 
 
@@ -88,7 +88,12 @@ class MainActivity : BaseActivity() {
 
 
         val month = Constant.getCurrentMonthName()+" "+Constant.getCurrentYear()
-        binding.txtCurrentMonth.text = month
+        if(Constant.getMessType()==Constant.MessType.MANUALLY){
+            binding.txtCurrentMonth.text = Constant.getCurrentMonth()?.name
+
+        }else{
+            binding.txtCurrentMonth.text = month
+        }
 
         if(!Constant.isManagerOrSuperUser()){
 
@@ -109,7 +114,8 @@ class MainActivity : BaseActivity() {
         askNotificationPermission()
         initListener()
 
-        getInitialData()
+        //getInitialData()
+        setInitialData();
         getHomeMainBanner()
 
 
@@ -120,6 +126,160 @@ class MainActivity : BaseActivity() {
 
         getSliderData()
 
+    }
+
+    private fun showCreateNewNotice() {
+        if(Constant.isManagerOrSuperUser()){
+            JDialog.make(this)
+                .setCancelable(false)
+                .setPositiveButton("Start Now"){
+                    it.hideDialog()
+                    showCreateNewMonthDialog()
+                }
+                .setNegativeButton("Dismiss"){
+                    it.hideDialog()
+                }
+                .setBodyText("Your mess type Manual. And you didn't start a month. So start a new month first.")
+                .setIconType(JDialog.IconType.WARNING)
+                .build()
+                .showDialog()
+        }
+
+    }
+
+    private fun setInitialData() {
+        val initialData = LocalDB.getInitialData()
+        initialData?.let {
+            binding.txtMealcharge.text = it.mealCharge
+            binding.txtTotalMeal.text = it.totalMeal
+
+            it.messName?.let {
+                binding.txtCurrentMonth.text  =it
+            }
+
+            it.messData?.let {mess->
+                when(mess.type){
+                    1 -> Log.i(TAG, "setInitialData: mess is auto type")
+                    2 -> if(it.month==null) {
+                        showCreateNewNotice()
+                    } else{
+                        //do nothing
+                    }
+                    else -> showSetMessTypeDialogNotice()
+                }
+            }
+        }
+    }
+
+    private fun showCreateNewMonthDialog() {
+        val dialogBinding = DialogStartNewMonthLayoutBinding.inflate(layoutInflater);
+
+        val builder= AlertDialog.Builder(this)
+            .setCancelable(true)
+            .setView(dialogBinding.root)
+
+        val dialog=builder.create()
+        dialogBinding.btnSubmit.setOnClickListener {
+            val name = dialogBinding.edtName.text.toString()
+            if(name.isNullOrEmpty()){
+                Toast.makeText(this, "Please enter name of month to start", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            startNewMonth(name, object : () -> Unit {
+                override fun invoke() {
+                    dialog.dismiss()
+                }
+
+            })
+        }
+        dialog.show()
+
+
+
+    }
+
+    private fun startNewMonth(name: String, dismissCallback : () ->Unit) {
+        loadingDialog.show()
+        (application as MyApplication)
+            .myApi
+            .startNewMonth(name)
+            .enqueue(object : Callback<InitialDataResponse> {
+                override fun onResponse(
+                    call: Call<InitialDataResponse>,
+                    response: Response<InitialDataResponse>
+                ) {
+                    loadingDialog.hide()
+                    response.body()?.let {
+                        it.initialData?.let {
+                            LocalDB.saveInitialData(it)
+                        }
+                    }
+
+                    setInitialData()
+                    dismissCallback.invoke()
+                }
+
+                override fun onFailure(call: Call<InitialDataResponse>, t: Throwable) {
+                    loadingDialog.hide()
+                }
+
+            })
+    }
+
+    private fun showSetMessTypeDialogNotice() {
+
+        if(Constant.isManagerOrSuperUser()){
+            JDialog.make(this)
+                .setCancelable(false)
+                .setPositiveButton("Select Now"){
+                    showSetMessTypeDialog()
+                    it.hideDialog()
+                }
+                .setNegativeButton("Dismiss"){
+                    it.hideDialog()
+                }
+                .setBodyText("You didn't specify your mess type. Please select your mess type.")
+                .setIconType(JDialog.IconType.WARNING)
+                .build()
+                .showDialog()
+        }
+
+    }
+
+    private fun showSetMessTypeDialog() {
+        var messType = 0
+        LocalDB.getInitialData()?.messData?.type?.let {
+             messType = it
+        }
+        DialogMaker.SelectMessTypeDialog(this, messType ){ dialog, type ->
+            loadingDialog.show()
+            (application as MyApplication)
+                .myApi
+                .setMessType(type)
+                .enqueue(object : Callback<GenericRespose> {
+                    override fun onResponse(
+                        call: Call<GenericRespose>,
+                        response: Response<GenericRespose>
+                    ) {
+                       loadingDialog.hide()
+                        response.body()?.let {
+                            Toast.makeText(this@MainActivity, it.msg, Toast.LENGTH_SHORT).show()
+                            if (it.error){
+                                return
+                            }
+
+                            dialog.dismiss()
+                            freshReload()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                        loadingDialog.hide()
+                        Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+        }.show()
     }
 
     private fun getSliderData() {
@@ -230,8 +390,8 @@ class MainActivity : BaseActivity() {
                                     binding.txtTotalMeal.text = it.totalMeal
 
                                     LocalDB.saveInitialData(it)
-
                                     setCustomerSupport(it.support)
+
                                 }
                             }
                         }
@@ -284,12 +444,22 @@ class MainActivity : BaseActivity() {
 
     }
 
+    private fun reload(){
+        startActivity(intent)
+        finish()
+    }
+
+
+    private fun freshReload(){
+        startActivity(Intent(this, FirstActivity::class.java))
+        finish()
+    }
+
     private fun initListener() {
 
 
         binding.layoutRefresh.setOnRefreshListener {
-            startActivity(intent)
-            finish()
+            reload()
         }
 
         userGuideBanner.observe(this){

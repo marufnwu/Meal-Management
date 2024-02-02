@@ -33,8 +33,7 @@ class FundActivity : BaseActivity(false) {
     lateinit var binding : ActivityFundBinding
     lateinit var loadingDialog: LoadingDialog
 
-    lateinit var month : String
-    lateinit var year : String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +55,7 @@ class FundActivity : BaseActivity(false) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getFunds(year, month)
+            .getFunds(year, month, monthId)
             .enqueue(object: Callback<ServerResponse<MutableList<Fund>>> {
                 @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
                 override fun onResponse(
@@ -150,7 +149,7 @@ class FundActivity : BaseActivity(false) {
             MyDatePicker(
                 this,
                 object : MyDatePicker.OnDateSelectListener {
-                    override fun date(date: Int, month: Int, year: Int) {
+                    override fun date(date: Int?, month: Int?, year: Int?) {
 
                     }
 
@@ -264,7 +263,7 @@ class FundActivity : BaseActivity(false) {
             MyDatePicker(
                 this,
                 object : MyDatePicker.OnDateSelectListener {
-                    override fun date(date: Int, month: Int, year: Int) {
+                    override fun date(date: Int?, month: Int?, year: Int?) {
 
                     }
 
@@ -380,7 +379,7 @@ class FundActivity : BaseActivity(false) {
     @SuppressLint("SetTextI18n")
     fun showDateTimePicker() {
         MyDatePicker(this, object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
+            override fun date(date: Int?, month: Int?, year: Int?) {
 
             }
 

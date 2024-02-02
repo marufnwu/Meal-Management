@@ -10,6 +10,7 @@ import com.logicline.mydining.models.Fund
 import com.logicline.mydining.models.InitiateUser
 import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.MessRequest
+import com.logicline.mydining.models.Month
 import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.models.OtpRequest
 import com.logicline.mydining.models.PurchaseRequest
@@ -18,12 +19,13 @@ import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.UserGuide
 import com.logicline.mydining.models.response.*
+import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LocalDB
-
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
-
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
@@ -34,6 +36,8 @@ import retrofit2.http.*
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.util.concurrent.TimeUnit
+
+
 interface MyApi {
 
     @GET("api/user.checkLogin.php")
@@ -41,23 +45,25 @@ interface MyApi {
     ): Call<ServerResponse<User>>
 
     @GET("api/summary.getHome.php")
-    fun getHomeData(
-    ): Call<InitialDataResponse>
+    fun getHomeData(): Call<InitialDataResponse>
 
     @GET("api/user.getInitiatedUsers.php")
     fun getInitiatedUsers(
         @Query("active") active:Int,
         @Query("date") date:String,
+        @Query("monthId") monthId:Int?=null,
     ): Call<UserListResponse>
 
     @GET("api/user.currentUserInitiated.php")
     fun currentInitiatedUser(
         @Query("date") date:String,
+        @Query("monthId") monthId:Int?=null,
     ): Call<UserListResponse>
 
     @GET("api/user.getUsers.php")
     fun getUsers(
-        @Query("active") active:Int
+        @Query("active") active:Int,
+        @Query("monthId") monthId:Int?=null
     ): Call<UserListResponse>
 
     @FormUrlEncoded
@@ -97,15 +103,18 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/meal.get.php")
     fun getMealByMonth(
-        @Field("year") year:String,
-        @Field("month") month:String,
+        @Field("year") year:String ? = null,
+        @Field("month") month:String ? = null,
+        @Field("monthId") monthId:Int? = null,
     ): Call<MealListResponse>
 
     @FormUrlEncoded
     @POST("api/summary.getMonthSummary.php")
     fun getMonthSummary(
-        @Field("year") year:String,
-        @Field("month") month:String,
+        @Field("year") year:String?=null,
+        @Field("month") month:String?=null,
+        @Field("monthId") monthId:Int?=null,
+
     ): Call<MonthlySummaryResponse>
 
     @FormUrlEncoded
@@ -118,9 +127,10 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/purchase.getByDate.php")
     fun getPurchasetByDate(
-        @Field("year") year:String,
-        @Field("month") month:String,
-        @Field("type") type:Int,
+        @Field("year") year: String? = null,
+        @Field("month") month: String?=null,
+        @Field("type") type: Int,
+        @Field("monthId") monthId: Int? =null,
     ): Call<PurchaseListResponse>
 
 
@@ -132,6 +142,7 @@ interface MyApi {
         @Field("breakfast") breakfast: Float,
         @Field("lunch") lunch: Float,
         @Field("dinner") dinner: Float,
+        @Field("monthId") monthId:Int?=null,
     ): Call<UserDayMealResponse>
 
 
@@ -170,13 +181,15 @@ interface MyApi {
         @Field("userId") userId:String,
         @Field("date") date:String,
         @Field("amount") amount:Int,
+        @Field("monthId") monthId:Int? = null,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/deposit.get.php")
     fun getDeposit(
-        @Field("year") year:String,
-        @Field("month") month:String,
+        @Field("year") year:String? = null,
+        @Field("month") month:String? = null,
+        @Field("monthId") monthId:Int? = null,
     ): Call<DepositsResponse>
 
 
@@ -217,6 +230,7 @@ interface MyApi {
     @POST("api/mess.initiateUser.php")
     suspend fun initiateUser(
         @Field("userId") userId :String,
+        @Field("monthId") monthId:Int? = null,
     ): Response<GenericRespose>
 
     @FormUrlEncoded
@@ -224,6 +238,7 @@ interface MyApi {
     fun initiateAllUser(
         @Field("year") year :String,
         @Field("month") month :String,
+        @Field("monthId") monthId:Int? = null,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
@@ -241,6 +256,7 @@ interface MyApi {
         @Field("price") price :Float,
         @Field("isDepositToAcc") isDepositToAcc :Int,
         @Field("purchaseType") purchaseType: Int,
+        @Field("monthId") monthId:Int? = null,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
@@ -251,7 +267,7 @@ interface MyApi {
         @Field("price") price: Float,
         @Field("isDepositToAcc") isDepositToAcc: Int,
         @Field("purchaseType") purchaseType: Int,
-
+        @Field("monthId") monthId:Int? = null,
     ): Call<GenericRespose>
 
 
@@ -267,6 +283,7 @@ interface MyApi {
         @Field("year") year :String,
         @Field("month") month :String,
         @Field("status") status :Int,
+        @Field("monthId") monthId:Int? = null,
     ): Call<ServerResponse<List<PurchaseRequest>>>
 
 
@@ -297,6 +314,7 @@ interface MyApi {
         @Field("year") year: String,
         @Field("month") month: String,
         @Field("messId") messId: String,
+        @Field("monthId") monthId:Int? = null,
     ): Call<ServerResponse<DepositHistoryResponse>>
 
 
@@ -352,6 +370,7 @@ interface MyApi {
         @Field("userId") userId: String,
         @Field("year") year: String,
         @Field("month") month: String,
+        @Field("monthId") monthId:Int? = null,
     ): Call<GenericRespose>
 
 
@@ -361,6 +380,7 @@ interface MyApi {
         @Field("userId") userId: String,
         @Field("year") year: String,
         @Field("month") month: String,
+        @Field("monthId") monthId:Int? = null,
     ): Call<GenericRespose>
 
     @GET("api/helper.getSupport.php")
@@ -411,6 +431,7 @@ interface MyApi {
     @GET("api/settings.getInitialData.php")
     fun getInitialData(
         @Query("version") version:Int,
+        @Query("monthId") monthId:Int? = null,
     ) : Call<InitialDataResponse>
 
 
@@ -429,8 +450,9 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/fund.get.php")
     fun getFunds(
-        @Field("year") year:String,
-        @Field("month") month:String,
+        @Field("year") year:String?=null,
+        @Field("month") month:String?=null,
+        @Field("monthId") monthId:Int? = null,
     ) : Call<ServerResponse<MutableList<Fund>>>
 
 
@@ -440,6 +462,7 @@ interface MyApi {
         @Field("date") date:String,
         @Field("comment") comment:String,
         @Field("amount") amount: Float,
+        @Field("monthId") monthId:Int? = null,
     ) : Call<GenericRespose>
 
     @FormUrlEncoded
@@ -471,12 +494,14 @@ interface MyApi {
     fun genereteFullReport(
         @Query("year") year:Int,
         @Query("month") month:Int,
+        @Field("monthId") monthId:Int? = null,
     ) : Call<ServerResponse<Report>>
     @FormUrlEncoded
     @POST("api/mess.resetByMonth.php")
     fun resetByMonth(
         @Field("year") year:Int,
         @Field("month") month:Int,
+        @Field("monthId") monthId:Int? = null,
     ) : Call<GenericRespose>
     @FormUrlEncoded
     @POST("api/switchmess.accept.php")
@@ -508,7 +533,31 @@ interface MyApi {
     @GET("api/mess.info.php")
     fun getMessInfo() : Call<ServerResponse<Mess>>
 
+    @FormUrlEncoded
+    @POST("api/month.new.php")
+    fun startNewMonth(
+        @Field("name") name :String
+    ) : Call<InitialDataResponse>
+
+    @FormUrlEncoded
+    @POST("api/mess.setType.php")
+    fun setMessType(
+        @Field("type") type :Int
+    ) : Call<GenericRespose>
+
+    @GET("api/month.all.php")
+    fun getAllMonthList() : Call<ServerResponse<List<Month>>>
+
     companion object {
+
+        enum class CHECK_TYPE{
+            AUTO,
+            MANUAL
+        }
+
+        public var isForceCheck = false
+        var checkType : CHECK_TYPE? = null
+
         @Volatile
         private var myApiInstance: MyApi? = null
         private val LOCK = Any()
@@ -546,6 +595,7 @@ interface MyApi {
                 .connectTimeout(2, TimeUnit.MINUTES)
                 .callTimeout(2, TimeUnit.MINUTES)
                 .addInterceptor(TokenInterceptor())
+                .addInterceptor(MonthIdInterceptor())
 
                 .addInterceptor(interceptor)
 //                .addInterceptor(
@@ -592,6 +642,39 @@ interface MyApi {
                 .create(MyApi::class.java)
         }
 
+
+    }
+
+    class MonthIdInterceptor : Interceptor{
+        override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+
+            if(Constant.getMessType() == Constant.MessType.MANUALLY && !isForceCheck){
+                Constant.getMonthId()?.let {
+                    val original: Request = chain.request()
+                    val originalHttpUrl: HttpUrl = original.url
+
+                    val url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("monthId", it.toString())
+                        .build()
+
+                    // Request customization: add request headers
+
+                    // Request customization: add request headers
+                    val requestBuilder: Request.Builder = original.newBuilder()
+                        .url(url)
+
+                    val request: Request = requestBuilder.build()
+                    return chain.proceed(request)
+                }
+            }
+
+
+            return chain.proceed(chain.request())
+
+
+
+
+        }
 
     }
 

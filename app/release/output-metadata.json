@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 116,
-      "versionName": "1.1.6",
-      "outputFile": "Meal_Management1.1.6-release.apk"
+      "versionCode": 117,
+      "versionName": "1.1.7",
+      "outputFile": "Meal_Management1.1.7-release.apk"
     }
   ],
   "elementType": "File"

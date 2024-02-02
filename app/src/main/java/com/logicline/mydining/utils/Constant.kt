@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.R
 import com.logicline.mydining.models.Banner
+import com.logicline.mydining.models.Month
 import com.logicline.mydining.models.UserType
 import com.logicline.mydining.network.MyApi
 import com.logicline.mydining.ui.GenericWebViewActivity
@@ -35,6 +36,9 @@ import java.util.concurrent.TimeUnit
 
 object Constant {
 
+    const val MONTH_NAME: String = "month_name"
+    const val MONTH_ID: String = "month_id"
+    const val FORCE: String = "force"
     val APP_LANG_KEY: String = "APPLANGUAGE"
     const val MONTH: String = "Month"
     const val YEAR: String = "Year"
@@ -64,9 +68,31 @@ object Constant {
         NATIVE_AD_ITEM
     }
 
+    enum class MessType{
+        NONE,
+        MONTHLY,
+        MANUALLY
+    }
+
     enum class LANGUAGE{
         en_US,
         bn
+    }
+
+    fun getMonthId() : Int?{
+        return LocalDB.getInitialData()?.month?.id
+    }
+
+    fun getCurrentMonth() : Month?{
+        return LocalDB.getInitialData()?.month
+    }
+
+    fun getMessType() : MessType{
+        return when(LocalDB.getInitialData()?.messData?.type){
+            1-> MessType.MONTHLY
+            2-> MessType.MANUALLY
+            else -> MessType.NONE
+        }
     }
 
     fun isManager():Boolean{
@@ -133,6 +159,24 @@ object Constant {
         cal.add(Calendar.DATE ,1)
         val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
         return inFormat.format(cal.time)
+    }
+
+    fun getMonthName(monthNumber: Int): String {
+        return when (monthNumber) {
+            1 -> "January"
+            2 -> "February"
+            3 -> "March"
+            4 -> "April"
+            5 -> "May"
+            6 -> "June"
+            7 -> "July"
+            8 -> "August"
+            9 -> "September"
+            10 -> "October"
+            11 -> "November"
+            12 -> "December"
+            else -> "Invalid month number"
+        }
     }
 
     @SuppressLint("SimpleDateFormat")

@@ -124,8 +124,8 @@ class LoginActivity : BaseActivity() {
                                         LocalDB.saveUser(it.user!!)
                                         LocalDB.saveAccessToken(it.token)
                                         LocalDB.saveUserId(it.userId)
-                                        gotoMainActivity()
-
+                                        //gotoMainActivity()
+                                        goToSplashActivity();
                                         return
                                     }
                                 }
@@ -143,7 +143,7 @@ class LoginActivity : BaseActivity() {
 
                 override fun onFailure(call: Call<ServerResponse<CheckLoginResponse>>, t: Throwable) {
                     if(t is UnknownHostException){
-                        shortToast("Your Internet Connection Not Working. Please try again")
+                        shortToast("Your Internet Connection Not Working properly. Please try again")
                     }else if (t is NetworkErrorException){
                         shortToast("Something went wrong. Contact with support center")
                     }
@@ -152,6 +152,12 @@ class LoginActivity : BaseActivity() {
                 }
 
             })
+    }
+
+    private fun goToSplashActivity() {
+        val intent = Intent(this, FirstActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
     }
 
     private fun gotoMainActivity() {

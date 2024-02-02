@@ -54,16 +54,19 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)
 
-
-
-
         if(!Constant.isManagerOrSuperUser()){
             binding.txtInstruction.text = "You are regular user, so you can only request today and tomorrow meal"
         }
 
+        if(Constant.getMessType()==Constant.MessType.MANUALLY && Constant.getMonthId()!=null){
+            initView()
+        }else{
+            initView()
+        }
 
 
-        initView()
+
+
 
         //MediationTestSuite.launch(this);
 
@@ -72,7 +75,10 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
 
     override fun onResume() {
         super.onResume()
-        getUsersList()
+        if(Constant.getMessType()==Constant.MessType.MANUALLY && Constant.getMonthId()!=null || Constant.getMessType()==Constant.MessType.MONTHLY){
+            getUsersList()
+        }
+
     }
 
 

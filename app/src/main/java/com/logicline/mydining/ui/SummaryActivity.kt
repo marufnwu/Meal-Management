@@ -27,8 +27,8 @@ import retrofit2.Response
 class SummaryActivity : BaseActivity(){
     private lateinit var myFullScreenAd: MyFullScreenAd
     lateinit var binding : ActivitySummaryBinding
-    private var month : String = Constant.getCurrentMonthNumber()
-    private var year : String = Constant.getCurrentYear()
+
+
     lateinit var loadingDialog: LoadingDialog
     var userSummary : List<UsersSummary> = arrayListOf()
 
@@ -41,23 +41,14 @@ class SummaryActivity : BaseActivity(){
         supportActionBar?.title = getString(R.string.monthly_summary)
 
         setContentView(binding.root)
+
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)
 
-        intent?.let {
-            it.getStringExtra(Constant.YEAR)?.let {
-                year = it
-            }
 
-            it.getStringExtra(Constant.MONTH)?.let {
-                month = it
-
-            }
-        }
-
-
-        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
+        binding.monthPicker.builder(null, mYear = year?.toInt(), mMonth = month?.toInt(), mDay = 1, force = force )
+            .onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int?, month: Int?, year: Int?) {
                 setDate(year.toString(), month.toString())
             }
 
@@ -65,7 +56,25 @@ class SummaryActivity : BaseActivity(){
 
             }
 
+            override fun month(id: Int) {
+                monthId = id
+                getSummary()
+
+            }
+
         }
+
+        if(!force){
+
+            if(Constant.getMessType() == Constant.MessType.MANUALLY){
+                monthId = Constant.getMonthId()
+            }else{
+                year = Constant.getCurrentYear()
+                month = Constant.getCurrentMonthNumber()
+            }
+        }
+
+
 
         binding.recySummary.setHasFixedSize(true)
         binding.recySummary.layoutManager = LinearLayoutManager(this)
@@ -80,7 +89,7 @@ class SummaryActivity : BaseActivity(){
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getMonthSummary(year, month)
+            .getMonthSummary(year, month, monthId)
             .enqueue(object: Callback<MonthlySummaryResponse> {
                 override fun onResponse(
                     call: Call<MonthlySummaryResponse>,
