@@ -37,7 +37,6 @@ import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDownloadManager
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
-import com.whiteelephant.monthpicker.MonthPickerDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -248,7 +247,7 @@ class ReportActivity : BaseActivity(false) {
 //            builder.setTitle("Select Month")
 //                .build()
 //                .show()
-            createDialogWithoutDateField()
+            createDialogWithoutDateField().show()
         }
 
         dialogBinding.btnCancel.setOnClickListener {

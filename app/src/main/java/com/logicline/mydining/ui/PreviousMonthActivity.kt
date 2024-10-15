@@ -12,7 +12,6 @@ import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.MyExtensions.shortToast
-import com.whiteelephant.monthpicker.MonthPickerDialog
 
 class PreviousMonthActivity : BaseActivity(), OnClickListener {
 
@@ -55,18 +54,18 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
         binding.summary.setOnClickListener(this)
 
         binding.btnSelectDate.setOnClickListener {
-            MonthPickerDialog.Builder(this, { m, y ->
-                year = y
-                month = m+1
-
-                setButtonText(year!!, month!!)
-
-
-            }, Constant.getCurrentYear().toInt(),
-                Constant.getCurrentMonthNumber().toInt()-1)
-                .setTitle("Select Month")
-                .build()
-                .show()
+//            MonthPickerDialog.Builder(this, { m, y ->
+//                year = y
+//                month = m+1
+//
+//                setButtonText(year!!, month!!)
+//
+//
+//            }, Constant.getCurrentYear().toInt(),
+//                Constant.getCurrentMonthNumber().toInt()-1)
+//                .setTitle("Select Month")
+//                .build()
+//                .show()
         }
 
 

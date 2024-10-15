@@ -18,7 +18,6 @@ import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
-import com.whiteelephant.monthpicker.MonthPickerDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -117,15 +116,15 @@ class SettingsActivity : BaseActivity(false) {
     }
 
     private fun showDateSelectionDialog() {
-        val  builder = MonthPickerDialog.Builder(this, { m, y ->
-            showWarningDialog( y, m+1)
-
-
-        },Constant.getCurrentYear().toInt(), Constant.getCurrentMonthNumber().toInt()-1)
-
-        builder.setTitle("Select Month")
-            .build()
-            .show()
+//        val  builder = MonthPickerDialog.Builder(this, { m, y ->
+//            showWarningDialog( y, m+1)
+//
+//
+//        },Constant.getCurrentYear().toInt(), Constant.getCurrentMonthNumber().toInt()-1)
+//
+//        builder.setTitle("Select Month")
+//            .build()
+//            .show()
     }
 
     private fun showWarningDialog(year:Int, month:Int) {
