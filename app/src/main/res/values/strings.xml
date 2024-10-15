@@ -13,7 +13,7 @@
     <string name="facebook_app_id" translatable="false">1226582827985710</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1234</string>
     <string name="facebook_client_token" translatable="false">251ae0f389ee2a676e15c05857e607bf</string>
-    <string name="initiate_member_first" formatted="false">If any user not showing in the list, please go Initiate Members page and initiate the user</string>
+    <string name="initiate_member_first" formatted="false" translatable="false">If any user not showing in the list, please go Initiate Members page and initiate the user</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

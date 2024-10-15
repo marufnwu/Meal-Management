@@ -1,6 +1,7 @@
 package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,8 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
+import android.widget.DatePicker
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.adapter.ReportAdapter
@@ -24,7 +24,6 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
-import com.whiteelephant.monthpicker.MonthPickerDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -155,19 +154,20 @@ class ReportActivity : BaseActivity(false) {
 
 
         dialogBinding.txtMonth.setOnClickListener {
-            val  builder = MonthPickerDialog.Builder(this, { m, y ->
-                selectedMonth = m+1
-                selectedYear = y
-
-
-                dialogBinding.txtMonth.text = Constant.getMonthName("${selectedYear}-${selectedMonth}-01")+" "+selectedYear
-
-
-            },Constant.getCurrentYear().toInt(), Constant.getCurrentMonthNumber().toInt()-1)
-
-            builder.setTitle("Select Month")
-                .build()
-                .show()
+//            val  builder = MonthPickerDialog.Builder(this, { m, y ->
+//                selectedMonth = m+1
+//                selectedYear = y
+//
+//
+//                dialogBinding.txtMonth.text = Constant.getMonthName("${selectedYear}-${selectedMonth}-01")+" "+selectedYear
+//
+//
+//            },Constant.getCurrentYear().toInt(), Constant.getCurrentMonthNumber().toInt()-1)
+//
+//            builder.setTitle("Select Month")
+//                .build()
+//                .show()
+            createDialogWithoutDateField()
         }
 
         dialogBinding.btnCancel.setOnClickListener {
@@ -232,6 +232,29 @@ class ReportActivity : BaseActivity(false) {
             return true
         }
         return false
+    }
+
+    private fun createDialogWithoutDateField(): DatePickerDialog {
+        val dpd = DatePickerDialog(this, null, 2014, 1, 24)
+        try {
+            val datePickerDialogFields = dpd.javaClass.declaredFields
+            for (datePickerDialogField in datePickerDialogFields) {
+                if (datePickerDialogField.name == "mDatePicker") {
+                    datePickerDialogField.isAccessible = true
+                    val datePicker = datePickerDialogField[dpd] as DatePicker
+                    val datePickerFields = datePickerDialogField.type.declaredFields
+                    for (datePickerField in datePickerFields) {
+                        if ("mDaySpinner" == datePickerField.name) {
+                            datePickerField.isAccessible = true
+                            val dayPicker = datePickerField[datePicker]
+                            (dayPicker as View).visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+        }
+        return dpd
     }
 
 }
