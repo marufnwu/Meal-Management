@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Meal Management"
 include ':app'
+include ':monthPicker'

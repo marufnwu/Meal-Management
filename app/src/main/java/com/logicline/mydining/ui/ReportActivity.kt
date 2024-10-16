@@ -17,6 +17,7 @@ import android.view.View
 import android.view.Window
 import android.widget.DatePicker
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,6 +30,7 @@ import com.logicline.mydining.databinding.DialogNewReportGenerateLayoutBinding
 import com.logicline.mydining.models.Report
 import com.logicline.mydining.models.response.Paging
 import com.logicline.mydining.models.response.ServerResponse
+import com.logicline.mydining.ui.custom_views.MonthPickerView
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -37,6 +39,7 @@ import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDownloadManager
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
+import dev.maruf.monthpicker.JMonthPicker
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -234,20 +237,14 @@ class ReportActivity : BaseActivity(false) {
 
 
         dialogBinding.txtMonth.setOnClickListener {
-//            val  builder = MonthPickerDialog.Builder(this, { m, y ->
-//                selectedMonth = m+1
-//                selectedYear = y
-//
-//
-//                dialogBinding.txtMonth.text = Constant.getMonthName("${selectedYear}-${selectedMonth}-01")+" "+selectedYear
-//
-//
-//            },Constant.getCurrentYear().toInt(), Constant.getCurrentMonthNumber().toInt()-1)
-//
-//            builder.setTitle("Select Month")
-//                .build()
-//                .show()
-            createDialogWithoutDateField().show()
+            JMonthPicker(this).setPositiveButton { month, startDate, endDate, year, monthLabel ->
+                selectedMonth = month
+                selectedYear = year
+               dialogBinding.txtMonth.text = Constant.getMonthName("${selectedYear}-${selectedMonth}-01")+" "+selectedYear
+
+            }.setNegativeButton {
+                it.dismiss()
+            }.show()
         }
 
         dialogBinding.btnCancel.setOnClickListener {
@@ -314,27 +311,5 @@ class ReportActivity : BaseActivity(false) {
         return false
     }
 
-    private fun createDialogWithoutDateField(): DatePickerDialog {
-        val dpd = DatePickerDialog(this, null, 2014, 1, 24)
-        try {
-            val datePickerDialogFields = dpd.javaClass.declaredFields
-            for (datePickerDialogField in datePickerDialogFields) {
-                if (datePickerDialogField.name == "mDatePicker") {
-                    datePickerDialogField.isAccessible = true
-                    val datePicker = datePickerDialogField[dpd] as DatePicker
-                    val datePickerFields = datePickerDialogField.type.declaredFields
-                    for (datePickerField in datePickerFields) {
-                        if ("mDaySpinner" == datePickerField.name) {
-                            datePickerField.isAccessible = true
-                            val dayPicker = datePickerField[datePicker]
-                            (dayPicker as View).visibility = View.GONE
-                        }
-                    }
-                }
-            }
-        } catch (ex: Exception) {
-        }
-        return dpd
-    }
 
 }

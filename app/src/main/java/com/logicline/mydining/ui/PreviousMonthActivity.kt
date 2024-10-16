@@ -12,6 +12,7 @@ import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.MyExtensions.shortToast
+import dev.maruf.monthpicker.JMonthPicker
 
 class PreviousMonthActivity : BaseActivity(), OnClickListener {
 
@@ -54,18 +55,16 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
         binding.summary.setOnClickListener(this)
 
         binding.btnSelectDate.setOnClickListener {
-//            MonthPickerDialog.Builder(this, { m, y ->
-//                year = y
-//                month = m+1
-//
-//                setButtonText(year!!, month!!)
-//
-//
-//            }, Constant.getCurrentYear().toInt(),
-//                Constant.getCurrentMonthNumber().toInt()-1)
-//                .setTitle("Select Month")
-//                .build()
-//                .show()
+
+
+            JMonthPicker(this).setPositiveButton { month, startDate, endDate, year, monthLabel ->
+                this.month = month
+                this.year = year
+                setButtonText(year, month)
+
+            }.setNegativeButton {
+                it.dismiss()
+            }.show()
         }
 
 
