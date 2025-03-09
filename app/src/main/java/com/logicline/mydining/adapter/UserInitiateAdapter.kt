@@ -46,11 +46,14 @@ class UserInitiateAdapter(val context: Context, val users: MutableList<User>, va
 
             binding.txtName.text = user.name
             if(type==Type.INITIATE){
-                if(user.active!="1"){
-                    binding.action.setImageResource(R.drawable.cross)
-                }else{
-                    binding.action.setImageResource(R.drawable.tick)
-                }
+//                if(user.active!="1"){
+//                    binding.action.setImageResource(R.drawable.cross)
+//                }else{
+//                    binding.action.setImageResource(R.drawable.tick)
+//                }
+
+                binding.action.setImageResource(R.drawable.tick)
+
             }else{
                 binding.action.setImageResource(R.drawable.plus)
                 binding.action.setOnClickListener {

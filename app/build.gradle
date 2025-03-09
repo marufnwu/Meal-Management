@@ -5,7 +5,6 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'org.jetbrains.kotlin.android'
-
 }
 
 android {
@@ -23,16 +22,16 @@ android {
         applicationId "com.logicline.mydining"
         minSdk 24
         targetSdk 34
-        versionCode 117
-        versionName "1.1.7"
+        versionCode 120
+        versionName "1.2.0"
         setProperty("archivesBaseName", "Meal_Management"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

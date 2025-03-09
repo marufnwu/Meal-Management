@@ -47,18 +47,18 @@ class UserListAdapter(val context: Context, val userList : MutableList<User>) : 
 
             binding.txtName.text = user.name
 
-            if(user.active=="1"){
-                Glide.with(context)
-                    .load(R.drawable.check)
-                    .into(binding.active)
-            }
+//            if(user.active=="1"){
+//                Glide.with(context)
+//                    .load(R.drawable.check)
+//                    .into(binding.active)
+//            }
 
-            binding.txtUserRole.text = Constant.getUserType(user.accType)
+//            binding.txtUserRole.text = Constant.getUserType(user.accType)
 
             if (Constant.isSuperUser()){
                 binding.layTrash.visibility = View.VISIBLE
                 binding.layTrash.setOnClickListener {
-                    onAction?.onDeleteClick(user.id!!)
+//                    onAction?.onDeleteClick(user.id!!)
                 }
             }else{
                 binding.layTrash.visibility = View.GONE
@@ -70,7 +70,7 @@ class UserListAdapter(val context: Context, val userList : MutableList<User>) : 
 
 
             binding.root.setOnClickListener {
-                context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("profile", user))
+//                context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("profile", user))
             }
         }
     }

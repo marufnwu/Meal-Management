@@ -7,7 +7,7 @@ import com.logicline.mydining.models.User
 data class CheckLoginResponse(
     @SerializedName("token")
     var token: String = "",
-    @SerializedName("userId")
+    @SerializedName("user_id")
     var userId: Int = 0,
     @SerializedName("user")
     var user: User? = null

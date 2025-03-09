@@ -61,9 +61,9 @@ interface MyApi {
     ): Call<UserListResponse>
 
     @FormUrlEncoded
-    @POST("api/user.login.php")
+    @POST("api/auth/login")
     fun login(
-        @Field("userName") userName:String,
+        @Field("email") email:String,
         @Field("password") password:String,
     ): Call<ServerResponse<CheckLoginResponse>>
 

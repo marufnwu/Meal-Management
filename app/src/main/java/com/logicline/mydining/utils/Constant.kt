@@ -23,7 +23,6 @@ import com.bumptech.glide.Glide
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.R
 import com.logicline.mydining.models.Banner
-import com.logicline.mydining.models.UserType
 import com.logicline.mydining.network.MyApi
 import com.logicline.mydining.ui.GenericWebViewActivity
 import java.net.URLEncoder
@@ -71,30 +70,30 @@ object Constant {
 
     fun isManager():Boolean{
         val user = LocalDB.getUser()
-        user?.let {
-            if(it.accType=="2"){
-                return true
-            }
-        }
+//        user?.let {
+//            if(it.accType=="2"){
+//                return true
+//            }
+//        }
         return false
     }
     fun isSuperUser():Boolean{
         val user = LocalDB.getUser()
-        user?.let {
-            if(it.accType=="3"){
-                return true
-            }
-        }
+//        user?.let {
+//            if(it.accType=="3"){
+//                return true
+//            }
+//        }
         return false
     }
 
     fun isManagerOrSuperUser():Boolean{
         val user = LocalDB.getUser()
-        user?.let {
-            if(it.accType=="3" || it.accType=="2"){
-                return true
-            }
-        }
+//        user?.let {
+//            if(it.accType=="3" || it.accType=="2"){
+//                return true
+//            }
+//        }
         return false
     }
 
@@ -256,9 +255,9 @@ object Constant {
         }
 
         return when (type.toInt()){
-            UserType.NORMAL_USER -> "User"
-            UserType.MANAGER -> "Manager"
-            UserType.SUPER_USER -> "Super Admin"
+//            UserType.NORMAL_USER -> "User"
+//            UserType.MANAGER -> "Manager"
+//            UserType.SUPER_USER -> "Super Admin"
             else -> "Undefined"
         }
     }
@@ -431,18 +430,18 @@ object Constant {
     @SuppressLint("SimpleDateFormat")
     fun getAccAgeInDays():Int{
         val user = LocalDB.getUser()
-        user?.let {
-            it.joinDate?.let {
-                val df = SimpleDateFormat("yyyy-MM-dd")
-                val jDate = df.parse(it)
-                val cDate = df.parse(getCurrentDate())
-
-                if (cDate != null && jDate != null) {
-                    return TimeUnit.MILLISECONDS.toDays(cDate.time - jDate.time).toInt()
-                }
-
-            }
-        }
+//        user?.let {
+//            it.joinDate?.let {
+//                val df = SimpleDateFormat("yyyy-MM-dd")
+//                val jDate = df.parse(it)
+//                val cDate = df.parse(getCurrentDate())
+//
+//                if (cDate != null && jDate != null) {
+//                    return TimeUnit.MILLISECONDS.toDays(cDate.time - jDate.time).toInt()
+//                }
+//
+//            }
+//        }
 
         return 0
     }

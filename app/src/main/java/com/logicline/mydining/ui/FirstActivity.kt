@@ -114,6 +114,7 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun getAdSettings(){
+        Log.d("getAdSettings", "getAdSettings: calling")
         try {
             (application as MyApplication)
                 .myApi
@@ -140,11 +141,13 @@ class FirstActivity : AppCompatActivity() {
 
                 })
         }catch (e:Exception){
-            
+            checkLogin()
         }
     }
 
     private fun checkLogin() {
+        Log.d("getAdSettings", "checkLogin: calling")
+
         if(MyApplication.isLogged()){
 
             checkAccessToken()
