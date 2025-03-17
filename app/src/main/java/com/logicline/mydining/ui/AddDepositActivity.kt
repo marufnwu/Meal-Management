@@ -12,8 +12,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddDepositBinding
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.GenericRespose
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.models.response.UserListResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
@@ -26,9 +28,9 @@ import retrofit2.Response
 class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListener, AdapterView.OnItemSelectedListener {
     lateinit var binding: ActivityAddDepositBinding
     lateinit var loadingDialog : LoadingDialog
-    private var userList: List<User>? = null
+    private var userList: List<MessUser>? = null
 
-    var selectedUser : User? = null
+    var selectedUser : MessUser? = null
     lateinit var selectedDate : String
     lateinit var myFullScreenAd: MyFullScreenAd
 
@@ -69,9 +71,9 @@ class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListene
 
     private fun addDeposit() {
         val priceString = binding.edtAmount.text.toString()
-        var amount = 0
-        if(TextUtils.isDigitsOnly(priceString) && !priceString.isEmpty()){
-            amount = priceString.toInt()
+        var amount = 0f
+        if(TextUtils.isDigitsOnly(priceString) && priceString.isNotEmpty()){
+            amount = priceString.toFloat()
         }else{
             Toast.makeText(this, "Amount is not valid", Toast.LENGTH_SHORT).show()
             return
@@ -115,16 +117,16 @@ class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListene
     private fun getUsersList() {
         loadingDialog.show()
         (application as MyApplication)
-            .myApi.getInitiatedUsers(1, selectedDate)
-            .enqueue(object: Callback<UserListResponse> {
+            .myApi.getInitiatedUsers()
+            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<UserListResponse>, response: Response<UserListResponse>) {
+                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            userList  = userListResponse.userList!!
+                            userList  = userListResponse.data!!
                             setUsersToSpinner(userList!!)
 
                         }else{
@@ -132,19 +134,18 @@ class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListene
                         }
                     }
                 }
-                override fun onFailure(call: Call<UserListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
             })
     }
 
-    private fun setUsersToSpinner(userList: List<User>) {
+    private fun setUsersToSpinner(userList: List<MessUser>) {
         val usersArray = arrayListOf<String?>()
         usersArray.add("Select Uer")
         userList.listIterator().forEach { member->
-            usersArray.add(member.name)
-            Log.d("Member", member.name!!)
+            usersArray.add(member.user.name)
         }
 
         Log.d("Member", usersArray.size.toString())

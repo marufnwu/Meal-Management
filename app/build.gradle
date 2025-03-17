@@ -8,14 +8,14 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('F:\\Android Projects\\MealManagement\\mydining.jks')
-            storePassword '1M@ruf21'
-            keyAlias 'maruf'
-            keyPassword '1M@ruf21'
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file('F:\\Android Projects\\MealManagement\\mydining.jks')
+//            storePassword '1M@ruf21'
+//            keyAlias 'maruf'
+//            keyPassword '1M@ruf21'
+//        }
+//    }
     compileSdk 34
 
     defaultConfig {
@@ -33,11 +33,11 @@ android {
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
         }
 
         debug {
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
             minifyEnabled false
 
         }

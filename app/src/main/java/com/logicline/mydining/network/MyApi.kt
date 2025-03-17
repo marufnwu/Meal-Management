@@ -10,6 +10,7 @@ import com.logicline.mydining.models.Fund
 import com.logicline.mydining.models.InitiateUser
 import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.MessRequest
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.models.OtpRequest
 import com.logicline.mydining.models.PurchaseRequest
@@ -44,11 +45,10 @@ interface MyApi {
     fun getHomeData(
     ): Call<InitialDataResponse>
 
-    @GET("api/user.getInitiatedUsers.php")
+    @GET("api/member/initiated/true")
     fun getInitiatedUsers(
-        @Query("active") active:Int,
-        @Query("date") date:String,
-    ): Call<UserListResponse>
+        @Header("Month-ID") monthId: String? = null
+    ): Call<ServerResponse<List<MessUser>>>
 
     @GET("api/user.currentUserInitiated.php")
     fun currentInitiatedUser(
@@ -167,9 +167,9 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/deposit.add.php")
     fun addDeposit(
-        @Field("userId") userId:String,
+        @Field("userId") userId:Int,
         @Field("date") date:String,
-        @Field("amount") amount:Int,
+        @Field("amount") amount:Float,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
