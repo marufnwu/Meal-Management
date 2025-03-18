@@ -9,6 +9,7 @@ import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Fund
 import com.logicline.mydining.models.InitiateUser
 import com.logicline.mydining.models.Meal
+import com.logicline.mydining.models.MealsData
 import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.MessRequest
 import com.logicline.mydining.models.MessUser
@@ -97,11 +98,10 @@ interface MyApi {
         ): Call<ServerResponse<CheckLoginResponse>>
 
     @FormUrlEncoded
-    @POST("api/meal.get.php")
+    @POST("api/meal/list")
     fun getMealByMonth(
-        @Field("year") year:String,
-        @Field("month") month:String,
-    ): Call<MealListResponse>
+        @Header("Month-ID") monthId: Int? = null
+    ): Call<ServerResponse<MealsData>>
 
     @FormUrlEncoded
     @POST("api/summary.getMonthSummary.php")

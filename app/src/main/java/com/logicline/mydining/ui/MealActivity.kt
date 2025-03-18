@@ -19,8 +19,10 @@ import com.logicline.mydining.adapter.DayMealListAdapter
 import com.logicline.mydining.databinding.ActivityMealBinding
 import com.logicline.mydining.databinding.DialogEditMealDialogBinding
 import com.logicline.mydining.models.Meal
+import com.logicline.mydining.models.MealsData
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.MealListResponse
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.models.response.UserDayMealResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.Constant
@@ -41,7 +43,7 @@ class MealActivity : AppCompatActivity() {
     lateinit var adapter: DayMealListAdapter
     lateinit var binding: ActivityMealBinding
     lateinit var loadingDialog: LoadingDialog
-    var dayList :  MutableList<MutableList<Meal>> = mutableListOf()
+    var dayList :  MutableList<MealsData> = mutableListOf()
     var year = Constant.getCurrentYear()
     var month = Constant.getCurrentMonthNumber()
 
@@ -252,21 +254,24 @@ class MealActivity : AppCompatActivity() {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getMealByMonth(year, month)
-            .enqueue(object : Callback<MealListResponse> {
-                override fun onResponse(call: Call<MealListResponse>, response: Response<MealListResponse>) {
+            .getMealByMonth()
+            .enqueue(object : Callback<ServerResponse<MealsData>> {
+                @SuppressLint("SetTextI18n")
+                override fun onResponse(call: Call<ServerResponse<MealsData>>, response: Response<ServerResponse<MealsData>>) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null){
-
-                        binding.txtTotalMeal.text = "Total Meal "+response.body()?.totalMeal.toString()
+                    if(response.isSuccessful && response.body()!=null ){
+                        val mealData = response.body()!!.data
+                        binding.txtTotalMeal.text = "Total Meal "+mealData?.overallTotals?.totalMeals
 
                         dayList.clear()
-                        response.body()!!.meals?.let { dayList.addAll(it) }
+                        mealData?.let {
+                            dayList.addAll(it.mealsByDate)
+                        }
                         adapter.notifyDataSetChanged()
                     }
                 }
 
-                override fun onFailure(call: Call<MealListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<MealsData>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
