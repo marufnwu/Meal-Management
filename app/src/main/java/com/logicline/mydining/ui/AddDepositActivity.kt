@@ -1,7 +1,6 @@
 package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -13,10 +12,8 @@ import android.widget.Toast
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddDepositBinding
 import com.logicline.mydining.models.MessUser
-import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
-import com.logicline.mydining.models.response.UserListResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -145,7 +142,7 @@ class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListene
         val usersArray = arrayListOf<String?>()
         usersArray.add("Select Uer")
         userList.listIterator().forEach { member->
-            usersArray.add(member.user.name)
+            usersArray.add(member.user?.name)
         }
 
         Log.d("Member", usersArray.size.toString())

@@ -10,11 +10,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.util.Pair
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddMealBinding
+import com.logicline.mydining.models.Meal
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.models.response.UserDayMealResponse
 import com.logicline.mydining.models.response.UserListResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
@@ -35,12 +36,12 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
 
     private lateinit var myFullScreenAd: MyFullScreenAd
 
-    private var userList: List<User>? = null
+    private var userList: List<MessUser>? = null
     lateinit var binding : ActivityAddMealBinding
     lateinit var loadingDialog : LoadingDialog
     var selectedDate : String?  =null
     var memberArray = arrayListOf<User>()
-    var selectedUser : User? = null
+    var selectedUser : MessUser? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,16 +86,16 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
 
         loadingDialog.show()
         (application as MyApplication)
-            .myApi.getInitiatedUsers(1, selectedDate!!)
-            .enqueue(object: Callback<UserListResponse> {
+            .myApi.getInitiatedUsers(1)
+            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<UserListResponse>, response: Response<UserListResponse>) {
+                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            userList  = userListResponse.userList!!
+                            userList  = userListResponse.data
                             setUsersToSpinner(userList!!)
 
                         }else{
@@ -102,7 +103,7 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
                         }
                     }
                 }
-                override fun onFailure(call: Call<UserListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
@@ -126,8 +127,8 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            userList  = userListResponse.userList!!
-                            setUsersToSpinner(userList!!)
+//                            userList  = userListResponse.userList!!
+//                            setUsersToSpinner(userList!!)
 
                         }else{
                             Toast.makeText(this@AddMealActivity, response.body()?.msg, Toast.LENGTH_SHORT).show()
@@ -143,24 +144,23 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
 
     private fun getUsersList() {
 
-        if(Constant.isManagerOrSuperUser()){
-            getUserListForManager()
-        }else{
-            LocalDB.getUser()?.let {
-                if(it.allUserAddMeal==1){
-                    getUserListFoRegularUser()
-                }
-            }
-        }
+//        if(Constant.isManagerOrSuperUser()){
+//            getUserListForManager()
+//        }else{
+//            LocalDB.getUser()?.let {
+//                if(it.allUserAddMeal==1){
+//                    getUserListFoRegularUser()
+//                }
+//            }
+//        }
 
     }
 
-    private fun setUsersToSpinner(userList: List<User>) {
+    private fun setUsersToSpinner(userList: List<MessUser>) {
         val usersArray = arrayListOf<String?>()
         usersArray.add("Select Uer")
         userList.listIterator().forEach { member->
-            usersArray.add(member.name)
-            Log.d("Member", member.name!!)
+            usersArray.add(member.user?.name)
         }
 
         Log.d("Member", usersArray.size.toString())
@@ -265,17 +265,17 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
         (application as MyApplication)
             .myApi
             .addMeal(selectedUser?.id!!, selectedDate!!, breakfast, lunch, dinner)
-            .enqueue(object: Callback<UserDayMealResponse> {
+            .enqueue(object: Callback<ServerResponse<Meal>> {
                 override fun onResponse(
-                    call: Call<UserDayMealResponse>, response: Response<UserDayMealResponse>) {
+                    call: Call<ServerResponse<Meal>>, response: Response<ServerResponse<Meal>>) {
                     loadingDialog.hide()
                     if(response.isSuccessful && response.body()!=null){
                         val dayMealResponse = response.body()!!
                         Toast.makeText(this@AddMealActivity, dayMealResponse.msg, Toast.LENGTH_SHORT).show()
                         if(!dayMealResponse.error){
 
-                            if(dayMealResponse.meal!=null){
-                                val meal = dayMealResponse.meal!!
+                            if(dayMealResponse.data!=null){
+                                val meal = dayMealResponse.data!!
                                 binding.edtDinner.setText(meal.dinner)
                                 binding.edtLunch.setText(meal.lunch)
                                 binding.edtBreakfast.setText(meal.breakfast)
@@ -285,7 +285,7 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
                     }
                 }
 
-                override fun onFailure(call: Call<UserDayMealResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Meal>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
@@ -347,16 +347,16 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
             (application as MyApplication)
                 .myApi
                 .getUserMealByDate(selectedUser?.id!!, selectedDate!!)
-                .enqueue(object : Callback<UserDayMealResponse> {
+                .enqueue(object : Callback<ServerResponse<Meal>> {
                     override fun onResponse(
-                        call: Call<UserDayMealResponse>, response: Response<UserDayMealResponse>) {
+                        call: Call<ServerResponse<Meal>>, response: Response<ServerResponse<Meal>>) {
                         loadingDialog.hide()
                         if(response.isSuccessful && response.body()!=null){
                             val dayMealResponse = response.body()!!
                             if(!dayMealResponse.error){
 
-                                if(dayMealResponse.meal!=null){
-                                    val meal = dayMealResponse.meal!!
+                                if(dayMealResponse.data!=null){
+                                    val meal = dayMealResponse.data!!
                                     binding.edtDinner.setText(meal.dinner)
                                     binding.edtLunch.setText(meal.lunch)
                                     binding.edtBreakfast.setText(meal.breakfast)
@@ -370,7 +370,7 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
                         }
                     }
 
-                    override fun onFailure(call: Call<UserDayMealResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<ServerResponse<Meal>>, t: Throwable) {
                         loadingDialog.hide()
                     }
 

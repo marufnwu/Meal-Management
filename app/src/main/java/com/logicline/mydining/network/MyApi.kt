@@ -8,6 +8,7 @@ import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Fund
 import com.logicline.mydining.models.InitiateUser
+import com.logicline.mydining.models.Meal
 import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.MessRequest
 import com.logicline.mydining.models.MessUser
@@ -47,7 +48,7 @@ interface MyApi {
 
     @GET("api/member/initiated/true")
     fun getInitiatedUsers(
-        @Header("Month-ID") monthId: String? = null
+        @Header("Month-ID") monthId: Int? = null
     ): Call<ServerResponse<List<MessUser>>>
 
     @GET("api/user.currentUserInitiated.php")
@@ -108,12 +109,11 @@ interface MyApi {
         @Field("month") month:String,
     ): Call<MonthlySummaryResponse>
 
-    @FormUrlEncoded
-    @POST("api/meal.getUserMealByDate.php")
+    @GET("api/meal/user/{messUserId}/by-date")
     fun getUserMealByDate(
-        @Field("userId") userId:String,
-        @Field("date") date:String,
-    ): Call<UserDayMealResponse>
+        @Path("messUserId") messUserId: Long,
+        @Query("date") date: String
+    ): Call<ServerResponse<Meal>>
 
     @FormUrlEncoded
     @POST("api/purchase.getByDate.php")
@@ -127,12 +127,12 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/meal.add.php")
     fun addMeal(
-        @Field("userId") userId:String,
+        @Field("mess_user_id") messUserId: Int,
         @Field("date") date:String,
         @Field("breakfast") breakfast: Float,
         @Field("lunch") lunch: Float,
         @Field("dinner") dinner: Float,
-    ): Call<UserDayMealResponse>
+    ): Call<ServerResponse<Meal>>
 
 
     @FormUrlEncoded
@@ -167,7 +167,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/deposit.add.php")
     fun addDeposit(
-        @Field("userId") userId:Int,
+        @Field("userId") userId: Long,
         @Field("date") date:String,
         @Field("amount") amount:Float,
     ): Call<GenericRespose>

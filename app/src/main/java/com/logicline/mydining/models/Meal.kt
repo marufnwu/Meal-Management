@@ -4,20 +4,36 @@ package com.logicline.mydining.models
 import com.google.gson.annotations.SerializedName
 
 data class Meal(
-    @SerializedName("breakfast")
-    var breakfast: String? = "",
-    @SerializedName("date")
-    var date: String? = "",
-    @SerializedName("dinner")
-    var dinner: String? = "",
     @SerializedName("id")
-    var id: String? = "",
+    val id: Int,
+
+    @SerializedName("month_id")
+    val monthId: Int,
+
+    @SerializedName("mess_user_id")
+    val messUserId: Int,
+
+    @SerializedName("mess_id")
+    val messId: Int,
+
+    @SerializedName("date")
+    val date: String,
+
+    @SerializedName("breakfast")
+    val breakfast: Int,
+
     @SerializedName("lunch")
-    var lunch: String? = "",
-    @SerializedName("manager_id")
-    var managerId: String? = "",
-    @SerializedName("name")
-    var name: String? = "",
-    @SerializedName("user_id")
-    var userId: String? = ""
+    val lunch: Int,
+
+    @SerializedName("dinner")
+    val dinner: Int,
+
+    @SerializedName("created_at")
+    val createdAt: String,
+
+    @SerializedName("updated_at")
+    val updatedAt: String,
+
+    @SerializedName("model_name")
+    val modelName: String
 )
