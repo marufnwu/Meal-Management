@@ -16,13 +16,11 @@ import com.logicline.mydining.models.Meal
 import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.ServerResponse
-import com.logicline.mydining.models.response.UserDayMealResponse
 import com.logicline.mydining.models.response.UserListResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
-import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
 

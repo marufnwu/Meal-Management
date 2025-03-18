@@ -112,9 +112,9 @@ class MemberMealListAdapter(val context: Context, val memberList : List<Meal>): 
     inner class ViewHolder(val binding: LayoutMemberMealBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(meal: Meal, pos :Int){
             binding.name.text = meal.name
-            binding.dinner.text = meal.dinner
-            binding.morning.text = meal.breakfast
-            binding.lunch.text = meal.lunch
+            binding.dinner.text = meal.dinner.toString()
+            binding.morning.text = meal.breakfast.toString()
+            binding.lunch.text = meal.lunch.toString()
 
             if(pos%2==0){
                 binding.name.setTextColor(context.getColor(R.color.White))

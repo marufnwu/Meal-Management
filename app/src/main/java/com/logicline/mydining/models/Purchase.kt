@@ -4,18 +4,30 @@ package com.logicline.mydining.models
 import com.google.gson.annotations.SerializedName
 
 data class Purchase(
-    @SerializedName("date")
-    var date: String = "",
     @SerializedName("id")
-    var id: String = "",
-    @SerializedName("manager_id")
-    var managerId: String = "",
+    val id: Int,
+
+    @SerializedName("mess_user_id")
+    val messUserId: Int,
+
+    @SerializedName("date")
+    val date: String,
+
     @SerializedName("price")
-    var price: String = "",
+    val price: Int,
+
     @SerializedName("product")
-    var product: String = "",
-    @SerializedName("user")
-    var user: String = "",
-    @SerializedName("user_id")
-    var userId: String = ""
+    val product: String,
+
+    @SerializedName("month_id")
+    val monthId: Int,
+
+    @SerializedName("mess_id")
+    val messId: Int,
+
+    @SerializedName("created_at")
+    val createdAt: String,
+
+    @SerializedName("updated_at")
+    val updatedAt: String
 )

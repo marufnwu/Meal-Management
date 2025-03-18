@@ -1,8 +1,6 @@
 package com.logicline.mydining.ui
 
-import android.R
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -10,12 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import android.widget.Toast
+import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddPurchaseBinding
-import com.logicline.mydining.models.User
+import com.logicline.mydining.enums.PurchaseType
+import com.logicline.mydining.models.MessUser
+import com.logicline.mydining.models.Purchase
 import com.logicline.mydining.models.response.GenericRespose
-import com.logicline.mydining.models.response.UserListResponse
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -25,11 +25,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListener, AdapterView.OnItemSelectedListener {
+    private var purchaseType: PurchaseType? = null
     private lateinit var myFullScreenAd: MyFullScreenAd
-    var selectedUser : User? = null
+    var selectedUser : MessUser? = null
     lateinit var binding : ActivityAddPurchaseBinding
     lateinit var loadingDialog : LoadingDialog
-    private var userList: List<User>? = null
+    private var userList: List<MessUser>? = null
     private var type = 0
     private var isDeposit = 0
 
@@ -46,24 +47,28 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
 
         myFullScreenAd = MyFullScreenAd(this, true)
 
-        type = intent.getIntExtra(Constant.PURCHASE_TYPE, 0)
 
-        if(type==1){
-            supportActionBar?.title = getString(com.logicline.mydining.R.string.add_purchase)
+        val type = intent.getStringExtra(Constant.PURCHASE_TYPE) ?: PurchaseType.PURCHASE.type
 
-            binding.btnAddPurchase.text = getString(com.logicline.mydining.R.string.add_purchase)
+         purchaseType = PurchaseType.fromType(type)
 
-            binding.rGroupPurchaseType.check(com.logicline.mydining.R.id.rButtonMealPurchase)
-
-        }else if(type==2){
-            supportActionBar?.title = getString(com.logicline.mydining.R.string.other_purchase)
-
-            binding.btnAddPurchase.text = getString(com.logicline.mydining.R.string.add_other_purchase)
-            binding.rGroupPurchaseType.check(com.logicline.mydining.R.id.rButtonOtherPurchase)
-        }else{
-            supportActionBar?.title = getString(com.logicline.mydining.R.string.purchases)
-            binding.btnAddPurchase.text = getString(com.logicline.mydining.R.string.add_purchase)
+        when (purchaseType) {
+            PurchaseType.PURCHASE -> {
+                supportActionBar?.title = getString(R.string.add_purchase)
+                binding.btnAddPurchase.text = getString(R.string.add_purchase)
+                binding.rGroupPurchaseType.check(R.id.rButtonMealPurchase)
+            }
+            PurchaseType.OTHER_PURCHASE -> {
+                supportActionBar?.title = getString(R.string.other_purchase)
+                binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
+                binding.rGroupPurchaseType.check(R.id.rButtonOtherPurchase)
+            }
+            else -> {
+                supportActionBar?.title = getString(R.string.purchases)
+                binding.btnAddPurchase.text = getString(R.string.add_purchase)
+            }
         }
+
 
         loadingDialog = LoadingDialog(this)
         binding.spinnerMember.onItemSelectedListener = this
@@ -76,10 +81,10 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
         }
 
         binding.rGroupPurchaseType.setOnCheckedChangeListener { radioGroup, i ->
-            if(i==com.logicline.mydining.R.id.rButtonMealPurchase){
-                type =1
+            if(i== R.id.rButtonMealPurchase){
+                purchaseType = PurchaseType.PURCHASE
             }else{
-                type = 2
+                purchaseType = PurchaseType.OTHER_PURCHASE
             }
         }
 
@@ -106,16 +111,16 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
     private fun getUsersList() {
         loadingDialog.show()
         (application as MyApplication)
-            .myApi.getInitiatedUsers(1, selectedDate)
-            .enqueue(object: Callback<UserListResponse> {
+            .myApi.getInitiatedUsers()
+            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<UserListResponse>, response: Response<UserListResponse>) {
+                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            userList  = userListResponse.userList!!
+                            userList  = userListResponse.data!!
                             setUsersToSpinner(userList!!)
 
                         }else{
@@ -123,25 +128,24 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
                         }
                     }
                 }
-                override fun onFailure(call: Call<UserListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
             })
     }
 
-    private fun setUsersToSpinner(userList: List<User>) {
+    private fun setUsersToSpinner(userList: List<MessUser>) {
         val usersArray = arrayListOf<String?>()
         usersArray.add("Select Uer")
         userList.listIterator().forEach { member->
-            usersArray.add(member.name)
-            Log.d("Member", member.name!!)
+            usersArray.add(member.user?.name)
         }
 
         Log.d("Member", usersArray.size.toString())
 
 
-        ArrayAdapter(this,  R.layout.simple_spinner_item, usersArray)
+        ArrayAdapter(this,  android.R.layout.simple_spinner_item, usersArray)
             .also { adapter->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spinnerMember.adapter = adapter
@@ -184,9 +188,9 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
         (application as MyApplication)
             .myApi
             .addPurchase(selectedUser?.id!!, selectedDate, productDesc, price, type, isDeposit)
-            .enqueue(object : Callback<GenericRespose> {
+            .enqueue(object : Callback<ServerResponse<Purchase>> {
                 override fun onResponse(
-                    call: Call<GenericRespose>, response: Response<GenericRespose>) {
+                    call: Call<ServerResponse<Purchase>>, response: Response<ServerResponse<Purchase>>) {
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null) {
                         shortToast(response.body()?.msg)
@@ -198,7 +202,7 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Purchase>>, t: Throwable) {
                     shortToast("Something went wrong")
                     loadingDialog.hide()
                 }
@@ -248,7 +252,7 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
         selectedUser?.let {
             binding.checkboxDeposit.visibility = View.VISIBLE
             binding.checkboxDeposit.isChecked = false
-            it.name?.let {
+            it.user?.name?.let {
                 binding.checkboxDeposit.text= "Also deposit to $it account"
             }
         }

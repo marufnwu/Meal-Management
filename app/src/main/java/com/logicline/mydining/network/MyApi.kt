@@ -14,6 +14,7 @@ import com.logicline.mydining.models.MessRequest
 import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.models.OtpRequest
+import com.logicline.mydining.models.Purchase
 import com.logicline.mydining.models.PurchaseRequest
 import com.logicline.mydining.models.Report
 import com.logicline.mydining.models.Support
@@ -125,9 +126,9 @@ interface MyApi {
 
 
     @FormUrlEncoded
-    @POST("api/meal.add.php")
+    @POST("api/meal/add")
     fun addMeal(
-        @Field("mess_user_id") messUserId: Int,
+        @Field("mess_user_id") messUserId: Long,
         @Field("date") date:String,
         @Field("breakfast") breakfast: Float,
         @Field("lunch") lunch: Float,
@@ -154,15 +155,15 @@ interface MyApi {
     ): Call<GenericRespose>
 
     @FormUrlEncoded
-    @POST("api/purchase.add.php")
+    @POST("api/purchase/add")
     fun addPurchase(
-        @Field("userId") userId:String,
+        @Field("mess_user_id") messUserId:Long,
         @Field("date") date:String,
         @Field("product") product:String,
         @Field("price") price:Int,
         @Field("type") type:Int,
         @Field("isAddAmount") isAddAmount:Int,
-    ): Call<GenericRespose>
+    ): Call<ServerResponse<Purchase>>
 
     @FormUrlEncoded
     @POST("api/deposit.add.php")
