@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddDepositBinding
+import com.logicline.mydining.models.Deposit
 import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
@@ -84,10 +85,10 @@ class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListene
         (application as MyApplication)
             .myApi
             .addDeposit(selectedUser?.id!!, selectedDate, amount)
-            .enqueue(object : Callback<GenericRespose> {
+            .enqueue(object : Callback<ServerResponse<Deposit>> {
                 override fun onResponse(
-                    call: Call<GenericRespose>,
-                    response: Response<GenericRespose>
+                    call: Call<ServerResponse<Deposit>>,
+                    response: Response<ServerResponse<Deposit>>
                 ) {
                     loadingDialog.hide()
 
@@ -100,7 +101,7 @@ class AddDepositActivity : BaseActivity(true) , MyDatePicker.OnDateSelectListene
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Deposit>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
