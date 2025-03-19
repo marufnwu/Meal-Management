@@ -19,11 +19,10 @@ import com.logicline.mydining.adapter.DayMealListAdapter
 import com.logicline.mydining.databinding.ActivityMealBinding
 import com.logicline.mydining.databinding.DialogEditMealDialogBinding
 import com.logicline.mydining.models.Meal
+import com.logicline.mydining.models.MealDate
 import com.logicline.mydining.models.MealsData
 import com.logicline.mydining.models.response.GenericRespose
-import com.logicline.mydining.models.response.MealListResponse
 import com.logicline.mydining.models.response.ServerResponse
-import com.logicline.mydining.models.response.UserDayMealResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LangUtils
@@ -43,7 +42,7 @@ class MealActivity : AppCompatActivity() {
     lateinit var adapter: DayMealListAdapter
     lateinit var binding: ActivityMealBinding
     lateinit var loadingDialog: LoadingDialog
-    var dayList :  MutableList<MealsData> = mutableListOf()
+    var dayList :  MutableList<MealDate> = mutableListOf()
     var year = Constant.getCurrentYear()
     var month = Constant.getCurrentMonthNumber()
 
@@ -122,7 +121,7 @@ class MealActivity : AppCompatActivity() {
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        editBinding.txtName.text = meal.name
+        editBinding.txtName.text = meal.messUser?.user?.name
         editBinding.txtDate.text = meal.date
 
         editBinding.edtBreakfast.setText(meal.breakfast)
@@ -180,23 +179,23 @@ class MealActivity : AppCompatActivity() {
             }
 
 
-            updateMeal(meal.id!!, meal.userId!!, meal.date!!, breakfast, lunch, dinner, dialog)
+            updateMeal(meal.id, meal.messUser!!.id, meal.date, breakfast, lunch, dinner, dialog)
         }
 
         editBinding.btnDelete.setOnClickListener {
-            deleteMeal(meal.id!!, dialog)
+            deleteMeal(meal.id, dialog)
         }
 
         dialog.show()
     }
 
-    private fun deleteMeal(id: String, dialog: Dialog) {
+    private fun deleteMeal(id: Int, dialog: Dialog) {
         loadingDialog.hide()
         (application as MyApplication)
             .myApi
             .deleteMeal(id)
-            .enqueue(object: Callback<GenericRespose> {
-                override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
+            .enqueue(object: Callback<ServerResponse<Void>> {
+                override fun onResponse(call: Call<ServerResponse<Void>>, response: Response<ServerResponse<Void>>) {
                     loadingDialog.hide()
                     if(response.isSuccessful && response.body()!=null){
                         Toast.makeText(this@MealActivity, response.body()!!.msg, Toast.LENGTH_SHORT).show()
@@ -207,7 +206,7 @@ class MealActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Void>>, t: Throwable) {
                     loadingDialog.hide()
                     shortToast(t.message)
                 }
@@ -215,14 +214,14 @@ class MealActivity : AppCompatActivity() {
             })
     }
 
-    private fun updateMeal(mealId:String, userId: String, date: String, breakfast: Float, lunch: Float, dinner: Float, dialog: Dialog) {
+    private fun updateMeal(mealId: Int, userId: Long, date: String, breakfast: Float, lunch: Float, dinner: Float, dialog: Dialog) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
             .updateMeal(mealId, userId, date, breakfast, lunch, dinner)
-            .enqueue(object: Callback<GenericRespose> {
+            .enqueue(object: Callback<ServerResponse<Meal>> {
                 override fun onResponse(
-                    call: Call<GenericRespose>, response: Response<GenericRespose>) {
+                    call: Call<ServerResponse<Meal>>, response: Response<ServerResponse<Meal>>) {
                     loadingDialog.hide()
                     if(response.isSuccessful && response.body()!=null){
                         Toast.makeText(this@MealActivity, response.body()!!.msg, Toast.LENGTH_SHORT).show()
@@ -233,7 +232,7 @@ class MealActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Meal>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
@@ -265,7 +264,7 @@ class MealActivity : AppCompatActivity() {
 
                         dayList.clear()
                         mealData?.let {
-                            dayList.addAll(it.mealsByDate)
+                            dayList.addAll(it.mealsByDate!!)
                         }
                         adapter.notifyDataSetChanged()
                     }

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.Banner
+import com.logicline.mydining.models.Deposit
 import com.logicline.mydining.models.Fund
 import com.logicline.mydining.models.InitiateUser
 import com.logicline.mydining.models.Meal
@@ -112,7 +113,7 @@ interface MyApi {
 
     @GET("api/meal/user/{messUserId}/by-date")
     fun getUserMealByDate(
-        @Path("messUserId") messUserId: Long,
+        @Path("messUserId") messUserId: Int,
         @Query("date") date: String
     ): Call<ServerResponse<Meal>>
 
@@ -128,7 +129,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/meal/add")
     fun addMeal(
-        @Field("mess_user_id") messUserId: Long,
+        @Field("mess_user_id") messUserId: Int,
         @Field("date") date:String,
         @Field("breakfast") breakfast: Float,
         @Field("lunch") lunch: Float,
@@ -137,22 +138,22 @@ interface MyApi {
 
 
     @FormUrlEncoded
-    @POST("api/meal.update.php")
+    @PUT("api/meal/{mealId}/update")
     fun updateMeal(
-        @Field("mealId") mealId:String,
-        @Field("userId") userId:String,
-        @Field("date") date:String,
-        @Field("breakfast") breakfast: Float,
-        @Field("lunch") lunch: Float,
-        @Field("dinner") dinner: Float,
-    ): Call<GenericRespose>
+        @Path("mealId") mealId: Int,
+        @Field("mess_user_id") messUserId: Int,
+        @Field("date") date: String? = null,
+        @Field("breakfast") breakfast: Float = 0f,
+        @Field("lunch") lunch: Float = 0f,
+        @Field("dinner") dinner: Float = 0f,
+    ): Call<ServerResponse<Meal>>
 
 
     @FormUrlEncoded
-    @POST("api/meal.delete.php")
+    @POST("api/meal/{mealId}/delete")
     fun deleteMeal(
-        @Field("mealId") mealId:String,
-    ): Call<GenericRespose>
+        @Path("mealId") mealId: Int,
+    ): Call<ServerResponse<Void>>
 
     @FormUrlEncoded
     @POST("api/purchase/add")
@@ -166,19 +167,24 @@ interface MyApi {
     ): Call<ServerResponse<Purchase>>
 
     @FormUrlEncoded
-    @POST("api/deposit.add.php")
+    @POST("api/deposit/add")
     fun addDeposit(
-        @Field("userId") userId: Long,
+        @Field("mess_user_id") messUserId: Int,
         @Field("date") date:String,
         @Field("amount") amount:Float,
-    ): Call<GenericRespose>
+    ): Call<ServerResponse<Deposit>>
 
-    @FormUrlEncoded
-    @POST("api/deposit.get.php")
+    @GET("api/deposit/list")
     fun getDeposit(
-        @Field("year") year:String,
-        @Field("month") month:String,
-    ): Call<DepositsResponse>
+        @Header("Month-ID") monthId: Int? = null
+    ): Call<ServerResponse<DepositsSumResponse>>
+
+
+    @GET("api/deposit/history/{messUserId}")
+    fun getDepositHistory(
+        @Header("Month-ID") monthId: Int? = null,
+        @Path("messUserId") messUserId: Int
+    ): Call<ServerResponse<DepositsResponse>>
 
 
     @FormUrlEncoded

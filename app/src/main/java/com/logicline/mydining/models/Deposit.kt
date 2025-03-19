@@ -4,12 +4,14 @@ package com.logicline.mydining.models
 import com.google.gson.annotations.SerializedName
 
 data class Deposit(
-    @SerializedName("amount")
-    var amount: String = "",
-    @SerializedName("name")
-    var name: String = "",
-    @SerializedName("user_id")
-    var userId: String = "",
-    @SerializedName("mess_id")
-    var messId: String = ""
+    @SerializedName("mess_user_id") val messUserId: Int,
+    @SerializedName("date") val date: String,
+    @SerializedName("amount") val amount: Float,
+    @SerializedName("month_id") val monthId: Int,
+    @SerializedName("mess_id") val messId: Int,
+    @SerializedName("updated_at") val updatedAt: String,
+    @SerializedName("created_at") val createdAt: String,
+    @SerializedName("id") val id: Int,
+    @SerializedName("mess_user") val messUser: MessUser?,
+    @SerializedName("model_name") val modelName: String,
 )

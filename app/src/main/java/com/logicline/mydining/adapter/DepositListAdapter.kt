@@ -1,21 +1,19 @@
 package com.logicline.mydining.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.adapter.holders.AdViewHolder
 import com.logicline.mydining.databinding.LayoutDepositItemBinding
 import com.logicline.mydining.databinding.LayoutNativeAdViewBinding
-import com.logicline.mydining.models.Deposit
-import com.logicline.mydining.ui.DepositHistoryActivity
+import com.logicline.mydining.models.DepositSum
 import com.logicline.mydining.utils.Constant
 
-class DepositListAdapter(val context: Context, val depositList : MutableList<Deposit>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DepositListAdapter(val context: Context, val depositList: MutableList<DepositSum>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface OnItemClickListener{
-        fun onClick(userId: String, messId:String)
+        fun onClick(userId: Int)
     }
 
     var onItemClickListener: OnItemClickListener? = null
@@ -58,18 +56,18 @@ class DepositListAdapter(val context: Context, val depositList : MutableList<Dep
     }
 
     inner class ViewHolder(val binding: LayoutDepositItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(deposit: Deposit){
+        fun bind(deposit: DepositSum){
 //            deposit.photoUrl?.let { url->
 //                Glide.with(context)
 //                    .load(url)
 //                    .into(binding.profileImage)
 //            }
 
-            binding.txtName.text = deposit.name
-            binding.txtAmount.text = deposit.amount+" /="
+            binding.txtName.text = deposit.messUser?.user?.name
+            binding.txtAmount.text = deposit.totalAmount.toString() + " /="
 
             binding.root.setOnClickListener {
-                onItemClickListener?.onClick(deposit.userId, deposit.messId)
+                onItemClickListener?.onClick(deposit.messUserId)
             }
 
         }

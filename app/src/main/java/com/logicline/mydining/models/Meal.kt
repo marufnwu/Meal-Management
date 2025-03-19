@@ -23,7 +23,7 @@ data class Meal(
     val messId: Int,
 
     @SerializedName("date")
-    val date: String,
+    var date: String,
 
     @SerializedName("breakfast")
     val breakfast: Int,
@@ -41,7 +41,10 @@ data class Meal(
     val updatedAt: String,
 
     @SerializedName("model_name")
-    val modelName: String
+    val modelName: String,
+
+    @SerializedName("mess_user")
+    val messUser: MessUser?
 )
 
 

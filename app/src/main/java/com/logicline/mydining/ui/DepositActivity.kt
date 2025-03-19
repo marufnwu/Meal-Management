@@ -2,7 +2,6 @@ package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,8 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.DepositListAdapter
 import com.logicline.mydining.databinding.ActivityDepositBinding
-import com.logicline.mydining.models.Deposit
-import com.logicline.mydining.models.response.DepositsResponse
+import com.logicline.mydining.models.DepositSum
+import com.logicline.mydining.models.response.DepositsSumResponse
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -96,25 +96,25 @@ class DepositActivity : BaseActivity() {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getDeposit(year, month)
-            .enqueue(object: Callback<DepositsResponse> {
+            .getDeposit()
+            .enqueue(object: Callback<ServerResponse<DepositsSumResponse>> {
                 override fun onResponse(
-                    call: Call<DepositsResponse>,
-                    response: Response<DepositsResponse>
+                    call: Call<ServerResponse<DepositsSumResponse>>,
+                    response: Response<ServerResponse<DepositsSumResponse>>
                 ) {
                     loadingDialog.hide()
                     if(response.isSuccessful && response.body()!=null){
                         val depositsResponse = response.body()!!
                         if(!depositsResponse.error){
-                            depositsResponse.deposits.let { listOfDeposit->
-                                binding.txtPageTitle.text = "Total Deposit ".plus(depositsResponse.totalDeposit)
-                                setDepositsToRecyclerView(listOfDeposit)
+                            depositsResponse.data.let { data->
+                                binding.txtPageTitle.text = "Total Deposit ".plus(data?.totalDeposit)
+                                setDepositsToRecyclerView(data?.deposits!!)
                             }
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<DepositsResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<DepositsSumResponse>>, t: Throwable) {
                     loadingDialog.hide()
                     shortToast(t.message)
                 }
@@ -122,23 +122,23 @@ class DepositActivity : BaseActivity() {
             })
     }
 
-    private fun setDepositsToRecyclerView(listOfDeposit: List<Deposit>) {
+    private fun setDepositsToRecyclerView(listOfDeposit: List<DepositSum>) {
         val adpter = DepositListAdapter(this, listOfDeposit.toMutableList())
 
         adpter.onItemClickListener = (object : DepositListAdapter.OnItemClickListener {
-            override fun onClick(userId: String, messId:String) {
-                showUserDepositHistory(userId, messId)
+            override fun onClick(userId: Int, ) {
+                showUserDepositHistory(userId)
             }
 
         })
         binding.recyDeposit.adapter = adpter
     }
 
-    private fun showUserDepositHistory(userId: String, messId: String) {
+    private fun showUserDepositHistory(userId: Int) {
         startActivity(Intent(this, DepositHistoryActivity::class.java)
             .putExtra(Constant.YEAR, year).putExtra(Constant.MONTH, month)
             .putExtra(Constant.USER_ID,userId)
-            .putExtra(Constant.MESS_ID, messId)
+            .putExtra(Constant.MESS_ID, 0)
             .putExtra(Constant.HISTORY_TYPE, DepositHistoryActivity.Type.SINGLE_USER.name))
     }
 

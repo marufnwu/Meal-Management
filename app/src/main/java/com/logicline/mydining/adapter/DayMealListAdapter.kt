@@ -12,11 +12,11 @@ import com.logicline.mydining.databinding.LayoutDayMealBinding
 import com.logicline.mydining.databinding.LayoutMemberMealBinding
 import com.logicline.mydining.databinding.LayoutNativeAdViewBinding
 import com.logicline.mydining.models.Meal
+import com.logicline.mydining.models.MealDate
 import com.logicline.mydining.utils.Constant
-import com.logicline.mydining.utils.MyApplication
 
 
-class DayMealListAdapter(val context: Context, val dayList : List<List<Meal>>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DayMealListAdapter(val context: Context, val dayList: MutableList<MealDate>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
 
@@ -66,17 +66,17 @@ class DayMealListAdapter(val context: Context, val dayList : List<List<Meal>>): 
     }
 
     inner class ViewHolder(val binding: LayoutDayMealBinding):RecyclerView.ViewHolder(binding.root) {
-        fun bind(dayList: List<Meal>, pos: Int){
+        fun bind(day: MealDate, pos: Int){
             Log.d("Position", pos.toString())
-            binding.txtDate.text = dayList[0].date
-            binding.txtDay.text = Constant.getDayNameFromDate(dayList[0].date!!)
+            binding.txtDate.text = day.date
+            binding.txtDay.text = Constant.getDayNameFromDate(day.date)
 
             binding.recyMealList.setHasFixedSize(true)
             binding.recyMealList.layoutManager = LinearLayoutManager(context)
             val adapter =
                 MemberMealListAdapter(
                     context,
-                    dayList
+                    day.meals
                 )
             binding.recyMealList.adapter = adapter
             adapter.onAction = object : MemberMealListAdapter.OnAction {
@@ -111,7 +111,7 @@ class MemberMealListAdapter(val context: Context, val memberList : List<Meal>): 
 
     inner class ViewHolder(val binding: LayoutMemberMealBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(meal: Meal, pos :Int){
-            binding.name.text = meal.name
+            binding.name.text = meal.messUser?.user?.name
             binding.dinner.text = meal.dinner.toString()
             binding.morning.text = meal.breakfast.toString()
             binding.lunch.text = meal.lunch.toString()
