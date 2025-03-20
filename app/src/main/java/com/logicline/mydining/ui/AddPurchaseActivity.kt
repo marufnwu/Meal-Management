@@ -14,7 +14,6 @@ import com.logicline.mydining.databinding.ActivityAddPurchaseBinding
 import com.logicline.mydining.enums.PurchaseType
 import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.Purchase
-import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
@@ -268,6 +267,7 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         myFullScreenAd.showAd()
     }
 

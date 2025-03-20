@@ -152,6 +152,7 @@ class DepositActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
+        super.onBackPressed()
         myFullScreenAd.showAd()
     }
 

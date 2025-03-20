@@ -21,6 +21,7 @@ import com.logicline.mydining.models.PurchaseRequest
 import com.logicline.mydining.models.Report
 import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.UserGuide
 import com.logicline.mydining.models.response.*
 import com.logicline.mydining.utils.LocalDB
@@ -41,9 +42,9 @@ import java.net.CookieManager
 import java.util.concurrent.TimeUnit
 interface MyApi {
 
-    @GET("api/user.checkLogin.php")
+    @GET("api/auth/check-login")
     fun checkLogin(
-    ): Call<ServerResponse<User>>
+    ): Call<ServerResponse<UserData>>
 
     @GET("api/summary.getHome.php")
     fun getHomeData(
@@ -69,7 +70,7 @@ interface MyApi {
     fun login(
         @Field("email") email:String,
         @Field("password") password:String,
-    ): Call<ServerResponse<CheckLoginResponse>>
+    ): Call<ServerResponse<UserData>>
 
     @FormUrlEncoded
     @POST("api/user.addUser.php")
@@ -158,7 +159,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/purchase/add")
     fun addPurchase(
-        @Field("mess_user_id") messUserId:Long,
+        @Field("mess_user_id") messUserId: Int,
         @Field("date") date:String,
         @Field("product") product:String,
         @Field("price") price:Int,

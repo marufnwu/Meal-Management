@@ -300,6 +300,7 @@ class DepositHistoryActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         myFullScreenAd.showAd()
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

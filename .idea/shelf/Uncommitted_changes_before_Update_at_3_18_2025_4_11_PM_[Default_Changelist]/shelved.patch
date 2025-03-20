@@ -1,0 +1,115 @@
+Index: app/src/main/java/com/logicline/mydining/models/Mess.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.logicline.mydining.models\r\n\r\nimport com.google.gson.annotations.SerializedName\r\n\r\ndata class Mess(\r\n    @SerializedName(\"ad_free\") val adFree: Int,\r\n    @SerializedName(\"all_user_add_meal\") var allUserAddMeal: Int,\r\n    @SerializedName(\"created_at\") val createdAt: String,\r\n    @SerializedName(\"id\") val id: Int,\r\n    @SerializedName(\"name\") var name: String,\r\n    @SerializedName(\"status\") val status: Int,\r\n    @SerializedName(\"super_user_id\") val superUserId: Int,\r\n    @SerializedName(\"fund\") var fundStatus: Int = 0\r\n)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/logicline/mydining/models/Mess.kt b/app/src/main/java/com/logicline/mydining/models/Mess.kt
+--- a/app/src/main/java/com/logicline/mydining/models/Mess.kt	(revision 82d7e3362f8c5a7564b75c73a005c4e305d72212)
++++ b/app/src/main/java/com/logicline/mydining/models/Mess.kt	(date 1742113561938)
+@@ -1,14 +1,15 @@
+ package com.logicline.mydining.models
+ 
+ import com.google.gson.annotations.SerializedName
++import java.time.LocalDateTime
+ 
+ data class Mess(
+-    @SerializedName("ad_free") val adFree: Int,
+-    @SerializedName("all_user_add_meal") var allUserAddMeal: Int,
+-    @SerializedName("created_at") val createdAt: String,
+-    @SerializedName("id") val id: Int,
+-    @SerializedName("name") var name: String,
+-    @SerializedName("status") val status: Int,
+-    @SerializedName("super_user_id") val superUserId: Int,
+-    @SerializedName("fund") var fundStatus: Int = 0
+-)
+\ No newline at end of file
++    @SerializedName("id") val id: Long,
++    @SerializedName("name") val name: String,
++    @SerializedName("status") val status: String,
++    @SerializedName("ad_free") val adFree: Boolean,
++    @SerializedName("all_user_add_meal") val allUserAddMeal: Boolean,
++    @SerializedName("fund_add_enabled") val fundAddEnabled: Boolean,
++    @SerializedName("created_at") val createdAt: LocalDateTime,
++    @SerializedName("updated_at") val updatedAt: LocalDateTime
++)
+Index: app/src/main/java/com/logicline/mydining/models/Permission.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/logicline/mydining/models/Permission.kt b/app/src/main/java/com/logicline/mydining/models/Permission.kt
+new file mode 100644
+--- /dev/null	(date 1742113603101)
++++ b/app/src/main/java/com/logicline/mydining/models/Permission.kt	(date 1742113603101)
+@@ -0,0 +1,12 @@
++package com.logicline.mydining.models
++
++import com.google.gson.annotations.SerializedName
++import java.time.LocalDateTime
++
++data class Permission(
++    @SerializedName("id") val id: Long,
++    @SerializedName("mess_role_id") val messRoleId: Long,
++    @SerializedName("permission") val permission: String,
++    @SerializedName("created_at") val createdAt: LocalDateTime,
++    @SerializedName("updated_at") val updatedAt: LocalDateTime
++)
+\ No newline at end of file
+Index: app/src/main/java/com/logicline/mydining/models/MessUser.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/logicline/mydining/models/MessUser.kt b/app/src/main/java/com/logicline/mydining/models/MessUser.kt
+new file mode 100644
+--- /dev/null	(date 1742113542802)
++++ b/app/src/main/java/com/logicline/mydining/models/MessUser.kt	(date 1742113542802)
+@@ -0,0 +1,21 @@
++package com.logicline.mydining.models
++import com.google.gson.annotations.SerializedName
++import java.time.LocalDateTime
++
++data class MessUser(
++    @SerializedName("id") val id: Long,
++    @SerializedName("mess_id") val messId: Long,
++    @SerializedName("user_id") val userId: Long,
++    @SerializedName("mess_role_id") val messRoleId: Long,
++    @SerializedName("joined_at") val joinedAt: LocalDateTime,
++    @SerializedName("left_at") val leftAt: LocalDateTime?,
++    @SerializedName("status") val status: String,
++    @SerializedName("created_at") val createdAt: LocalDateTime,
++    @SerializedName("updated_at") val updatedAt: LocalDateTime,
++    @SerializedName("model_name") val modelName: String,
++    @SerializedName("mess") val mess: Mess,
++    @SerializedName("role") val role: Role
++)
++
++
++
+Index: app/src/main/java/com/logicline/mydining/models/Role.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/logicline/mydining/models/Role.kt b/app/src/main/java/com/logicline/mydining/models/Role.kt
+new file mode 100644
+--- /dev/null	(date 1742113573441)
++++ b/app/src/main/java/com/logicline/mydining/models/Role.kt	(date 1742113573441)
+@@ -0,0 +1,15 @@
++package com.logicline.mydining.models
++
++import com.google.gson.annotations.SerializedName
++import java.time.LocalDateTime
++
++data class Role(
++    @SerializedName("id") val id: Long,
++    @SerializedName("mess_id") val messId: Long,
++    @SerializedName("role") val role: String,
++    @SerializedName("is_default") val isDefault: Boolean,
++    @SerializedName("is_admin") val isAdmin: Boolean,
++    @SerializedName("created_at") val createdAt: LocalDateTime,
++    @SerializedName("updated_at") val updatedAt: LocalDateTime,
++    @SerializedName("permissions") val permissions: List<Permission>
++)

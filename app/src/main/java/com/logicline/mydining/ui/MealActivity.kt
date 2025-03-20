@@ -21,7 +21,6 @@ import com.logicline.mydining.databinding.DialogEditMealDialogBinding
 import com.logicline.mydining.models.Meal
 import com.logicline.mydining.models.MealDate
 import com.logicline.mydining.models.MealsData
-import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.Constant
@@ -214,7 +213,7 @@ class MealActivity : AppCompatActivity() {
             })
     }
 
-    private fun updateMeal(mealId: Int, userId: Long, date: String, breakfast: Float, lunch: Float, dinner: Float, dialog: Dialog) {
+    private fun updateMeal(mealId: Int, userId: Int, date: String, breakfast: Float, lunch: Float, dinner: Float, dialog: Dialog) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi

@@ -17,6 +17,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.logicline.mydining.R
 import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.JDialog
 import com.logicline.mydining.utils.LocalDB
@@ -162,10 +163,10 @@ class FirstActivity : AppCompatActivity() {
             try {
                 (application as MyApplication).myApi
                     .checkLogin()
-                    .enqueue(object : Callback<ServerResponse<User>> {
+                    .enqueue(object : Callback<ServerResponse<UserData>> {
                         override fun onResponse(
-                            call: Call<ServerResponse<User>>,
-                            response: Response<ServerResponse<User>>
+                            call: Call<ServerResponse<UserData>>,
+                            response: Response<ServerResponse<UserData>>
                         ) {
                             if(response.isSuccessful && response.body()!=null){
                                 val body = response.body()!!
@@ -182,7 +183,7 @@ class FirstActivity : AppCompatActivity() {
                             }
                         }
 
-                        override fun onFailure(call: Call<ServerResponse<User>>, t: Throwable) {
+                        override fun onFailure(call: Call<ServerResponse<UserData>>, t: Throwable) {
                             JDialog.make(this@FirstActivity)
                                 .setCancelable(false)
                                 .setPositiveButton("Reload"){

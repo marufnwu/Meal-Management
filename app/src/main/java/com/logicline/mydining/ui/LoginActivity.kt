@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import com.logicline.mydining.databinding.ActivityLoginBinding
 import com.logicline.mydining.models.Support
+import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.CheckLoginResponse
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.BaseActivity
@@ -107,8 +108,8 @@ class LoginActivity : BaseActivity() {
         (application as MyApplication)
             .myApi
             .login(userName, password)
-            .enqueue(object : Callback<ServerResponse<CheckLoginResponse>> {
-                override fun onResponse(call: Call<ServerResponse<CheckLoginResponse>>, response: Response<ServerResponse<CheckLoginResponse>>) {
+            .enqueue(object : Callback<ServerResponse<UserData>> {
+                override fun onResponse(call: Call<ServerResponse<UserData>>, response: Response<ServerResponse<UserData>>) {
 
                     loadingDialog.hide()
 
@@ -119,13 +120,12 @@ class LoginActivity : BaseActivity() {
                             if(!it.error){
 
                                 it.data?.let {
-                                    if(it.token.isNotEmpty() && it.userId>0 && it.user!=null){
-
+                                    if(it.token?.isNotEmpty() == true  && it.user!=null){
+                                        LocalDB.saveUserData(it)
                                         LocalDB.saveUser(it.user!!)
-                                        LocalDB.saveAccessToken(it.token)
-                                        LocalDB.saveUserId(it.userId)
+                                        LocalDB.saveAccessToken(it.token!!)
+                                        LocalDB.saveUserId(it.user?.id!!)
                                         gotoMainActivity()
-
                                         return
                                     }
                                 }
@@ -141,7 +141,7 @@ class LoginActivity : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<ServerResponse<CheckLoginResponse>>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<UserData>>, t: Throwable) {
                     if(t is UnknownHostException){
                         shortToast("Your Internet Connection Not Working. Please try again")
                     }else if (t is NetworkErrorException){

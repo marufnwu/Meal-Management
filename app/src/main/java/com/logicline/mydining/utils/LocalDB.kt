@@ -2,6 +2,7 @@ package com.logicline.mydining.utils
 
 import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.InitialData
 import io.paperdb.Paper
 
@@ -47,7 +48,16 @@ object LocalDB {
         return Paper.book().read(KEY_AD_SETTINGS)
     }
 
+
     fun saveUser(user: User){
+        Paper.book().write(KEY_USER, user)
+    }
+
+    fun getUserData(): UserData?{
+        return Paper.book().read<UserData>(KEY_USER)
+    }
+
+    fun saveUserData(user: UserData){
         Paper.book().write(KEY_USER, user)
     }
 
