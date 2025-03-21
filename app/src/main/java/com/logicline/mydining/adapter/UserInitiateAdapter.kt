@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.MemberInitiateLayoutBinding
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.User
 
 
-class UserInitiateAdapter(val context: Context, val users: MutableList<User>, val type: Type) : RecyclerView.Adapter<UserInitiateAdapter.MyViewHolder>() {
+class UserInitiateAdapter(val context: Context, val users: MutableList<MessUser>, val type: Type) : RecyclerView.Adapter<UserInitiateAdapter.MyViewHolder>() {
     var onActionClick : OnActionClick? = null
     enum class Type{
         INITIATE, NOT_INITIATE

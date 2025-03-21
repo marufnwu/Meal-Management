@@ -33,9 +33,9 @@ class PurchaseListAdapter(val context: Context, val purchaseList : List<Purchase
     inner class ViewHolder(private val binding : LayoutPurchaseItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(purchase: Purchase){
             binding.txtDate.text = purchase.date
-            binding.txtName.text = purchase.user
+            binding.txtName.text = purchase.messUSer.user?.name
             binding.txtProduct.text = if (purchase.product.length>10) purchase.product.substring(0, 10)+".." else purchase.product
-            binding.txtPrice.text = purchase.price
+            binding.txtPrice.text = purchase.price.toString()
 
             binding.root.setOnClickListener {
                 if(Constant.isManagerOrSuperUser()){

@@ -63,7 +63,7 @@ interface MyApi {
     @GET("api/user.getUsers.php")
     fun getUsers(
         @Query("active") active:Int
-    ): Call<UserListResponse>
+    ): Call<ServerResponse<List<MessUser>>>
 
     @FormUrlEncoded
     @POST("api/auth/login")
@@ -206,7 +206,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/user.changeSuperUser.php")
     fun changeSuperUser(
-        @Field("newId") newId :String,
+        @Field("newId") newId: Int,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
@@ -222,9 +222,9 @@ interface MyApi {
     suspend fun getUsersForInitiate(): Response<ServerResponse<InitiateUser>>
 
     @FormUrlEncoded
-    @POST("api/mess.initiateUser.php")
+    @POST("api/member/initiated/true")
     suspend fun initiateUser(
-        @Field("userId") userId :String,
+        @Field("mess_user_id") messUserId: Int,
     ): Response<GenericRespose>
 
     @FormUrlEncoded

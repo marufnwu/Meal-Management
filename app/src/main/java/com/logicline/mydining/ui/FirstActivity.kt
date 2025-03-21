@@ -173,7 +173,10 @@ class FirstActivity : AppCompatActivity() {
 
                                 if(!body.error){
                                     body.data?.let {
-                                        LocalDB.saveUser(it)
+                                        LocalDB.saveUserData(it)
+                                        LocalDB.saveUser(it.user!!)
+                                        LocalDB.saveAccessToken(it.token!!)
+                                        LocalDB.saveUserId(it.user?.id!!)
                                         gotoMainActivity()
                                     }
                                 }else{

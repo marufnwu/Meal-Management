@@ -2,7 +2,6 @@ package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,13 +9,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityCahngeSuperuserBinding
-import com.logicline.mydining.models.User
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.response.GenericRespose
-import com.logicline.mydining.models.response.UserListResponse
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
-import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import retrofit2.Call
@@ -24,8 +22,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ChangeSuperuserActivity : BaseActivity(false) {
-    private var selectedUser: User? = null
-    private var userList: List<User> = listOf()
+    private var selectedUser: MessUser? = null
+    private var userList: List<MessUser> = listOf()
     lateinit var binding : ActivityCahngeSuperuserBinding
     lateinit var loadingDialog: LoadingDialog
 
@@ -86,7 +84,7 @@ class ChangeSuperuserActivity : BaseActivity(false) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .changeSuperUser(selectedUser!!.id!!)
+            .changeSuperUser(selectedUser!!.id)
             .enqueue(object : Callback<GenericRespose> {
                 override fun onResponse(
                     call: Call<GenericRespose>,
@@ -114,15 +112,15 @@ class ChangeSuperuserActivity : BaseActivity(false) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi.getUsers(1)
-            .enqueue(object: Callback<UserListResponse> {
+            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<UserListResponse>, response: Response<UserListResponse>) {
+                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            userList  = userListResponse.userList!!
+                            userList  = userListResponse.data!!
                             setUsersToSpinner(userList)
 
                         }else{
@@ -130,19 +128,18 @@ class ChangeSuperuserActivity : BaseActivity(false) {
                         }
                     }
                 }
-                override fun onFailure(call: Call<UserListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
             })
     }
 
-    private fun setUsersToSpinner(userList: List<User>) {
+    private fun setUsersToSpinner(userList: List<MessUser>) {
         val usersArray = arrayListOf<String?>()
         usersArray.add("Select Uer")
         userList.listIterator().forEach { member->
-            usersArray.add(member.name)
-            Log.d("Member", member.name!!)
+            usersArray.add(member.user?.name)
         }
 
         Log.d("Member", usersArray.size.toString())

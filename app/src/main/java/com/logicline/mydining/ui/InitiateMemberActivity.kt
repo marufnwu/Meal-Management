@@ -3,11 +3,11 @@ package com.logicline.mydining.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.UserInitiateAdapter
 import com.logicline.mydining.databinding.ActivityInitiateMemberBinding
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.User
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -22,8 +22,8 @@ class InitiateMemberActivity : BaseActivity() {
     lateinit var initiateUserAdapter: UserInitiateAdapter
     lateinit var notInitiateUserAdapter: UserInitiateAdapter
 
-    val initiateUser : MutableList<User> = mutableListOf()
-    val notInitiateUser : MutableList<User> = mutableListOf()
+    val initiateUser : MutableList<MessUser> = mutableListOf()
+    val notInitiateUser : MutableList<MessUser> = mutableListOf()
 
     lateinit var loadingDialog: LoadingDialog
 

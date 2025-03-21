@@ -29,5 +29,8 @@ data class Purchase(
     val createdAt: String,
 
     @SerializedName("updated_at")
-    val updatedAt: String
+    val updatedAt: String,
+
+    @SerializedName("mess_user")
+    val messUSer: MessUser
 )
