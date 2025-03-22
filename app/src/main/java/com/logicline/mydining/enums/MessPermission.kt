@@ -1,5 +1,7 @@
 package com.logicline.mydining.enums
 
+import com.logicline.mydining.enums.MessPermission.Companion.hasAll
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.Permission
 
 enum class MessPermission(val value: String) {
@@ -36,15 +38,35 @@ enum class MessPermission(val value: String) {
             return values().find { it.value == value }
         }
 
-        fun List<Permission>.hasAll(vararg messPermissions: MessPermission): Boolean {
-            val permissionValues = this.map { it.permission }
-            return messPermissions.all { it.value in permissionValues }
+        fun MessUser.hasAllPermission(vararg messPermissions: MessPermission): Boolean {
+
+
+            if(this.role == null){
+                return false;
+            }
+
+            if(this.role.isAdmin){
+                return true;
+            }
+
+            val permissionValues = this.role.permissions?.map { it.permission } ?: return false
+            return messPermissions.all { permission ->
+                permission.value in permissionValues
+            }
         }
 
-        fun List<Permission>.hasAny(vararg messPermissions: MessPermission): Boolean {
-            return this.any {
-                p -> p.permission in messPermissions.map { it.value }
+        fun MessUser.hasAnyPermission(vararg messPermissions: MessPermission): Boolean {
+            if(this.role == null){
+                return false;
             }
+
+            if(this.role.isAdmin){
+                return true;
+            }
+
+            return this.role.permissions?.any { p ->
+                p.permission in messPermissions.map { it.value }
+            } ?: false
         }
 
     }

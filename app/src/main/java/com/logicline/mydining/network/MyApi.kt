@@ -218,14 +218,17 @@ interface MyApi {
     @GET("api/mess.isUserInitiate.php")
     suspend fun isUserInitiate(): Response<GenericRespose>
 
-    @GET("api/mess.getUsersForInitiate.php")
-    suspend fun getUsersForInitiate(): Response<ServerResponse<InitiateUser>>
+    @GET("api/member/initiated/true")
+    suspend fun getInitiatedUser(): Response<ServerResponse<List<MessUser>>>
+
+    @GET("api/member/initiated/false")
+    suspend fun getNotInitiatedUser(): Response<ServerResponse<List<MessUser>>>
 
     @FormUrlEncoded
-    @POST("api/member/initiated/true")
+    @POST("api/member/inititate/add/{messUserId}")
     suspend fun initiateUser(
-        @Field("mess_user_id") messUserId: Int,
-    ): Response<GenericRespose>
+        @Field("messUserId") messUserId: Int,
+    ): Response<ServerResponse<Void>>
 
     @FormUrlEncoded
     @POST("api/mess.initiateAllUser.php")

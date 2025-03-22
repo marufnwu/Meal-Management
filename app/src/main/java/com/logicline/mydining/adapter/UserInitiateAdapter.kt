@@ -18,7 +18,7 @@ class UserInitiateAdapter(val context: Context, val users: MutableList<MessUser>
     }
 
     interface OnActionClick{
-        fun onClick(user: User)
+        fun onClick(user: MessUser)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -39,13 +39,13 @@ class UserInitiateAdapter(val context: Context, val users: MutableList<MessUser>
     }
 
     inner class MyViewHolder(val binding: MemberInitiateLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User){
+        fun bind(messUser: MessUser){
             Glide.with(context)
-                .load(user.photoUrl)
+                .load(messUser.user?.photoUrl)
                 .placeholder(R.drawable.man)
                 .into(binding.profileImage)
 
-            binding.txtName.text = user.name
+            binding.txtName.text = messUser.user?.name
             if(type==Type.INITIATE){
 //                if(user.active!="1"){
 //                    binding.action.setImageResource(R.drawable.cross)
@@ -58,7 +58,7 @@ class UserInitiateAdapter(val context: Context, val users: MutableList<MessUser>
             }else{
                 binding.action.setImageResource(R.drawable.plus)
                 binding.action.setOnClickListener {
-                    onActionClick?.onClick(user)
+                    onActionClick?.onClick(messUser)
                 }
             }
 

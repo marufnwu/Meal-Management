@@ -18,9 +18,13 @@ import com.google.firebase.messaging.ktx.messaging
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.adapter.MainSliderAdapter
 import com.logicline.mydining.databinding.ActivityMainBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAll
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.UserGuide
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.InitialDataResponse
@@ -42,7 +46,7 @@ class MainActivity : BaseActivity() {
     }
 
     lateinit var binding : ActivityMainBinding
-    var user : User? = null
+    var userData : UserData? = null
     lateinit var loadingDialog: LoadingDialog
     lateinit var mainBottomSheet: MainBottomSheet
 
@@ -59,14 +63,15 @@ class MainActivity : BaseActivity() {
         mainBottomSheet = MainBottomSheet.newInstance()
 
 
-        user = LocalDB.getUser()
+        userData = LocalDB.getUserData()
 
-        if(user==null){
+        if(userData==null){
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
+
         }
 
-        user?.let {
+        userData!!.user?.let {
             it.phone?.let {
                 binding.txtUserPhone.text = it
             }
@@ -90,22 +95,17 @@ class MainActivity : BaseActivity() {
         val month = Constant.getCurrentMonthName()+" "+Constant.getCurrentYear()
         binding.txtCurrentMonth.text = month
 
-        if(!Constant.isManagerOrSuperUser()){
-
-
-            user?.let {
-                if(it.allUserAddMeal==0){
-                    //regular user can't add meal
-                    binding.addMeal.visibility = View.GONE
-                }
-            }
-
-            binding.initiateMember.visibility = View.GONE
-            binding.addPurchase.visibility = View.GONE
-
-
-
+        if (userData!!.messUser!!.hasAnyPermission(MessPermission.MEAL_ADD, MessPermission.MEAL_MANAGEMENT)){
+            binding.addMeal.visibility = View.GONE
         }
+
+        if (userData!!.messUser!!.hasAnyPermission(MessPermission.USER_MANAGEMENT)){
+            binding.addMeal.visibility = View.GONE
+        }
+
+
+
+
         askNotificationPermission()
         initListener()
 

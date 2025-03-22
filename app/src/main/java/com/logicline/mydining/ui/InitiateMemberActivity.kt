@@ -8,7 +8,6 @@ import com.logicline.mydining.R
 import com.logicline.mydining.adapter.UserInitiateAdapter
 import com.logicline.mydining.databinding.ActivityInitiateMemberBinding
 import com.logicline.mydining.models.MessUser
-import com.logicline.mydining.models.User
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.Coroutines
@@ -57,7 +56,7 @@ class InitiateMemberActivity : BaseActivity() {
         notInitiateUserAdapter = UserInitiateAdapter(this, notInitiateUser, UserInitiateAdapter.Type.NOT_INITIATE)
 
         notInitiateUserAdapter.setOnActionClick(object : UserInitiateAdapter.OnActionClick {
-            override fun onClick(user: User) {
+            override fun onClick(user: MessUser) {
                 initiateUserNow(user)
             }
 
@@ -69,7 +68,7 @@ class InitiateMemberActivity : BaseActivity() {
         binding.recyNotInitiate.adapter = notInitiateUserAdapter
     }
 
-    private fun initiateUserNow(user: User) {
+    private fun initiateUserNow(user: MessUser) {
         loadingDialog.show()
         Coroutines.main {
             try {
@@ -82,6 +81,7 @@ class InitiateMemberActivity : BaseActivity() {
                 if(res.isSuccessful && res.body()!=null){
                     if(!res.body()!!.error){
                         getInitiateUser()
+                        getNotInitiateUser()
                     }else{
                         shortToast(res.body()!!.msg)
                     }
@@ -97,39 +97,58 @@ class InitiateMemberActivity : BaseActivity() {
     private fun getInitiateUser() {
         Coroutines.main {
             try {
-                val res = (application as MyApplication).myApi.getUsersForInitiate()
+                val res = (application as MyApplication).myApi.getInitiatedUser()
                 if(res.isSuccessful && res.body()!=null){
                     val r = res.body()!!
 
                     if(!r.error){
                         r.data?.let {
-                            it.initiatedUsers?.let {
-                                if(it.size>0){
-                                    binding.recyInitiate.visibility  =View.VISIBLE
-                                    binding.txtInitiate.visibility = View.GONE
+                            if(it.size>0){
+                                binding.recyInitiate.visibility  =View.VISIBLE
+                                binding.txtInitiate.visibility = View.GONE
 
-                                    initiateUser.clear()
-                                    initiateUser.addAll(it)
-                                    initiateUserAdapter.notifyDataSetChanged()
-                                }else{
-                                    binding.recyInitiate.visibility  =View.GONE
-                                    binding.txtInitiate.visibility = View.VISIBLE
-                                }
+                                initiateUser.clear()
+                                initiateUser.addAll(it)
+                                initiateUserAdapter.notifyDataSetChanged()
+                            }else{
+                                binding.recyInitiate.visibility  =View.GONE
+                                binding.txtInitiate.visibility = View.VISIBLE
                             }
 
-                            it.users?.let {
-                                if(it.size>0){
 
-                                    binding.recyNotInitiate.visibility  =View.VISIBLE
-                                    binding.txtNotInitiate.visibility = View.GONE
+                        }
+                    }
 
-                                    notInitiateUser.clear()
-                                    notInitiateUser.addAll(it)
-                                    notInitiateUserAdapter.notifyDataSetChanged()
-                                }else{
-                                    binding.recyNotInitiate.visibility  =View.GONE
-                                    binding.txtNotInitiate.visibility = View.VISIBLE
-                                }
+                }
+            }catch (e:Exception){
+
+            }
+        }
+
+    }
+
+
+  @SuppressLint("NotifyDataSetChanged")
+    private fun getNotInitiateUser() {
+        Coroutines.main {
+            try {
+                val res = (application as MyApplication).myApi.getNotInitiatedUser()
+                if(res.isSuccessful && res.body()!=null){
+                    val r = res.body()!!
+
+                    if(!r.error){
+                        r.data?.let {
+                            if(it.size>0){
+
+                                binding.recyNotInitiate.visibility  =View.VISIBLE
+                                binding.txtNotInitiate.visibility = View.GONE
+
+                                notInitiateUser.clear()
+                                notInitiateUser.addAll(it)
+                                notInitiateUserAdapter.notifyDataSetChanged()
+                            }else{
+                                binding.recyNotInitiate.visibility  =View.GONE
+                                binding.txtNotInitiate.visibility = View.VISIBLE
                             }
                         }
                     }

@@ -10,6 +10,7 @@ object LocalDB {
     private const val KEY_USER = "user"
     private const val KEY_TOKEN = "access_token"
     private const val KEY_USER_ID = "user_id"
+    private const val KEY_USER_DATA = "user_data"
     private const val FIRST_OPEN_ID = "first_open"
 
     private const val KEY_AD_SETTINGS = "ad_settings"
@@ -54,11 +55,11 @@ object LocalDB {
     }
 
     fun getUserData(): UserData?{
-        return Paper.book().read<UserData>(KEY_USER)
+        return Paper.book().read<UserData>(KEY_USER_DATA)
     }
 
     fun saveUserData(user: UserData){
-        Paper.book().write(KEY_USER, user)
+        Paper.book().write(KEY_USER_DATA, user)
     }
 
     fun getUser(): User?{
