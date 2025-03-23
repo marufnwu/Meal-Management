@@ -1,8 +1,7 @@
 package com.logicline.mydining.enums
 
-import com.logicline.mydining.enums.MessPermission.Companion.hasAll
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.MessUser
-import com.logicline.mydining.models.Permission
 
 enum class MessPermission(val value: String) {
     // Existing permissions
@@ -38,8 +37,10 @@ enum class MessPermission(val value: String) {
             return values().find { it.value == value }
         }
 
-        fun MessUser.hasAllPermission(vararg messPermissions: MessPermission): Boolean {
-
+        fun MessUser?.hasAllPermission(vararg messPermissions: MessPermission): Boolean {
+            if(this == null){
+                return false;
+            }
 
             if(this.role == null){
                 return false;
@@ -55,7 +56,10 @@ enum class MessPermission(val value: String) {
             }
         }
 
-        fun MessUser.hasAnyPermission(vararg messPermissions: MessPermission): Boolean {
+        fun MessUser?.hasAnyPermission(vararg messPermissions: MessPermission): Boolean {
+            if(this == null){
+                return false;
+            }
             if(this.role == null){
                 return false;
             }

@@ -1,22 +1,22 @@
 package com.logicline.mydining.ui
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.UserListAdapter
 import com.logicline.mydining.databinding.ActivityMembersBinding
 import com.logicline.mydining.databinding.DialogAddNewMemberBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.UserListResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
@@ -32,12 +32,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.random.Random
 
 class MembersActivity : BaseActivity() {
     lateinit var adapter: UserListAdapter
     lateinit var binding : ActivityMembersBinding
-    var user: User? = null
+    var userData: UserData? = null
     lateinit var loadingDialog: LoadingDialog
     private var userList: MutableList<User> = mutableListOf<User>()
     lateinit var myFullScreenAd: MyFullScreenAd
@@ -53,9 +52,9 @@ class MembersActivity : BaseActivity() {
         myFullScreenAd = MyFullScreenAd(this, true)
 
         loadingDialog = LoadingDialog(this)
-        user = LocalDB.getUser()
+        userData = LocalDB.getUserData()
 
-        if(user?.accType== Constant.NORMAL_USER){
+        if(!userData?.messUser.hasAnyPermission(MessPermission.USER_ADD, MessPermission.USER_MANAGEMENT)){
             binding.fab.visibility = View.GONE
         }
 

@@ -19,7 +19,6 @@ import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.adapter.MainSliderAdapter
 import com.logicline.mydining.databinding.ActivityMainBinding
 import com.logicline.mydining.enums.MessPermission
-import com.logicline.mydining.enums.MessPermission.Companion.hasAll
 import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Support
@@ -95,11 +94,11 @@ class MainActivity : BaseActivity() {
         val month = Constant.getCurrentMonthName()+" "+Constant.getCurrentYear()
         binding.txtCurrentMonth.text = month
 
-        if (userData!!.messUser!!.hasAnyPermission(MessPermission.MEAL_ADD, MessPermission.MEAL_MANAGEMENT)){
+        if (!userData!!.messUser!!.hasAnyPermission(MessPermission.MEAL_ADD, MessPermission.MEAL_MANAGEMENT)){
             binding.addMeal.visibility = View.GONE
         }
 
-        if (userData!!.messUser!!.hasAnyPermission(MessPermission.USER_MANAGEMENT)){
+        if (!userData!!.messUser!!.hasAnyPermission(MessPermission.USER_MANAGEMENT)){
             binding.addMeal.visibility = View.GONE
         }
 
@@ -180,36 +179,36 @@ class MainActivity : BaseActivity() {
     }
 
     private fun updateFcmToken() {
-        user?.let {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener {task->
-                if(task.isSuccessful){
-                    task.result?.let {
-                        (application as MyApplication).myApi
-                            .updadeFcmToken(it)
-                            .enqueue(object : Callback<GenericRespose?> {
-                                override fun onResponse(
-                                    call: Call<GenericRespose?>,
-                                    response: Response<GenericRespose?>
-                                ) {
-                                }
-
-                                override fun onFailure(call: Call<GenericRespose?>, t: Throwable) {}
-                            })
-                    }
-                }
-
-            }
-        }
+//        user?.let {
+//            FirebaseMessaging.getInstance().token.addOnCompleteListener {task->
+//                if(task.isSuccessful){
+//                    task.result?.let {
+//                        (application as MyApplication).myApi
+//                            .updadeFcmToken(it)
+//                            .enqueue(object : Callback<GenericRespose?> {
+//                                override fun onResponse(
+//                                    call: Call<GenericRespose?>,
+//                                    response: Response<GenericRespose?>
+//                                ) {
+//                                }
+//
+//                                override fun onFailure(call: Call<GenericRespose?>, t: Throwable) {}
+//                            })
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
     private fun registerFcm() {
-        user?.let {
-            Firebase.messaging.subscribeToTopic("mess_${it.messId}")
-                .addOnCompleteListener {}
-
-            Firebase.messaging.subscribeToTopic("allUser")
-                .addOnCompleteListener {}
-        }
+//        user?.let {
+//            Firebase.messaging.subscribeToTopic("mess_${it.messId}")
+//                .addOnCompleteListener {}
+//
+//            Firebase.messaging.subscribeToTopic("allUser")
+//                .addOnCompleteListener {}
+//        }
     }
 
     private fun getInitialData() {
@@ -342,7 +341,7 @@ class MainActivity : BaseActivity() {
         }
 
         binding.imgProPic.setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java).putExtra("profile",user))
+            startActivity(Intent(this, ProfileActivity::class.java).putExtra("profile", userData!!.user))
 
         }
 
@@ -442,12 +441,12 @@ class MainActivity : BaseActivity() {
             finish()
         }
 
-        if(LocalDB.getInitialData()?.messData?.fundStatus==0){
-            binding.addFund.visibility = View.GONE
-        }else{
-            binding.addFund.visibility = View.VISIBLE
-
-        }
+//        if(LocalDB.getInitialData()?.messData?.fundStatus==0){
+//            binding.addFund.visibility = View.GONE
+//        }else{
+//            binding.addFund.visibility = View.VISIBLE
+//
+//        }
 
     }
 

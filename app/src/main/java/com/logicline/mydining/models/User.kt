@@ -1,7 +1,9 @@
 package com.logicline.mydining.models
 
+import android.os.Parcelable
 import java.sql.Timestamp
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 // Define enums to match Laravel's Gender and AccountStatus enums
 enum class Gender {
@@ -13,7 +15,6 @@ enum class AccountStatus(val value: String) {
     INACTIVE("inactive"),
     BANNED("banned")
 }
-
 data class User(
     @SerializedName("id")
     val id: Int,
@@ -55,4 +56,4 @@ data class User(
     val createdAt: Timestamp?,
     @SerializedName("updated_at")
     val updatedAt: Timestamp?
-)
+) : Serializable
