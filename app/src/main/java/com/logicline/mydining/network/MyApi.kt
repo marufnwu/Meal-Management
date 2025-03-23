@@ -60,7 +60,7 @@ interface MyApi {
         @Query("date") date:String,
     ): Call<UserListResponse>
 
-    @GET("api/user.getUsers.php")
+    @GET("api//member/list")
     fun getUsers(
         @Query("active") active:Int
     ): Call<ServerResponse<List<MessUser>>>
@@ -73,7 +73,7 @@ interface MyApi {
     ): Call<ServerResponse<UserData>>
 
     @FormUrlEncoded
-    @POST("api/user.addUser.php")
+    @POST("api/member/create-and-add")
     fun addUser(
         @Field("name") name:String,
         @Field("phone") phone:String,
@@ -118,13 +118,10 @@ interface MyApi {
         @Query("date") date: String
     ): Call<ServerResponse<Meal>>
 
-    @FormUrlEncoded
-    @POST("api/purchase.getByDate.php")
-    fun getPurchasetByDate(
-        @Field("year") year:String,
-        @Field("month") month:String,
-        @Field("type") type:Int,
-    ): Call<PurchaseListResponse>
+    @GET("api/purchase/list")
+    fun getPurchases(
+        @Header("Month-ID") monthId: Int? = null,
+    ): Call<ServerResponse<PurchaseListResponse>>
 
 
     @FormUrlEncoded

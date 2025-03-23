@@ -11,13 +11,13 @@ data class Purchase(
     val messUserId: Int,
 
     @SerializedName("date")
-    val date: String,
+    var date: String,
 
     @SerializedName("price")
-    val price: Int,
+    var price: Float,
 
     @SerializedName("product")
-    val product: String,
+    var product: String,
 
     @SerializedName("month_id")
     val monthId: Int,

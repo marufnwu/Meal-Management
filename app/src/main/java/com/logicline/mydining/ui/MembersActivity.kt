@@ -15,10 +15,10 @@ import com.logicline.mydining.databinding.ActivityMembersBinding
 import com.logicline.mydining.databinding.DialogAddNewMemberBinding
 import com.logicline.mydining.enums.MessPermission
 import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
-import com.logicline.mydining.models.User
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.GenericRespose
-import com.logicline.mydining.models.response.UserListResponse
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -31,14 +31,13 @@ import com.maruf.jdialog.JDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class MembersActivity : BaseActivity() {
     lateinit var adapter: UserListAdapter
     lateinit var binding : ActivityMembersBinding
     var userData: UserData? = null
     lateinit var loadingDialog: LoadingDialog
-    private var userList: MutableList<User> = mutableListOf<User>()
+    private var userList: MutableList<MessUser> = mutableListOf()
     lateinit var myFullScreenAd: MyFullScreenAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,28 +149,28 @@ class MembersActivity : BaseActivity() {
         loadingDialog.show()
         (application as MyApplication)
             .myApi.getUsers(1)
-            .enqueue(object: Callback<UserListResponse> {
+            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<UserListResponse>, response: Response<UserListResponse>) {
+                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            val list = userListResponse.userList!!
+                            val list = userListResponse.data!!
                             setUsers(list)
 
                         }
                     }
                 }
-                override fun onFailure(call: Call<UserListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
             })
     }
 
-    private fun setUsers(list: List<User>) {
+    private fun setUsers(list: List<MessUser>) {
         userList.clear()
         userList.addAll(list)
         adapter.notifyDataSetChanged()

@@ -1,21 +1,18 @@
 package com.logicline.mydining.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.logicline.mydining.BuildConfig
-import com.logicline.mydining.R
 import com.logicline.mydining.databinding.LayoutUserItemBinding
-import com.logicline.mydining.models.User
-import com.logicline.mydining.ui.ProfileActivity
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.utils.Constant
 
 
-class UserListAdapter(val context: Context, val userList : MutableList<User>) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
+class UserListAdapter(val context: Context, val userList: MutableList<MessUser>) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
 
     interface OnAction{
@@ -38,16 +35,16 @@ class UserListAdapter(val context: Context, val userList : MutableList<User>) : 
     }
 
     inner class ViewHolder(val binding: LayoutUserItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User){
-            user.photoUrl?.let { url->
+        fun bind(messUser: MessUser){
+            messUser.user?.photoUrl?.let { url->
                 Glide.with(context)
                     .load(BuildConfig.BASE_URL+url)
                     .into(binding.profileImage)
             }
 
-            binding.txtName.text = user.name
+            binding.txtName.text = messUser.user?.name
 
-//            if(user.active=="1"){
+//            if(messUser.user?.active=="1"){
 //                Glide.with(context)
 //                    .load(R.drawable.check)
 //                    .into(binding.active)

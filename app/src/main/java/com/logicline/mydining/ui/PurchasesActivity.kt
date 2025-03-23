@@ -22,6 +22,7 @@ import com.logicline.mydining.databinding.DialogEditPurchaseLayoutBinding
 import com.logicline.mydining.models.Purchase
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.PurchaseListResponse
+import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -79,7 +80,6 @@ class PurchasesActivity : BaseActivity() {
             binding.btnAddPurchase.text = getString(R.string.add_purchase)
         }else if(type==2){
             supportActionBar?.title = getString(R.string.other_purchase)
-
             binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
         }
 
@@ -148,7 +148,7 @@ class PurchasesActivity : BaseActivity() {
 
 
 
-        editBinding.txtName.text = purchase.user
+        editBinding.txtName.text = purchase.messUSer.user?.name
         editBinding.txtDate.text = purchase.date
         editBinding.edtProducts.setText(purchase.product)
         editBinding.edtAmount.setText(purchase.price.toString())
@@ -199,7 +199,7 @@ class PurchasesActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            purchase.price = price.toString()
+            purchase.price = price
 
             update(purchase, position, dialog)
 
@@ -305,11 +305,11 @@ class PurchasesActivity : BaseActivity() {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getPurchasetByDate(year, month, type)
-            .enqueue(object: Callback<PurchaseListResponse> {
+            .getPurchases()
+            .enqueue(object: Callback<ServerResponse<PurchaseListResponse>> {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(
-                    call: Call<PurchaseListResponse>, response: Response<PurchaseListResponse>) {
+                    call: Call<ServerResponse<PurchaseListResponse>>, response: Response<ServerResponse<PurchaseListResponse>>) {
                     loadingDialog.hide()
 
                     if(response.isSuccessful && response.body()!=null){
@@ -322,18 +322,18 @@ class PurchasesActivity : BaseActivity() {
                             }else{
                                 purchaseType = "Total Others Cost"
                             }
-                            binding.txtTotalPurchase.text = purchaseType+" "+purchaseListResponse.totalPurchase
+                            binding.txtTotalPurchase.text = purchaseType+" "+purchaseListResponse.data?.totalPurchase
 
-                            purchaseListResponse.purchases.let {
+                            purchaseListResponse.data?.purchases.let {
                                 purchaseList.clear()
-                                purchaseList.addAll(it)
+                                purchaseList.addAll(it!!)
                                 adpter.notifyDataSetChanged()
                             }
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<PurchaseListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<PurchaseListResponse>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
@@ -342,6 +342,8 @@ class PurchasesActivity : BaseActivity() {
 
     override fun onBackPressed() {
         myFullScreenAd.showAd()
+        super.onBackPressed()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

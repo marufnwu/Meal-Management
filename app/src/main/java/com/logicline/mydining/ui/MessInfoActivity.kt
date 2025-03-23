@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityMessInfoBinding
+import com.logicline.mydining.enums.MessStatus
 import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.LoadingDialog
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +28,8 @@ class MessInfoActivity : BaseActivity() {
 
         setContentView(binding.root)
         loadingDialog = LoadingDialog(this)
-        getMessInfo()
+        //getMessInfo()
+        setData(LocalDB.getUserData()?.messUser?.mess)
     }
 
     private fun getMessInfo() {
@@ -58,8 +61,8 @@ class MessInfoActivity : BaseActivity() {
         data?.let {
             binding.txtMessName.text = data.name
             binding.txtMessId.text = data.id.toString()
-            binding.txtMessCreated.text = data.createdAt
-            binding.txtStatus.text = if(data.status==1)  "Active" else "Disable"
+            binding.txtMessCreated.text = data.createdAt.toString()
+            binding.txtStatus.text = MessStatus.fromValue(data.status)?.value?: "Undefined"
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.logicline.mydining.models
 
 import com.google.gson.annotations.SerializedName
+import com.logicline.mydining.enums.MessStatus
 import java.time.LocalDateTime
 
 data class Mess(

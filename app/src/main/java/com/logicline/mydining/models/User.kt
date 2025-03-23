@@ -15,6 +15,7 @@ enum class AccountStatus(val value: String) {
     INACTIVE("inactive"),
     BANNED("banned")
 }
+
 data class User(
     @SerializedName("id")
     val id: Int,
@@ -39,7 +40,7 @@ data class User(
     @SerializedName("remember_token")
     val rememberToken: String?,
     @SerializedName("status")
-    val status: AccountStatus = AccountStatus.ACTIVE,
+    val status: String,
     @SerializedName("join_date")
     val joinDate: Timestamp?,
     @SerializedName("leave_date")
