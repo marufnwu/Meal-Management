@@ -78,7 +78,8 @@ object AdSettings {
         val ad = LocalDB.getAdSettings()
         val user = LocalDB.getUser()
         if(user!==null){
-            if(user.adFree==0){
+//            if(user.adFree==0){
+            if(false){
                 if(ad!=null){
                     if(ad.show){
                         if(ad.fullScreen.show){
@@ -118,7 +119,8 @@ object AdSettings {
         val ad = LocalDB.getAdSettings()
         val user = LocalDB.getUser()
         if(user!==null){
-            if(user.adFree==0){
+//            if(user.adFree==0){
+            if(false){
                 if(ad!=null){
                     if(ad.show){
                         if(ad.native.show){

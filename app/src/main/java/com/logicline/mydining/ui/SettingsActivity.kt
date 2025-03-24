@@ -48,8 +48,8 @@ class SettingsActivity : BaseActivity(false) {
 
         LocalDB.getInitialData()?.let {
             it.messData?.let {
-                binding.switchMealAdd.isChecked = it.allUserAddMeal==1
-                binding.switchFundAdd.isChecked = it.fundStatus!=0
+//                binding.switchMealAdd.isChecked = it.allUserAddMeal==1
+//                binding.switchFundAdd.isChecked = it.fundStatus!=0
             }
         }
 
@@ -180,7 +180,7 @@ class SettingsActivity : BaseActivity(false) {
                         shortToast(response.body()!!.msg)
                         if(!response.body()!!.error){
                             val changeValue = LocalDB.getInitialData()!!
-                            changeValue.messData!!.fundStatus = Constant.booleanToInt(checked)
+//                            changeValue.messData!!.fundStatus = Constant.booleanToInt(checked)
                             LocalDB.saveInitialData(changeValue)
                         }else{
                             binding.switchFundAdd.isChecked = !checked
@@ -211,7 +211,7 @@ class SettingsActivity : BaseActivity(false) {
                         shortToast(response.body()!!.msg)
                         if(!response.body()!!.error){
                             val changeValue = LocalDB.getInitialData()!!
-                            changeValue.messData!!.allUserAddMeal = Constant.booleanToInt(checked)
+//                            changeValue.messData!!.allUserAddMeal = Constant.booleanToInt(checked)
                             LocalDB.saveInitialData(changeValue)
                         }else{
                             binding.switchMealAdd.isChecked = !checked

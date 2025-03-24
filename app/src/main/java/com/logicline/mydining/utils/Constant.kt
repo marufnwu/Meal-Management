@@ -164,7 +164,7 @@ object Constant {
     fun getYear(date:String):String{
         val inFormat = SimpleDateFormat("yyyy-MM-dd",Locale("en"))
 
-        val myDate: Date = inFormat.parse(date)
+        val myDate: Date? = inFormat.parse(date)
         val simpleDateFormat = SimpleDateFormat("yyyy",Locale("en"))
         val dayName: String = simpleDateFormat.format(myDate)
 

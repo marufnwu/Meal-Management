@@ -40,6 +40,7 @@ import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityProfileBinding
 import com.logicline.mydining.databinding.DialogEditProfileLayoutBinding
 import com.logicline.mydining.databinding.DialogPasswordChangeBinding
+import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
@@ -63,6 +64,7 @@ class ProfileActivity : BaseActivity() {
     lateinit var loadingDialog: LoadingDialog
 
     var userProfile : User? = null
+    var messUser : MessUser? = null
     var loggedUser : User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +76,7 @@ class ProfileActivity : BaseActivity() {
         supportActionBar?.title = getString(R.string.profile)
 
         userProfile = intent.getParcelableExtra<User>("profile")
+        messUser = intent.getParcelableExtra<MessUser>("messUser")
         loggedUser = LocalDB.getUser()
 
         loadingDialog = LoadingDialog(this)
@@ -172,7 +175,7 @@ class ProfileActivity : BaseActivity() {
         )
 
         editBinding.ccp.registerCarrierNumberEditText(editBinding.edtPhone)
-        editBinding.ccp.setCountryForNameCode(userProfile?.country)
+        editBinding.ccp.setCountryForNameCode(userProfile?.country?.dialCode)
         editBinding.ccp.fullNumber = userProfile?.phone
 
 
@@ -322,25 +325,31 @@ class ProfileActivity : BaseActivity() {
                 binding.phone.text = it.phone
             }
 
-            when (it.accType) {
-                "2" -> {
-                    binding.switchManager.isChecked = true
-                    binding.txtUserRole.text = "Manager"
-                }
-                "1" -> {
-                    binding.txtUserRole.text = "User"
-                }
-                else -> {
-                    binding.txtUserRole.text = "Super User"
-                }
+            binding.txtUserRole.text = "Super User"
+
+            messUser?.let {
+                binding.txtUserRole.text = it.role?.role
             }
+
+//            when (it.accType) {
+//                "2" -> {
+//                    binding.switchManager.isChecked = true
+//                    binding.txtUserRole.text = "Manager"
+//                }
+//                "1" -> {
+//                    binding.txtUserRole.text = "User"
+//                }
+//                else -> {
+//                    binding.txtUserRole.text = "Super User"
+//                }
+//            }
 
             it.city?.let {
                 binding.txtCity.text = it
             }
 
             it.country?.let {
-                binding.txtCountry.text = Locale("", it).displayName
+                binding.txtCountry.text = user.country.name
             }
 
             it.joinDate?.let {
@@ -377,7 +386,7 @@ class ProfileActivity : BaseActivity() {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .changeManager(userProfile!!.id!! , Constant.booleanToInt(value))
+            .changeManager(userProfile!!.id, Constant.booleanToInt(value))
             .enqueue(object : Callback<GenericRespose> {
                 override fun onResponse(
                     call: Call<GenericRespose>,

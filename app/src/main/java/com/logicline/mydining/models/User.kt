@@ -1,9 +1,11 @@
 package com.logicline.mydining.models
 
+import android.os.Parcel
 import android.os.Parcelable
 import java.sql.Timestamp
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
 // Define enums to match Laravel's Gender and AccountStatus enums
 enum class Gender {
@@ -15,7 +17,7 @@ enum class AccountStatus(val value: String) {
     INACTIVE("inactive"),
     BANNED("banned")
 }
-
+@Parcelize
 data class User(
     @SerializedName("id")
     val id: Int,
@@ -26,13 +28,13 @@ data class User(
     @SerializedName("email")
     val email: String,
     @SerializedName("email_verified_at")
-    val emailVerifiedAt: Timestamp?,
+    val emailVerifiedAt: String?,
     @SerializedName("country_id")
     val countryId: Int?,
     @SerializedName("phone")
     val phone: String?,
     @SerializedName("gender")
-    val gender: Gender,
+    val gender: String,
     @SerializedName("city")
     val city: String?,
     @SerializedName("password")
@@ -42,19 +44,21 @@ data class User(
     @SerializedName("status")
     val status: String,
     @SerializedName("join_date")
-    val joinDate: Timestamp?,
+    val joinDate: String?,
     @SerializedName("leave_date")
-    val leaveDate: Timestamp?,
+    val leaveDate: String?,
     @SerializedName("photo_url")
-    val photoUrl: String?,
+    var photoUrl: String?,
     @SerializedName("fcm_token")
     val fcmToken: String?,
     @SerializedName("version")
     val version: Int = 0,
     @SerializedName("last_active")
-    val lastActive: Timestamp?,
+    val lastActive: String?,
     @SerializedName("created_at")
-    val createdAt: Timestamp?,
+    val createdAt: String?,
     @SerializedName("updated_at")
-    val updatedAt: Timestamp?
-) : Serializable
+    val updatedAt: String?,
+    @SerializedName("country")
+    val country: Country
+) : Parcelable

@@ -5,6 +5,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -65,7 +66,9 @@ android {
 }
 
 
+
 dependencies {
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.22") // Aligns versions
 
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.appcompat:appcompat:1.7.0'
@@ -148,5 +151,7 @@ dependencies {
     implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
 
     implementation "com.android.installreferrer:installreferrer:2.2"
+
+
 }
 apply plugin: 'com.google.gms.google-services'

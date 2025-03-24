@@ -110,13 +110,13 @@ class SummaryActivity : BaseActivity(){
         binding.totalDeposit.text = monthlySummaryResponse.totalDeposit
         binding.totalMealCost.text = monthlySummaryResponse.totalMealCost
 
-        if(LocalDB.getInitialData()?.messData?.fundStatus!!>0){
-            binding.layoutFund.visibility  =View.VISIBLE
-            binding.totalFund.text = monthlySummaryResponse.totalFund
-        }else{
-            binding.layoutFund.visibility  =View.GONE
-
-        }
+//        if(LocalDB.getInitialData()?.messData?.fundStatus!!>0){
+//            binding.layoutFund.visibility  =View.VISIBLE
+//            binding.totalFund.text = monthlySummaryResponse.totalFund
+//        }else{
+//            binding.layoutFund.visibility  =View.GONE
+//
+//        }
 
         setRecyclear(monthlySummaryResponse.usersSummary)
     }
@@ -151,6 +151,7 @@ class SummaryActivity : BaseActivity(){
 
     override fun onBackPressed() {
         myFullScreenAd.showAd()
+        super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

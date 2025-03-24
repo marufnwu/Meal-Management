@@ -1,6 +1,5 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    ext.kotlin_version = '1.7.1'
     repositories {
         google()
         mavenCentral()
@@ -11,7 +10,7 @@ dependencyResolutionManagement {
             url "https://jcenter.bintray.com"
         }
 
-        jcenter()
+        mavenCentral()
 
     }
 }

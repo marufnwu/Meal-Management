@@ -196,7 +196,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/user.changeManager.php")
     fun changeManager(
-        @Field("newId") newId :String,
+        @Field("newId") newId :Int,
         @Field("value") value :Int,
     ): Call<GenericRespose>
 

@@ -63,7 +63,7 @@ class DepositListAdapter(val context: Context, val depositList: MutableList<Depo
 //                    .into(binding.profileImage)
 //            }
 
-            binding.txtName.text = deposit.messUser?.user?.name
+            binding.txtName.text = deposit.messUser.user?.name
             binding.txtAmount.text = deposit.totalAmount.toString() + " /="
 
             binding.root.setOnClickListener {

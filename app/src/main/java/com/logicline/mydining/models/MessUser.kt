@@ -1,7 +1,10 @@
 package com.logicline.mydining.models
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
+@Parcelize
 data class MessUser(
     @SerializedName("id") val id: Int,
     @SerializedName("mess_id") val messId: Int,
@@ -16,7 +19,7 @@ data class MessUser(
     @SerializedName("user") val user: User?,
     @SerializedName("mess") val mess: Mess?,
     @SerializedName("role") val role: Role?
-)
+) : Parcelable
 
 
 
