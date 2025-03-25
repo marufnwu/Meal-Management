@@ -160,6 +160,7 @@ class FirstActivity : AppCompatActivity() {
 
 
     private fun checkAccessToken(){
+        shortToast("11111")
             try {
                 (application as MyApplication).myApi
                     .checkLogin()
@@ -170,6 +171,8 @@ class FirstActivity : AppCompatActivity() {
                         ) {
                             if(response.isSuccessful && response.body()!=null){
                                 val body = response.body()!!
+
+                                shortToast(response.body()?.msg)
 
                                 if(!body.error){
                                     body.data?.let {
@@ -183,6 +186,9 @@ class FirstActivity : AppCompatActivity() {
                                     LocalDB.logout()
                                     gotoLoginActivity()
                                 }
+                            }else{
+                                gotoLoginActivity()
+                                shortToast(response.message())
                             }
                         }
 
@@ -203,7 +209,8 @@ class FirstActivity : AppCompatActivity() {
 
 
             }catch (e:Exception){
-
+                e.printStackTrace()
+                shortToast(e.message)
             }
 
     }

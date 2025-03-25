@@ -99,8 +99,7 @@ interface MyApi {
             @Field("gender") gender:String,
         ): Call<ServerResponse<CheckLoginResponse>>
 
-    @FormUrlEncoded
-    @POST("api/meal/list")
+    @GET("api/meal/list")
     fun getMealByMonth(
         @Header("Month-ID") monthId: Int? = null
     ): Call<ServerResponse<MealsData>>
@@ -529,15 +528,6 @@ interface MyApi {
 
 
         private fun createClient(): MyApi {
-            val AUTH: String = "Basic ${
-                Base64.encodeToString(
-                    ("${BuildConfig.USER_NAME}:${BuildConfig.USER_PASSWORD}").toByteArray(),
-                    Base64.NO_WRAP
-                )
-            }"
-
-
-
             val interceptor = run {
                 val httpLoggingInterceptor = HttpLoggingInterceptor()
                 httpLoggingInterceptor.apply {
@@ -612,7 +602,7 @@ interface MyApi {
             return if(!token.isNullOrEmpty()){
                 chain.proceed(chain.request()
                     .newBuilder()
-                    .header("Authorization","AccessToken $token")
+                    .header("Authorization","Bearer `$token")
                     .header("Userid","$userId")
                     .build())
 

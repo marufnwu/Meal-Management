@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.logicline.mydining.databinding.ActivityLoginBinding
@@ -27,6 +28,7 @@ import retrofit2.Response
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
+private const val TAG = "LoginActivity"
 class LoginActivity : BaseActivity() {
 
     lateinit var binding : ActivityLoginBinding
@@ -104,6 +106,7 @@ class LoginActivity : BaseActivity() {
             Toast.makeText(this, "Every field are required", Toast.LENGTH_SHORT).show()
             return
         }
+
         loadingDialog.show()
         (application as MyApplication)
             .myApi
@@ -112,14 +115,21 @@ class LoginActivity : BaseActivity() {
                 override fun onResponse(call: Call<ServerResponse<UserData>>, response: Response<ServerResponse<UserData>>) {
 
                     loadingDialog.hide()
+                    shortToast( response.body()?.msg)
 
                     if(response.isSuccessful && response.body()!=null){
                         val loginResponse = response.body()
 
-                        loginResponse?.let {
-                            if(!it.error){
+                        shortToast(loginResponse?.msg)
 
+                        loginResponse?.let {
+                            Log.d(TAG, "onResponse: not error")
+
+                            if(!it.error){
+                                Log.d(TAG, "onResponse: not error")
                                 it.data?.let {
+                                    Log.d(TAG, "onResponse: data not null")
+
                                     if(it.token?.isNotEmpty() == true  && it.user!=null){
                                         LocalDB.saveUserData(it)
                                         LocalDB.saveUser(it.user!!)
@@ -137,7 +147,9 @@ class LoginActivity : BaseActivity() {
 
                             Toast.makeText(this@LoginActivity, it.msg, Toast.LENGTH_SHORT).show()
 
-                        }
+                        }?: shortToast("aassasas")
+                    }else{
+                        shortToast(response.message())
                     }
                 }
 
@@ -146,7 +158,10 @@ class LoginActivity : BaseActivity() {
                         shortToast("Your Internet Connection Not Working. Please try again")
                     }else if (t is NetworkErrorException){
                         shortToast("Something went wrong. Contact with support center")
+                    }else{
+                        shortToast(t.message)
                     }
+                    t.printStackTrace()
                     loadingDialog.hide()
 
                 }
