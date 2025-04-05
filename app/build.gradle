@@ -17,12 +17,12 @@ android {
 //            keyPassword '1M@ruf21'
 //        }
 //    }
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.logicline.mydining"
         minSdk 24
-        targetSdk 34
+        targetSdk 35
         versionCode 120
         versionName "1.2.0"
         setProperty("archivesBaseName", "Meal_Management"+versionName)
@@ -70,11 +70,12 @@ android {
 dependencies {
     implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.22") // Aligns versions
 
-    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.core:core-ktx:1.15.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation project(':monthPicker')
+    implementation 'androidx.activity:activity-ktx:1.10.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

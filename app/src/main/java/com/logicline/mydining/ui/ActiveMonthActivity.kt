@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.MonthAdapter
 import com.logicline.mydining.databinding.ActivityActiveMonthBinding
-import com.logicline.mydining.models.MonthOfYear
+import com.logicline.mydining.models.Month
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +24,7 @@ class ActiveMonthActivity : BaseActivity() {
     private lateinit var binding : ActivityActiveMonthBinding
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var adapter: MonthAdapter
-    private var months: MutableList<MonthOfYear> = mutableListOf()
+    private var months: MutableList<Month> = mutableListOf()
     lateinit var myFullScreenAd: MyFullScreenAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,9 +50,11 @@ class ActiveMonthActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         adapter.onClick = {
-            startActivity(Intent(this, PreviousMonthActivity::class.java)
-                .putExtra(Constant.YEAR, it.year)
-                .putExtra(Constant.MONTH, it.month.toString()))
+//            startActivity(Intent(this, PreviousMonthActivity::class.java)
+//                .putExtra(Constant.YEAR, it.year)
+//                .putExtra(Constant.MONTH, it.month.toString()))
+
+            LocalDB.setActiveMonth(it)
         }
     }
 
@@ -59,11 +62,11 @@ class ActiveMonthActivity : BaseActivity() {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .getActiveMonthList()
-            .enqueue(object : Callback<ServerResponse<MutableList<MonthOfYear>>> {
+            .getMonths()
+            .enqueue(object : Callback<ServerResponse<MutableList<Month>>> {
                 override fun onResponse(
-                    call: Call<ServerResponse<MutableList<MonthOfYear>>>,
-                    response: Response<ServerResponse<MutableList<MonthOfYear>>>
+                    call: Call<ServerResponse<MutableList<Month>>>,
+                    response: Response<ServerResponse<MutableList<Month>>>
                 ) {
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
@@ -75,7 +78,7 @@ class ActiveMonthActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ServerResponse<MutableList<MonthOfYear>>>,
+                    call: Call<ServerResponse<MutableList<Month>>>,
                     t: Throwable
                 ) {
                     loadingDialog.hide()
@@ -85,6 +88,7 @@ class ActiveMonthActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         myFullScreenAd.showAd()
     }
 

@@ -73,7 +73,32 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
         super.onResume()
         getUsersList()
     }
+    private fun getUsersList() {
+        loadingDialog.show()
+        (application as MyApplication)
+            .myApi.getInitiatedUsers()
+            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
 
+                    loadingDialog.hide()
+                    if (response.isSuccessful && response.body()!=null){
+                        val userListResponse = response.body()!!
+                        if(!userListResponse.error){
+                            userList  = userListResponse.data!!
+                            setUsersToSpinner(userList!!)
+
+                        }else{
+                            shortToast(response.body()?.msg)
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
+                    loadingDialog.hide()
+                }
+
+            })
+    }
 
     private fun getUserListForManager(){
         if(selectedDate == null){
@@ -140,19 +165,6 @@ class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener 
             })
     }
 
-    private fun getUsersList() {
-
-//        if(Constant.isManagerOrSuperUser()){
-//            getUserListForManager()
-//        }else{
-//            LocalDB.getUser()?.let {
-//                if(it.allUserAddMeal==1){
-//                    getUserListFoRegularUser()
-//                }
-//            }
-//        }
-
-    }
 
     private fun setUsersToSpinner(userList: List<MessUser>) {
         val usersArray = arrayListOf<String?>()

@@ -20,6 +20,7 @@ import com.logicline.mydining.adapter.MainSliderAdapter
 import com.logicline.mydining.databinding.ActivityMainBinding
 import com.logicline.mydining.enums.MessPermission
 import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
+import com.logicline.mydining.enums.PurchaseType
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.User
@@ -320,11 +321,11 @@ class MainActivity : BaseActivity() {
         }
 
         binding.purchases.setOnClickListener {
-            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, 1))
+            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, PurchaseType.PURCHASE.name))
         }
 
         binding.otherCost.setOnClickListener {
-            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, 2))
+            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, PurchaseType.OTHER_PURCHASE.name))
         }
 
         binding.addMeal.setOnClickListener {

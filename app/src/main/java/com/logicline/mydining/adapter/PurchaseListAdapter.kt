@@ -5,8 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.databinding.LayoutPurchaseItemBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
+import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.Purchase
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyExtensions.shortToast
 
 
@@ -38,7 +42,7 @@ class PurchaseListAdapter(val context: Context, val purchaseList : List<Purchase
             binding.txtPrice.text = purchase.price.toString()
 
             binding.root.setOnClickListener {
-                if(Constant.isManagerOrSuperUser()){
+                if(LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.PURCHASE_MANAGEMENT, MessPermission.PURCHASE_DELETE, MessPermission.PURCHASE_EDIT)){
                     onAction?.onItemClick(purchase, absoluteAdapterPosition)
                 }
             }

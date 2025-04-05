@@ -14,6 +14,7 @@ import com.logicline.mydining.models.MealsData
 import com.logicline.mydining.models.Mess
 import com.logicline.mydining.models.MessRequest
 import com.logicline.mydining.models.MessUser
+import com.logicline.mydining.models.Month
 import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.models.OtpRequest
 import com.logicline.mydining.models.Purchase
@@ -117,9 +118,10 @@ interface MyApi {
         @Query("date") date: String
     ): Call<ServerResponse<Meal>>
 
-    @GET("api/purchase/list")
+    @GET("api/{type}/list")
     fun getPurchases(
         @Header("Month-ID") monthId: Int? = null,
+        @Path("type") type: String
     ): Call<ServerResponse<PurchaseListResponse>>
 
 
@@ -153,13 +155,13 @@ interface MyApi {
     ): Call<ServerResponse<Void>>
 
     @FormUrlEncoded
-    @POST("api/purchase/add")
+    @POST("api/{type}/add")
     fun addPurchase(
         @Field("mess_user_id") messUserId: Int,
         @Field("date") date:String,
         @Field("product") product:String,
         @Field("price") price:Int,
-        @Field("type") type:Int,
+        @Path("type") type:String,
         @Field("isAddAmount") isAddAmount:Int,
     ): Call<ServerResponse<Purchase>>
 
@@ -323,23 +325,22 @@ interface MyApi {
     ): Call<GenericRespose>
 
     @FormUrlEncoded
-    @POST("api/purchase.update.php")
+    @PUT("api/{type}/{id}/update")
     fun updatePurchase(
-        @Field("id") depositId: Int,
-        @Field("amount") amount: Float,
+        @Path("id") id: Int,
+        @Field("price") amount: Float,
         @Field("date") date: String,
-        @Field("products") products: String,
-        @Field("type") type: Int,
+        @Field("product") products: String,
+        @Path("type") type: String,
 
     ): Call<GenericRespose>
 
 
-    @FormUrlEncoded
-    @POST("api/purchase.delete.php")
+    @DELETE("api/{type}/{id}/delete")
     fun deletePurchase(
-        @Field("id") purchaseId: Int,
-        @Field("type") type: Int,
-    ): Call<GenericRespose>
+        @Path("id") id: Int,
+        @Path("type") type: String,
+    ): Call<ServerResponse<Void>>
 
     @FormUrlEncoded
     @POST("api/user.updateProfile.php")
@@ -515,6 +516,12 @@ interface MyApi {
     @GET("api/mess.info.php")
     fun getMessInfo() : Call<ServerResponse<Mess>>
 
+
+    //New Api
+    @GET("api/month/list")
+    fun getMonths() : Call<ServerResponse<MutableList<Month>>>
+
+
     companion object {
         @Volatile
         private var myApiInstance: MyApi? = null
@@ -602,11 +609,10 @@ interface MyApi {
             return if(!token.isNullOrEmpty()){
                 chain.proceed(chain.request()
                     .newBuilder()
-                    .header("Authorization","Bearer `$token")
+                    .header("Authorization","Bearer $token")
                     .header("Userid","$userId")
+                    .header("Month-ID","${LocalDB.getActiveMonth()?.id}")
                     .build())
-
-
             }else{
                 chain.proceed(chain.request())
             }

@@ -18,6 +18,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.MonthsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MessInfoActivity"
             android:exported="false" />
         <activity

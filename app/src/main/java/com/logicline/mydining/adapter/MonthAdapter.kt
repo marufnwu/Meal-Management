@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.adapter.holders.AdViewHolder
 import com.logicline.mydining.databinding.LayoutMonthItemBinding
 import com.logicline.mydining.databinding.LayoutNativeAdViewBinding
+import com.logicline.mydining.models.Month
 import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.utils.Constant
 
-class MonthAdapter(val context: Context,val  months:MutableList<MonthOfYear>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MonthAdapter(val context: Context,val  months:MutableList<Month>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    var onClick : ((month:MonthOfYear)->Unit)? = null
+    var onClick : ((month:Month)->Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType==Constant.VIEW_TYPE.NORMAL_ITEM.ordinal){
@@ -54,8 +55,8 @@ class MonthAdapter(val context: Context,val  months:MutableList<MonthOfYear>) : 
 
     inner class MyViewHolder(val binding:LayoutMonthItemBinding) : RecyclerView.ViewHolder(binding.root){
         @SuppressLint("SetTextI18n")
-        fun bind(month:MonthOfYear){
-            binding.txtMonth.text = "${month.monthName} ${month.year}"
+        fun bind(month:Month){
+            binding.txtMonth.text = "${month.name} ${month.isActive}"
 
             binding.root.setOnClickListener {
                 onClick?.invoke(month)

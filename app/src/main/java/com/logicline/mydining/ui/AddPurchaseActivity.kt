@@ -30,7 +30,6 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
     lateinit var binding : ActivityAddPurchaseBinding
     lateinit var loadingDialog : LoadingDialog
     private var userList: List<MessUser>? = null
-    private var type = 0
     private var isDeposit = 0
 
     lateinit var selectedDate : String
@@ -47,9 +46,9 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
         myFullScreenAd = MyFullScreenAd(this, true)
 
 
-        val type = intent.getStringExtra(Constant.PURCHASE_TYPE) ?: PurchaseType.PURCHASE.type
+        val type = intent.getStringExtra(Constant.PURCHASE_TYPE) ?: PurchaseType.PURCHASE.value
 
-         purchaseType = PurchaseType.fromType(type)
+         purchaseType = PurchaseType.fromValue(type)
 
         when (purchaseType) {
             PurchaseType.PURCHASE -> {
@@ -178,7 +177,7 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
             return
         }
 
-        if(type<1 || type>2){
+        if(purchaseType == null){
             shortToast("Please select purchase type")
             return
         }
@@ -186,7 +185,7 @@ class AddPurchaseActivity : BaseActivity(true), MyDatePicker.OnDateSelectListene
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .addPurchase(selectedUser?.id!!, selectedDate, productDesc, price, type, isDeposit)
+            .addPurchase(selectedUser?.id!!, selectedDate, productDesc, price, purchaseType!!.value, isDeposit)
             .enqueue(object : Callback<ServerResponse<Purchase>> {
                 override fun onResponse(
                     call: Call<ServerResponse<Purchase>>, response: Response<ServerResponse<Purchase>>) {

@@ -1,12 +1,12 @@
 package com.logicline.mydining.enums
 
-enum class PurchaseType(val type: String) {
+enum class PurchaseType(val value: String) {
     PURCHASE("purchase"),
-    OTHER_PURCHASE("other-purchase");
+    OTHER_PURCHASE("other-cost");
 
     companion object {
-        fun fromType(type: String): PurchaseType? {
-            return values().find { it.type == type }
+        fun fromValue(value: String): PurchaseType? {
+            return entries.find { it.value == value }
         }
     }
 }

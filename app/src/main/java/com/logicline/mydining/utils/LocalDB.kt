@@ -1,6 +1,7 @@
 package com.logicline.mydining.utils
 
 import com.logicline.mydining.models.Ad
+import com.logicline.mydining.models.Month
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.InitialData
@@ -95,6 +96,16 @@ object LocalDB {
 
     fun setFirstOpen(v:Boolean){
         Paper.book().write(FIRST_OPEN_ID, v)
+    }
+
+
+    fun setActiveMonth(month : Month){
+        Paper.book().write(Constant.ACTIVE_MONTH, month)
+    }
+
+
+    fun getActiveMonth() : Month?{
+        return Paper.book().read<Month?>(Constant.ACTIVE_MONTH, null)
     }
 
 
