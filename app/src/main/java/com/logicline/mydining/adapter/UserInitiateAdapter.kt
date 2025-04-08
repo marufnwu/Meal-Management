@@ -47,13 +47,13 @@ class UserInitiateAdapter(val context: Context, val users: MutableList<MessUser>
 
             binding.txtName.text = messUser.user?.name
             if(type==Type.INITIATE){
-//                if(user.active!="1"){
-//                    binding.action.setImageResource(R.drawable.cross)
-//                }else{
-//                    binding.action.setImageResource(R.drawable.tick)
-//                }
+                if(messUser.status!="active"){
+                    binding.action.setImageResource(R.drawable.cross)
+                }else{
+                    binding.action.setImageResource(R.drawable.tick)
+                }
 
-                binding.action.setImageResource(R.drawable.tick)
+//                binding.action.setImageResource(R.drawable.tick)
 
             }else{
                 binding.action.setImageResource(R.drawable.plus)

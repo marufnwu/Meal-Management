@@ -27,8 +27,6 @@ import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
-import com.maruf.jdialog.JDialog
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -223,16 +221,12 @@ class MembersActivity : BaseActivity() {
         dialogBinding.ccp.setHintExampleNumberEnabled(true)
         dialogBinding.ccp.registerCarrierNumberEditText(dialogBinding.edtPhone)
 
+        var countryCode : String? = null
 
+        dialogBinding.ccp.setOnCountryChangeListener {
+             countryCode = dialogBinding.ccp.selectedCountryCode
+        }
 
-        val adapter = ArrayAdapter(
-            this,
-            R.layout.layout_spinner_item,
-            countries.map { it.name } // This is a List<String>
-        )
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        dialogBinding.spinnerCountry.adapter = adapter
 
 
         ArrayAdapter.createFromResource(this, R.array.gender, R.layout.layout_spinner_item).also { adapter ->
@@ -279,7 +273,18 @@ class MembersActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            val phone = dialogBinding.ccp.fullNumber
+            var phone = dialogBinding.ccp.fullNumber
+
+
+            // Get the selected country code
+            val code: String = dialogBinding.ccp.getSelectedCountryCode()
+
+
+            if (phone.startsWith(code)) {
+                 phone = phone.substring(code.length)
+            }
+
+            Toast.makeText(this, "$phone", Toast.LENGTH_SHORT).show()
 
             if(gender==null){
                 shortToast("Please select gender")
@@ -303,7 +308,7 @@ class MembersActivity : BaseActivity() {
 
             loadingDialog.show()
             (application as MyApplication).myApi
-                .addUser(name, phone, pass, userName, email, city, gender!!, country)
+                .addUser(name, phone, pass, pass, userName, email, city, gender!!.toLowerCase(), countryCode = countryCode)
                 .enqueue(object: Callback<GenericRespose> {
                     override fun onResponse(
                         call: Call<GenericRespose>, response: Response<GenericRespose>

@@ -2,44 +2,57 @@ package com.logicline.mydining.utils
 
 import android.app.Dialog
 import android.content.Context
+import android.view.View
+import android.widget.Button
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.SearchView
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.SearchableStringAdapter
+
 class SearchableListDialog(
     private val context: Context,
     private val title: String = "Select Item",
     private val items: List<String>,
-    private val onItemSelected: (List<String>) -> Unit, // Multi-select callback
-    private val supportMultiSelect: Boolean = false, // Flag for multi-select
-    private val preSelectedItems: List<String> = emptyList() // Pre-selected items
+    private val onItemSelected: (List<String>) -> Unit,
+    private val supportMultiSelect: Boolean = false,
+    private val preSelectedItems: List<String> = emptyList()
 ) {
 
     private lateinit var dialog: Dialog
     private lateinit var adapter: SearchableStringAdapter
     private var filteredItems: List<String> = items
-    private var selectedItems: MutableList<String> = preSelectedItems.toMutableList()
+    private val selectedItems = preSelectedItems.toMutableList()
     private var lastSearchQuery: String = ""
 
-    // Show the dialog
     fun show() {
         dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_searchable_list)
+        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         dialog.setTitle(title)
 
         val searchView = dialog.findViewById<SearchView>(R.id.searchView)
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
+        val btnDone = dialog.findViewById<Button>(R.id.btnDone)
 
-        adapter = SearchableStringAdapter(filteredItems) { selected ->
-            handleItemSelection(selected)
+        adapter = SearchableStringAdapter(filteredItems, selectedItems) { clickedItem ->
+            handleItemSelection(clickedItem)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
+        // Multi-select done button visibility
+        btnDone?.visibility = if (supportMultiSelect) View.VISIBLE else View.GONE
+
+        // Done button click
+        btnDone?.setOnClickListener {
+            onItemSelected(selectedItems)
+            dialog.dismiss()
+        }
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextSubmit(query: String?) = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 lastSearchQuery = newText.orEmpty()
@@ -48,13 +61,10 @@ class SearchableListDialog(
             }
         })
 
-        // Restore last search query
         searchView.setQuery(lastSearchQuery, false)
-
         dialog.show()
     }
 
-    // Handle item selection based on multi-select flag
     private fun handleItemSelection(selected: String) {
         if (supportMultiSelect) {
             if (selectedItems.contains(selected)) {
@@ -62,16 +72,15 @@ class SearchableListDialog(
             } else {
                 selectedItems.add(selected)
             }
+            adapter.updateSelectedItems(selectedItems)
         } else {
             selectedItems.clear()
             selectedItems.add(selected)
-            dialog.dismiss() // Automatically dismiss on single select
+            onItemSelected(selectedItems)
+            dialog.dismiss()
         }
-
-        onItemSelected(selectedItems) // Call the callback with selected items
     }
 
-    // Filter items based on search query
     private fun filterItems(query: String) {
         filteredItems = items.filter {
             it.contains(query, ignoreCase = true)
@@ -79,24 +88,14 @@ class SearchableListDialog(
         adapter.filterList(filteredItems)
     }
 
-    // Get the selected items (useful for multi-select mode)
-    fun getSelectedItems(): List<String> {
-        return selectedItems
-    }
+    fun getSelectedItems(): List<String> = selectedItems
 
-    // Get the selected item (useful for single select mode)
-    fun getSelectedItem(): String? {
-        return if (selectedItems.isNotEmpty()) selectedItems.first() else null
-    }
-
-    // Set pre-selected item(s)
     fun setPreSelected(items: List<String>) {
         selectedItems.clear()
         selectedItems.addAll(items)
-        filterItems(lastSearchQuery) // Refresh the filtered list based on the search
+        filterItems(lastSearchQuery)
     }
 
-    // Save the last search query
     fun saveLastSearch(query: String) {
         lastSearchQuery = query
     }

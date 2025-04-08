@@ -79,11 +79,13 @@ interface MyApi {
         @Field("name") name:String,
         @Field("phone") phone:String,
         @Field("password") password:String,
-        @Field("userName") userName:String,
+        @Field("password_confirmation") passwordConfirmation :String,
+        @Field("user_name") userName:String,
         @Field("email") email:String,
         @Field("city") city:String,
         @Field("gender") gender:String,
-        @Field("country") country:String,
+        @Field("country_id") countryId: String? = null,
+        @Field("country_code") countryCode: String? = null,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
@@ -221,10 +223,9 @@ interface MyApi {
     @GET("api/member/initiated/false")
     suspend fun getNotInitiatedUser(): Response<ServerResponse<List<MessUser>>>
 
-    @FormUrlEncoded
     @POST("api/member/inititate/add/{messUserId}")
     suspend fun initiateUser(
-        @Field("messUserId") messUserId: Int,
+        @Path("messUserId") messUserId: Int,
     ): Response<ServerResponse<Void>>
 
     @FormUrlEncoded

@@ -40,6 +40,7 @@ class InitiateMemberActivity : BaseActivity() {
 
         initViews()
         getInitiateUser()
+        getNotInitiateUser()
     }
 
     @SuppressLint("SetTextI18n")
