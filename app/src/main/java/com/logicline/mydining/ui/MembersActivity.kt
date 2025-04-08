@@ -15,6 +15,7 @@ import com.logicline.mydining.databinding.ActivityMembersBinding
 import com.logicline.mydining.databinding.DialogAddNewMemberBinding
 import com.logicline.mydining.enums.MessPermission
 import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
+import com.logicline.mydining.models.Country
 import com.logicline.mydining.models.MessUser
 import com.logicline.mydining.models.UserData
 import com.logicline.mydining.models.response.GenericRespose
@@ -39,6 +40,7 @@ class MembersActivity : BaseActivity() {
     lateinit var loadingDialog: LoadingDialog
     private var userList: MutableList<MessUser> = mutableListOf()
     lateinit var myFullScreenAd: MyFullScreenAd
+    var countries : MutableList<Country> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +65,8 @@ class MembersActivity : BaseActivity() {
         adapter = UserListAdapter(this, userList)
 
         adapter.onAction = object : UserListAdapter.OnAction {
-            override fun onDeleteClick(userId: String) {
-                userDeleteCheck(userId)
+            override fun onDeleteClick(messUser: MessUser) {
+                userDeleteCheck(messUser)
             }
 
         }
@@ -75,55 +77,83 @@ class MembersActivity : BaseActivity() {
         }
 
         getUsersList()
+        getCountries()
     }
 
-    private fun userDeleteCheck(userId: String) {
-        loadingDialog.show()
+    private fun getCountries() {
         (application as MyApplication)
             .myApi
-            .userDeleteCheck(userId, Constant.getCurrentYear(), Constant.getCurrentMonthNumber())
-            .enqueue(object : Callback<GenericRespose> {
-                override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
-                    loadingDialog.hide()
-                    if (response.isSuccessful && response.body()!=null){
+            .getCountries()
+            .enqueue(object : Callback<ServerResponse<MutableList<Country>>> {
+                override fun onResponse(
+                    call: Call<ServerResponse<MutableList<Country>>>,
+                    response: Response<ServerResponse<MutableList<Country>>>
+                ) {
+                    if(response.isSuccessful && response.body()!=null){
                         val body = response.body()!!
-                        if(body.error){
-                            //show warning
-
-                            JDialog.make(this@MembersActivity)
-                                .setCancelable(true)
-                                .setIconType(JDialog.IconType.WARNING)
-                                .setBodyText(body.msg)
-                                .setNegativeButton("Cancel"){
-                                    it.hideDialog()
-                                }.setPositiveButton("Yes! Delete Now"){
-                                    it.hideDialog()
-                                    deleteUser(userId)
-                                }
-                                .build()
-                                .showDialog()
-
-                        }else{
-                            //account deleted
-
-                            shortToast(body.msg)
-                            getUsersList()
+                        if(!body.error){
+                            countries.clear()
+                            countries.addAll(body.data!!)
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
-                    loadingDialog.hide()
+                override fun onFailure(
+                    call: Call<ServerResponse<MutableList<Country>>>,
+                    t: Throwable
+                ) {
                 }
 
             })
     }
 
-    private fun deleteUser(userId: String) {
+    private fun userDeleteCheck(messUser: MessUser) {
+//        loadingDialog.show()
+//        (application as MyApplication)
+//            .myApi
+//            .userDeleteCheck(mess, Constant.getCurrentYear(), Constant.getCurrentMonthNumber())
+//            .enqueue(object : Callback<GenericRespose> {
+//                override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
+//                    loadingDialog.hide()
+//                    if (response.isSuccessful && response.body()!=null){
+//                        val body = response.body()!!
+//                        if(body.error){
+//                            //show warning
+//
+//                            JDialog.make(this@MembersActivity)
+//                                .setCancelable(true)
+//                                .setIconType(JDialog.IconType.WARNING)
+//                                .setBodyText(body.msg)
+//                                .setNegativeButton("Cancel"){
+//                                    it.hideDialog()
+//                                }.setPositiveButton("Yes! Delete Now"){
+//                                    it.hideDialog()
+//                                    deleteUser(messUser)
+//                                }
+//                                .build()
+//                                .showDialog()
+//
+//                        }else{
+//                            //account deleted
+//
+//                            shortToast(body.msg)
+//                            getUsersList()
+//                        }
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+//                    loadingDialog.hide()
+//                }
+//
+//            })
+    }
+
+    private fun deleteUser(messUser: MessUser) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
-            .userDelete(userId, Constant.getCurrentYear(), Constant.getCurrentMonthNumber())
+            .userDelete(messUser.id, Constant.getCurrentYear(), Constant.getCurrentMonthNumber())
             .enqueue(object : Callback<GenericRespose> {
                 override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
                     loadingDialog.hide()
@@ -193,6 +223,16 @@ class MembersActivity : BaseActivity() {
         dialogBinding.ccp.setHintExampleNumberEnabled(true)
         dialogBinding.ccp.registerCarrierNumberEditText(dialogBinding.edtPhone)
 
+
+
+        val adapter = ArrayAdapter(
+            this,
+            R.layout.layout_spinner_item,
+            countries.map { it.name } // This is a List<String>
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dialogBinding.spinnerCountry.adapter = adapter
 
 
         ArrayAdapter.createFromResource(this, R.array.gender, R.layout.layout_spinner_item).also { adapter ->

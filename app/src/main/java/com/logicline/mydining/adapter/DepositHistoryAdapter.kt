@@ -6,31 +6,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.LayoutDepositHistoryItemBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
+import com.logicline.mydining.models.Deposit
 import com.logicline.mydining.models.DepositHistory
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyExtensions.shortToast
 
-class DepositHistoryAdapter(val context: Context ,val depositHistoryList: List<DepositHistory>) : RecyclerView.Adapter<DepositHistoryAdapter.MyViewHolder>() {
+class DepositHistoryAdapter(val context: Context, val depositHistoryList: MutableList<Deposit>) : RecyclerView.Adapter<DepositHistoryAdapter.MyViewHolder>() {
 
 
     interface OnItemAction{
-        fun onEdit(depositHistory: DepositHistory, position: Int)
+        fun onEdit(deposit: Deposit, position: Int)
     }
 
     var onItemAction : OnItemAction? = null
 
     inner class MyViewHolder(val binding: LayoutDepositHistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: DepositHistory){
+        fun bind(item: Deposit){
             binding.txtDate.text = item.date
             binding.txtAmount.text = item.amount.toString()
 
-            if(!Constant.isManagerOrSuperUser()){
+            if(!LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.DEPOSIT_MANAGEMENT)){
                 binding.imgEdit.setImageResource(R.drawable.cross)
             }
 
             binding.imgEdit.setOnClickListener {
 
-                if(Constant.isManagerOrSuperUser()){
+                if(LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.DEPOSIT_MANAGEMENT)){
                     onItemAction?.onEdit(item, absoluteAdapterPosition)
                 }else{
                     context.shortToast("You don't have access to edit or delete any data")

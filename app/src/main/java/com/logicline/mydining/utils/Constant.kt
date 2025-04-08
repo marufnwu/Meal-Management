@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit
 
 object Constant {
 
+    val MESS_USER_ID: String = "MESS_USER_ID"
     val ACTIVE_MONTH: String = "ACTIVE_MONTH"
     val APP_LANG_KEY: String = "APPLANGUAGE"
     const val MONTH: String = "Month"

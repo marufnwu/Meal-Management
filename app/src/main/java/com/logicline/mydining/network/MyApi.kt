@@ -1,14 +1,14 @@
 package com.logicline.mydining.network
 
-import android.util.Base64
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.Banner
+import com.logicline.mydining.models.Country
 import com.logicline.mydining.models.Deposit
+import com.logicline.mydining.models.DepositHistory
 import com.logicline.mydining.models.Fund
-import com.logicline.mydining.models.InitiateUser
 import com.logicline.mydining.models.Meal
 import com.logicline.mydining.models.MealsData
 import com.logicline.mydining.models.Mess
@@ -61,7 +61,7 @@ interface MyApi {
         @Query("date") date:String,
     ): Call<UserListResponse>
 
-    @GET("api//member/list")
+    @GET("api/member/list")
     fun getUsers(
         @Query("active") active:Int
     ): Call<ServerResponse<List<MessUser>>>
@@ -148,8 +148,7 @@ interface MyApi {
     ): Call<ServerResponse<Meal>>
 
 
-    @FormUrlEncoded
-    @POST("api/meal/{mealId}/delete")
+    @DELETE("api/meal/{mealId}/delete")
     fun deleteMeal(
         @Path("mealId") mealId: Int,
     ): Call<ServerResponse<Void>>
@@ -299,30 +298,25 @@ interface MyApi {
         @Query("name") name :String,
     ): Call<ServerResponse<Banner>>
 
-    @FormUrlEncoded
-    @POST("api/deposit.getByUserIdDate.php")
+    @GET("api/deposit/history/{messUserId}")
     fun getDepositByUserIdDate(
-        @Field("userId") userId: String,
-        @Field("year") year: String,
-        @Field("month") month: String,
-        @Field("messId") messId: String,
-    ): Call<ServerResponse<DepositHistoryResponse>>
+        @Path("messUserId") userId: Int,
+    ): Call<ServerResponse<DepositHistory>>
 
 
-    @FormUrlEncoded
-    @POST("api/deposit.delete.php")
+    @DELETE("api/deposit/{id}/delete")
     fun deleteDeposit(
-        @Field("id") depositId: Int,
+        @Path("id") depositId: Int,
     ): Call<GenericRespose>
 
 
     @FormUrlEncoded
-    @POST("api/deposit.update.php")
+    @PUT("api/deposit/{id}/update")
     fun updateDeposit(
-        @Field("id") depositId: Int,
+        @Path("id") depositId: Int,
         @Field("amount") amount: Float,
         @Field("date") date: String,
-    ): Call<GenericRespose>
+    ): Call<ServerResponse<Void>>
 
     @FormUrlEncoded
     @PUT("api/{type}/{id}/update")
@@ -366,7 +360,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/user.delete.php")
     fun userDelete(
-        @Field("userId") userId: String,
+        @Field("userId") userId: Int,
         @Field("year") year: String,
         @Field("month") month: String,
     ): Call<GenericRespose>
@@ -520,6 +514,9 @@ interface MyApi {
     //New Api
     @GET("api/month/list")
     fun getMonths() : Call<ServerResponse<MutableList<Month>>>
+
+    @GET("api/country/list")
+    fun getCountries() : Call<ServerResponse<MutableList<Country>>>
 
 
     companion object {

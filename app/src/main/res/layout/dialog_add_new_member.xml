@@ -59,6 +59,18 @@
             android:layout_height="wrap_content"
             />
 
+        <RelativeLayout
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/edittext_white_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Spinner
+                style="@style/mySpinnerItemStyle"
+                android:id="@+id/spinnerCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
         <EditText
             android:id="@+id/edtPhone"
             android:layout_width="match_parent"

@@ -11,9 +11,12 @@ import com.logicline.mydining.adapter.holders.AdViewHolder
 import com.logicline.mydining.databinding.LayoutDayMealBinding
 import com.logicline.mydining.databinding.LayoutMemberMealBinding
 import com.logicline.mydining.databinding.LayoutNativeAdViewBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.Meal
 import com.logicline.mydining.models.MealDate
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.LocalDB
 
 
 class DayMealListAdapter(val context: Context, val dayList: MutableList<MealDate>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -129,7 +132,7 @@ class MemberMealListAdapter(val context: Context, val memberList : List<Meal>): 
             }
 
             binding.root.setOnClickListener {
-                if(Constant.isManagerOrSuperUser()){
+                if(LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.MEAL_EDIT, MessPermission.MEAL_MANAGEMENT)){
                     onAction?.onClick(meal, absoluteAdapterPosition)
                 }
             }

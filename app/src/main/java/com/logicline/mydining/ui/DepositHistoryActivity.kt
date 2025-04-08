@@ -9,14 +9,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.DepositHistoryAdapter
 import com.logicline.mydining.databinding.ActivityDepositHistoryBinding
 import com.logicline.mydining.databinding.DialogEditDepositLayoutBinding
+import com.logicline.mydining.models.Deposit
 import com.logicline.mydining.models.DepositHistory
-import com.logicline.mydining.models.response.DepositHistoryResponse
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
@@ -29,6 +28,7 @@ import com.logicline.mydining.utils.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class DepositHistoryActivity : BaseActivity() {
     lateinit var myFullScreenAd: MyFullScreenAd
@@ -40,7 +40,7 @@ class DepositHistoryActivity : BaseActivity() {
     lateinit var binding: ActivityDepositHistoryBinding
     lateinit var adapter: DepositHistoryAdapter
 
-    private var depositHistory : MutableList<DepositHistory> = mutableListOf()
+    private var deposits : MutableList<Deposit> = mutableListOf()
     lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,11 +65,11 @@ class DepositHistoryActivity : BaseActivity() {
         binding.recyDepositHistory.layoutManager = LinearLayoutManager(this)
         binding.recyDepositHistory.setHasFixedSize(true)
 
-        adapter = DepositHistoryAdapter(this, depositHistory)
+        adapter = DepositHistoryAdapter(this, deposits)
 
         adapter.onItemAction = object : DepositHistoryAdapter.OnItemAction {
-            override fun onEdit(depositHistory: DepositHistory, pos: Int) {
-                showEditDailog(depositHistory, pos)
+            override fun onEdit(deposit: Deposit, pos: Int) {
+                showEditDailog(deposit, pos)
             }
         }
 
@@ -77,7 +77,7 @@ class DepositHistoryActivity : BaseActivity() {
         binding.recyDepositHistory.adapter = adapter
     }
 
-    private fun showEditDailog(depositHistory: DepositHistory, pos: Int) {
+    private fun showEditDailog(deposit: Deposit, pos: Int) {
 
         val editBinding = DialogEditDepositLayoutBinding.inflate(layoutInflater)
 
@@ -97,9 +97,9 @@ class DepositHistoryActivity : BaseActivity() {
 
 
 
-        editBinding.txtName.text = depositHistory.name
-        editBinding.txtDate.text = depositHistory.date
-        editBinding.edtAmount.setText(depositHistory.amount.toString())
+        editBinding.txtName.text = deposit.messUser?.user?.name
+        editBinding.txtDate.text = deposit.date
+        editBinding.edtAmount.setText(deposit.amount.toString())
 
 
         editBinding.txtDate.setOnClickListener {
@@ -111,20 +111,20 @@ class DepositHistoryActivity : BaseActivity() {
                     }
 
                     override fun dateString(date: String) {
-                        depositHistory.date = date
+                        deposit.date = date
                         editBinding.txtDate.text = date
                     }
 
                 },
-                Constant.getDay(depositHistory.date).toInt(),
-                Constant.getMonthNumber(depositHistory.date).toInt(),
-                Constant.getYear(depositHistory.date).toInt(),
+                Constant.getDay(deposit.date).toInt(),
+                Constant.getMonthNumber(deposit.date).toInt(),
+                Constant.getYear(deposit.date).toInt(),
             ).create().show()
         }
 
 
         editBinding.btnUpdate.setOnClickListener {
-            if(depositHistory.date.isEmpty()){
+            if(deposit.date.isEmpty()){
                 shortToast("Date not valid")
                 return@setOnClickListener
             }
@@ -137,16 +137,16 @@ class DepositHistoryActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            depositHistory.amount = amount
+            deposit.amount = amount
 
-            update(depositHistory.id, depositHistory.amount, depositHistory.date, pos, dialog)
+            update(deposit.id, deposit.amount, deposit.date, pos, dialog)
 
 
 
         }
 
         editBinding.btnDelete.setOnClickListener {
-            delete(depositHistory.id, pos, dialog)
+            delete(deposit.id, pos, dialog)
         }
 
 
@@ -165,10 +165,10 @@ class DepositHistoryActivity : BaseActivity() {
         (application as MyApplication)
             .myApi
             .updateDeposit(id, amount, date)
-            .enqueue(object : Callback<GenericRespose> {
+            .enqueue(object : Callback<ServerResponse<Void>> {
                 override fun onResponse(
-                    call: Call<GenericRespose>,
-                    response: Response<GenericRespose>
+                    call: Call<ServerResponse<Void>>,
+                    response: Response<ServerResponse<Void>>
                 ) {
                     loadingDialog.hide()
                     if(response.isSuccessful && response.body()!=null){
@@ -185,7 +185,7 @@ class DepositHistoryActivity : BaseActivity() {
 
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Void>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
@@ -227,16 +227,13 @@ class DepositHistoryActivity : BaseActivity() {
 
     private fun initCall(){
         val type = intent?.getStringExtra(Constant.HISTORY_TYPE)
-        val month = intent?.getStringExtra(Constant.MONTH)
-        val year = intent?.getStringExtra(Constant.YEAR)
-        val messId = intent?.getStringExtra(Constant.MESS_ID)
 
         type?.let {
             if(it==Type.SINGLE_USER.name){
                 //single user history
-                val userId = intent?.getStringExtra(Constant.USER_ID)
-                userId?.let {
-                    getSingleUserHistory(it, year, month, messId)
+                val messUserId = intent?.getIntExtra(Constant.MESS_USER_ID, 0)
+                messUserId?.let {
+                    getSingleUserHistory(messUserId)
                 }
 
             }else{
@@ -245,24 +242,17 @@ class DepositHistoryActivity : BaseActivity() {
         }
     }
 
-    private fun getSingleUserHistory(id: String, year: String?, month: String?, messId: String?) {
-
-
-
-        if(year==null || month == null|| messId == null){
-            shortToast("Something went wrong!!")
-            return
-        }
+    private fun getSingleUserHistory(id: Int) {
 
         loadingDialog.show()
 
         (application as MyApplication)
             .myApi
-            .getDepositByUserIdDate(id, year, month, messId)
-            .enqueue(object : Callback<ServerResponse<DepositHistoryResponse>> {
+            .getDepositByUserIdDate(id)
+            .enqueue(object : Callback<ServerResponse<DepositHistory>> {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(
-                    call: Call<ServerResponse<DepositHistoryResponse>>, response: Response<ServerResponse<DepositHistoryResponse>>) {
+                    call: Call<ServerResponse<DepositHistory>>, response: Response<ServerResponse<DepositHistory>>) {
                     if (response.isSuccessful && response.body()!=null){
 
                         loadingDialog.hide()
@@ -272,14 +262,14 @@ class DepositHistoryActivity : BaseActivity() {
                         if(!res.error){
 
                             res.data?.let {
-                                if(it.history.isNotEmpty()){
+                                if(it.deposits.isNotEmpty()){
                                     binding.layoutParent.visibility = View.VISIBLE
-                                    depositHistory.clear()
-                                    depositHistory.addAll(res.data!!.history)
+                                    deposits.clear()
+                                    deposits.addAll(res.data!!.deposits)
                                     adapter.notifyDataSetChanged()
                                 }
 
-                                binding.txtTotal.text  =it.total.toString()
+                                binding.txtTotal.text  = String.format(Locale.getDefault(), it.totalAmount.toString())
 
                             }
 
@@ -290,7 +280,7 @@ class DepositHistoryActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ServerResponse<DepositHistoryResponse>>, t: Throwable) {
+                    call: Call<ServerResponse<DepositHistory>>, t: Throwable) {
                     loadingDialog.hide()
                     shortToast(t.message)
 

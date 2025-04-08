@@ -18,6 +18,8 @@ import com.logicline.mydining.R
 import com.logicline.mydining.adapter.DayMealListAdapter
 import com.logicline.mydining.databinding.ActivityMealBinding
 import com.logicline.mydining.databinding.DialogEditMealDialogBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.Meal
 import com.logicline.mydining.models.MealDate
 import com.logicline.mydining.models.MealsData
@@ -26,6 +28,7 @@ import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LangUtils
 import com.logicline.mydining.utils.LoadingDialog
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -58,7 +61,7 @@ class MealActivity : AppCompatActivity() {
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)
 
-        if(!Constant.isManagerOrSuperUser()){
+        if(!LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.MEAL_MANAGEMENT, MessPermission.MEAL_ADD)){
             binding.addMeal.visibility = View.GONE
         }
 
@@ -123,9 +126,9 @@ class MealActivity : AppCompatActivity() {
         editBinding.txtName.text = meal.messUser?.user?.name
         editBinding.txtDate.text = meal.date
 
-        editBinding.edtBreakfast.setText(meal.breakfast)
-        editBinding.edtLunch.setText(meal.lunch)
-        editBinding.edtDinner.setText(meal.dinner)
+        editBinding.edtBreakfast.setText(meal.breakfast.toString())
+        editBinding.edtLunch.setText(meal.lunch.toString())
+        editBinding.edtDinner.setText(meal.dinner.toString())
 
         editBinding.btnCancel.setOnClickListener {
             dialog.dismiss()

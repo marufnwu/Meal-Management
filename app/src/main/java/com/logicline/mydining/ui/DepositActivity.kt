@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.adapter.DepositListAdapter
 import com.logicline.mydining.databinding.ActivityDepositBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.models.DepositSum
 import com.logicline.mydining.models.response.DepositsSumResponse
 import com.logicline.mydining.models.response.ServerResponse
@@ -16,6 +18,7 @@ import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -48,7 +51,10 @@ class DepositActivity : BaseActivity() {
 
         loadingDialog = LoadingDialog(this)
 
-        if(!Constant.isManagerOrSuperUser()) binding.btnAddDeposit.visibility = View.GONE
+        if(!LocalDB.getUserData()?.messUser?.hasAnyPermission(
+                MessPermission.DEPOSIT_MANAGEMENT, MessPermission.DEPOSIT_ADD
+            )!!
+        ) binding.btnAddDeposit.visibility = View.GONE
 
         intent?.let {
             it.getStringExtra(Constant.YEAR)?.let {
@@ -126,19 +132,17 @@ class DepositActivity : BaseActivity() {
         val adpter = DepositListAdapter(this, listOfDeposit.toMutableList())
 
         adpter.onItemClickListener = (object : DepositListAdapter.OnItemClickListener {
-            override fun onClick(userId: Int, ) {
-                showUserDepositHistory(userId)
+            override fun onClick(depositSum : DepositSum, ) {
+                showUserDepositHistory(depositSum)
             }
 
         })
         binding.recyDeposit.adapter = adpter
     }
 
-    private fun showUserDepositHistory(userId: Int) {
+    private fun showUserDepositHistory(depositSum: DepositSum) {
         startActivity(Intent(this, DepositHistoryActivity::class.java)
-            .putExtra(Constant.YEAR, year).putExtra(Constant.MONTH, month)
-            .putExtra(Constant.USER_ID,userId)
-            .putExtra(Constant.MESS_ID, 0)
+            .putExtra(Constant.MESS_USER_ID, depositSum.messUserId)
             .putExtra(Constant.HISTORY_TYPE, DepositHistoryActivity.Type.SINGLE_USER.name))
     }
 

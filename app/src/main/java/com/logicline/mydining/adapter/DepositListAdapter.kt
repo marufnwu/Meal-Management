@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.adapter.holders.AdViewHolder
 import com.logicline.mydining.databinding.LayoutDepositItemBinding
 import com.logicline.mydining.databinding.LayoutNativeAdViewBinding
+import com.logicline.mydining.models.Deposit
 import com.logicline.mydining.models.DepositSum
 import com.logicline.mydining.utils.Constant
 
 class DepositListAdapter(val context: Context, val depositList: MutableList<DepositSum>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface OnItemClickListener{
-        fun onClick(userId: Int)
+        fun onClick(deposit : DepositSum)
     }
 
     var onItemClickListener: OnItemClickListener? = null
@@ -67,7 +68,7 @@ class DepositListAdapter(val context: Context, val depositList: MutableList<Depo
             binding.txtAmount.text = deposit.totalAmount.toString() + " /="
 
             binding.root.setOnClickListener {
-                onItemClickListener?.onClick(deposit.messUserId)
+                onItemClickListener?.onClick(deposit)
             }
 
         }

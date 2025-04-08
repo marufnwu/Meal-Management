@@ -1,22 +1,29 @@
 package com.logicline.mydining.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.logicline.mydining.BuildConfig
+import com.logicline.mydining.R
 import com.logicline.mydining.databinding.LayoutUserItemBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
+import com.logicline.mydining.enums.MessUserStatus
 import com.logicline.mydining.models.MessUser
+import com.logicline.mydining.ui.ProfileActivity
 import com.logicline.mydining.utils.Constant
+import com.logicline.mydining.utils.LocalDB
 
 
 class UserListAdapter(val context: Context, val userList: MutableList<MessUser>) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
 
     interface OnAction{
-        fun onDeleteClick(userId: String)
+        fun onDeleteClick(messUser: MessUser)
     }
 
 
@@ -44,18 +51,18 @@ class UserListAdapter(val context: Context, val userList: MutableList<MessUser>)
 
             binding.txtName.text = messUser.user?.name
 
-//            if(messUser.user?.active=="1"){
-//                Glide.with(context)
-//                    .load(R.drawable.check)
-//                    .into(binding.active)
-//            }
+            if(messUser.status==MessUserStatus.ACTIVE.value){
+                Glide.with(context)
+                    .load(R.drawable.check)
+                    .into(binding.active)
+            }
 
-//            binding.txtUserRole.text = Constant.getUserType(user.accType)
+            binding.txtUserRole.text =messUser.role?.role?: "User"
 
-            if (Constant.isSuperUser()){
+            if (LocalDB.getUserData()?.messUser?.hasAnyPermission(MessPermission.USER_MANAGEMENT) == true){
                 binding.layTrash.visibility = View.VISIBLE
                 binding.layTrash.setOnClickListener {
-//                    onAction?.onDeleteClick(user.id!!)
+                    onAction?.onDeleteClick(messUser)
                 }
             }else{
                 binding.layTrash.visibility = View.GONE
@@ -67,7 +74,7 @@ class UserListAdapter(val context: Context, val userList: MutableList<MessUser>)
 
 
             binding.root.setOnClickListener {
-//                context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("profile", user))
+                context.startActivity(Intent(context, ProfileActivity::class.java).putExtra("profile", messUser))
             }
         }
     }

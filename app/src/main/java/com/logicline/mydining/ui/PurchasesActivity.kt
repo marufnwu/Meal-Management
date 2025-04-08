@@ -16,6 +16,8 @@ import com.logicline.mydining.R
 import com.logicline.mydining.adapter.PurchaseListAdapter
 import com.logicline.mydining.databinding.ActivityPurchasesBinding
 import com.logicline.mydining.databinding.DialogEditPurchaseLayoutBinding
+import com.logicline.mydining.enums.MessPermission
+import com.logicline.mydining.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.enums.PurchaseType
 import com.logicline.mydining.models.Purchase
 import com.logicline.mydining.models.response.GenericRespose
@@ -25,6 +27,7 @@ import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
+import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -78,7 +81,7 @@ class PurchasesActivity : BaseActivity() {
             binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
         }
 
-        if (Constant.isManagerOrSuperUser()) {
+        if (LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.PURCHASE_MANAGEMENT, MessPermission.PURCHASE_ADD)) {
             binding.layoutAdminPurchase.visibility = View.VISIBLE
 
         } else {
