@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/PowderBlue"
-    tools:context=".ui.MealActivity">
+    tools:context=".ui.activities.MealActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-                <com.logicline.mydining.ui.custom_views.MonthPickerView
+                <com.logicline.mydining.ui.custom.MonthPickerView
                     android:id="@+id/monthPicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

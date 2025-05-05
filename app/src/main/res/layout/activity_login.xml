@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.activities.LoginActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"/>
 
 
-            <com.logicline.mydining.ui.custom_views.LanguageView
+            <com.logicline.mydining.ui.custom.LanguageView
                 android:drawablePadding="@dimen/_4sdp"
                 android:id="@+id/txtLang"
                 android:text=""
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 app:drawableLeftCompat="@drawable/translate" />
 
-            <com.logicline.mydining.ui.custom_views.BannerView
+            <com.logicline.mydining.ui.custom.BannerView
                 app:banner="loginActivity"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_width="match_parent"

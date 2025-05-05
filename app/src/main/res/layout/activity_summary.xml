@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SummaryActivity">
+    tools:context=".ui.activities.SummaryActivity">
 
     <LinearLayout
         android:padding="@dimen/_10sdp"
@@ -17,7 +17,7 @@
 
 
 
-        <com.logicline.mydining.ui.custom_views.MonthPickerView
+        <com.logicline.mydining.ui.custom.MonthPickerView
             android:id="@+id/monthPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

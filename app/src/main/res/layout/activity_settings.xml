@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/_8sdp"
     android:background="@color/WhiteSmoke"
-    tools:context=".ui.SettingsActivity">
+    tools:context=".ui.activities.SettingsActivity">
 
     <LinearLayout
         android:orientation="vertical"

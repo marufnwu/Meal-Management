@@ -141,6 +141,9 @@
     <string name="mess_status">Mess Status</string>
     <string name="mess_info">Mess Info</string>
     <string name="contact_us_text">For Any Issues/Query Contact With Us</string>
+    <string name="empty_state_message">"Not available "</string>
+    <string name="error_state_message">Something went wrong!</string>
+    <string name="info_state_message">Nothing found!</string>
 
 
 </resources>

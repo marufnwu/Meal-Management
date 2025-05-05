@@ -1,10 +1,10 @@
 package com.logicline.mydining.utils
 
-import com.logicline.mydining.models.Ad
-import com.logicline.mydining.models.Month
-import com.logicline.mydining.models.User
-import com.logicline.mydining.models.UserData
-import com.logicline.mydining.models.response.InitialData
+import com.logicline.mydining.data.models.Ad
+import com.logicline.mydining.data.models.Month
+import com.logicline.mydining.data.models.User
+import com.logicline.mydining.data.models.UserData
+import com.logicline.mydining.data.models.response.InitialData
 import io.paperdb.Paper
 
 object LocalDB {

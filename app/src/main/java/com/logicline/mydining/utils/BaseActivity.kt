@@ -1,28 +1,23 @@
 package com.logicline.mydining.utils
 
-import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.util.AttributeSet
-import android.view.Gravity
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.logicline.mydining.MyApplication
 import com.logicline.mydining.R
-import com.logicline.mydining.models.response.GenericRespose
-import com.logicline.mydining.ui.InitiateMemberActivity
+import com.logicline.mydining.data.models.response.GenericRespose
 import com.logicline.mydining.utils.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class BaseActivity(private val checkUserInitiate: Boolean = false) : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
+    protected open val checkUserInitiate: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
     override fun attachBaseContext(newBase: Context?) {
         if (newBase!=null) {

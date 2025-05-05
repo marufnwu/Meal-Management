@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.CreateMessActivity">
+    tools:context=".ui.activities.SignUpActivity">
 
 
     <LinearLayout
@@ -19,17 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_100sdp"/>
 
-
-        <EditText
-            android:id="@+id/edtMessName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/editext_bg"
-            android:hint="@string/mess_name"
-            android:inputType="textPersonName"
-            android:textColor="@color/Black"
-            android:textSize="@dimen/_16sdp" />
         <EditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"

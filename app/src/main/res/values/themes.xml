@@ -17,13 +17,13 @@
         <item name="actionBarTheme">@style/ThemeOverlay.Actionbar</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
         <item name="android:windowLightStatusBar" >false</item>
 
-        <item name="fontFamily">@font/app_font</item>
+<!--        <item name="fontFamily">@font/app_font</item>-->
 
         <item name="textOutlineColor">@color/Black</item>
         <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
@@ -61,7 +61,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
 
-        <item name="fontFamily">@font/app_font</item>
+<!--        <item name="fontFamily">@font/app_font</item>-->
 
     </style>
 

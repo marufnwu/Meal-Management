@@ -10,7 +10,7 @@
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
-        android:name=".utils.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,28 +18,28 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.MonthsActivity"
+            android:name=".ui.activities.MonthsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MessInfoActivity"
+            android:name=".ui.activities.MessInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ActiveMonthActivity"
+            android:name=".ui.activities.ActiveMonthActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MemberRequestActivity"
+            android:name=".ui.activities.MemberRequestActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SwitchMessActivity"
+            android:name=".ui.activities.SwitchMessActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.PreviousMonthActivity"
+            android:name=".ui.activities.PreviousMonthActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.FundActivity"
+            android:name=".ui.activities.FundActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ReportActivity"
+            android:name=".ui.activities.ReportActivity"
             android:exported="false" />
 
         <meta-data
@@ -50,34 +50,34 @@
             android:value="RATQWqcuNliMJzgxmUNkbSuxmn5O3k1DNmEePbDJuhUbcIxSLpM7HSBI9oZ6hcWLIOqdVgiaoBpdDp7_2CskMV" />
 
         <activity
-            android:name=".ui.MealRequestActivity"
+            android:name=".ui.activities.MealRequestActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.UserGuideActivity"
+            android:name=".ui.activities.UserGuideActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ChangeSuperuserActivity"
+            android:name=".ui.activities.ChangeSuperuserActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".ui.activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ResetPasswordActivity"
+            android:name=".ui.activities.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.DepositHistoryActivity"
+            android:name=".ui.activities.DepositHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.PurchaseRequestActivity"
+            android:name=".ui.activities.PurchaseRequestActivity"
             android:exported="false"
             android:label="Purchase Request"
-            android:parentActivityName=".ui.PurchasesActivity"
+            android:parentActivityName=".ui.activities.PurchasesActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.SubmitPurchaseActivity"
+            android:name=".ui.activities.SubmitPurchaseActivity"
             android:exported="false"
             android:label="Submit Purchase"
-            android:parentActivityName=".ui.PurchasesActivity">
+            android:parentActivityName=".ui.activities.PurchasesActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -94,59 +94,59 @@
             android:value="My Dining" />
 
         <activity
-            android:name=".ui.InitiateMemberActivity"
+            android:name=".ui.activities.InitiateMemberActivity"
             android:exported="false"
             android:label="Initiate Members" />
         <activity
-            android:name=".ui.GenericWebViewActivity"
+            android:name=".ui.activities.GenericWebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.CreateMessActivity"
+            android:name=".ui.activities.SignUpActivity"
             android:exported="false"
             android:label="Create Mess"
-            android:parentActivityName=".ui.LoginActivity" />
+            android:parentActivityName=".ui.activities.LoginActivity" />
         <activity
-            android:name=".ui.ProfileActivity"
+            android:name=".ui.activities.ProfileActivity"
             android:exported="false"
             android:label="Profile"
             android:theme="@style/Theme.MealManagementNoActionBar" />
         <activity
-            android:name=".ui.SummaryActivity"
+            android:name=".ui.activities.SummaryActivity"
             android:exported="false"
             android:label="Summary" />
         <activity
-            android:name=".ui.AddDepositActivity"
+            android:name=".ui.activities.AddDepositActivity"
             android:exported="false"
             android:label="Add Deposit" />
         <activity
-            android:name=".ui.DepositActivity"
+            android:name=".ui.activities.DepositActivity"
             android:exported="false"
             android:label="Deposit List" />
         <activity
-            android:name=".ui.AddPurchaseActivity"
+            android:name=".ui.activities.AddPurchaseActivity"
             android:exported="false"
             android:label="Add Purchase" />
         <activity
-            android:name=".ui.PurchasesActivity"
+            android:name=".ui.activities.PurchasesActivity"
             android:exported="false"
             android:label="Purchase List"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.AddMealActivity"
+            android:name=".ui.activities.AddMealActivity"
             android:exported="false"
             android:label="Add Meal" />
         <activity
-            android:name=".ui.MealActivity"
+            android:name=".ui.activities.MealActivity"
             android:exported="false"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="false"
-            android:parentActivityName=".ui.FirstActivity"
+            android:parentActivityName=".ui.activities.FirstActivity"
             android:theme="@style/Theme.MealManagementNoActionBar" />
         <activity
-            android:name=".ui.FirstActivity"
+            android:name=".ui.activities.FirstActivity"
             android:exported="true"
             android:theme="@style/Theme.MealManagementNoActionBar">
             <intent-filter>
@@ -156,11 +156,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MembersActivity"
+            android:name=".ui.activities.MembersActivity"
             android:exported="false"
             android:label="Members" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MealManagementNoActionBar" />
 

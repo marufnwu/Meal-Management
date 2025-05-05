@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
-import com.logicline.mydining.ui.FirstActivity;
+import com.logicline.mydining.ui.activities.FirstActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

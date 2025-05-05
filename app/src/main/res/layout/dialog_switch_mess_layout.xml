@@ -29,7 +29,7 @@
         android:gravity="center"
         android:hint="@string/enter_mess_id"
         android:layout_margin="@dimen/_10sdp"
-        android:background="@drawable/round_background"
+        android:background="@drawable/editext_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -20,7 +20,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.gson.Gson;
 import com.logicline.mydining.R;
-import com.logicline.mydining.ui.FirstActivity;
+import com.logicline.mydining.ui.activities.FirstActivity;
 import com.logicline.mydining.utils.Constant;
 
 

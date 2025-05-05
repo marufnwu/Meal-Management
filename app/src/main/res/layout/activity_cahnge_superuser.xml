@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/_8sdp"
     android:orientation="vertical"
-    tools:context=".ui.ChangeSuperuserActivity">
+    tools:context=".ui.activities.ChangeSuperuserActivity">
 
     <TextView
         android:id="@+id/txtNonSuperUser"

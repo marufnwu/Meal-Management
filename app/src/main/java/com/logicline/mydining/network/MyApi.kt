@@ -3,28 +3,37 @@ package com.logicline.mydining.network
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.logicline.mydining.BuildConfig
-import com.logicline.mydining.models.Ad
-import com.logicline.mydining.models.Banner
-import com.logicline.mydining.models.Country
-import com.logicline.mydining.models.Deposit
-import com.logicline.mydining.models.DepositHistory
-import com.logicline.mydining.models.Fund
-import com.logicline.mydining.models.Meal
-import com.logicline.mydining.models.MealsData
-import com.logicline.mydining.models.Mess
-import com.logicline.mydining.models.MessRequest
-import com.logicline.mydining.models.MessUser
-import com.logicline.mydining.models.Month
-import com.logicline.mydining.models.MonthOfYear
-import com.logicline.mydining.models.OtpRequest
-import com.logicline.mydining.models.Purchase
-import com.logicline.mydining.models.PurchaseRequest
-import com.logicline.mydining.models.Report
-import com.logicline.mydining.models.Support
-import com.logicline.mydining.models.User
-import com.logicline.mydining.models.UserData
-import com.logicline.mydining.models.UserGuide
-import com.logicline.mydining.models.response.*
+import com.logicline.mydining.data.models.Ad
+import com.logicline.mydining.data.models.Banner
+import com.logicline.mydining.data.models.Country
+import com.logicline.mydining.data.models.Deposit
+import com.logicline.mydining.data.models.DepositHistory
+import com.logicline.mydining.data.models.Fund
+import com.logicline.mydining.data.models.Meal
+import com.logicline.mydining.data.models.MealsData
+import com.logicline.mydining.data.models.Mess
+import com.logicline.mydining.data.models.MessRequest
+import com.logicline.mydining.data.models.MessUser
+import com.logicline.mydining.data.models.Month
+import com.logicline.mydining.data.models.MonthOfYear
+import com.logicline.mydining.data.models.OtpRequest
+import com.logicline.mydining.data.models.Purchase
+import com.logicline.mydining.data.models.PurchaseRequest
+import com.logicline.mydining.data.models.Report
+import com.logicline.mydining.data.models.response.DepositsResponse
+import com.logicline.mydining.data.models.response.PurchaseListResponse
+import com.logicline.mydining.data.models.response.ServerResponse
+import com.logicline.mydining.data.models.Support
+import com.logicline.mydining.data.models.User
+import com.logicline.mydining.data.models.response.GenericRespose
+import com.logicline.mydining.data.models.UserData
+import com.logicline.mydining.data.models.UserGuide
+import com.logicline.mydining.data.models.response.CheckLoginResponse
+import com.logicline.mydining.data.models.response.DepositsSumResponse
+import com.logicline.mydining.data.models.response.InitialDataResponse
+import com.logicline.mydining.data.models.response.MonthlySummaryResponse
+import com.logicline.mydining.data.models.response.Paging
+import com.logicline.mydining.data.models.response.UserListResponse
 import com.logicline.mydining.utils.LocalDB
 
 import okhttp3.Interceptor
@@ -41,6 +50,7 @@ import retrofit2.http.*
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.util.concurrent.TimeUnit
+
 interface MyApi {
 
     @GET("api/auth/check-login")
@@ -58,49 +68,49 @@ interface MyApi {
 
     @GET("api/user.currentUserInitiated.php")
     fun currentInitiatedUser(
-        @Query("date") date:String,
+        @Query("date") date: String,
     ): Call<UserListResponse>
 
     @GET("api/member/list")
     fun getUsers(
-        @Query("active") active:Int
+        @Query("active") active: Int
     ): Call<ServerResponse<List<MessUser>>>
 
     @FormUrlEncoded
     @POST("api/auth/login")
     fun login(
-        @Field("email") email:String,
-        @Field("password") password:String,
+        @Field("email") email: String,
+        @Field("password") password: String,
     ): Call<ServerResponse<UserData>>
 
     @FormUrlEncoded
     @POST("api/member/create-and-add")
     fun addUser(
-        @Field("name") name:String,
-        @Field("phone") phone:String,
-        @Field("password") password:String,
-        @Field("password_confirmation") passwordConfirmation :String,
-        @Field("user_name") userName:String,
-        @Field("email") email:String,
-        @Field("city") city:String,
-        @Field("gender") gender:String,
+        @Field("name") name: String,
+        @Field("phone") phone: String,
+        @Field("password") password: String,
+        @Field("password_confirmation") passwordConfirmation: String,
+        @Field("user_name") userName: String,
+        @Field("email") email: String,
+        @Field("city") city: String,
+        @Field("gender") gender: String,
         @Field("country_id") countryId: String? = null,
         @Field("country_code") countryCode: String? = null,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
-        @POST("api/mess.create.php")
-        fun createMess(
-            @Field("messName") messName:String,
-            @Field("name") name:String,
-            @Field("userName") userName:String,
-            @Field("phone") phone:String,
-            @Field("password") password:String,
-            @Field("email") email:String,
-            @Field("country") country:String,
-            @Field("city") city:String,
-            @Field("gender") gender:String,
-        ): Call<ServerResponse<CheckLoginResponse>>
+    @POST("api/auth/sign-up")
+    fun signUp(
+        @Field("name") name: String,
+        @Field("user_name") userName: String,
+        @Field("country_code") countryCode: String,
+        @Field("phone") phone: String,
+        @Field("password") password: String,
+        @Field("password_confirmation") passwordConfirmation: String,
+        @Field("email") email: String,
+        @Field("city") city: String,
+        @Field("gender") gender: String,
+    ): Call<ServerResponse<User>>
 
     @GET("api/meal/list")
     fun getMealByMonth(
@@ -110,8 +120,8 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/summary.getMonthSummary.php")
     fun getMonthSummary(
-        @Field("year") year:String,
-        @Field("month") month:String,
+        @Field("year") year: String,
+        @Field("month") month: String,
     ): Call<MonthlySummaryResponse>
 
     @GET("api/meal/user/{messUserId}/by-date")
@@ -131,7 +141,7 @@ interface MyApi {
     @POST("api/meal/add")
     fun addMeal(
         @Field("mess_user_id") messUserId: Int,
-        @Field("date") date:String,
+        @Field("date") date: String,
         @Field("breakfast") breakfast: Float,
         @Field("lunch") lunch: Float,
         @Field("dinner") dinner: Float,
@@ -159,19 +169,19 @@ interface MyApi {
     @POST("api/{type}/add")
     fun addPurchase(
         @Field("mess_user_id") messUserId: Int,
-        @Field("date") date:String,
-        @Field("product") product:String,
-        @Field("price") price:Int,
-        @Path("type") type:String,
-        @Field("isAddAmount") isAddAmount:Int,
+        @Field("date") date: String,
+        @Field("product") product: String,
+        @Field("price") price: Int,
+        @Path("type") type: String,
+        @Field("isAddAmount") isAddAmount: Int,
     ): Call<ServerResponse<Purchase>>
 
     @FormUrlEncoded
     @POST("api/deposit/add")
     fun addDeposit(
         @Field("mess_user_id") messUserId: Int,
-        @Field("date") date:String,
-        @Field("amount") amount:Float,
+        @Field("date") date: String,
+        @Field("amount") amount: Float,
     ): Call<ServerResponse<Deposit>>
 
     @GET("api/deposit/list")
@@ -190,16 +200,16 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/user.changePassword.php")
     fun changePassword(
-        @Field("oldPass") oldPass :String,
-        @Field("newPass") newPass :String,
+        @Field("oldPass") oldPass: String,
+        @Field("newPass") newPass: String,
     ): Call<GenericRespose>
 
 
     @FormUrlEncoded
     @POST("api/user.changeManager.php")
     fun changeManager(
-        @Field("newId") newId :Int,
-        @Field("value") value :Int,
+        @Field("newId") newId: Int,
+        @Field("value") value: Int,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
@@ -211,7 +221,7 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/user.checkUserName.php")
     suspend fun isUserNameAvailable(
-        @Field("userName") userName :String,
+        @Field("userName") userName: String,
     ): Response<Boolean>
 
     @GET("api/mess.isUserInitiate.php")
@@ -231,37 +241,37 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/mess.initiateAllUser.php")
     fun initiateAllUser(
-        @Field("year") year :String,
-        @Field("month") month :String,
+        @Field("year") year: String,
+        @Field("month") month: String,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/user.updadeFcmToken.php")
-     fun updadeFcmToken(
-        @Field("token") token :String,
+    fun updadeFcmToken(
+        @Field("token") token: String,
     ): Call<GenericRespose>
 
 
     @FormUrlEncoded
     @POST("api/purchase.requestListPurchase.php")
-     fun requestListPurchase(
-        @Field("productJson") productJson :String,
-        @Field("date") date :String,
-        @Field("price") price :Float,
-        @Field("isDepositToAcc") isDepositToAcc :Int,
+    fun requestListPurchase(
+        @Field("productJson") productJson: String,
+        @Field("date") date: String,
+        @Field("price") price: Float,
+        @Field("isDepositToAcc") isDepositToAcc: Int,
         @Field("purchaseType") purchaseType: Int,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/purchase.requestSinglePurchase.php")
-     fun requestSinglePurchase(
+    fun requestSinglePurchase(
         @Field("products") products: String,
         @Field("date") date: String,
         @Field("price") price: Float,
         @Field("isDepositToAcc") isDepositToAcc: Int,
         @Field("purchaseType") purchaseType: Int,
 
-    ): Call<GenericRespose>
+        ): Call<GenericRespose>
 
 
     @Multipart
@@ -273,30 +283,30 @@ interface MyApi {
     @FormUrlEncoded
     @POST("api/purchase.getPurchaseRequestManager.php")
     fun getPurchaseRequestManager(
-        @Field("year") year :String,
-        @Field("month") month :String,
-        @Field("status") status :Int,
+        @Field("year") year: String,
+        @Field("month") month: String,
+        @Field("status") status: Int,
     ): Call<ServerResponse<List<PurchaseRequest>>>
 
 
     @FormUrlEncoded
     @POST("api/purchase.acceptPurchaseRequest.php")
     fun acceptPurchaseRequest(
-        @Field("requestId") requestId :Int,
-        @Field("isDeposit") isDeposit :Int,
-        @Field("purchaseType") purchaseType :Int,
+        @Field("requestId") requestId: Int,
+        @Field("isDeposit") isDeposit: Int,
+        @Field("purchaseType") purchaseType: Int,
     ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/purchase.rejectPurchaseRequest.php")
     fun rejectPurchaseRequest(
-        @Field("requestId") requestId :Int,
+        @Field("requestId") requestId: Int,
     ): Call<GenericRespose>
 
 
     @GET("api/banner.get.php")
     fun getBanner(
-        @Query("name") name :String,
+        @Query("name") name: String,
     ): Call<ServerResponse<Banner>>
 
     @GET("api/deposit/history/{messUserId}")
@@ -328,7 +338,7 @@ interface MyApi {
         @Field("product") products: String,
         @Path("type") type: String,
 
-    ): Call<GenericRespose>
+        ): Call<GenericRespose>
 
 
     @DELETE("api/{type}/{id}/delete")
@@ -405,119 +415,127 @@ interface MyApi {
 
     @GET("api/guide.getAll.php")
     fun getAllUserGuide(
-        @Query("currPage") currPage:Int,
-        @Query("totalPage") totalPage:Int
-    ) : Call<ServerResponse<Paging<UserGuide>>>
+        @Query("currPage") currPage: Int,
+        @Query("totalPage") totalPage: Int
+    ): Call<ServerResponse<Paging<UserGuide>>>
+
     @GET("api/slider.get.php")
-    fun getMainSlider() : Call<ServerResponse<MutableList<UserGuide>>>
+    fun getMainSlider(): Call<ServerResponse<MutableList<UserGuide>>>
 
     @GET("api/settings.getInitialData.php")
     fun getInitialData(
-        @Query("version") version:Int,
-    ) : Call<InitialDataResponse>
+        @Query("version") version: Int,
+    ): Call<InitialDataResponse>
 
 
     @GET("api/mess.changeAlluserAddMeal.php")
     fun changeAlluserAddMeal(
-        @Query("status") status:Int,
-    ) : Call<GenericRespose>
+        @Query("status") status: Int,
+    ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/mess.updateFund.php")
     fun updateFundStatus(
-        @Field("fund") fund:Int,
-    ) : Call<GenericRespose>
+        @Field("fund") fund: Int,
+    ): Call<GenericRespose>
 
 
     @FormUrlEncoded
     @POST("api/fund.get.php")
     fun getFunds(
-        @Field("year") year:String,
-        @Field("month") month:String,
-    ) : Call<ServerResponse<MutableList<Fund>>>
+        @Field("year") year: String,
+        @Field("month") month: String,
+    ): Call<ServerResponse<MutableList<Fund>>>
 
 
     @FormUrlEncoded
     @POST("api/fund.add.php")
     fun addFund(
-        @Field("date") date:String,
-        @Field("comment") comment:String,
+        @Field("date") date: String,
+        @Field("comment") comment: String,
         @Field("amount") amount: Float,
-    ) : Call<GenericRespose>
+    ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/fund.update.php")
     fun updateFund(
-        @Field("id") id:Int,
-        @Field("date") date:String,
-        @Field("comment") comment:String,
+        @Field("id") id: Int,
+        @Field("date") date: String,
+        @Field("comment") comment: String,
         @Field("amount") amount: Float,
-    ) : Call<GenericRespose>
-
+    ): Call<GenericRespose>
 
 
     @FormUrlEncoded
     @POST("api/fund.delete.php")
     fun deleteFund(
-        @Field("id") id:Int,
-    ) : Call<GenericRespose>
+        @Field("id") id: Int,
+    ): Call<GenericRespose>
 
 
     @GET("api/mess.getAllReport.php")
     fun getAllReport(
-        @Query("currPage") currPage:Int,
-        @Query("totalPage") totalPage:Int,
-    ) : Call<ServerResponse<Paging<Report>>>
+        @Query("currPage") currPage: Int,
+        @Query("totalPage") totalPage: Int,
+    ): Call<ServerResponse<Paging<Report>>>
 
 
     @GET("api/report.genereteFull.php")
     fun genereteFullReport(
-        @Query("year") year:Int,
-        @Query("month") month:Int,
-    ) : Call<ServerResponse<Report>>
+        @Query("year") year: Int,
+        @Query("month") month: Int,
+    ): Call<ServerResponse<Report>>
+
     @FormUrlEncoded
     @POST("api/mess.resetByMonth.php")
     fun resetByMonth(
-        @Field("year") year:Int,
-        @Field("month") month:Int,
-    ) : Call<GenericRespose>
+        @Field("year") year: Int,
+        @Field("month") month: Int,
+    ): Call<GenericRespose>
+
     @FormUrlEncoded
     @POST("api/switchmess.accept.php")
     fun acceptMessMemberJoinRequest(
-        @Field("requestId") year:Int,
-    ) : Call<GenericRespose>
+        @Field("requestId") year: Int,
+    ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/switchmess.cancel.php")
     fun cancelMessMemberJoinRequest(
-        @Field("requestId") requestId:Int,
-    ) : Call<GenericRespose>
+        @Field("requestId") requestId: Int,
+    ): Call<GenericRespose>
 
     @FormUrlEncoded
     @POST("api/switchmess.request.php")
     fun messSwitchRequest(
-        @Field("messId") messId:String,
-    ) : Call<GenericRespose>
+        @Field("messId") messId: String,
+    ): Call<GenericRespose>
 
     @GET("api/switchmess.userJoinHistory.php")
-    fun userJoinHistory() : Call<ServerResponse<MutableList<MessRequest>>>
+    fun userJoinHistory(): Call<ServerResponse<MutableList<MessRequest>>>
 
     @GET("api/switchmess.messJoinRequest.php")
-    fun messJoinRequest() : Call<ServerResponse<MutableList<MessRequest>>>
+    fun messJoinRequest(): Call<ServerResponse<MutableList<MessRequest>>>
 
     @GET("api/mess.getActiveMonthList.php")
-    fun getActiveMonthList() : Call<ServerResponse<MutableList<MonthOfYear>>>
+    fun getActiveMonthList(): Call<ServerResponse<MutableList<MonthOfYear>>>
 
     @GET("api/mess.info.php")
-    fun getMessInfo() : Call<ServerResponse<Mess>>
+    fun getMessInfo(): Call<ServerResponse<Mess>>
 
 
     //New Api
     @GET("api/month/list")
-    fun getMonths() : Call<ServerResponse<MutableList<Month>>>
+    suspend fun getMonths(): Response<ServerResponse<MutableList<Month>>>
 
     @GET("api/country/list")
-    fun getCountries() : Call<ServerResponse<MutableList<Country>>>
+    fun getCountries(): Call<ServerResponse<MutableList<Country>>>
+
+    @FormUrlEncoded
+    @POST("api/mess/create")
+    suspend fun createMess(
+        @Field("mess_name") name: String,
+    ) : Response<ServerResponse<MessUser>>
 
 
     companion object {
@@ -567,7 +585,7 @@ interface MyApi {
                         val response = chain.proceed(request)
 
                         response
-                    }catch (e :Exception){
+                    } catch (e: Exception) {
                         e.message?.let { Log.d("OkHttpError", it) }
                         chain.proceed(chain.request())
                     }
@@ -598,20 +616,22 @@ interface MyApi {
 
     }
 
-    class TokenInterceptor: Interceptor {
+    class TokenInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-            val token = if (LocalDB.getAccessToken()!=null) LocalDB.getAccessToken() else ""
-            val userId = if (LocalDB.getUserId()!=null) LocalDB.getUserId() else ""
+            val token = if (LocalDB.getAccessToken() != null) LocalDB.getAccessToken() else ""
+            val userId = if (LocalDB.getUserId() != null) LocalDB.getUserId() else ""
 
 
-            return if(!token.isNullOrEmpty()){
-                chain.proceed(chain.request()
-                    .newBuilder()
-                    .header("Authorization","Bearer $token")
-                    .header("Userid","$userId")
-                    .header("Month-ID","${LocalDB.getActiveMonth()?.id}")
-                    .build())
-            }else{
+            return if (!token.isNullOrEmpty()) {
+                chain.proceed(
+                    chain.request()
+                        .newBuilder()
+                        .header("Authorization", "Bearer $token")
+                        .header("Userid", "$userId")
+                        .header("Month-ID", "${LocalDB.getActiveMonth()?.id}")
+                        .build()
+                )
+            } else {
                 chain.proceed(chain.request())
             }
         }

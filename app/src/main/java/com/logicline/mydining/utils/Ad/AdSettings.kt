@@ -4,6 +4,7 @@ import android.util.Log
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LocalDB
 import io.paperdb.Paper
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 object AdSettings {
@@ -21,7 +22,7 @@ object AdSettings {
         val ad = LocalDB.getAdSettings()
 
         ad?.native?.platform?.let {it->
-            val platForm = it.toUpperCase()
+            val platForm = it.uppercase(Locale.getDefault())
             return when (platForm) {
                 PLATFORM.ADMOB.name -> {
                     PLATFORM.ADMOB

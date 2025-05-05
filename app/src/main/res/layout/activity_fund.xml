@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.FundActivity">
+    tools:context=".ui.activities.FundActivity">
 
     <LinearLayout
         android:paddingStart="@dimen/_10sdp"

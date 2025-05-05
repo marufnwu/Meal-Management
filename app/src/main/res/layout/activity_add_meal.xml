@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:scrollbars="none"
-    tools:context=".ui.AddMealActivity">
+    tools:context=".ui.activities.AddMealActivity">
 
     <LinearLayout
         android:orientation="vertical"

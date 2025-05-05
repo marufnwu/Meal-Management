@@ -162,4 +162,24 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+
+
+    <!-- Button colors -->
+    <color name="buttonPrimary">#1976D2</color>
+    <color name="buttonPrimaryPressed">#0D47A1</color>
+    <color name="buttonPrimaryDisabled">#B3E5FC</color>
+
+    <color name="buttonSecondary">#757575</color>
+    <color name="buttonSecondaryPressed">#424242</color>
+    <color name="buttonSecondaryDisabled">#E0E0E0</color>
+
+    <color name="buttonDanger">#D32F2F</color>
+    <color name="buttonDangerPressed">#B71C1C</color>
+    <color name="buttonDangerDisabled">#FFCDD2</color>
+
+    <color name="buttonTextLight">#FFFFFF</color>
+    <color name="buttonTextDark">#212121</color>
+    <color name="buttonTextDisabled">#9E9E9E</color>
+
+
 </resources>

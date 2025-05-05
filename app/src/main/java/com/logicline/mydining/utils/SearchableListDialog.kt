@@ -8,7 +8,7 @@ import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.R
-import com.logicline.mydining.adapter.SearchableStringAdapter
+import com.logicline.mydining.ui.adapter.SearchableStringAdapter
 
 class SearchableListDialog(
     private val context: Context,

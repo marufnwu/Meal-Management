@@ -3,7 +3,6 @@ package com.logicline.mydining.ui.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +12,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.R
-import com.logicline.mydining.adapter.PurchaseRequestAdapter
+import com.logicline.mydining.ui.adapter.PurchaseRequestAdapter
 import com.logicline.mydining.databinding.FragmentPurchaseRequestLayoutBinding
-import com.logicline.mydining.models.PurchaseRequest
-import com.logicline.mydining.models.response.GenericRespose
-import com.logicline.mydining.models.response.ServerResponse
+import com.logicline.mydining.data.models.PurchaseRequest
+import com.logicline.mydining.data.models.response.GenericRespose
+import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
-import com.logicline.mydining.utils.MyApplication
+import com.logicline.mydining.MyApplication
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PurchaseRequestFragment : Fragment() {
 

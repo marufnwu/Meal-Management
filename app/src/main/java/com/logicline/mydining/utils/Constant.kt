@@ -10,7 +10,6 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.ViewGroup
@@ -18,18 +17,16 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import com.bumptech.glide.Glide
 import com.logicline.mydining.BuildConfig
+import com.logicline.mydining.MyApplication
 import com.logicline.mydining.R
-import com.logicline.mydining.models.Banner
+import com.logicline.mydining.data.models.Banner
 import com.logicline.mydining.network.MyApi
-import com.logicline.mydining.ui.GenericWebViewActivity
+import com.logicline.mydining.ui.activities.GenericWebViewActivity
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 object Constant {

@@ -11,4 +11,11 @@
         <attr name="showLoading" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="StatusView">
+        <attr name="statusMessage" format="string" />
+        <attr name="statusImage" format="reference" />
+        <attr name="positiveButtonText" format="string" />
+        <attr name="negativeButtonText" format="string" />
+    </declare-styleable>
+
 </resources>

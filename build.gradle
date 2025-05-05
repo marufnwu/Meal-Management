@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.9.22' // Define this first
+    ext.kotlin_version = '2.1.0' // Define this first
 
     repositories {
         google()
@@ -10,6 +10,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.2'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.3'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.56.1"
+
     }
 }
 
