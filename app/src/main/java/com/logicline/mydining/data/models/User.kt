@@ -57,5 +57,5 @@ data class User(
     @SerializedName("updated_at")
     val updatedAt: String?,
     @SerializedName("country")
-    val country: Country
+    val country: Country? = null,
 ) : Parcelable

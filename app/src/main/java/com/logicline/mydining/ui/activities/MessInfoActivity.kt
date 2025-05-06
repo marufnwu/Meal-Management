@@ -59,7 +59,7 @@ class MessInfoActivity : BaseActivity() {
         // Optionally observe the result (with Flow or LiveData)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.createMessState.collect { state ->
+                viewModel.messUserUser.collect { state ->
                     when (state) {
                         is DataState.Loading -> {
                             loadingDialog.show()
@@ -67,6 +67,7 @@ class MessInfoActivity : BaseActivity() {
                         is DataState.Success -> {
                             loadingDialog.hide()
                             messCreateDialog?.dismiss()
+                            setData(state.data?.mess)
                         }
                         is DataState.Error ->{
                             loadingDialog.hide()
@@ -104,9 +105,6 @@ class MessInfoActivity : BaseActivity() {
                     createMess(name!!.text.toString())
 
                 }
-
-
-
             })
             .setNegativeButton("Cancel")
             .setAutoDismiss(false)
@@ -142,8 +140,6 @@ class MessInfoActivity : BaseActivity() {
     }
 
     private fun setData(data: Mess?) {
-
-
         if(data!=null){
             data.let {
                 binding.txtMessName.text = data.name

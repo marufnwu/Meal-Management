@@ -345,7 +345,7 @@ class ProfileActivity : BaseActivity() {
             }
 
             it.country?.let {
-                binding.txtCountry.text = user.country.name
+                binding.txtCountry.text = user.country?.name
             }
 
             it.joinDate?.let {
