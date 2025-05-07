@@ -17,7 +17,7 @@ import com.logicline.mydining.data.local.entities.UserEntity
         RoleEntity::class,
         PermissionEntity::class
     ],
-    version = 1
+    version = 3
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun messUserDao(): MessUserDao

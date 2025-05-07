@@ -12,16 +12,18 @@ class MessRepository @Inject constructor(
 ) {
     suspend fun createMess(name: String) = myApi.createMess(name)
 
-    suspend fun getMessUser(): Flow<MessUserWithRelations?> = messUserDao.getMessUser()
+    suspend fun getCurrentMessUser(): Flow<MessUserWithRelations?> = messUserDao.getMessUser()
 
-    suspend fun saveMessUserLocally(messUser: MessUserWithRelations) {
+    suspend fun saveMessUserLocally(messUser: MessUserWithRelations?) {
         // extract related entities and save via insertFullMessUser
         messUserDao.insertFullMessUser(
-            messUser = messUser.messUser,
-            user = messUser.user,
-            mess = messUser.mess,
-            role = messUser.role,
-            permissions = messUser.permissions
+            messUser = messUser?.messUser,
+            user = messUser?.user,
+            mess = messUser?.mess,
+            role = messUser?.role,
+            permissions = messUser?.permissions
         )
     }
+
+    suspend fun getMessUser() = myApi.messUser()
 }

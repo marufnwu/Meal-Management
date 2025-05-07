@@ -53,8 +53,6 @@ fun MessUser.toRoomModel(): MessUserWithRelations {
             phone = user.phone,
             gender = user.gender,
             city = user.city,
-            password = user.password,
-            rememberToken = user.rememberToken,
             status = user.status,
             joinDate = user.joinDate,
             leaveDate = user.leaveDate,

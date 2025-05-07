@@ -1,6 +1,7 @@
 package com.logicline.mydining.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityMessInfoBinding
@@ -22,6 +23,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.gson.Gson
 import com.logicline.mydining.data.DataState
 import com.logicline.mydining.ui.viewmodels.MessViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,8 +50,8 @@ class MessInfoActivity : BaseActivity() {
         setContentView(binding.root)
         loadingDialog = LoadingDialog(this)
         //getMessInfo()
-        setData(LocalDB.getUserData()?.messUser?.mess)
-
+//        setData(LocalDB.getUserData()?.messUser?.mess)
+//
         initViews()
 
         setCollectors()
@@ -60,6 +62,7 @@ class MessInfoActivity : BaseActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.messUserUser.collect { state ->
+                    Log.d("", "setCollectors: ${state.javaClass.simpleName} "+ Gson().toJson(state))
                     when (state) {
                         is DataState.Loading -> {
                             loadingDialog.show()
@@ -90,6 +93,10 @@ class MessInfoActivity : BaseActivity() {
 
 
         })
+
+        binding.btnRefresh.setOnClickListener {
+            viewModel.syncCurrentMessUser()
+        }
     }
     private fun createMess(name: String) {
         viewModel.createMess(name)
@@ -146,6 +153,7 @@ class MessInfoActivity : BaseActivity() {
                 binding.txtMessId.text = data.id.toString()
                 binding.txtMessCreated.text = data.createdAt.toString()
                 binding.txtStatus.text = MessStatus.fromValue(data.status)?.value?: "Undefined"
+                binding.statusView.hideStatusView()
             }
         }else{
             binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No Mess Found! Please create a mess or join existing mess.")

@@ -65,8 +65,6 @@ fun MessUserWithRelations.toDomainModel(): MessUser {
                 phone = it.phone,
                 gender = it.gender,
                 city = it.city,
-                password = it.password,
-                rememberToken = it.rememberToken,
                 status = it.status,
                 joinDate = it.joinDate,
                 leaveDate = it.leaveDate,

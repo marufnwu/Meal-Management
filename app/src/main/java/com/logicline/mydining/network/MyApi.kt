@@ -537,6 +537,15 @@ interface MyApi {
         @Field("mess_name") name: String,
     ) : Response<ServerResponse<MessUser>>
 
+    @GET("api/mess/mess-user")
+    suspend fun messUser(
+    ) : Response<ServerResponse<MessUser>>
+
+    @GET("api/mess/mess-user/{user}")
+    suspend fun messUserById(
+        @Path("user") userId: Int? = null,
+    ) : Response<ServerResponse<MessUser>>
+
 
     companion object {
         @Volatile

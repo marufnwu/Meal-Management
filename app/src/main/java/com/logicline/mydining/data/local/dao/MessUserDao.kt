@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MessUserDao {
     @Transaction
-    @Query("SELECT * FROM mess_user LIMIT 1")
+    @Query("SELECT * FROM mess_user ORDER BY ID DESC LIMIT 1 ")
     fun getMessUser(): Flow<MessUserWithRelations?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -34,15 +34,37 @@ interface MessUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPermissions(permissions: List<PermissionEntity>)
 
+    @Query("DELETE FROM mess_user")
+    suspend fun clearMessUser()
+
+    @Query("DELETE FROM user")
+    suspend fun clearUser()
+
+    @Query("DELETE FROM mess")
+    suspend fun clearMess()
+
+    @Query("DELETE FROM role")
+    suspend fun clearRole()
+
+    @Query("DELETE FROM permissions")
+    suspend fun clearPermissions()
+
     @Transaction
     suspend fun insertFullMessUser(
-        messUser: MessUserEntity,
+        messUser: MessUserEntity?,
         user: UserEntity?,
         mess: MessEntity?,
         role: RoleEntity?,
         permissions: List<PermissionEntity>?
     ) {
-        insertMessUser(messUser)
+        clearPermissions()
+        clearRole()
+        clearMess()
+        clearUser()
+        clearMessUser()
+        messUser?.let {
+            insertMessUser(messUser)
+        }
         user?.let {
             insertUser(user)
 

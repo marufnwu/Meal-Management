@@ -3,7 +3,7 @@ package com.logicline.mydining.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "roles")
+@Entity(tableName = "role")
 data class RoleEntity(
     @PrimaryKey val id: Long,
     val messId: Long,

@@ -22,7 +22,9 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "my_dining_db"
-        ).build()
+        ).
+        fallbackToDestructiveMigration().
+        build()
     }
 
     @Provides

@@ -34,10 +34,6 @@ data class User(
     val gender: String,
     @SerializedName("city")
     val city: String?,
-    @SerializedName("password")
-    val password: String,
-    @SerializedName("remember_token")
-    val rememberToken: String?,
     @SerializedName("status")
     val status: String,
     @SerializedName("join_date")
