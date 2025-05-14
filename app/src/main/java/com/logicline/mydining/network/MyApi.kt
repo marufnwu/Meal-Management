@@ -636,6 +636,7 @@ interface MyApi {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
             val token = if (AppPrefs.accessToken != null) AppPrefs.accessToken else ""
             val userId = if (AppPrefs.userId != null) AppPrefs.userId else ""
+            val monthId = if (AppPrefs.monthId != null) AppPrefs.monthId else ""
 
 
             return if (!token.isNullOrEmpty()) {
@@ -644,7 +645,7 @@ interface MyApi {
                         .newBuilder()
                         .header("Authorization", "Bearer $token")
                         .header("Userid", "$userId")
-                        .header("Month-ID", "${LocalDB.getActiveMonth()?.id}")
+                        .header("Month-ID", "$monthId")
                         .build()
                 )
             } else {

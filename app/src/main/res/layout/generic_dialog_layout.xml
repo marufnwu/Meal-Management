@@ -8,23 +8,22 @@
     android:padding="@dimen/_8sdp"
     >
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_margin="@dimen/_4sdp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:layout_height="wrap_content">
 
             <!-- Header with icon -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dialog_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp"
                 app:layout_constraintTop_toTopOf="parent">
 
 
@@ -32,8 +31,8 @@
 
                 <ImageView
                     android:id="@+id/dialog_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -50,10 +49,17 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
+                android:textSize="@dimen/_12sdp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/dialog_header"
                 tools:text="Dialog Title" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_marginVertical="@dimen/_4sdp"
+                app:layout_constraintTop_toBottomOf="@id/dialog_title"
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <!-- Message -->
             <TextView
@@ -66,7 +72,7 @@
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/colorPrimaryTransparent"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/dialog_title"
+                app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:text="This is the message content of the dialog that can be multiple lines and provide detailed information to the user." />
 
             <!-- Content area -->
@@ -115,5 +121,5 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

@@ -1,15 +1,21 @@
 package com.logicline.mydining.ui.custom.monthpicker
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AlphaAnimation
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,11 +24,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.logicline.mydining.R
 import com.logicline.mydining.data.DataState
 import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.data.repository.MonthRepository
 import com.logicline.mydining.domains.MonthStore
+import com.logicline.mydining.ui.custom.GenericDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -31,9 +39,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MonthPickerView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr) {
     // Existing components
     private val recyclerView: RecyclerView
@@ -46,6 +59,7 @@ class MonthPickerView @JvmOverloads constructor(
     private val headerLayout: ConstraintLayout
     private val filterContainer: FrameLayout
     private val emptyStateView: View
+    private val btnAdd: MaterialButton
 
     // Configuration options
     private var config = MonthPickerConfig()
@@ -61,6 +75,9 @@ class MonthPickerView @JvmOverloads constructor(
     private var monthsFilterStrategy: FilterStrategy = FilterStrategy.ALL
     private var searchDebouncer = Debouncer(viewScope, 300L)
 
+    private  var  monthCreateDialog: GenericDialog? = null
+
+
     init {
         orientation = VERTICAL
         LayoutInflater.from(context).inflate(R.layout.dialog_month_selector, this, true)
@@ -74,6 +91,7 @@ class MonthPickerView @JvmOverloads constructor(
         headerLayout = findViewById(R.id.headerLayout)
         filterContainer = findViewById(R.id.filterContainer)
         emptyStateView = findViewById(R.id.emptyState)
+        btnAdd = findViewById(R.id.btn_add)
 
         // Apply custom attributes if provided
         context.obtainStyledAttributes(attrs, R.styleable.MonthPickerView).apply {
@@ -118,6 +136,10 @@ class MonthPickerView @JvmOverloads constructor(
 
         clearButton.setOnClickListener {
             searchBox.text.clear()
+        }
+
+        btnAdd.setOnClickListener {
+            showCreateMonthDialog()
         }
 
         // Setup animations
@@ -382,6 +404,185 @@ class MonthPickerView @JvmOverloads constructor(
         object NEWEST_FIRST : SortingStrategy()
         object OLDEST_FIRST : SortingStrategy()
         class CUSTOM(val sort: (List<Month>) -> List<Month>) : SortingStrategy()
+    }
+
+    private fun showCreateMonthDialog() {
+        // Check if dialog already exists
+        if (monthCreateDialog != null) {
+            // If dialog still exists but is not showing, show it
+            if (!monthCreateDialog!!.isShowing()) {
+                monthCreateDialog!!.show()
+            }
+            // Dialog is already showing, no need to do anything
+            return
+        }
+
+        // Create a new dialog only if one doesn't exist
+        monthCreateDialog = GenericDialog.Builder(context)
+            .setIcon(R.drawable.add)
+            .setTitle("Create Month!")
+            .setPositiveButton("Create", object : GenericDialog.OnClickListener {
+                override fun onClick(genericDialog: GenericDialog) {
+                    // Get form values
+                    val name = genericDialog.findViewById<EditText>(R.id.ev_month_name)?.text.toString()
+                    val typeRadioGroup = genericDialog.findViewById<RadioGroup>(R.id.rg_month_type)
+                    val selectedTypeId = typeRadioGroup?.checkedRadioButtonId
+
+                    // Determine month type
+                    val type = when(selectedTypeId) {
+                        R.id.rb_automatic -> "automatic"
+                        R.id.rb_manual -> "manual"
+                        else -> ""
+                    }
+
+                    // Get other values based on type
+                    var month: Int? = null
+                    var year: Int? = null
+                    var startAt: String? = null
+                    var forceCloseOther = false
+
+                    if (type == "automatic") {
+                        val monthSpinner = genericDialog.findViewById<Spinner>(R.id.spinner_month)
+                        month = monthSpinner?.selectedItemPosition?.plus(1) // Adding 1 because position starts from 0
+
+                        val yearSpinner = genericDialog.findViewById<Spinner>(R.id.spinner_year)
+                        year = yearSpinner?.selectedItem?.toString()?.toIntOrNull()
+                    } else if (type == "manual") {
+                        startAt = genericDialog.findViewById<TextView>(R.id.tv_start_date_value)?.text.toString()
+                    }
+
+                    // Check force close checkbox
+                    val forceCloseCheckbox = genericDialog.findViewById<CheckBox>(R.id.cb_force_close)
+                    forceCloseOther = forceCloseCheckbox?.isChecked ?: false
+
+                    // Call your API function to create month
+                    createMonth(name, type, month, year, startAt, forceCloseOther)
+
+                    // Dismiss the dialog after handling the click
+                    genericDialog.dismiss()
+
+                    // Clear the dialog reference
+                    monthCreateDialog = null
+                }
+            })
+            .setNegativeButton("Cancel", object : GenericDialog.OnClickListener {
+                override fun onClick(genericDialog: GenericDialog) {
+                    // Dismiss the dialog when cancel is clicked
+                    genericDialog.dismiss()
+
+                    // Clear the dialog reference
+                    monthCreateDialog = null
+                }
+            })
+
+            .setAutoDismiss(false)
+            .setContentView(R.layout.layout_create_month)
+            .build() // Use build instead of show to create the dialog
+
+        // After dialog is created, set up the spinners and date picker
+        setupFormElements(monthCreateDialog!!)
+
+        // Show the dialog after setup
+        monthCreateDialog!!.show()
+    }
+
+    private fun setupFormElements(dialog: GenericDialog) {
+        // Set up Month Spinner
+        val monthSpinner = dialog.findViewById<Spinner>(R.id.spinner_month)
+        val months = arrayOf("January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December")
+        val monthAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, months)
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        monthSpinner?.adapter = monthAdapter
+
+        // Set default to current month (current month index is 0-based)
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        monthSpinner?.setSelection(currentMonth)
+
+        // Set up Year Spinner
+        val yearSpinner = dialog.findViewById<Spinner>(R.id.spinner_year)
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val years = arrayOf(currentYear.toString()) // Only the current year as per validation
+        val yearAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, years)
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        yearSpinner?.adapter = yearAdapter
+
+        // Set up Date Picker for Start Date
+        val btnPickDate = dialog.findViewById<Button>(R.id.btn_pick_start_date)
+        val tvStartDateValue = dialog.findViewById<TextView>(R.id.tv_start_date_value)
+
+        // Set initial date
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        tvStartDateValue?.text = dateFormat.format(calendar.time)
+
+        btnPickDate?.setOnClickListener {
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                context,
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    calendar.set(Calendar.YEAR, selectedYear)
+                    calendar.set(Calendar.MONTH, selectedMonth)
+                    calendar.set(Calendar.DAY_OF_MONTH, selectedDay)
+
+                    // Format the date as YYYY-MM-DD
+                    tvStartDateValue?.text = dateFormat.format(calendar.time)
+                },
+                year,
+                month,
+                day
+            )
+
+            datePickerDialog.show()
+        }
+
+        // Set up visibility logic for form fields
+        val typeRadioGroup = dialog.findViewById<RadioGroup>(R.id.rg_month_type)
+        val automaticFields = dialog.findViewById<LinearLayout>(R.id.automatic_fields)
+        val manualFields = dialog.findViewById<LinearLayout>(R.id.manual_fields)
+
+        // Set default visibility
+        automaticFields?.visibility = View.GONE
+        manualFields?.visibility = View.GONE
+
+        // Set listener to show/hide fields based on selected type
+        typeRadioGroup?.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rb_automatic -> {
+                    automaticFields?.visibility = View.VISIBLE
+                    manualFields?.visibility = View.GONE
+                }
+                R.id.rb_manual -> {
+                    automaticFields?.visibility = View.GONE
+                    manualFields?.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun createMonth(
+        name: String?,
+        type: String,
+        month: Int?,
+        year: Int?,
+        startAt: String?,
+        forceCloseOther: Boolean
+    ) {
+        // Implementation to call your API endpoint
+        // You can use Retrofit or any other HTTP client here
+
+        // Example payload structure:
+        // {
+        //   "name": name,
+        //   "type": type,
+        //   "month": month,
+        //   "year": year,
+        //   "start_at": startAt,
+        //   "force_close_other": forceCloseOther
+        // }
     }
 
     class MonthPickerConfig {
