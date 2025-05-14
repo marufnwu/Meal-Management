@@ -28,8 +28,9 @@ data class MessUser(
     @SerializedName("role") val role: Role?
 ) : Parcelable
 
-fun MessUser.toRoomModel(): MessUserWithRelations {
-    val messUser = MessUserEntity(
+
+fun MessUser.toEntity(): MessUserEntity {
+    return MessUserEntity(
         id = id,
         messId = messId,
         userId = userId,
@@ -38,79 +39,18 @@ fun MessUser.toRoomModel(): MessUserWithRelations {
         leftAt = leftAt,
         status = status,
         createdAt = createdAt,
-        updatedAt = updatedAt,
-        isSynced = true
+        updatedAt = updatedAt
     )
+}
 
-    val userEntity = if (user != null) {
-        UserEntity(
-            id = user.id,
-            name = user.name,
-            userName = user.userName,
-            email = user.email,
-            emailVerifiedAt = user.emailVerifiedAt,
-            countryId = user.countryId,
-            phone = user.phone,
-            gender = user.gender,
-            city = user.city,
-            status = user.status,
-            joinDate = user.joinDate,
-            leaveDate = user.leaveDate,
-            photoUrl = user.photoUrl,
-            fcmToken = user.fcmToken,
-            version = user.version,
-            lastActive = user.lastActive,
-            createdAt = user.createdAt,
-            updatedAt = user.updatedAt
-        )
-    } else {
-        null
-    }
-    val messEntity = if (mess != null) {
-        MessEntity(
-            id = mess.id,
-            name = mess.name,
-            status = mess.status,
-            adFree = mess.adFree,
-            allUserAddMeal = mess.allUserAddMeal,
-            fundAddEnabled = mess.fundAddEnabled,
-            createdAt = mess.createdAt,
-            updatedAt = mess.updatedAt
-        )
-    } else {
-        null
-    }
-    val roleWithPermissions = if (role != null) {
-        RoleWithPermissions(
-            role = RoleEntity(
-                id = role.id,
-                messId = role.messId,
-                role = role.role,
-                isDefault = role.isDefault,
-                isAdmin = role.isAdmin,
-                createdAt = role.createdAt,
-                updatedAt = role.updatedAt
-            ),
-            permissions = role.permissions.orEmpty().map {
-                PermissionEntity(
-                    id = it.id,
-                    messRoleId = it.messRoleId,
-                    permission = it.permission,
-                    createdAt = it.createdAt,
-                    updatedAt = it.updatedAt
-                )
-            }
-        )
-    } else {
-        null
-    }
+fun MessUser.toRelation(): MessUserWithRelations {
 
     return MessUserWithRelations(
-        messUser = messUser,
-        mess = messEntity,
-        user = userEntity,
-        role = roleWithPermissions?.role,
-        permissions = roleWithPermissions?.permissions
+        messUser = toEntity(),
+        mess = mess?.toEntity(),
+        user = user?.toEntity(),
+        role = role?.toEntity(),
+        permissions = role?.permissions?.toEntity()
     )
 }
 

@@ -10,12 +10,10 @@ import com.logicline.mydining.data.models.Mess
 import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.LoadingDialog
-import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.ui.custom.GenericDialog
 import com.logicline.mydining.ui.custom.StatusView
-import com.logicline.mydining.ui.viewmodels.MonthViewModel
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,12 +23,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.gson.Gson
 import com.logicline.mydining.data.DataState
-import com.logicline.mydining.ui.viewmodels.MessViewModel
+import com.logicline.mydining.ui.viewmodels.UserViewModel
+import com.logicline.mydining.utils.Ext.MyExtensions.collectState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 @AndroidEntryPoint
 class MessInfoActivity : BaseActivity() {
@@ -38,7 +34,7 @@ class MessInfoActivity : BaseActivity() {
     private lateinit var loadingDialog: LoadingDialog
     private  var messCreateDialog : GenericDialog? = null
 
-    private val viewModel : MessViewModel by viewModels()
+    private val viewModel : UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,27 +54,21 @@ class MessInfoActivity : BaseActivity() {
     }
 
     private fun setCollectors() {
-        // Optionally observe the result (with Flow or LiveData)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.messUserUser.collect { state ->
-                    Log.d("", "setCollectors: ${state.javaClass.simpleName} "+ Gson().toJson(state))
-                    when (state) {
-                        is DataState.Loading -> {
-                            loadingDialog.show()
-                        }
-                        is DataState.Success -> {
-                            loadingDialog.hide()
-                            messCreateDialog?.dismiss()
-                            setData(state.data?.mess)
-                        }
-                        is DataState.Error ->{
-                            loadingDialog.hide()
-                            shortToast(state.message)
-                        }
-                        else -> Unit
+                viewModel.messUserState.collectState(
+                    lifecycleOwner = this@MessInfoActivity,
+                    onLoading = { loadingDialog.show() },
+                    onSuccess = {
+                        loadingDialog.hide()
+                        messCreateDialog?.dismiss()
+                        setData(it?.mess)
+                    },
+                    onError = {
+                        loadingDialog.hide()
+                        shortToast(it)
                     }
-                }
+                )
             }
         }
 

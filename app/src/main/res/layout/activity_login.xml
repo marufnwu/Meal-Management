@@ -59,6 +59,7 @@
 
 
             <EditText
+                android:text="maruf@email.com"
                 android:textSize="@dimen/_13sdp"
                 android:inputType="text"
                 android:layout_marginBottom="@dimen/_8sdp"
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"/>
 
             <EditText
-
+                android:text="11111111"
                 android:textSize="@dimen/_13sdp"
                 android:inputType="textPassword"
                 android:id="@+id/edtPassword"

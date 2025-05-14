@@ -41,13 +41,14 @@ android {
         debug {
             //signingConfig signingConfigs.release
             minifyEnabled false
-
         }
 
         buildTypes.each {
             it.buildConfigField 'String', 'BASE_URL', BASE_URL
             it.buildConfigField 'String', 'USER_NAME', userName
             it.buildConfigField 'String', 'USER_PASSWORD', userPassword
+
+
         }
 
     }

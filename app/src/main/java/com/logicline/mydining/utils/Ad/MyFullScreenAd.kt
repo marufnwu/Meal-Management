@@ -10,7 +10,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.logicline.mydining.BuildConfig
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 class MyFullScreenAd(val context: Context, val isFinishActivity: Boolean = false) {
 

@@ -10,7 +10,7 @@ import com.logicline.mydining.databinding.ActivityPreviousMonthBinding
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import dev.maruf.monthpicker.JMonthPicker
 
 class PreviousMonthActivity : BaseActivity(), OnClickListener {

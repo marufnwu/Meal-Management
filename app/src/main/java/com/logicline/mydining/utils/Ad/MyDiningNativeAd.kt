@@ -16,7 +16,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.logicline.mydining.R
-import com.logicline.mydining.utils.MyExtensions.lifecycleOwner
+import com.logicline.mydining.utils.Ext.MyExtensions.lifecycleOwner
 
 class MyDiningNativeAd(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 

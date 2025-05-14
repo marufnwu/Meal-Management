@@ -2,7 +2,7 @@ package com.logicline.mydining.di
 
 import android.content.Context
 import androidx.room.Room
-import com.logicline.mydining.data.local.dao.MessUserDao
+import com.logicline.mydining.data.local.dao.MyDao
 import com.logicline.mydining.data.local.db.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -28,7 +28,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideMessUserDao(appDatabase: AppDatabase): MessUserDao {
+    fun provideMessUserDao(appDatabase: AppDatabase): MyDao {
         return appDatabase.messUserDao()
     }
 }

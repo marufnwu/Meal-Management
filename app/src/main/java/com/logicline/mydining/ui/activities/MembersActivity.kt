@@ -26,7 +26,7 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

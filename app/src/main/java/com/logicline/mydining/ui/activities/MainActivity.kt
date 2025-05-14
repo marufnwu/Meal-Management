@@ -5,11 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.logicline.mydining.BuildConfig
 import com.logicline.mydining.data.enums.MessPermission
 import com.logicline.mydining.data.enums.MessPermission.Companion.hasAnyPermission
@@ -28,12 +32,17 @@ import com.logicline.mydining.utils.LangUtils
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.ui.viewmodels.UserViewModel
+import com.logicline.mydining.utils.Ext.MyExtensions.handle
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
+import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val TAG = "MainActivity"
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
 
@@ -47,6 +56,7 @@ class MainActivity : BaseActivity() {
     lateinit var mainBottomSheet: MainBottomSheet
 
     var userGuideBanner : MutableLiveData<Banner> = MutableLiveData()
+    private val userViewModel : UserViewModel by viewModels()
 
     private var rotationAngle = 0f
     private var isUserGuideExpand = false
@@ -59,62 +69,78 @@ class MainActivity : BaseActivity() {
         mainBottomSheet = MainBottomSheet.Companion.newInstance()
 
 
-        userData = LocalDB.getUserData()
+        lifecycleScope.launchWhenStarted {
+            userViewModel.observedUserData.collect { state ->
+                state.handle(
+                    onLoading = {
+                        loadingDialog.show()
+                    },
+                    onSuccess = {
+                        loadingDialog.hide()
+                        userData = it
+                        Log.d(TAG, "onCreate: user data "+ Gson().toJson(userData))
+                        if(userData==null){
+                            Log.d(TAG, "onCreate: user data "+ Gson().toJson(userData))
 
-        if(userData==null){
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+                            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                            finish()
 
-        }
+                        }
 
-        userData!!.user?.let {
-            it.phone?.let {
-                binding.txtUserPhone.text = it
+                        userData?.user?.let {
+                            it.phone?.let {
+                                binding.txtUserPhone.text = it
+                            }
+
+                            it.name?.let {
+                                binding.txtUserName.text = it
+                            }
+
+                            it.photoUrl?.let {
+                                Glide.with(this@MainActivity)
+                                    .load(BuildConfig.BASE_URL+it)
+                                    .into(binding.imgProPic)
+                            }
+
+
+
+                        }
+
+
+                        val month = Constant.getCurrentMonthName()+" "+ Constant.getCurrentYear()
+                        binding.txtCurrentMonth.text = month
+
+                        if (!userData?.messUser.hasAnyPermission(MessPermission.MEAL_ADD, MessPermission.MEAL_MANAGEMENT)){
+                            binding.addMeal.visibility = View.GONE
+                        }
+
+                        if (!userData?.messUser.hasAnyPermission(MessPermission.USER_MANAGEMENT)){
+                            binding.addMeal.visibility = View.GONE
+                        }
+
+
+
+
+                        askNotificationPermission()
+                        initListener()
+
+                        getInitialData()
+                        getHomeMainBanner()
+
+
+
+
+                        registerFcm()
+                        updateFcmToken()
+
+                        getSliderData()
+                    }
+                )
             }
-
-            it.name?.let {
-                binding.txtUserName.text = it
-            }
-
-            it.photoUrl?.let {
-                Glide.with(this)
-                    .load(BuildConfig.BASE_URL+it)
-                    .into(binding.imgProPic)
-
-            }
-
-
-
-        }
-
-
-        val month = Constant.getCurrentMonthName()+" "+ Constant.getCurrentYear()
-        binding.txtCurrentMonth.text = month
-
-        if (!userData?.messUser.hasAnyPermission(MessPermission.MEAL_ADD, MessPermission.MEAL_MANAGEMENT)){
-            binding.addMeal.visibility = View.GONE
-        }
-
-        if (!userData?.messUser.hasAnyPermission(MessPermission.USER_MANAGEMENT)){
-            binding.addMeal.visibility = View.GONE
         }
 
 
 
-
-        askNotificationPermission()
-        initListener()
-
-        getInitialData()
-        getHomeMainBanner()
-
-
-
-
-        registerFcm()
-        updateFcmToken()
-
-        getSliderData()
 
     }
 

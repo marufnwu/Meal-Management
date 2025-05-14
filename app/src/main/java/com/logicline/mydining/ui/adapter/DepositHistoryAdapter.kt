@@ -10,7 +10,7 @@ import com.logicline.mydining.data.enums.MessPermission
 import com.logicline.mydining.data.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.data.models.Deposit
 import com.logicline.mydining.utils.LocalDB
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 class DepositHistoryAdapter(val context: Context, val depositHistoryList: MutableList<Deposit>) : RecyclerView.Adapter<DepositHistoryAdapter.MyViewHolder>() {
 

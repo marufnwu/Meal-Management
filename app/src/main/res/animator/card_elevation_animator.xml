@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- When the card is pressed/touched -->
+    <item android:state_pressed="true">
+        <objectAnimator
+            android:propertyName="cardElevation"
+            android:duration="100"
+            android:valueTo="@dimen/_6sdp"
+            android:valueType="floatType" />
+    </item>
+
+    <!-- When the card is focused -->
+    <item android:state_focused="true">
+        <objectAnimator
+            android:propertyName="cardElevation"
+            android:duration="100"
+            android:valueTo="@dimen/_5sdp"
+            android:valueType="floatType" />
+    </item>
+
+    <!-- Default state (not pressed, not focused) -->
+    <item>
+        <objectAnimator
+            android:propertyName="cardElevation"
+            android:duration="100"
+            android:valueTo="@dimen/_3sdp"
+            android:valueType="floatType" />
+    </item>
+</selector>

@@ -34,6 +34,7 @@ import com.logicline.mydining.data.models.response.InitialDataResponse
 import com.logicline.mydining.data.models.response.MonthlySummaryResponse
 import com.logicline.mydining.data.models.response.Paging
 import com.logicline.mydining.data.models.response.UserListResponse
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LocalDB
 
 import okhttp3.Interceptor
@@ -54,8 +55,8 @@ import java.util.concurrent.TimeUnit
 interface MyApi {
 
     @GET("api/auth/check-login")
-    fun checkLogin(
-    ): Call<ServerResponse<UserData>>
+    suspend fun checkLogin(
+    ): Response<ServerResponse<UserData>>
 
     @GET("api/summary.getHome.php")
     fun getHomeData(
@@ -78,10 +79,10 @@ interface MyApi {
 
     @FormUrlEncoded
     @POST("api/auth/login")
-    fun login(
+    suspend fun login(
         @Field("email") email: String,
         @Field("password") password: String,
-    ): Call<ServerResponse<UserData>>
+    ): Response<ServerResponse<UserData>>
 
     @FormUrlEncoded
     @POST("api/member/create-and-add")
@@ -568,6 +569,7 @@ interface MyApi {
             }
 
 
+
             var cookieHandler: CookieHandler = CookieManager()
 
             val okHttpClient: OkHttpClient = OkHttpClient.Builder()
@@ -576,7 +578,12 @@ interface MyApi {
                 .connectTimeout(2, TimeUnit.MINUTES)
                 .callTimeout(2, TimeUnit.MINUTES)
                 .addInterceptor(TokenInterceptor())
-
+                .addInterceptor { chain ->
+                    val request = chain.request().newBuilder()
+                        .addHeader("Host", "md.local") // Add custom Host header
+                        .build()
+                    chain.proceed(request)
+                }
                 .addInterceptor(interceptor)
 //                .addInterceptor(
 //                    com.logicline.mydining.network.ReceivedCookiesInterceptor(
@@ -627,8 +634,8 @@ interface MyApi {
 
     class TokenInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-            val token = if (LocalDB.getAccessToken() != null) LocalDB.getAccessToken() else ""
-            val userId = if (LocalDB.getUserId() != null) LocalDB.getUserId() else ""
+            val token = if (AppPrefs.accessToken != null) AppPrefs.accessToken else ""
+            val userId = if (AppPrefs.userId != null) AppPrefs.userId else ""
 
 
             return if (!token.isNullOrEmpty()) {

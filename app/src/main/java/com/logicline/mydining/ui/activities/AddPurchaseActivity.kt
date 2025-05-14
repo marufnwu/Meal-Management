@@ -18,7 +18,7 @@ import com.logicline.mydining.data.models.Purchase
 import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 import retrofit2.Call
 import retrofit2.Callback

@@ -1,6 +1,8 @@
 package com.logicline.mydining.data.models
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
+
 
 
 data class Month(
@@ -15,11 +17,11 @@ data class Month(
     @SerializedName("start_at")
     var startAt: String,
     @SerializedName("end_at")
-    var endAt: String,
+    var endAt: String?,
     @SerializedName("created_at")
-    var createdAt: String,
+    var createdAt: String?,
     @SerializedName("updated_at")
-    var updatedAt: String,
+    var updatedAt: String?,
     @SerializedName("is_active")
     var isActive: Boolean
 )

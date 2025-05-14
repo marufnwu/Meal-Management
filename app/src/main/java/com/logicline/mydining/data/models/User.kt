@@ -2,6 +2,7 @@ package com.logicline.mydining.data.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.logicline.mydining.data.local.entities.UserEntity
 import kotlinx.parcelize.Parcelize
 
 // Define enums to match Laravel's Gender and AccountStatus enums
@@ -55,3 +56,26 @@ data class User(
     @SerializedName("country")
     val country: Country? = null,
 ) : Parcelable
+
+fun User.toEntity(): UserEntity {
+    return UserEntity(
+        id = id,
+        name = name,
+        userName = userName,
+        email = email,
+        emailVerifiedAt = emailVerifiedAt,
+        countryId = countryId,
+        phone = phone,
+        gender = gender,
+        city = city,
+        status = status,
+        joinDate = joinDate,
+        leaveDate = leaveDate,
+        photoUrl = photoUrl,
+        fcmToken = fcmToken,
+        version = version,
+        lastActive = lastActive,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+}

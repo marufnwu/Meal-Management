@@ -13,7 +13,7 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.Coroutines
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 class InitiateMemberActivity : BaseActivity() {
     lateinit var binding : ActivityInitiateMemberBinding

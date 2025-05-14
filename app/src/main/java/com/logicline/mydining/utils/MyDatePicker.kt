@@ -5,7 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.logicline.mydining.R
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import java.time.Year
 import java.util.*
 

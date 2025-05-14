@@ -2,6 +2,7 @@ package com.logicline.mydining.data.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.logicline.mydining.data.local.entities.RoleEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -15,3 +16,15 @@ data class Role(
     @SerializedName("updated_at") val updatedAt: String?,
     @SerializedName("permissions") val permissions: List<Permission>?
 ) : Parcelable
+
+fun Role.toEntity(): RoleEntity {
+    return RoleEntity(
+        id = id,
+        messId = messId,
+        role = role,
+        isDefault = isDefault,
+        isAdmin = isAdmin,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+}

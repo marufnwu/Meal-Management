@@ -3,6 +3,7 @@ package com.logicline.mydining.ui.activities
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.logicline.mydining.R
 import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.databinding.ActivityActiveMonthBinding
@@ -13,6 +14,8 @@ import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.data.repository.MonthRepository
 import com.logicline.mydining.ui.custom.monthpicker.MonthPickerDialog
+import com.logicline.mydining.utils.AppPrefs
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 class ActiveMonthActivity : BaseActivity() {
     private lateinit var binding : ActivityActiveMonthBinding
@@ -35,18 +38,27 @@ class ActiveMonthActivity : BaseActivity() {
         initViews()
 
 
-        MonthPickerDialog.show(
-            context = this,
-            monthRepository = MonthRepository((application as MyApplication).myApi),
-            preselectedMonthId = 5
-        )  { selectedMonth ->
-            Toast.makeText(this, "Selected: ${selectedMonth.name}", Toast.LENGTH_SHORT).show()
-        }
+//        MonthPickerDialog.show(
+//            context = this,
+//            monthRepository = MonthRepository((application as MyApplication).myApi),
+//            preselectedMonthId = 5
+//        )  { selectedMonth ->
+//            Toast.makeText(this, "Selected: ${selectedMonth.name}", Toast.LENGTH_SHORT).show()
+//        }
 
     }
 
     private fun initViews() {
-       binding.monthPicker.initialize(MonthRepository((application as MyApplication).myApi))
+       binding.monthPicker.initialize(MonthRepository((application as MyApplication).myApi)){month->
+           shortToast("Selected: ${month.name}")
+           AppPrefs.monthId = month.id
+       }
+
+       lifecycleScope.launchWhenStarted {
+           AppPrefs.monthIdFlow.collect {
+                binding.monthPicker.setSelectedMonthId(it)
+           }
+       }
 
     }
 

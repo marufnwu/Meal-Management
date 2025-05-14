@@ -182,4 +182,32 @@
     <color name="buttonTextDisabled">#9E9E9E</color>
 
 
+    <!-- Add these color values to your colors.xml -->
+    <color name="success">#4CAF50</color>
+    <color name="success_light">#E8F5E9</color>
+    <color name="warning">#FFC107</color>
+    <color name="warning_light">#FFF8E1</color>
+    <color name="error">#F44336</color>
+    <color name="error_light">#FFEBEE</color>
+    <color name="info">#2196F3</color>
+    <color name="info_light">#E3F2FD</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="divider_color">#EEEEEE</color>
+
+
+
+    <!-- Colors for active status chip -->
+    <color name="active_bg_color">#E0F2F1</color>
+    <color name="active_text_color">#00796B</color>
+
+    <!-- Colors for inactive status if needed -->
+    <color name="inactive_bg_color">#FFEBEE</color>
+    <color name="inactive_text_color">#C62828</color>
+
+    <!-- Colors for pending status if needed -->
+    <color name="pending_bg_color">#FFF8E1</color>
+    <color name="pending_text_color">#FF8F00</color>
+
+
 </resources>

@@ -10,11 +10,11 @@ import java.util.Locale
 object LangUtils {
 
     fun changeLanguage(context: Context, lanCode:Constant.LANGUAGE){
-        SharedPreUtils.setStringToStorage(context, Constant.APP_LANG_KEY, lanCode.name)
+        AppPrefs.putString(Constant.APP_LANG_KEY, lanCode.name)
     }
 
     fun getLanguage(context: Context):String{
-        return SharedPreUtils.getStringFromStorageWithoutSuspend(context, Constant.APP_LANG_KEY, Constant.LANGUAGE.en_US.name)!!
+        return AppPrefs.getString(Constant.APP_LANG_KEY, Constant.LANGUAGE.en_US.name)!!
     }
 
     fun getFullLanguage(context: Context, langCode : String) : String{

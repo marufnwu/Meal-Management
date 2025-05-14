@@ -4,7 +4,9 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
@@ -21,22 +23,63 @@ import com.logicline.mydining.ui.activities.MainActivity
 import com.logicline.mydining.utils.JDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.ui.viewmodels.UserViewModel
+import com.logicline.mydining.utils.Ext.MyExtensions.handle
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
+import com.logicline.mydining.utils.LoadingDialog
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@AndroidEntryPoint
 class FirstActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 6666
     lateinit var appUpdate: AppUpdateManager
 
     private lateinit var referrerClient: InstallReferrerClient
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         checkReferrerClient()
         appUpdate = AppUpdateManagerFactory.create(this)
+
+        listenFLow()
+    }
+
+    private fun listenFLow() {
+        lifecycleScope.launchWhenStarted {
+            userViewModel.loginState.collect { loginState ->
+                loginState.handle(
+                    onError = {
+                        MyApplication.logOut(this@FirstActivity)
+                        gotoLoginActivity()
+                    },
+                    onSuccess = {
+                        processData(it)
+
+                    }
+                )
+            }
+        }
+
+
+    }
+
+    private fun processData(userData: UserData?) {
+        lifecycleScope.launch {
+            userViewModel.saveUserDataLocally(userData)
+
+            if (userData?.messUser != null) {
+                gotoMainActivity()
+            }else{
+                gotoMessActivity()
+            }
+        }
+
     }
 
     private fun checkReferrerClient() {
@@ -54,13 +97,18 @@ class FirstActivity : AppCompatActivity() {
                         val appInstallTime: Long = response.installBeginTimestampSeconds
                         val instantExperienceLaunched: Boolean = response.googlePlayInstantParam
 
-                        Log.d("InstallReferrerClient", "onInstallReferrerSetupFinished: "+referrerUrl)
+                        Log.d(
+                            "InstallReferrerClient",
+                            "onInstallReferrerSetupFinished: " + referrerUrl
+                        )
                     }
+
                     InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
                         // API not available on the current Play Store app.
                         Log.d("InstallReferrerClient", "FEATURE_NOT_SUPPORTED: ")
 
                     }
+
                     InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
                         // Connection couldn't be established.
                         Log.d("InstallReferrerClient", "SERVICE_UNAVAILABLE: ")
@@ -81,7 +129,7 @@ class FirstActivity : AppCompatActivity() {
         checkUpdate()
     }
 
-    private fun checkUpdate(){
+    private fun checkUpdate() {
         Log.d("UpdateChecker", "Inside check update")
         appUpdate.appUpdateInfo.addOnSuccessListener { updateInfo ->
 
@@ -113,19 +161,19 @@ class FirstActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAdSettings(){
+    private fun getAdSettings() {
         Log.d("getAdSettings", "getAdSettings: calling")
         try {
             (application as MyApplication)
                 .myApi
                 .getAdSettings()
-                .enqueue(object: Callback<Ad?> {
+                .enqueue(object : Callback<Ad?> {
                     override fun onResponse(call: Call<Ad?>, response: Response<Ad?>) {
                         try {
-                            if(response.isSuccessful && response.body()!=null){
+                            if (response.isSuccessful && response.body() != null) {
                                 LocalDB.saveAdSettings(response.body()!!)
                             }
-                        }catch (_:Exception){
+                        } catch (_: Exception) {
 
                         }
 
@@ -140,80 +188,25 @@ class FirstActivity : AppCompatActivity() {
                     }
 
                 })
-        }catch (e:Exception){
+        } catch (e: Exception) {
             checkLogin()
         }
     }
 
     private fun checkLogin() {
-        Log.d("getAdSettings", "checkLogin: calling")
-
-        if(MyApplication.isLogged()){
-
+        Log.d("checkLogin: ", MyApplication.isLogged().toString())
+        if (MyApplication.isLogged()) {
             checkAccessToken()
-
-        }else{
+        } else {
             gotoLoginActivity()
         }
     }
 
 
-    private fun checkAccessToken(){
-        shortToast("11111")
-            try {
-                (application as MyApplication).myApi
-                    .checkLogin()
-                    .enqueue(object : Callback<ServerResponse<UserData>> {
-                        override fun onResponse(
-                            call: Call<ServerResponse<UserData>>,
-                            response: Response<ServerResponse<UserData>>
-                        ) {
-                            if(response.isSuccessful && response.body()!=null){
-                                val body = response.body()!!
+    private fun checkAccessToken() {
 
-                                shortToast(response.body()?.msg)
-
-                                if(!body.error){
-                                    body.data?.let {
-                                        LocalDB.saveUserData(it)
-                                        LocalDB.saveUser(it.user!!)
-                                        LocalDB.saveAccessToken(it.token!!)
-                                        LocalDB.saveUserId(it.user?.id!!)
-                                        gotoMainActivity()
-                                    }
-                                }else{
-                                    LocalDB.logout()
-                                    gotoLoginActivity()
-                                }
-                            }else{
-                                gotoLoginActivity()
-                                shortToast(response.message())
-                            }
-                        }
-
-                        override fun onFailure(call: Call<ServerResponse<UserData>>, t: Throwable) {
-                            JDialog.make(this@FirstActivity)
-                                .setCancelable(false)
-                                .setPositiveButton("Reload"){
-                                    it.hideDialog()
-                                    checkAccessToken()
-                                }
-                                .setBodyText("Something went wrong!!")
-                                .setIconType(JDialog.IconType.ERROR)
-                                .build()
-                                .showDialog()
-                        }
-
-                    })
-
-
-            }catch (e:Exception){
-                e.printStackTrace()
-                shortToast(e.message)
-            }
-
+        userViewModel.checkLogin()
     }
-
 
 
     private fun gotoLoginActivity() {
@@ -230,7 +223,14 @@ class FirstActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun reopen(){
+    private fun gotoMessActivity() {
+        val intent = Intent(this, MessInfoActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    private fun reopen() {
 
         val intent = baseContext.packageManager.getLaunchIntentForPackage(
             baseContext.packageName
@@ -249,10 +249,12 @@ class FirstActivity : AppCompatActivity() {
                     shortToast("App Successfully updated")
                     getAdSettings()
                 }
+
                 RESULT_CANCELED -> {
                     //  handle user's rejection  }
                     checkUpdate()
                 }
+
                 ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> {
                     //if you want to request the update again just call checkUpdate()
                     shortToast("App update failed")

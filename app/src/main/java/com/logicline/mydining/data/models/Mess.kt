@@ -2,6 +2,7 @@ package com.logicline.mydining.data.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.logicline.mydining.data.local.entities.MessEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -15,3 +16,17 @@ data class Mess(
     @SerializedName("created_at") val createdAt: String?,
     @SerializedName("updated_at") val updatedAt: String?
 ) : Parcelable
+
+
+fun Mess.toEntity(): MessEntity {
+    return MessEntity(
+        id = id,
+        name = name,
+        status = status,
+        adFree = adFree,
+        allUserAddMeal = allUserAddMeal,
+        fundAddEnabled = fundAddEnabled,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
+}

@@ -50,5 +50,10 @@ fun <T, R> DataState<T>.map(transform: (T) -> R): DataState<R> {
         is DataState.Error -> DataState.Error(data = null, message = this.message)
         is DataState.Loading -> DataState.Loading()
         is DataState.Idle -> DataState.Idle()
+        is DataState.Exception -> DataState.Exception(
+            exception = this.throwable,
+            message = this.message,
+            data = this.data?.let(transform)
+        )
     }
 }

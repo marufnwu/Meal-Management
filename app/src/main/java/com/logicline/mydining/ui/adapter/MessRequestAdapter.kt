@@ -9,7 +9,7 @@ import com.logicline.mydining.databinding.LayoutMessJoinRequestBinding
 import com.logicline.mydining.data.models.MessRequest
 import com.logicline.mydining.ui.activities.SwitchMessActivity
 import com.logicline.mydining.utils.JDialog
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 class MessRequestAdapter(val context: Context, val list:MutableList<MessRequest>) : RecyclerView.Adapter<MessRequestAdapter.MyViewHolder>() {
 

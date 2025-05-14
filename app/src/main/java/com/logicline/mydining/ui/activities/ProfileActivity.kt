@@ -43,8 +43,8 @@ import com.logicline.mydining.data.models.User
 import com.logicline.mydining.data.models.response.GenericRespose
 import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.*
-import com.logicline.mydining.utils.MyExtensions.longToast
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.longToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import id.zelory.compressor.Compressor
 import okhttp3.MultipartBody
 import retrofit2.Call

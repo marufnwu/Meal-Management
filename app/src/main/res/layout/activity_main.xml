@@ -201,7 +201,7 @@
                                         android:id="@+id/txtMealcharge"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="00 tk"
+                                        android:text="NA"
                                         android:textColor="@color/WhiteSmoke"
                                         android:textSize="@dimen/_15sdp" />
 
@@ -234,7 +234,7 @@
                                         android:id="@+id/txtTotalMeal"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="00"
+                                        android:text="NA"
                                         android:textColor="@color/WhiteSmoke"
                                         android:textSize="@dimen/_15sdp" />
 

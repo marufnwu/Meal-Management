@@ -1,21 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Declare all unique attributes first -->
+    <attr name="banner" format="string" />
+    <attr name="enableAnimation" format="boolean" />
+    <attr name="showPlayIcon" format="boolean" />
+    <attr name="showCustomAd" format="boolean" />
+    <attr name="showLoading" format="boolean" />
+    <attr name="statusMessage" format="string" />
+    <attr name="statusImage" format="reference" />
+    <attr name="positiveButtonText" format="string" />
+    <attr name="negativeButtonText" format="string" />
+    <!-- Declare all unique attrs once -->
+    <attr name="displayMode" format="enum">
+        <enum name="list" value="0" />
+        <enum name="grid" value="1" />
+    </attr>
+    <attr name="allowMultipleSelection" format="boolean" />
+    <attr name="enableYearFiltering" format="boolean" />
+    <attr name="searchDebounceTime" format="integer" />
+    <attr name="cardBackgroundColor" format="color" />
+    <attr name="accentColor" format="color" />
+    <attr name="titleText" format="string" />
+    <attr name="emptyStateMessage" format="string" />
+    <attr name="searchHint" format="string" />
+    <attr name="maxSelectionCount" format="integer" />
+
+    <!-- Then use them inside styleables -->
     <declare-styleable name="BannerView">
-        <attr name="banner" format="string" />
-        <attr name="enableAnimation" format="boolean"/>
-        <attr name="showPlayIcon" format="boolean"/>
+        <attr name="banner" />
+        <attr name="enableAnimation" />
+        <attr name="showPlayIcon" />
     </declare-styleable>
 
     <declare-styleable name="AdmobCustomNativeAdView">
-        <attr name="showCustomAd" format="boolean"/>
-        <attr name="showLoading" format="boolean"/>
+        <attr name="showCustomAd" />
+        <attr name="showLoading" />
     </declare-styleable>
 
     <declare-styleable name="StatusView">
-        <attr name="statusMessage" format="string" />
-        <attr name="statusImage" format="reference" />
-        <attr name="positiveButtonText" format="string" />
-        <attr name="negativeButtonText" format="string" />
+        <attr name="statusMessage" />
+        <attr name="statusImage" />
+        <attr name="positiveButtonText" />
+        <attr name="negativeButtonText" />
     </declare-styleable>
 
+    <declare-styleable name="MonthPickerView">
+        <attr name="showTitle" format="boolean" />
+        <attr name="showSearch" format="boolean" />
+        <attr name="title" format="string" />
+        <attr name="searchHint" />
+        <attr name="multipleSelection" format="boolean" />
+        <attr name="selectionMarkStyle" format="enum">
+            <enum name="checkmark" value="0" />
+            <enum name="radio" value="1" />
+            <enum name="highlight" value="2" />
+        </attr>
+        <attr name="gridLayout" format="boolean" />
+    </declare-styleable>
 </resources>

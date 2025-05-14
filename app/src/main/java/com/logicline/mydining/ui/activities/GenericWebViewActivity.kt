@@ -14,7 +14,7 @@ import com.logicline.mydining.databinding.ActivityGenericWebviewBinding
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import java.net.URISyntaxException
 
 

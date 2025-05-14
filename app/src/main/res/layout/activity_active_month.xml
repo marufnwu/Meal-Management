@@ -8,6 +8,8 @@
     tools:context=".ui.activities.ActiveMonthActivity">
 
     <com.logicline.mydining.ui.custom.monthpicker.MonthPickerView
+        app:showTitle="false"
+        app:selectionMarkStyle="checkmark"
         android:id="@+id/monthPicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

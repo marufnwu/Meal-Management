@@ -11,6 +11,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.firebase.FirebaseApp
 import com.logicline.mydining.network.MyApi
 import com.logicline.mydining.ui.activities.FirstActivity
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LangUtils
 import com.logicline.mydining.utils.LocalDB
 import com.onesignal.OneSignal
@@ -27,22 +28,23 @@ class MyApplication : Application() {
         private val ONESIGNAL_APP_ID =  "583b27bf-ab91-4ece-831e-1513302b7392";
         lateinit  var appContext: Context
 
-        fun isLogged():Boolean{
-            if(LocalDB.getAccessToken()!=null && LocalDB.getUserId()!=null && LocalDB.getUser()!=null){
-                return true
-            }
-
-            return false
+        fun isLogged(): Boolean {
+            return !AppPrefs.accessToken.isNullOrBlank() && AppPrefs.user != null
         }
 
-        fun logOut(context: Activity){
-            LocalDB.logout()
-            context.finish()
-            context.startActivity(
-                Intent(
-                    context,
-                    FirstActivity::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+        fun logOut(context: Activity,  isRestart: Boolean = false){
+            AppPrefs.remove(AppPrefs.ACCESS_TOKEN)
+            AppPrefs.remove(AppPrefs.USER_ID)
+            AppPrefs.remove(AppPrefs.USER)
+            AppPrefs.remove(AppPrefs.MESS_USER)
+            if (isRestart){
+                context.finish()
+                context.startActivity(
+                    Intent(
+                        context,
+                        FirstActivity::class.java
+                    ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+            }
         }
 
     }
@@ -51,6 +53,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = applicationContext
+        AppPrefs.init(this)
         Paper.init(this)
         FirebaseApp.initializeApp(applicationContext)
         MobileAds.initialize(this) {}
@@ -81,13 +84,13 @@ class MyApplication : Application() {
         super.onConfigurationChanged(newConfig)
     }
 
-    override fun attachBaseContext(base: Context?) {
-        if (base!=null) {
-            super.attachBaseContext(LangUtils.applyLanguage(base))
-        } else {
-            super.attachBaseContext(base)
-        }
-    }
+//    override fun attachBaseContext(base: Context?) {
+//        if (base!=null) {
+//            super.attachBaseContext(LangUtils.applyLanguage(base))
+//        } else {
+//            super.attachBaseContext(base)
+//        }
+//    }
 
 
 }

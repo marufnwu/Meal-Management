@@ -10,7 +10,7 @@ import android.webkit.URLUtil
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
 import com.logicline.mydining.R
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 
 class MyDownloadManager {

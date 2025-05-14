@@ -33,7 +33,7 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.utils.MyDownloadManager
-import com.logicline.mydining.utils.MyExtensions.shortToast
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
 import dev.maruf.monthpicker.JMonthPicker
 import retrofit2.Call

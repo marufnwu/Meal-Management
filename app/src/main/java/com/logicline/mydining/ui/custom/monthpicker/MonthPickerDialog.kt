@@ -29,16 +29,16 @@ class MonthPickerDialog private constructor(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        val pickerView = findViewById<MonthPickerView>(R.id.monthPickerView)
-        pickerView?.initialize(
-            monthRepository = monthRepository,
-            preselectedId = preselectedMonthId,
-            onSelected = {
-                onMonthSelected(it)
-                dismiss()
-                dialogInstance = null
-            }
-        )
+//        val pickerView = findViewById<MonthPickerView>(R.id.monthPickerView)
+//        pickerView?.initialize(
+//            monthRepository = monthRepository,
+//            preselectedId = preselectedMonthId,
+//            onSelected = {
+//                onMonthSelected(it)
+//                dismiss()
+//                dialogInstance = null
+//            }
+//        )
     }
 
     companion object {
