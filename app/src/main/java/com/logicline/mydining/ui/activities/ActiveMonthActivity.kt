@@ -56,6 +56,7 @@ class ActiveMonthActivity : BaseActivity() {
 
        lifecycleScope.launchWhenStarted {
            AppPrefs.monthIdFlow.collect {
+               shortToast("Selected: ${it}")
                 binding.monthPicker.setSelectedMonthId(it)
            }
        }

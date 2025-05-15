@@ -18,6 +18,7 @@ import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -31,6 +32,7 @@ import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.data.repository.MonthRepository
 import com.logicline.mydining.domains.MonthStore
 import com.logicline.mydining.ui.custom.GenericDialog
+import com.logicline.mydining.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -77,6 +79,7 @@ class MonthPickerView @JvmOverloads constructor(
 
     private  var  monthCreateDialog: GenericDialog? = null
 
+    private var monthRepository: MonthRepository? = null
 
     init {
         orientation = VERTICAL
@@ -159,6 +162,8 @@ class MonthPickerView @JvmOverloads constructor(
         config: MonthPickerConfig.() -> Unit = {},
         onSelected: (Month) -> Unit = {}
     ) {
+        this.monthRepository = monthRepository
+
         // Apply custom configuration
         this.config.apply(config)
         this.selectedMonthId = preselectedIds?.firstOrNull()
@@ -459,10 +464,9 @@ class MonthPickerView @JvmOverloads constructor(
                     createMonth(name, type, month, year, startAt, forceCloseOther)
 
                     // Dismiss the dialog after handling the click
-                    genericDialog.dismiss()
+//                    genericDialog.dismiss()
 
                     // Clear the dialog reference
-                    monthCreateDialog = null
                 }
             })
             .setNegativeButton("Cancel", object : GenericDialog.OnClickListener {
@@ -563,6 +567,7 @@ class MonthPickerView @JvmOverloads constructor(
         }
     }
 
+    // Now implement createMonth with the stored repository
     private fun createMonth(
         name: String?,
         type: String,
@@ -571,18 +576,61 @@ class MonthPickerView @JvmOverloads constructor(
         startAt: String?,
         forceCloseOther: Boolean
     ) {
-        // Implementation to call your API endpoint
-        // You can use Retrofit or any other HTTP client here
+        // Check if repository is available
+        val repository = monthRepository
+        if (repository == null) {
+            Toast.makeText(context, "Error: Repository not initialized", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        // Example payload structure:
-        // {
-        //   "name": name,
-        //   "type": type,
-        //   "month": month,
-        //   "year": year,
-        //   "start_at": startAt,
-        //   "force_close_other": forceCloseOther
-        // }
+        // Validate inputs
+        if (type == "automatic" && (month == null || year == null)) {
+            Toast.makeText(context, "Month and year are required for automatic type", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (type == "manual" && startAt.isNullOrEmpty()) {
+            Toast.makeText(context, "Start date is required for manual type", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Show loading indicator
+        progressBar.isVisible = true
+
+        viewScope.launch {
+            try {
+                // Make API call through repository
+                val response = repository.createMonth(
+                    name = name,
+                    type = type,
+                    month = month,
+                    year = year,
+                    startAt = startAt,
+                    forceCloseOther = forceCloseOther
+                )
+
+                // Process response
+                if (response.isSuccessful && response.body()?.error != true) {
+                    // Show success message
+                    Toast.makeText(context, "Month created successfully", Toast.LENGTH_SHORT).show()
+
+                    monthCreateDialog?.dismiss()
+
+                    // Refresh month list
+                    MonthStore.forceRefresh(repository)
+                } else {
+                    // Show error message
+                    val errorMsg = response.body()?.msg ?: "Unknown error occurred"
+                    Toast.makeText(context, "Error: $errorMsg", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                // Handle exception
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                // Hide loading indicator
+                progressBar.isVisible = false
+            }
+        }
     }
 
     class MonthPickerConfig {

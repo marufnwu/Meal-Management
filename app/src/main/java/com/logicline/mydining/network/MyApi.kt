@@ -34,6 +34,7 @@ import com.logicline.mydining.data.models.response.InitialDataResponse
 import com.logicline.mydining.data.models.response.MonthlySummaryResponse
 import com.logicline.mydining.data.models.response.Paging
 import com.logicline.mydining.data.models.response.UserListResponse
+import com.logicline.mydining.data.requests.MonthCreateRequest
 import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LocalDB
 
@@ -546,6 +547,11 @@ interface MyApi {
     suspend fun messUserById(
         @Path("user") userId: Int? = null,
     ) : Response<ServerResponse<MessUser>>
+
+    @POST("api/month/create")
+    suspend fun createMonth(
+        @Body monthData: MonthCreateRequest
+    ): Response<ServerResponse<Month>>
 
 
     companion object {
