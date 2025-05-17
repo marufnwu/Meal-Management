@@ -44,7 +44,7 @@
             android:id="@+id/txtAmount"
             android:textStyle="bold"
             android:textSize="@dimen/_13sdp"
-            android:textColor="@color/themeColor"
+            android:textColor="?attr/colorPrimary"
             android:padding="@dimen/_6sdp"
             android:text="1000/="
             android:background="@drawable/rounf_transparent_bg"

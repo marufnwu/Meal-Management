@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/meal_chart"
-                        android:textColor="@color/themeColor"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -99,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/purchases"
-                        android:textColor="@color/themeColor"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/other_cost"
-                        android:textColor="@color/themeColor"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -168,7 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/deposit"
-                        android:textColor="@color/themeColor"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
 
@@ -213,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/monthly_summary"
-                    android:textColor="@color/themeColor"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
 

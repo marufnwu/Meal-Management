@@ -23,7 +23,7 @@
             android:id="@+id/txtDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryTransparent"
+            android:background="?attr/colorPrimary"
             android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
@@ -120,7 +120,7 @@
                                <TextView
                                    android:id="@+id/txtTotalPurchase"
                                    android:textColor="@color/White"
-                                   android:background="@color/colorPrimaryTransparent"
+                                   android:background="?attr/colorPrimary"
                                    android:textStyle="bold"
                                    android:textSize="@dimen/_14sdp"
                                    android:padding="@dimen/_6sdp"
@@ -144,7 +144,7 @@
                                        android:layout_gravity="center"
                                        android:textSize="@dimen/_12sdp"
                                        android:textStyle="bold"
-                                       android:textColor="@color/colorPrimary"
+                                       android:textColor="?attr/colorPrimary"
                                        android:text="@string/no_purchase_item_added"
                                        android:layout_width="wrap_content"
                                        android:layout_height="wrap_content"/>

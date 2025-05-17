@@ -77,7 +77,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation project(':monthPicker')
+
     implementation 'androidx.activity:activity-ktx:1.10.1'
+    implementation 'androidx.activity:activity:1.10.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -185,6 +187,8 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
+
+    implementation 'com.google.android.material:material:1.12.0'
 
 
 

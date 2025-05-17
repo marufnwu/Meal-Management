@@ -8,7 +8,7 @@
     <LinearLayout
         android:padding="@dimen/_5sdp"
         android:gravity="center"
-        android:background="@color/colorPrimaryTransparent"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView

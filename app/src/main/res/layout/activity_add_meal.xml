@@ -59,7 +59,7 @@
             <TextView
                 android:id="@+id/txtDate"
                 android:textColor="@color/White"
-                android:background="@color/colorPrimaryTransparent"
+                android:background="?attr/colorPrimary"
                 android:padding="@dimen/_8sdp"
                 android:textSize="@dimen/_14sdp"
                 android:gravity="center"

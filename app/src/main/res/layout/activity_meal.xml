@@ -64,7 +64,7 @@
 
 
         <TextView
-            android:textColor="@color/themeColor"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/_14sdp"
             android:elevation="@dimen/_8sdp"
             android:padding="@dimen/_8sdp"

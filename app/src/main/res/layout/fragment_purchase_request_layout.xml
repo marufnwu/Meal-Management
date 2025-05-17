@@ -71,7 +71,7 @@
                 android:layout_height="@dimen/_60sdp"/>
 
             <TextView
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 android:text="List is empty"
                 android:layout_width="wrap_content"

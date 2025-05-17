@@ -2,35 +2,26 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layoutRefresh"
     android:orientation="vertical"
     tools:context=".ui.activities.MainActivity">
 
-
-
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:paddingBottom="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_8sdp"
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_8sdp"
-            android:paddingStart="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:paddingBottom="@dimen/_5sdp">
 
-
-
-            <com.mikhaellopez.circularimageview.CircularImageView
-                app:civ_border_width="@dimen/_2sdp"
-                android:src="@drawable/man"
-                app:civ_border_color="@color/themeColor"
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgProPic"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
@@ -39,16 +30,19 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:layout_marginBottom="@dimen/_4sdp" />
-
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:src="@drawable/man"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                app:strokeColor="?attr/colorPrimary"
+                app:strokeWidth="@dimen/_2sdp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="-350dp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_toStartOf="@id/imgCust"
                 android:layout_toEndOf="@id/imgProPic"
@@ -58,54 +52,47 @@
                     android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:text="@string/app_name"
-                    android:textAllCaps="false"
-                    android:textColor="@color/Black"
-                    android:textSize="@dimen/_13sdp"
-                    android:textStyle="bold" />
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <TextView
                     android:id="@+id/txtUserPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:text="8801778473031"
-                    android:textAllCaps="false"
-                    android:textColor="@color/Black"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textAppearance="?attr/textAppearanceBodyMedium" />
             </LinearLayout>
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/imgCust"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
-                android:layout_toLeftOf="@id/imgSettings"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:src="@drawable/customer_service" />
+                android:layout_toStartOf="@id/imgSettings"
+                android:src="@drawable/customer_service"
+                android:visibility="gone" />
 
             <ImageView
-                android:visibility="visible"
                 android:id="@+id/imgSettings"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_toLeftOf="@id/imgDrawer"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:src="@drawable/setting" />
+                android:layout_toStartOf="@id/imgDrawer"
+                android:src="@drawable/setting"
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/imgDrawer"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_4sdp"
@@ -113,49 +100,44 @@
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:src="@drawable/baseline_keyboard_arrow_up_24" />
-
-
-
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:padding="@dimen/_8sdp"
-            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:elevation="@dimen/_8sdp"
-                    app:cardBackgroundColor="@color/themeColor"
-                    app:cardCornerRadius="@dimen/_8sdp"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp">
-
-
+                    android:layout_height="@dimen/_100sdp"
+                    app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="@dimen/_2sdp">
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:scaleType="fitEnd"
-                            android:alpha="0.05"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:alpha="0.05"
+                            android:scaleType="fitEnd"
+                            android:importantForAccessibility="no"/>
 
                         <LinearLayout
-
-                            android:layout_width="385dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:orientation="vertical"
                             android:paddingTop="@dimen/_8sdp"
                             android:paddingBottom="@dimen/_10sdp">
-
 
                             <TextView
                                 android:id="@+id/txtCurrentMonth"
@@ -164,16 +146,17 @@
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/hubballi"
                                 android:text="March 2022"
-                                android:textColor="@color/LightBlue"
-                                android:textSize="@dimen/_15sdp" />
+                                android:textAppearance="?attr/textAppearanceTitleLarge"
+                                android:textColor="?attr/colorOnPrimaryContainer" />
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_3sdp"
+                                android:layout_height="@dimen/_1sdp"
                                 android:layout_marginStart="@dimen/_30sdp"
+                                android:layout_marginTop="@dimen/_4sdp"
                                 android:layout_marginEnd="@dimen/_30sdp"
                                 android:layout_marginBottom="@dimen/_8sdp"
-                                android:background="@drawable/curve_line_white" />
+                                android:background="?attr/colorOutlineVariant" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -194,25 +177,24 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/meal_charge"
-                                        android:textColor="@color/Gold"
-                                        android:textSize="@dimen/_15sdp" />
+                                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                                        android:textColor="?attr/colorSecondary" />
 
                                     <TextView
                                         android:id="@+id/txtMealcharge"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="NA"
-                                        android:textColor="@color/WhiteSmoke"
-                                        android:textSize="@dimen/_15sdp" />
+                                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        android:textColor="?attr/colorOnPrimaryContainer" />
 
                                     <View
                                         android:layout_width="match_parent"
-                                        android:layout_height="@dimen/_3sdp"
+                                        android:layout_height="@dimen/_1sdp"
                                         android:layout_marginStart="@dimen/_30sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:layout_marginEnd="@dimen/_30sdp"
-                                        android:background="@drawable/curve_line_white" />
-
-
+                                        android:background="?attr/colorOutlineVariant" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -227,81 +209,73 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/total_meal"
-                                        android:textColor="@color/Gold"
-                                        android:textSize="@dimen/_15sdp" />
+                                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                                        android:textColor="?attr/colorSecondary" />
 
                                     <TextView
                                         android:id="@+id/txtTotalMeal"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="NA"
-                                        android:textColor="@color/WhiteSmoke"
-                                        android:textSize="@dimen/_15sdp" />
+                                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                                        android:textColor="?attr/colorOnPrimaryContainer" />
 
                                     <View
                                         android:layout_width="match_parent"
-                                        android:layout_height="@dimen/_3sdp"
+                                        android:layout_height="@dimen/_1sdp"
                                         android:layout_marginStart="@dimen/_30sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
                                         android:layout_marginEnd="@dimen/_30sdp"
-                                        android:background="@drawable/curve_line_white" />
-
-
+                                        android:background="?attr/colorOutlineVariant" />
                                 </LinearLayout>
-
                             </LinearLayout>
-
                         </LinearLayout>
-
-
                     </FrameLayout>
-                </androidx.cardview.widget.CardView>
-
-
-
-
-
+                </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
-                    android:id="@+id/mealChart"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:id="@+id/mealChartContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/mealChart"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_3sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounf_transparent_bg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp">
 
                         <ImageView
-                            android:scaleType="fitXY"
-                            android:padding="@dimen/_8sdp"
-                            android:background="@drawable/round"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_margin="@dimen/_5sdp"
+                            android:background="@drawable/round"
+                            android:padding="@dimen/_8sdp"
+                            android:scaleType="fitXY"
                             android:src="@drawable/chart" />
 
                         <View
                             android:layout_width="@dimen/_20sdp"
-                            android:layout_height="7dp"
-                            android:background="@drawable/curve_line_black" />
+                            android:layout_height="2dp"
+                            android:background="?attr/colorPrimary" />
 
                         <TextView
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
                             android:text="@string/meal_chart"
-                            android:textColor="@color/themeColor"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorPrimary" />
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:id="@+id/purchases"
@@ -309,195 +283,177 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_3sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounf_transparent_bg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp">
 
                         <ImageView
-                            android:scaleType="fitXY"
-                            android:padding="@dimen/_8sdp"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_margin="@dimen/_5sdp"
+                            android:padding="@dimen/_8sdp"
+                            android:scaleType="fitXY"
                             android:src="@drawable/shopping_bag" />
 
                         <View
                             android:layout_width="@dimen/_20sdp"
-                            android:layout_height="7dp"
-                            android:background="@drawable/curve_line_black" />
+                            android:layout_height="2dp"
+                            android:background="?attr/colorPrimary" />
 
                         <TextView
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
                             android:text="@string/purchases"
-                            android:textColor="@color/themeColor"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorPrimary" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:id="@+id/otherCost"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_3sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounf_transparent_bg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp">
-
                         <ImageView
-                            android:scaleType="fitXY"
-                            android:padding="@dimen/_8sdp"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_margin="@dimen/_5sdp"
+                            android:padding="@dimen/_8sdp"
+                            android:scaleType="fitXY"
                             android:src="@drawable/expense" />
-
                         <View
                             android:layout_width="@dimen/_20sdp"
-                            android:layout_height="7dp"
-                            android:background="@drawable/curve_line_black" />
-
+                            android:layout_height="2dp"
+                            android:background="?attr/colorPrimary" />
                         <TextView
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
                             android:text="@string/other_cost"
-                            android:textColor="@color/themeColor"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorPrimary" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:id="@+id/deposit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_3sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounf_transparent_bg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp">
-
                         <ImageView
-                            android:padding="@dimen/_8sdp"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_margin="@dimen/_5sdp"
+                            android:padding="@dimen/_8sdp"
                             android:src="@drawable/wallet" />
-
                         <View
                             android:layout_width="@dimen/_20sdp"
-                            android:layout_height="7dp"
-                            android:background="@drawable/curve_line_black" />
-
+                            android:layout_height="2dp"
+                            android:background="?attr/colorPrimary" />
                         <TextView
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
                             android:text="@string/deposit"
-                            android:textColor="@color/themeColor"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorPrimary" />
                     </LinearLayout>
-
                 </LinearLayout>
 
-
-                <!--User Guide Section Start-->
-                <androidx.cardview.widget.CardView
-                    android:layout_margin="@dimen/_8sdp"
-                    android:elevation="@dimen/_8sdp"
-                    app:cardCornerRadius="@dimen/_8sdp"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardCornerRadius="@dimen/_8sdp">
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <RelativeLayout
-                            android:gravity="center_vertical"
                             android:id="@+id/layoutUserGideToggle"
-                            android:background="@color/LightCyan"
-                            android:padding="@dimen/_4sdp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="?attr/colorSurfaceContainerLowest"
+                            android:padding="@dimen/_8sdp">
 
                             <TextView
-                                android:gravity="center"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
                                 android:text="@string/user_guide"
-                                android:textColor="@color/Black"
-                                android:textSize="@dimen/_16sdp"
-                                android:textStyle="bold" />
+                                android:textAppearance="?attr/textAppearanceTitleMedium"
+                                android:textColor="?attr/colorOnSurface" />
 
                             <ImageView
-                                android:layout_centerVertical="true"
                                 android:id="@+id/imgDownExpand"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/baseline_keyboard_arrow_down_24"
                                 android:layout_width="@dimen/_24sdp"
-                                android:layout_height="@dimen/_24sdp"/>
+                                android:layout_height="@dimen/_24sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/baseline_keyboard_arrow_down_24" />
                         </RelativeLayout>
 
-
                         <LinearLayout
-                            android:visibility="gone"
                             android:id="@+id/layoutUserGuide"
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
                             <ImageView
-                                android:visibility="gone"
                                 android:id="@+id/imgUserGuide"
-                                android:scaleType="fitXY"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_160sdp"/>
+                                android:layout_height="@dimen/_160sdp"
+                                android:scaleType="fitXY"
+                                android:visibility="gone" />
 
                             <LinearLayout
                                 android:id="@+id/layoutFaq"
-                                android:background="@drawable/bottom_border_curve"
-                                android:layout_margin="@dimen/_8sdp"
-                                android:gravity="center_vertical|center_horizontal"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_8sdp"
+                                android:background="@drawable/bottom_border_curve"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/_8sdp">
                                 <ImageView
-                                    android:src="@drawable/qa"
                                     android:layout_width="@dimen/_35sdp"
-                                    android:layout_height="@dimen/_35sdp"/>
-
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:src="@drawable/qa" />
                                 <TextView
-                                    android:textColor="@color/themeColor"
-                                    android:textSize="@dimen/_14sdp"
-                                    android:textStyle="bold"
-                                    android:layout_margin="@dimen/_4sdp"
-                                    android:text="Frequently Ask Question"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_8sdp"
+                                    android:text="Frequently Ask Question"
+                                    android:textAppearance="?attr/textAppearanceTitleSmall"
+                                    android:textColor="?attr/colorPrimary" />
                             </LinearLayout>
                         </LinearLayout>
-
-
-
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <!--User guide section end-->
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.smarteist.autoimageslider.SliderView
-                    android:background="@color/colorPrimaryTransparent"
-                    android:visibility="gone"
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
+                    android:background="?attr/colorSurfaceVariant"
+                    android:visibility="gone"
                     app:sliderAnimationDuration="2000"
                     app:sliderAutoCycleDirection="back_and_forth"
                     app:sliderAutoCycleEnabled="true"
@@ -507,675 +463,418 @@
                     app:sliderIndicatorOrientation="horizontal"
                     app:sliderIndicatorPadding="3dp"
                     app:sliderIndicatorRadius="2dp"
-                    app:sliderIndicatorSelectedColor="#5A5A5A"
-                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderIndicatorSelectedColor="?attr/colorPrimary"
+                    app:sliderIndicatorUnselectedColor="?attr/colorOnSurfaceVariant"
                     app:sliderScrollTimeInSec="5"
                     app:sliderStartAutoCycle="true" />
 
-
-                <!--Add user Start-->
-                <LinearLayout
-                    android:visibility="gone"
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/profile"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:src="@drawable/man" />
-                        </LinearLayout>
-
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:src="@drawable/man"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
                             android:text="Profile"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-                </LinearLayout>
-                <!--Add user end-->
-
-
-
-
-                <!--Add user Start-->
-                <LinearLayout
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:id="@+id/members"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/members" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/members"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-                </LinearLayout>
-                <!--Add user end-->
-
-                <!--Initiate user Start-->
-                <LinearLayout
-                    android:id="@+id/initiateMember"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/adduser" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/initiate_members"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-                </LinearLayout>
-                <!--Initiate user end-->
-
-                <!--Add user Start-->
-                <LinearLayout
-                    android:id="@+id/addMeal"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/meal_add" />
-
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/add_meal"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-                <!--Add user end-->
-
-                <!--Add Purchase Start-->
-                <LinearLayout
-                    android:id="@+id/addPurchase"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/shopping" />
-
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:textStyle="bold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/add_purchase"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-                <!--Add purchase end-->
-
-                <!--Fund-->
-                <LinearLayout
-                    android:id="@+id/addFund"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/fund" />
-
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:textStyle="bold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/fund"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-                <!--Fund end-->
-
-                <!--Native Ad-->
-                <com.logicline.mydining.utils.Ad.MyDiningNativeAd
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <!--Native Ad -->
-
-                <!--Purchase request Start-->
-                <LinearLayout
-                    android:id="@+id/purchaseRequest"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/cart" />
-
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/purchase_request"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-                <!--Add purchase end-->
-
-                <!--Add user Start-->
-                <LinearLayout
-                    android:id="@+id/summary"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/summary" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/monthly_summary"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-                <!--Add user end-->
-
-                <!--Old Data start-->
-                <LinearLayout
-                    android:id="@+id/oldData"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    app:cardBackgroundColor="@color/AliceBlue"
-                    android:elevation="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_margin="@dimen/_4sdp"
-                            android:padding="@dimen/_4sdp"
-                            android:background="@drawable/round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                app:civ_border_overlay="true"
-                                app:civ_border_color="@color/themeColor"
-                                app:civ_border_width="@dimen/_2sdp"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@drawable/summary" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="@string/previous_data"
-                            android:textStyle="bold"
-                            android:textColor="@color/mainButtonTextColor"
-                            android:textSize="@dimen/_16sdp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="@dimen/_40sdp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
-                <!--Old Data end-->
-
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:id="@+id/cardContactUs"
-                    android:elevation="@dimen/_30sdp"
-                    app:cardCornerRadius="@dimen/_8sdp"
-                    app:cardBackgroundColor="@color/Azure"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:padding="@dimen/_4sdp"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
 
                         <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                            android:src="@drawable/customer_service"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/members"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"/>
-
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/members"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
                         <TextView
-                            android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/members"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/initiateMember"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/adduser"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/initiate_members"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/addMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/meal_add"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/add_meal"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/addPurchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/shopping"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/add_purchase"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/addFund"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/fund"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/fund"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.logicline.mydining.utils.Ad.MyDiningNativeAd
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/purchaseRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/cart"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/purchase_request"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/summary"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/monthly_summary"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/oldData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_1sdp"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:backgroundTint="?attr/colorSurfaceContainerLow">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/summary"
+                            app:strokeColor="?attr/colorPrimary"
+                            app:strokeWidth="@dimen/_2sdp"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/previous_data"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardContactUs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="?attr/colorTertiaryContainer"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="@dimen/_2sdp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_8sdp">
+                        <ImageView
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:src="@drawable/customer_service"
+                            app:tint="?attr/colorOnTertiaryContainer" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_8sdp"
                             android:text="@string/contact_us_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
+                            android:textAppearance="?attr/textAppearanceLabelLarge"
+                            android:textColor="?attr/colorOnTertiaryContainer" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-
-
-
-
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-
-
-
-
-
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

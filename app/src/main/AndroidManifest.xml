@@ -4,8 +4,12 @@
     package="com.logicline.mydining">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" /> <!-- For Android 13+ consider granular media permissions -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" /> <!-- For scoped storage, this is not needed for app-specific dirs on API 29+ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
@@ -16,7 +20,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity
+            android:theme="@style/AppTheme.ContentMatching"
+            android:name=".ui.activities.DemoActivity"
+            android:exported="false" />
+        <!-- usesCleartextTraffic needs targetApi M or higher if minSdk is lower -->
         <activity
             android:name=".ui.activities.MonthsActivity"
             android:exported="false" />
@@ -109,7 +119,7 @@
             android:name=".ui.activities.ProfileActivity"
             android:exported="false"
             android:label="Profile"
-            android:theme="@style/Theme.MealManagementNoActionBar" />
+            android:theme="@style/AppTheme.WithNoActionBar" />
         <activity
             android:name=".ui.activities.SummaryActivity"
             android:exported="false"
@@ -144,11 +154,11 @@
             android:name=".ui.activities.LoginActivity"
             android:exported="false"
             android:parentActivityName=".ui.activities.FirstActivity"
-            android:theme="@style/Theme.MealManagementNoActionBar" />
+            android:theme="@style/AppTheme.WithNoActionBar" />
         <activity
             android:name=".ui.activities.FirstActivity"
             android:exported="true"
-            android:theme="@style/Theme.MealManagementNoActionBar">
+            android:theme="@style/AppTheme.WithNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -162,7 +172,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.MealManagementNoActionBar" />
+            android:theme="@style/AppTheme.ContentMatching" />
 
         <service
             android:name=".notification.NotificationService"

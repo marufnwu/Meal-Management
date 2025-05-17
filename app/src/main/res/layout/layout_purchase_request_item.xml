@@ -89,7 +89,7 @@
             android:layout_margin="@dimen/_8sdp"
             android:textStyle="bold"
             android:textSize="@dimen/_12sdp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:layout_gravity="center"
             android:text="Lulu requested to deposit money to his/her account"
             android:layout_width="wrap_content"

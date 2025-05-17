@@ -8,5 +8,5 @@
         android:left="10dp"/>
 
     <solid android:color="@color/White"/>
-    <stroke android:width="@dimen/_2sdp" android:color="@color/themeColor"/>
+    <stroke android:width="@dimen/_2sdp" android:color="?attr/colorPrimary"/>
 </shape>

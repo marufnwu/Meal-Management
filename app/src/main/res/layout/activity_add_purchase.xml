@@ -18,7 +18,7 @@
             android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
             android:id="@+id/txtDate"
             android:textColor="@color/White"
-            android:background="@color/colorPrimaryTransparent"
+            android:background="?attr/colorPrimary"
             android:padding="@dimen/_8sdp"
             android:textSize="@dimen/_14sdp"
             android:gravity="center"
@@ -106,7 +106,7 @@
                 <TextView
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/_13sdp"
                     android:layout_margin="@dimen/_4sdp"
                     android:text="@string/purchase_type"

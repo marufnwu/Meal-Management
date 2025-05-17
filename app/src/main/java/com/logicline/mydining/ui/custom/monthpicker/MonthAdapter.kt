@@ -110,7 +110,7 @@ class MonthAdapter(
                 }
                 2 -> { // Highlight
                     cardView?.strokeWidth = if (isSelected) 2.dpToPx() else 0
-                    cardView?.strokeColor = itemView.context.getColor(R.color.colorPrimary)
+                    cardView?.strokeColor = itemView.context.getColor(R.color.md_theme_primary)
                 }
             }
 

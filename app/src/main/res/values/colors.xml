@@ -1,27 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="md_theme_primary">#B30F59</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#D53171</color>
+    <color name="md_theme_onPrimaryContainer">#FFFBFF</color>
+    <color name="md_theme_secondary">#99405D</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#FF93B1</color>
+    <color name="md_theme_onSecondaryContainer">#792744</color>
+    <color name="md_theme_tertiary">#9F3C00</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#C84D00</color>
+    <color name="md_theme_onTertiaryContainer">#FFFBFF</color>
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#93000A</color>
+    <color name="md_theme_background">#FFF8F8</color>
+    <color name="md_theme_onBackground">#26181B</color>
+    <color name="md_theme_surface">#FFF8F8</color>
+    <color name="md_theme_onSurface">#26181B</color>
+    <color name="md_theme_surfaceVariant">#FDDAE1</color>
+    <color name="md_theme_onSurfaceVariant">#594046</color>
+    <color name="md_theme_outline">#8C7076</color>
+    <color name="md_theme_outlineVariant">#E0BEC5</color>
+    <color name="md_theme_scrim">#000000</color>
+    <color name="md_theme_inverseSurface">#3C2C30</color>
+    <color name="md_theme_inverseOnSurface">#FFECEF</color>
+    <color name="md_theme_inversePrimary">#FFB1C4</color>
+    <color name="md_theme_primaryFixed">#FFD9E1</color>
+    <color name="md_theme_onPrimaryFixed">#3F001A</color>
+    <color name="md_theme_primaryFixedDim">#FFB1C4</color>
+    <color name="md_theme_onPrimaryFixedVariant">#8F0044</color>
+    <color name="md_theme_secondaryFixed">#FFD9E1</color>
+    <color name="md_theme_onSecondaryFixed">#3F001A</color>
+    <color name="md_theme_secondaryFixedDim">#FFB1C4</color>
+    <color name="md_theme_onSecondaryFixedVariant">#7B2945</color>
+    <color name="md_theme_tertiaryFixed">#FFDBCD</color>
+    <color name="md_theme_onTertiaryFixed">#360F00</color>
+    <color name="md_theme_tertiaryFixedDim">#FFB596</color>
+    <color name="md_theme_onTertiaryFixedVariant">#7D2D00</color>
+    <color name="md_theme_surfaceDim">#EDD4D8</color>
+    <color name="md_theme_surfaceBright">#FFF8F8</color>
+    <color name="md_theme_surfaceContainerLowest">#FFFFFF</color>
+    <color name="md_theme_surfaceContainerLow">#FFF0F2</color>
+    <color name="md_theme_surfaceContainer">#FFE8EC</color>
+    <color name="md_theme_surfaceContainerHigh">#FCE2E6</color>
+    <color name="md_theme_surfaceContainerHighest">#F6DCE1</color>
+    <color name="md_theme_primary_mediumContrast">#700034</color>
+    <color name="md_theme_onPrimary_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_primaryContainer_mediumContrast">#CB296A</color>
+    <color name="md_theme_onPrimaryContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_secondary_mediumContrast">#661835</color>
+    <color name="md_theme_onSecondary_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer_mediumContrast">#AB4F6B</color>
+    <color name="md_theme_onSecondaryContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_tertiary_mediumContrast">#612200</color>
+    <color name="md_theme_onTertiary_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer_mediumContrast">#BB4800</color>
+    <color name="md_theme_onTertiaryContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_error_mediumContrast">#740006</color>
+    <color name="md_theme_onError_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_errorContainer_mediumContrast">#CF2C27</color>
+    <color name="md_theme_onErrorContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_background_mediumContrast">#FFF8F8</color>
+    <color name="md_theme_onBackground_mediumContrast">#26181B</color>
+    <color name="md_theme_surface_mediumContrast">#FFF8F8</color>
+    <color name="md_theme_onSurface_mediumContrast">#1A0D11</color>
+    <color name="md_theme_surfaceVariant_mediumContrast">#FDDAE1</color>
+    <color name="md_theme_onSurfaceVariant_mediumContrast">#473035</color>
+    <color name="md_theme_outline_mediumContrast">#654C52</color>
+    <color name="md_theme_outlineVariant_mediumContrast">#82666C</color>
+    <color name="md_theme_scrim_mediumContrast">#000000</color>
+    <color name="md_theme_inverseSurface_mediumContrast">#3C2C30</color>
+    <color name="md_theme_inverseOnSurface_mediumContrast">#FFECEF</color>
+    <color name="md_theme_inversePrimary_mediumContrast">#FFB1C4</color>
+    <color name="md_theme_primaryFixed_mediumContrast">#CB296A</color>
+    <color name="md_theme_onPrimaryFixed_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_primaryFixedDim_mediumContrast">#A90052</color>
+    <color name="md_theme_onPrimaryFixedVariant_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryFixed_mediumContrast">#AB4F6B</color>
+    <color name="md_theme_onSecondaryFixed_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryFixedDim_mediumContrast">#8D3753</color>
+    <color name="md_theme_onSecondaryFixedVariant_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryFixed_mediumContrast">#BB4800</color>
+    <color name="md_theme_onTertiaryFixed_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryFixedDim_mediumContrast">#933700</color>
+    <color name="md_theme_onTertiaryFixedVariant_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_surfaceDim_mediumContrast">#D9C0C5</color>
+    <color name="md_theme_surfaceBright_mediumContrast">#FFF8F8</color>
+    <color name="md_theme_surfaceContainerLowest_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_surfaceContainerLow_mediumContrast">#FFF0F2</color>
+    <color name="md_theme_surfaceContainer_mediumContrast">#FCE2E6</color>
+    <color name="md_theme_surfaceContainerHigh_mediumContrast">#F0D7DB</color>
+    <color name="md_theme_surfaceContainerHighest_mediumContrast">#E5CBD0</color>
+    <color name="md_theme_primary_highContrast">#5D002A</color>
+    <color name="md_theme_onPrimary_highContrast">#FFFFFF</color>
+    <color name="md_theme_primaryContainer_highContrast">#930046</color>
+    <color name="md_theme_onPrimaryContainer_highContrast">#FFFFFF</color>
+    <color name="md_theme_secondary_highContrast">#580C2B</color>
+    <color name="md_theme_onSecondary_highContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer_highContrast">#7E2B47</color>
+    <color name="md_theme_onSecondaryContainer_highContrast">#FFFFFF</color>
+    <color name="md_theme_tertiary_highContrast">#511B00</color>
+    <color name="md_theme_onTertiary_highContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer_highContrast">#802F00</color>
+    <color name="md_theme_onTertiaryContainer_highContrast">#FFFFFF</color>
+    <color name="md_theme_error_highContrast">#600004</color>
+    <color name="md_theme_onError_highContrast">#FFFFFF</color>
+    <color name="md_theme_errorContainer_highContrast">#98000A</color>
+    <color name="md_theme_onErrorContainer_highContrast">#FFFFFF</color>
+    <color name="md_theme_background_highContrast">#FFF8F8</color>
+    <color name="md_theme_onBackground_highContrast">#26181B</color>
+    <color name="md_theme_surface_highContrast">#FFF8F8</color>
+    <color name="md_theme_onSurface_highContrast">#000000</color>
+    <color name="md_theme_surfaceVariant_highContrast">#FDDAE1</color>
+    <color name="md_theme_onSurfaceVariant_highContrast">#000000</color>
+    <color name="md_theme_outline_highContrast">#3C262C</color>
+    <color name="md_theme_outlineVariant_highContrast">#5B4348</color>
+    <color name="md_theme_scrim_highContrast">#000000</color>
+    <color name="md_theme_inverseSurface_highContrast">#3C2C30</color>
+    <color name="md_theme_inverseOnSurface_highContrast">#FFFFFF</color>
+    <color name="md_theme_inversePrimary_highContrast">#FFB1C4</color>
+    <color name="md_theme_primaryFixed_highContrast">#930046</color>
+    <color name="md_theme_onPrimaryFixed_highContrast">#FFFFFF</color>
+    <color name="md_theme_primaryFixedDim_highContrast">#6A0031</color>
+    <color name="md_theme_onPrimaryFixedVariant_highContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryFixed_highContrast">#7E2B47</color>
+    <color name="md_theme_onSecondaryFixed_highContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryFixedDim_highContrast">#611431</color>
+    <color name="md_theme_onSecondaryFixedVariant_highContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryFixed_highContrast">#802F00</color>
+    <color name="md_theme_onTertiaryFixed_highContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryFixedDim_highContrast">#5C1F00</color>
+    <color name="md_theme_onTertiaryFixedVariant_highContrast">#FFFFFF</color>
+    <color name="md_theme_surfaceDim_highContrast">#CBB3B7</color>
+    <color name="md_theme_surfaceBright_highContrast">#FFF8F8</color>
+    <color name="md_theme_surfaceContainerLowest_highContrast">#FFFFFF</color>
+    <color name="md_theme_surfaceContainerLow_highContrast">#FFECEF</color>
+    <color name="md_theme_surfaceContainer_highContrast">#F6DCE1</color>
+    <color name="md_theme_surfaceContainerHigh_highContrast">#E7CED3</color>
+    <color name="md_theme_surfaceContainerHighest_highContrast">#D9C0C5</color>
+
+    <!-- Button colors - Variations of pink theme -->
+    <color name="buttonPrimary">@color/md_theme_primary</color>
+    <color name="buttonPrimaryPressed">#B00050</color>
+    <color name="buttonPrimaryDisabled">#FFADC6</color>
+    <color name="buttonSecondary">#7E596A</color>
+    <color name="buttonSecondaryPressed">#694558</color>
+    <color name="buttonSecondaryDisabled">#E7D7DE</color>
+    <color name="buttonDanger">#C62828</color>
+    <color name="buttonDangerPressed">#B71C1C</color>
+    <color name="buttonDangerDisabled">#FFEBEE</color>
+    <color name="buttonTextLight">#FFFFFF</color>
+    <color name="buttonTextDark">#201A1C</color>
+    <color name="buttonTextDisabled">#9E9E9E</color>
+
+    <!-- Text colors - Organic contrast with pink undertones -->
+    <color name="text_primary">#201A1C</color>
+    <color name="text_secondary">#5D4F53</color>
+    <color name="text_tertiary">#847377</color>
+    <color name="divider_color">#E6DDE1</color>
 
 
-    <color name="colorPrimary">#073570</color>
-    <color name="colorPrimaryDark">#FFFF</color>
+    <!-- Status colors - for feedback and states -->
+    <color name="success">#0B6E4F</color>
+    <color name="success_light">#E3F6ED</color>
+    <color name="success_container">#8DD9B9</color>
+    <color name="warning">#E6841C</color>
+    <color name="warning_light">#FFF2E4</color>
+    <color name="warning_container">#FFDBB0</color>
+    <color name="error">#B3261E</color>
+    <color name="error_light">#F9DEDC</color>
+    <color name="error_container">#F9DEDC</color>
+    <color name="info">#0B57D0</color>
+    <color name="info_light">#D8E2FF</color>
+    <color name="info_container">#D8E2FF</color>
 
-    <color name="colorPrimaryTransparent">#CE06264E</color>
+    <!-- Status chip colors - enhanced for better visibility -->
+    <color name="active_bg_color">#E3F6ED</color>
+    <color name="active_text_color">#0B6E4F</color>
+    <color name="inactive_bg_color">#F9DEDC</color>
+    <color name="inactive_text_color">#B3261E</color>
+    <color name="pending_bg_color">#FFF2E4</color>
+    <color name="pending_text_color">#E6841C</color>
 
-    <color name="themeColor">#073570</color>
-    <color name="mainButtonTextColor">#073570</color>
-
-    <color name="colorPrimaryTransparent1">#FFAB40</color>
-    <color name="colorAccent">#FF1744</color>
-
-
-    <color name="jdialog_button_color">?android:colorAccent</color>
-    <color name="jdialog_body_text_color">#000000</color>
-
+    <!-- Your existing color palette -->
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>
@@ -162,52 +326,4 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
-
-
-    <!-- Button colors -->
-    <color name="buttonPrimary">#1976D2</color>
-    <color name="buttonPrimaryPressed">#0D47A1</color>
-    <color name="buttonPrimaryDisabled">#B3E5FC</color>
-
-    <color name="buttonSecondary">#757575</color>
-    <color name="buttonSecondaryPressed">#424242</color>
-    <color name="buttonSecondaryDisabled">#E0E0E0</color>
-
-    <color name="buttonDanger">#D32F2F</color>
-    <color name="buttonDangerPressed">#B71C1C</color>
-    <color name="buttonDangerDisabled">#FFCDD2</color>
-
-    <color name="buttonTextLight">#FFFFFF</color>
-    <color name="buttonTextDark">#212121</color>
-    <color name="buttonTextDisabled">#9E9E9E</color>
-
-
-    <!-- Add these color values to your colors.xml -->
-    <color name="success">#4CAF50</color>
-    <color name="success_light">#E8F5E9</color>
-    <color name="warning">#FFC107</color>
-    <color name="warning_light">#FFF8E1</color>
-    <color name="error">#F44336</color>
-    <color name="error_light">#FFEBEE</color>
-    <color name="info">#2196F3</color>
-    <color name="info_light">#E3F2FD</color>
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="divider_color">#EEEEEE</color>
-
-
-
-    <!-- Colors for active status chip -->
-    <color name="active_bg_color">#E0F2F1</color>
-    <color name="active_text_color">#00796B</color>
-
-    <!-- Colors for inactive status if needed -->
-    <color name="inactive_bg_color">#FFEBEE</color>
-    <color name="inactive_text_color">#C62828</color>
-
-    <!-- Colors for pending status if needed -->
-    <color name="pending_bg_color">#FFF8E1</color>
-    <color name="pending_text_color">#FF8F00</color>
-
-
 </resources>

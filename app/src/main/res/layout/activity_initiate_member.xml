@@ -60,7 +60,7 @@
                 <TextView
                     android:textColor="@color/White"
                     android:textSize="@dimen/_14sdp"
-                    android:background="@color/colorPrimaryTransparent"
+                    android:background="?attr/colorPrimary"
                     android:padding="@dimen/_8sdp"
                     android:gravity="center"
                     android:text="@string/already_initiated"
@@ -102,7 +102,7 @@
                 <TextView
                     android:textColor="@color/White"
                     android:textSize="@dimen/_14sdp"
-                    android:background="@color/colorPrimaryTransparent"
+                    android:background="?attr/colorPrimary"
                     android:padding="@dimen/_8sdp"
                     android:gravity="center"
                     android:text="@string/not_initiated"
