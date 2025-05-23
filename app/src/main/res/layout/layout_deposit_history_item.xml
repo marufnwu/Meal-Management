@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Outlined"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
 
     <LinearLayout
-        android:background="@color/WhiteSmoke"
-        android:orientation="horizontal"
+        android:padding="@dimen/_4sdp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:gravity="center"
-            android:padding="@dimen/_4sdp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtDate"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="?attr/colorPrimary"
-            android:text="@string/date"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-        <View
-            android:background="@color/White"
-            android:layout_width="@dimen/_1sdp"
-            android:layout_height="match_parent"/>
-
-
-        <TextView
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
+            android:text="@string/date"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="4dp"
+            android:alpha="0.5"
+            app:dividerColor="?attr/colorOutline" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtAmount"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="?attr/colorPrimary"
-            android:text="@string/amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:gravity="center"
+            android:text="@string/amount"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold" />
 
-        <View
-            android:background="@color/White"
-            android:layout_width="@dimen/_1sdp"
-            android:layout_height="match_parent"/>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="4dp"
+            android:alpha="0.5"
+            app:dividerColor="?attr/colorOutline" />
 
-        <ImageView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/imgEdit"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/editor"
-            android:layout_weight=".5"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_25sdp"/>
-
-
-
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="0dp"
+            android:text="@string/edit"
+            android:textSize="12sp"
+            app:icon="@drawable/edit_24px"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconSize="16dp" />
     </LinearLayout>
-    <View
-        android:layout_marginEnd="@dimen/_25sdp"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:background="@color/White"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"/>
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

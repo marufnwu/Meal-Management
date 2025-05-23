@@ -2,7 +2,14 @@ package com.logicline.mydining.utils.Ext
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.os.Build
+import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.logicline.mydining.data.DataState
@@ -12,11 +19,11 @@ import kotlinx.coroutines.launch
 object MyExtensions {
 
     fun Context.shortToast(message: String?) {
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun Context.longToast(message: String) {
-        Toast.makeText(this,message, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     fun Context.lifecycleOwner(): LifecycleOwner? {

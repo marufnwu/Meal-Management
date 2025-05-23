@@ -4,135 +4,143 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:clipToPadding="false"
+    android:padding="@dimen/_8sdp"
     tools:context=".ui.activities.InitiateMemberActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:padding="@dimen/_10sdp"
-            android:background="@drawable/bottom_curve"
-            android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Already Initiated Members Section -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/txtMonthYear"
-                android:layout_gravity="center"
-                android:fontFamily="@font/hubballi"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="@color/LightBlue"
-                android:text="March 2022"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_50sdp"
-                android:background="@drawable/curve_line_white"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_3sdp"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="2dp"
+            app:strokeColor="?attr/colorOutlineVariant"
+            app:strokeWidth="1dp">
 
             <LinearLayout
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:weightSum="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_margin="@dimen/_5sdp"
-            app:cardElevation="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/White"
-                    android:textSize="@dimen/_14sdp"
-                    android:background="?attr/colorPrimary"
-                    android:padding="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:text="@string/already_initiated"
+                <!-- Header -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="?attr/colorPrimary"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
+                    >
 
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_12sdp"
+                        android:text="@string/already_initiated"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:textColor="?attr/colorOnPrimary" />
+                </com.google.android.material.card.MaterialCardView>
 
+                <!-- Content -->
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_8sdp">
+
+                    <!-- Empty State -->
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/txtInitiate"
-                        android:textSize="@dimen/_12sdp"
-                        android:padding="@dimen/_20sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:padding="@dimen/_20sdp"
                         android:text="No member initiated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <!-- Member List -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyInitiate"
-                        android:padding="@dimen/_3sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:padding="@dimen/_4sdp" />
                 </FrameLayout>
-
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_margin="@dimen/_5sdp"
-            app:cardElevation="@dimen/_8sdp"
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Not Initiated Members Section -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="2dp"
+            app:strokeColor="?attr/colorOutlineVariant"
+            app:strokeWidth="1dp">
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/White"
-                    android:textSize="@dimen/_14sdp"
-                    android:background="?attr/colorPrimary"
-                    android:padding="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:text="@string/not_initiated"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Header -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="?attr/colorSecondary"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
+                    >
 
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_12sdp"
+                        android:text="@string/not_initiated"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:textColor="?attr/colorOnSecondary" />
+                </com.google.android.material.card.MaterialCardView>
 
+                <!-- Content -->
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_8sdp">
+
+                    <!-- Empty State -->
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/txtNotInitiate"
-                        android:textSize="@dimen/_12sdp"
-                        android:padding="@dimen/_20sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:padding="@dimen/_20sdp"
                         android:text="No member available for initiate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <!-- Member List -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyNotInitiate"
-                        android:padding="@dimen/_3sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:padding="@dimen/_4sdp" />
                 </FrameLayout>
-
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>

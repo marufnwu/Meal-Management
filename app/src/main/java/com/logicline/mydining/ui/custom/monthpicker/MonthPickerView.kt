@@ -3,6 +3,7 @@ package com.logicline.mydining.ui.custom.monthpicker
 import android.app.DatePickerDialog
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -18,7 +19,6 @@ import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -26,13 +26,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.logicline.mydining.MyApplication
 import com.logicline.mydining.R
 import com.logicline.mydining.data.DataState
 import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.data.repository.MonthRepository
 import com.logicline.mydining.domains.MonthStore
 import com.logicline.mydining.ui.custom.GenericDialog
-import com.logicline.mydining.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -77,12 +77,13 @@ class MonthPickerView @JvmOverloads constructor(
     private var monthsFilterStrategy: FilterStrategy = FilterStrategy.ALL
     private var searchDebouncer = Debouncer(viewScope, 300L)
 
-    private  var  monthCreateDialog: GenericDialog? = null
+    private var monthCreateDialog: GenericDialog? = null
 
-    private var monthRepository: MonthRepository? = null
+    private var monthRepository: MonthRepository
 
     init {
         orientation = VERTICAL
+        Log.d("MonthPickerView", "Initializing")
         LayoutInflater.from(context).inflate(R.layout.dialog_month_selector, this, true)
 
         // Initialize views
@@ -112,10 +113,22 @@ class MonthPickerView @JvmOverloads constructor(
             }
         }
 
+        val app = context.applicationContext as? MyApplication
+        if (app != null) {
+            monthRepository = MonthRepository(app.myApi)
+            Log.d("MonthPickerView", "Repository initialized")
+        } else {
+            Log.e("MonthPickerView", "Failed to get application context")
+            throw IllegalStateException("Could not get application context")
+        }
+
         setupViews()
+        // Remove default initialization to prevent double loading
+        // initialize()
     }
 
     private fun setupViews() {
+        Log.d("MonthPickerView", "Setting up views")
         // Apply configuration
         titleText.isVisible = config.showTitle
         titleText.text = config.title
@@ -157,12 +170,11 @@ class MonthPickerView @JvmOverloads constructor(
     }
 
     fun initialize(
-        monthRepository: MonthRepository,
         preselectedIds: List<Int>? = null,
         config: MonthPickerConfig.() -> Unit = {},
         onSelected: (Month) -> Unit = {}
     ) {
-        this.monthRepository = monthRepository
+        Log.d("MonthPickerView", "Initialize called with preselectedIds: $preselectedIds")
 
         // Apply custom configuration
         this.config.apply(config)
@@ -173,40 +185,52 @@ class MonthPickerView @JvmOverloads constructor(
         setupViews()
 
         viewScope.launch {
-            MonthStore.fetchMonthsIfNeeded(monthRepository)
+            Log.d("MonthPickerView", "Starting data fetch")
+            // Force refresh to ensure data is loaded
+            MonthStore.forceRefresh(monthRepository)
 
             MonthStore.state.collectLatest { state ->
+                Log.d("MonthPickerView", "State received: $state")
                 handleDataState(state)
             }
         }
     }
 
     private fun handleDataState(state: DataState<List<Month>>) {
+        Log.d("MonthPickerView", "Handling state: $state")
         when (state) {
             is DataState.Loading -> {
                 progressBar.isVisible = true
                 recyclerView.isVisible = false
                 emptyStateView.isVisible = false
+                Log.d("MonthPickerView", "Loading state")
             }
             is DataState.Success -> {
                 progressBar.isVisible = false
                 val months = state.data ?: emptyList()
+                Log.d("MonthPickerView", "Success state, months count: ${months.size}")
+
                 if (months.isEmpty()) {
                     recyclerView.isVisible = false
                     emptyStateView.isVisible = true
+                    Log.d("MonthPickerView", "No months available")
                 } else {
                     recyclerView.isVisible = true
                     emptyStateView.isVisible = false
                     setUpAdapter(applySorting(applyFilter(months)))
+                    adapter?.notifyDataSetChanged()
                 }
             }
             is DataState.Error -> {
                 progressBar.isVisible = false
                 recyclerView.isVisible = false
                 emptyStateView.isVisible = true
+                Log.e("MonthPickerView", "Error state: ${state.message}")
                 Toast.makeText(context, "Error: ${state.message}", Toast.LENGTH_SHORT).show()
             }
-            else -> {} // Handle Idle and Exception states
+            else -> {
+                Log.d("MonthPickerView", "Other state: $state")
+            } // Handle Idle and Exception states
         }
     }
 
@@ -229,6 +253,7 @@ class MonthPickerView @JvmOverloads constructor(
     }
 
     private fun setUpAdapter(months: List<Month>) {
+        Log.d("MonthPickerView", "Setting up adapter with ${months.size} months")
         adapter = MonthAdapter(
             months = months,
             selectedIds = if (config.multipleSelection)
@@ -236,6 +261,7 @@ class MonthPickerView @JvmOverloads constructor(
             else listOfNotNull(selectedMonthId),
             config = config,
             onSelect = { selected ->
+                Log.d("MonthPickerView", "Month selected: ${selected.name}")
                 if (config.multipleSelection) {
                     toggleMonthSelection(selected)
                 } else {
@@ -314,12 +340,12 @@ class MonthPickerView @JvmOverloads constructor(
             this.selectedMonthId = monthId
             adapter?.updateSelectedIds(listOfNotNull(monthId))
 
-//            if (triggerCallback && monthId != null) {
-//                // Find the month object and trigger callback
-//                adapter?.getAllMonths()?.find { it.id == monthId }?.let { month ->
-//                    onMonthSelected?.invoke(month)
-//                }
-//            }
+            if (triggerCallback && monthId != null) {
+                // Find the month object and trigger callback
+                adapter?.getAllMonths()?.find { it.id == monthId }?.let { month ->
+                    onMonthSelected?.invoke(month)
+                }
+            }
         }
     }
 
@@ -463,10 +489,7 @@ class MonthPickerView @JvmOverloads constructor(
                     // Call your API function to create month
                     createMonth(name, type, month, year, startAt, forceCloseOther)
 
-                    // Dismiss the dialog after handling the click
-//                    genericDialog.dismiss()
-
-                    // Clear the dialog reference
+                    // Dialog will be dismissed in the createMonth function if successful
                 }
             })
             .setNegativeButton("Cancel", object : GenericDialog.OnClickListener {
@@ -576,14 +599,14 @@ class MonthPickerView @JvmOverloads constructor(
         startAt: String?,
         forceCloseOther: Boolean
     ) {
-        // Check if repository is available
-        val repository = monthRepository
-        if (repository == null) {
-            Toast.makeText(context, "Error: Repository not initialized", Toast.LENGTH_SHORT).show()
+        Log.d("MonthPickerView", "Creating month: name=$name, type=$type")
+
+        // Validate inputs
+        if (name.isNullOrBlank()) {
+            Toast.makeText(context, "Month name is required", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Validate inputs
         if (type == "automatic" && (month == null || year == null)) {
             Toast.makeText(context, "Month and year are required for automatic type", Toast.LENGTH_SHORT).show()
             return
@@ -600,7 +623,7 @@ class MonthPickerView @JvmOverloads constructor(
         viewScope.launch {
             try {
                 // Make API call through repository
-                val response = repository.createMonth(
+                val response = monthRepository.createMonth(
                     name = name,
                     type = type,
                     month = month,
@@ -615,9 +638,10 @@ class MonthPickerView @JvmOverloads constructor(
                     Toast.makeText(context, "Month created successfully", Toast.LENGTH_SHORT).show()
 
                     monthCreateDialog?.dismiss()
+                    monthCreateDialog = null
 
                     // Refresh month list
-                    MonthStore.forceRefresh(repository)
+                    MonthStore.forceRefresh(monthRepository)
                 } else {
                     // Show error message
                     val errorMsg = response.body()?.msg ?: "Unknown error occurred"
@@ -625,6 +649,7 @@ class MonthPickerView @JvmOverloads constructor(
                 }
             } catch (e: Exception) {
                 // Handle exception
+                Log.e("MonthPickerView", "Error creating month", e)
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
                 // Hide loading indicator

@@ -196,7 +196,7 @@ class AddPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener, A
 
                         if(!response.body()!!.error){
                             binding.edtDesc.text.clear()
-                            binding.edtPrice.text.clear()
+                            binding.edtPrice.clear()
                         }
                     }
                 }

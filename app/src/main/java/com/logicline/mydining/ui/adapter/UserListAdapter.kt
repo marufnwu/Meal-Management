@@ -15,6 +15,7 @@ import com.logicline.mydining.data.enums.MessPermission.Companion.hasAnyPermissi
 import com.logicline.mydining.data.enums.MessUserStatus
 import com.logicline.mydining.data.models.MessUser
 import com.logicline.mydining.ui.activities.ProfileActivity
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LocalDB
 
 
@@ -58,7 +59,7 @@ class UserListAdapter(val context: Context, val userList: MutableList<MessUser>)
 
             binding.txtUserRole.text =messUser.role?.role?: "User"
 
-            if (LocalDB.getUserData()?.messUser?.hasAnyPermission(MessPermission.USER_MANAGEMENT) == true){
+            if (AppPrefs.messUser?.hasAnyPermission(MessPermission.USER_MANAGEMENT) == true){
                 binding.layTrash.visibility = View.VISIBLE
                 binding.layTrash.setOnClickListener {
                     onAction?.onDeleteClick(messUser)

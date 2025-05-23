@@ -108,6 +108,7 @@
                     tools:text="Cancel" />
 
                 <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_margin="@dimen/_2sdp"
                     android:layout_weight="1"
                     android:id="@+id/positive_button"

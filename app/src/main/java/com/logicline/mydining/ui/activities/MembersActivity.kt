@@ -26,6 +26,7 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +36,6 @@ import java.util.Locale
 class MembersActivity : BaseActivity() {
     lateinit var adapter: UserListAdapter
     lateinit var binding : ActivityMembersBinding
-    var userData: UserData? = null
     lateinit var loadingDialog: LoadingDialog
     private var userList: MutableList<MessUser> = mutableListOf()
     lateinit var myFullScreenAd: MyFullScreenAd
@@ -52,9 +52,8 @@ class MembersActivity : BaseActivity() {
         myFullScreenAd = MyFullScreenAd(this, true)
 
         loadingDialog = LoadingDialog(this)
-        userData = LocalDB.getUserData()
 
-        if(!userData?.messUser.hasAnyPermission(MessPermission.USER_ADD, MessPermission.USER_MANAGEMENT)){
+        if(!AppPrefs.messUser.hasAnyPermission(MessPermission.USER_ADD, MessPermission.USER_MANAGEMENT)){
             binding.fab.visibility = View.GONE
         }
 

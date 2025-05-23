@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -29,6 +30,13 @@
             app:statusBarScrim="@android:color/transparent"
             app:titleEnabled="false">
 
+            <!-- Fixed Toolbar that stays during collapse -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                app:layout_collapseMode="pin" />
+
             <!-- Background that changes color when collapsing -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/header_background"
@@ -49,18 +57,19 @@
 
                 <!-- Location Header -->
                 <LinearLayout
-                    android:id="@+id/ll_location"
+                    android:id="@+id/llMonth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingStart="16dp"
-                    android:paddingTop="12dp"
+                    android:paddingTop="16dp"
                     android:paddingEnd="16dp">
 
                     <ImageView
+                        android:src="@drawable/keyboard_double_arrow_down_24px"
+                        android:id="@+id/imgDownExpand"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_location"
                         app:tint="#FFFFFF" />
 
                     <LinearLayout
@@ -71,14 +80,16 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtLocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Work"
+                            android:text="Month"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtMonthName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
@@ -93,7 +104,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/shopping_bag"
+                        android:src="@drawable/ic_clear_black_24dp"
                         app:tint="#FFFFFF" />
                 </LinearLayout>
 
@@ -329,9 +340,7 @@
                                     app:contentPadding="@dimen/_3sdp"
                                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CircularImageView"
                                     app:srcCompat="@drawable/skillet_24px"
-                                    app:tint="?attr/colorOnPrimaryContainer"
-
-                                    />
+                                    app:tint="?attr/colorOnPrimaryContainer" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -355,12 +364,7 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Fixed Toolbar that stays during collapse -->
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
-                app:layout_collapseMode="pin" />
+
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

@@ -28,6 +28,8 @@ import com.logicline.mydining.data.models.User
 import com.logicline.mydining.data.models.response.GenericRespose
 import com.logicline.mydining.data.models.UserData
 import com.logicline.mydining.data.models.UserGuide
+import com.logicline.mydining.data.models.UserMinimalSummary
+import com.logicline.mydining.data.models.UserSummary
 import com.logicline.mydining.data.models.response.CheckLoginResponse
 import com.logicline.mydining.data.models.response.DepositsSumResponse
 import com.logicline.mydining.data.models.response.InitialDataResponse
@@ -552,6 +554,16 @@ interface MyApi {
     suspend fun createMonth(
         @Body monthData: MonthCreateRequest
     ): Response<ServerResponse<Month>>
+
+    @GET("api/summary/months/user/minimal")
+    suspend fun userMinimalMonthSummary(
+        @Query("mess_user_id") messUserId: Int? = null
+    ): Response<ServerResponse<UserSummary>>
+
+    @GET("api/summary/months/user/details")
+    suspend fun userDetailsMonthSummary(
+        @Query("mess_user_id") messUserId: Int? = null
+    ): Response<ServerResponse<UserSummary>>
 
 
     companion object {

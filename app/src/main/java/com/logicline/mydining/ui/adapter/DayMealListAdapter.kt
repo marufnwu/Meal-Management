@@ -1,9 +1,11 @@
 package com.logicline.mydining.ui.adapter
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.R
@@ -15,6 +17,7 @@ import com.logicline.mydining.data.enums.MessPermission
 import com.logicline.mydining.data.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.data.models.Meal
 import com.logicline.mydining.data.models.MealDate
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LocalDB
 
@@ -119,26 +122,16 @@ class MemberMealListAdapter(val context: Context, val memberList : List<Meal>): 
     }
 
     inner class ViewHolder(val binding: LayoutMemberMealBinding):RecyclerView.ViewHolder(binding.root) {
+        @RequiresApi(Build.VERSION_CODES.N_MR1)
         fun bind(meal: Meal, pos :Int){
             binding.name.text = meal.messUser?.user?.name
             binding.dinner.text = meal.dinner.toString()
             binding.morning.text = meal.breakfast.toString()
             binding.lunch.text = meal.lunch.toString()
+            binding.action.text = "Edit"
 
-            if(pos%2==0){
-                binding.name.setTextColor(context.getColor(R.color.White))
-                binding.dinner.setTextColor(context.getColor(R.color.White))
-                binding.morning.setTextColor(context.getColor(R.color.White))
-                binding.lunch.setTextColor(context.getColor(R.color.White))
-            }else{
-                binding.name.setTextColor(context.getColor(R.color.Black))
-                binding.dinner.setTextColor(context.getColor(R.color.Black))
-                binding.morning.setTextColor(context.getColor(R.color.Black))
-                binding.lunch.setTextColor(context.getColor(R.color.Black))
-            }
-
-            binding.root.setOnClickListener {
-                if(LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.MEAL_EDIT, MessPermission.MEAL_MANAGEMENT)){
+            binding.action.setOnClickListener {
+                if(AppPrefs.messUser.hasAnyPermission(MessPermission.MEAL_EDIT, MessPermission.MEAL_MANAGEMENT)){
                     onAction?.onClick(meal, absoluteAdapterPosition)
                 }
             }

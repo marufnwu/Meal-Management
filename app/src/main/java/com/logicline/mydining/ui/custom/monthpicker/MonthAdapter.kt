@@ -1,18 +1,18 @@
 package com.logicline.mydining.ui.custom.monthpicker
 
 import android.content.res.ColorStateList
-import android.icu.text.SimpleDateFormat
-import com.logicline.mydining.R
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import com.logicline.mydining.R
 import com.logicline.mydining.data.models.Month
+import java.text.SimpleDateFormat
 import java.util.Locale
 
 class MonthAdapter(
@@ -26,6 +26,10 @@ class MonthAdapter(
     private var filtered = months
     private var highlightedPosition: Int = -1
 
+    init {
+        Log.d("MonthAdapter", "Initialized with ${months.size} months, filtered size: ${filtered.size}")
+    }
+
     fun updateSelectedIds(ids: List<Int>) {
         selectedIds = ids
         notifyDataSetChanged()
@@ -37,11 +41,13 @@ class MonthAdapter(
     }
 
     fun filter(query: String) {
+        val oldSize = filtered.size
         filtered = if (query.isBlank()) months
         else months.filter {
             it.name.contains(query, ignoreCase = true) ||
                     it.type.contains(query, ignoreCase = true)
         }
+        Log.d("MonthAdapter", "Filter applied: '${query}', filtered from ${months.size} to ${filtered.size}")
         notifyDataSetChanged()
     }
 
@@ -60,6 +66,8 @@ class MonthAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        Log.d("MonthAdapter", "Creating ViewHolder with viewType: $viewType")
+
         return when (viewType) {
             1 -> {
                 val view = LayoutInflater.from(parent.context)
@@ -74,24 +82,32 @@ class MonthAdapter(
         }
     }
 
-    override fun getItemCount(): Int = filtered.size
+    override fun getItemCount(): Int {
+        Log.d("MonthAdapter", "getItemCount: ${filtered.size}")
+        return filtered.size
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val month = filtered[position]
-        when (holder) {
-            is MonthViewHolder -> holder.bind(month, selectedIds.contains(month.id), position == highlightedPosition)
-            is CustomViewHolder -> holder.bind(month, selectedIds.contains(month.id))
+        if (position >= 0 && position < filtered.size) {
+            val month = filtered[position]
+            Log.d("MonthAdapter", "Binding month at position $position: ${month.name}")
+
+            when (holder) {
+                is MonthViewHolder -> holder.bind(month, selectedIds.contains(month.id), position == highlightedPosition)
+                is CustomViewHolder -> holder.bind(month, selectedIds.contains(month.id))
+            }
+        } else {
+            Log.e("MonthAdapter", "Position out of bounds: $position, filtered size: ${filtered.size}")
         }
     }
 
     inner class MonthViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val name: TextView = view.findViewById(R.id.tv_name)
-        private val check: ImageView = view.findViewById(R.id.iv_selected)
+        private val check: ImageView? = view.findViewById(R.id.iv_selected)
         private val statusChip: Chip? = view.findViewById(R.id.chip_status)
         private val dateRange: TextView? = view.findViewById(R.id.tv_date_range)
         private val typeText: TextView? = view.findViewById(R.id.tv_type)
         private val selectionContainer: View? = view.findViewById(R.id.selection_container)
-        private val cardView: MaterialCardView? = view.findViewById(R.id.card_view)
 
         fun bind(month: Month, isSelected: Boolean, isHighlighted: Boolean) {
             name.text = month.name
@@ -102,24 +118,11 @@ class MonthAdapter(
                     selectionContainer?.visibility = if (isSelected) View.VISIBLE else View.GONE
                 }
                 1 -> { // Radio button
-                    check.setImageResource(
-                        if (isSelected) R.drawable.check
-                        else R.drawable.check
-                    )
-                    check.visibility = View.VISIBLE
+                    check?.setImageResource(R.drawable.check)
+                    check?.visibility = if (isSelected) View.VISIBLE else View.GONE
                 }
-                2 -> { // Highlight
-                    cardView?.strokeWidth = if (isSelected) 2.dpToPx() else 0
-                    cardView?.strokeColor = itemView.context.getColor(R.color.md_theme_primary)
-                }
-            }
 
-//            // Highlighted state (e.g., for search results)
-//            if (isHighlighted) {
-//                itemView.setBackgroundColor(itemView.context.getColor(R.color.colorAccent))
-//            } else {
-//                itemView.background = null
-//            }
+            }
 
             // Show additional information when available
             statusChip?.apply {
@@ -146,6 +149,7 @@ class MonthAdapter(
 
             // Set click listeners
             itemView.setOnClickListener {
+                Log.d("MonthAdapter", "Item clicked: ${month.name}")
                 onSelect(month)
             }
 
@@ -187,7 +191,6 @@ class MonthAdapter(
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(month: Month, isSelected: Boolean) {
             // For custom layouts, find views by ID and bind data
-            // This provides flexibility for completely custom item layouts
             itemView.setOnClickListener {
                 onSelect(month)
             }

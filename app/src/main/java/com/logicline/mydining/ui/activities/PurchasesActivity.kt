@@ -29,6 +29,7 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
@@ -81,7 +82,7 @@ class PurchasesActivity : BaseActivity() {
             binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
         }
 
-        if (LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.PURCHASE_MANAGEMENT, MessPermission.PURCHASE_ADD)) {
+        if (AppPrefs.messUser.hasAnyPermission(MessPermission.PURCHASE_MANAGEMENT, MessPermission.PURCHASE_ADD)) {
             binding.layoutAdminPurchase.visibility = View.VISIBLE
 
         } else {
@@ -113,21 +114,21 @@ class PurchasesActivity : BaseActivity() {
 
         binding.recyPurchase.adapter = adpter
 
-        binding.monthPicker.builder(
-            null,
-            mYear = year.toInt(),
-            mMonth = month.toInt(),
-            mDay = 1
-        ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
-
-                setDate(year.toString(), month.toString())
-            }
-
-            override fun dateString(date: String) {
-            }
-
-        }
+//        binding.monthPicker.builder(
+//            null,
+//            mYear = year.toInt(),
+//            mMonth = month.toInt(),
+//            mDay = 1
+//        ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+//            override fun date(date: Int, month: Int, year: Int) {
+//
+//                setDate(year.toString(), month.toString())
+//            }
+//
+//            override fun dateString(date: String) {
+//            }
+//
+//        }
 
     }
 

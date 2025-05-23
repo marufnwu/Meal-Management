@@ -30,12 +30,14 @@ import com.logicline.mydining.utils.LangUtils
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.core.graphics.drawable.toDrawable
 
 class MealActivity : AppCompatActivity() {
 
@@ -44,7 +46,7 @@ class MealActivity : AppCompatActivity() {
     lateinit var adapter: DayMealListAdapter
     lateinit var binding: ActivityMealBinding
     lateinit var loadingDialog: LoadingDialog
-    var dayList :  MutableList<MealDate> = mutableListOf()
+    var dayList: MutableList<MealDate> = mutableListOf()
     var year = Constant.getCurrentYear()
     var month = Constant.getCurrentMonthNumber()
 
@@ -61,7 +63,11 @@ class MealActivity : AppCompatActivity() {
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)
 
-        if(!LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.MEAL_MANAGEMENT, MessPermission.MEAL_ADD)){
+        if (!AppPrefs.messUser.hasAnyPermission(
+                MessPermission.MEAL_MANAGEMENT,
+                MessPermission.MEAL_ADD
+            )
+        ) {
             binding.addMeal.visibility = View.GONE
         }
 
@@ -80,24 +86,29 @@ class MealActivity : AppCompatActivity() {
             startActivity(Intent(this, AddMealActivity::class.java))
         }
 
-        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
-                setDate(year.toString(), month.toString())
-            }
-
-            override fun dateString(date: String) {
-
-            }
-
-        }
+//        binding.monthPicker.builder(
+//            null,
+//            mYear = year.toInt(),
+//            mMonth = month.toInt(),
+//            mDay = 1
+//        ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+//            override fun date(date: Int, month: Int, year: Int) {
+//                setDate(year.toString(), month.toString())
+//            }
+//
+//            override fun dateString(date: String) {
+//
+//            }
+//
+//        }
 
 
         val recyDayMeal = binding.recyDayList
         recyDayMeal.setHasFixedSize(true)
-        recyDayMeal.layoutManager =LinearLayoutManager(this@MealActivity)
+        recyDayMeal.layoutManager = LinearLayoutManager(this@MealActivity)
 
         adapter = DayMealListAdapter(this@MealActivity, dayList)
-        adapter.onAction = object: DayMealListAdapter.OnAction {
+        adapter.onAction = object : DayMealListAdapter.OnAction {
             override fun onClick(meal: Meal, pos: Int) {
                 showEditMealDialog(meal)
             }
@@ -116,7 +127,7 @@ class MealActivity : AppCompatActivity() {
         dialog.setCancelable(true)
         dialog.setContentView(editBinding.root)
 
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         val window = dialog.window
         window!!.setLayout(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -160,12 +171,12 @@ class MealActivity : AppCompatActivity() {
             val lunchStr = editBinding.edtLunch.text.toString()
             val dinnerStr = editBinding.edtDinner.text.toString()
 
-            if(meal.date.isNullOrEmpty()){
+            if (meal.date.isNullOrEmpty()) {
                 shortToast("Please select date");
                 return@setOnClickListener
             }
 
-            if(dinnerStr.isEmpty() || lunchStr.isEmpty() || breakFastStr.isEmpty()){
+            if (dinnerStr.isEmpty() || lunchStr.isEmpty() || breakFastStr.isEmpty()) {
                 Toast.makeText(this, "Some field not valid", Toast.LENGTH_SHORT).show()
 
                 return@setOnClickListener
@@ -175,7 +186,7 @@ class MealActivity : AppCompatActivity() {
             val lunch = lunchStr.toFloat()
             val dinner = dinnerStr.toFloat()
 
-            if(breakfast<0 || lunch <0 || dinner<0){
+            if (breakfast < 0 || lunch < 0 || dinner < 0) {
                 Toast.makeText(this, "Some field not valid", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -196,12 +207,16 @@ class MealActivity : AppCompatActivity() {
         (application as MyApplication)
             .myApi
             .deleteMeal(id)
-            .enqueue(object: Callback<ServerResponse<Void>> {
-                override fun onResponse(call: Call<ServerResponse<Void>>, response: Response<ServerResponse<Void>>) {
+            .enqueue(object : Callback<ServerResponse<Void>> {
+                override fun onResponse(
+                    call: Call<ServerResponse<Void>>,
+                    response: Response<ServerResponse<Void>>
+                ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null){
-                        Toast.makeText(this@MealActivity, response.body()!!.msg, Toast.LENGTH_SHORT).show()
-                        if(!response.body()!!.error){
+                    if (response.isSuccessful && response.body() != null) {
+                        Toast.makeText(this@MealActivity, response.body()!!.msg, Toast.LENGTH_SHORT)
+                            .show()
+                        if (!response.body()!!.error) {
                             dialog.dismiss()
                             getMealList()
                         }
@@ -216,18 +231,28 @@ class MealActivity : AppCompatActivity() {
             })
     }
 
-    private fun updateMeal(mealId: Int, userId: Int, date: String, breakfast: Float, lunch: Float, dinner: Float, dialog: Dialog) {
+    private fun updateMeal(
+        mealId: Int,
+        userId: Int,
+        date: String,
+        breakfast: Float,
+        lunch: Float,
+        dinner: Float,
+        dialog: Dialog
+    ) {
         loadingDialog.show()
         (application as MyApplication)
             .myApi
             .updateMeal(mealId, userId, date, breakfast, lunch, dinner)
-            .enqueue(object: Callback<ServerResponse<Meal>> {
+            .enqueue(object : Callback<ServerResponse<Meal>> {
                 override fun onResponse(
-                    call: Call<ServerResponse<Meal>>, response: Response<ServerResponse<Meal>>) {
+                    call: Call<ServerResponse<Meal>>, response: Response<ServerResponse<Meal>>
+                ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null){
-                        Toast.makeText(this@MealActivity, response.body()!!.msg, Toast.LENGTH_SHORT).show()
-                        if(!response.body()!!.error){
+                    if (response.isSuccessful && response.body() != null) {
+                        Toast.makeText(this@MealActivity, response.body()!!.msg, Toast.LENGTH_SHORT)
+                            .show()
+                        if (!response.body()!!.error) {
                             dialog.dismiss()
                             getMealList()
                         }
@@ -239,7 +264,6 @@ class MealActivity : AppCompatActivity() {
                 }
 
             })
-
 
 
     }
@@ -258,11 +282,14 @@ class MealActivity : AppCompatActivity() {
             .getMealByMonth()
             .enqueue(object : Callback<ServerResponse<MealsData>> {
                 @SuppressLint("SetTextI18n")
-                override fun onResponse(call: Call<ServerResponse<MealsData>>, response: Response<ServerResponse<MealsData>>) {
+                override fun onResponse(
+                    call: Call<ServerResponse<MealsData>>,
+                    response: Response<ServerResponse<MealsData>>
+                ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null ){
+                    if (response.isSuccessful && response.body() != null) {
                         val mealData = response.body()!!.data
-                        binding.txtTotalMeal.text = "Total Meal "+mealData?.overallTotals?.totalMeals
+                        binding.txtTotalMeal.text = mealData?.overallTotals?.totalMeals.toString()
 
                         dayList.clear()
                         mealData?.let {
@@ -279,18 +306,19 @@ class MealActivity : AppCompatActivity() {
             })
     }
 
-    private fun setDate(year:String, month:String){
+    private fun setDate(year: String, month: String) {
         this.year = year
         this.month = month
         getMealList()
     }
+
     override fun onBackPressed() {
         myFullScreenAd.showAd()
         super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId==android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             onBackPressed()
             return true
         }
@@ -298,7 +326,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        if (newBase!=null) {
+        if (newBase != null) {
             super.attachBaseContext(LangUtils.applyLanguage(newBase))
         } else {
             super.attachBaseContext(newBase)
