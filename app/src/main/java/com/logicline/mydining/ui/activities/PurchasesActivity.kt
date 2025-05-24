@@ -27,7 +27,6 @@ import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
-import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.MyDatePicker
@@ -73,11 +72,11 @@ class PurchasesActivity : BaseActivity() {
 
 
 
-        if (type == PurchaseType.PURCHASE) {
+        if (type == PurchaseType.MEAL) {
             supportActionBar?.title = getString(R.string.purchases)
 
             binding.btnAddPurchase.text = getString(R.string.add_purchase)
-        } else if (type == PurchaseType.OTHER_PURCHASE) {
+        } else if (type == PurchaseType.OTHER) {
             supportActionBar?.title = getString(R.string.other_purchase)
             binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
         }
@@ -329,11 +328,11 @@ class PurchasesActivity : BaseActivity() {
         (application as MyApplication)
             .myApi
             .getPurchases(type = type!!.value)
-            .enqueue(object : Callback<ServerResponse<PurchaseListResponse>> {
+            .enqueue(object : Callback<ServerResponse<PurchaseListResponse<Purchase>>> {
                 @SuppressLint("SetTextI18n")
                 override fun onResponse(
-                    call: Call<ServerResponse<PurchaseListResponse>>,
-                    response: Response<ServerResponse<PurchaseListResponse>>
+                    call: Call<ServerResponse<PurchaseListResponse<Purchase>>>,
+                    response: Response<ServerResponse<PurchaseListResponse<Purchase>>>
                 ) {
                     loadingDialog.hide()
 
@@ -342,7 +341,7 @@ class PurchasesActivity : BaseActivity() {
                         if (!purchaseListResponse.error) {
 
                             var purchaseType = ""
-                            if (type == PurchaseType.PURCHASE) {
+                            if (type == PurchaseType.MEAL) {
                                 purchaseType = "Total Purchase"
                             } else {
                                 purchaseType = "Total Others Cost"
@@ -360,7 +359,7 @@ class PurchasesActivity : BaseActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<ServerResponse<PurchaseListResponse>>,
+                    call: Call<ServerResponse<PurchaseListResponse<Purchase>>>,
                     t: Throwable
                 ) {
                     loadingDialog.hide()

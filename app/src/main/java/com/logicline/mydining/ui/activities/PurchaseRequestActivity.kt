@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.logicline.mydining.R
+import com.logicline.mydining.data.enums.PurchaseRequestStatus
 import com.logicline.mydining.databinding.ActivityPurchaseRequestBinding
 import com.logicline.mydining.ui.fragments.PurchaseRequestFragment
 import com.logicline.mydining.utils.BaseActivity
@@ -21,9 +22,9 @@ class PurchaseRequestActivity : BaseActivity() {
     lateinit var loadingDialog: LoadingDialog
 
     val framgents = listOf(
-        "Pending" to 0,
-        "Accepted" to 1,
-        "Rejected" to 2
+        "Pending" to PurchaseRequestStatus.PENDING,
+        "Approved" to PurchaseRequestStatus.APPROVED,
+        "Rejected" to PurchaseRequestStatus.REJECTED
     )
 
     @SuppressLint("SetTextI18n")

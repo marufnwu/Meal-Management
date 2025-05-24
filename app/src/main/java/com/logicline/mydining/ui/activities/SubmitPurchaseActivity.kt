@@ -17,6 +17,9 @@ import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.data.enums.PurchaseType
+import com.logicline.mydining.data.models.PurchaseRequest
+import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import retrofit2.Call
@@ -35,7 +38,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
     var totalPurchase = 0f
     var isDeposit = 0
 
-    var purchaseType = 1
+    var purchaseType = PurchaseType.MEAL
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,9 +89,9 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
         binding.radioGroupPurchaseType.setOnCheckedChangeListener { radioGroup, i ->
 
             purchaseType = if(i == R.id.radioBtnMealPurchase){
-                1
+                PurchaseType.MEAL
             }else{
-                2
+                PurchaseType.OTHER
             }
 
         }
@@ -118,9 +121,9 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
                 loadingDialog.show()
                 (application as MyApplication)
-                    .myApi.requestListPurchase(productJson, selectedDate, totalPurchase, isDeposit, purchaseType)
-                    .enqueue(object : Callback<GenericRespose> {
-                        override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
+                    .myApi.addPurchaseRequest(null, productJson, selectedDate, totalPurchase, isDeposit, purchaseType.value)
+                    .enqueue(object : Callback<ServerResponse<PurchaseRequest>> {
+                        override fun onResponse(call: Call<ServerResponse<PurchaseRequest>>, response: Response<ServerResponse<PurchaseRequest>>) {
                             loadingDialog.hide()
 
                             if(response.isSuccessful && response.body()!=null){
@@ -135,7 +138,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                             }
                         }
 
-                        override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                        override fun onFailure(call: Call<ServerResponse<PurchaseRequest>>, t: Throwable) {
                             loadingDialog.hide()
                         }
 
@@ -169,7 +172,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                 loadingDialog.show()
                 (application as MyApplication)
                     .myApi
-                    .requestSinglePurchase(productDesc, selectedDate, price, isDeposit, purchaseType)
+                    .requestSinglePurchase(productDesc, selectedDate, price, isDeposit, purchaseType.value)
                     .enqueue(object : Callback<GenericRespose> {
                         override fun onResponse(
                             call: Call<GenericRespose>, response: Response<GenericRespose>) {

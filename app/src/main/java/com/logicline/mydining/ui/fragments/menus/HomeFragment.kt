@@ -15,7 +15,6 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -48,7 +47,6 @@ import com.logicline.mydining.ui.SmoothScrollBehavior
 import com.logicline.mydining.ui.activities.*
 import com.logicline.mydining.ui.adapter.MainSliderAdapter
 import com.logicline.mydining.ui.custom.monthpicker.MonthPickerBottomSheet
-import com.logicline.mydining.ui.custom.monthpicker.MonthPickerDialog
 import com.logicline.mydining.ui.viewmodels.UserViewModel
 import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.Constant
@@ -58,7 +56,6 @@ import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.maruf.jdialog.JDialog
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -605,14 +602,14 @@ class HomeFragment : Fragment() {
         binding.purchases.setOnClickListener {
             startActivity(
                 Intent(requireContext(), PurchasesActivity::class.java)
-                    .putExtra(Constant.PURCHASE_TYPE, PurchaseType.PURCHASE.name)
+                    .putExtra(Constant.PURCHASE_TYPE, PurchaseType.MEAL.name)
             )
         }
 
         binding.otherCost.setOnClickListener {
             startActivity(
                 Intent(requireContext(), PurchasesActivity::class.java)
-                    .putExtra(Constant.PURCHASE_TYPE, PurchaseType.OTHER_PURCHASE.name)
+                    .putExtra(Constant.PURCHASE_TYPE, PurchaseType.OTHER.name)
             )
         }
 
@@ -714,11 +711,11 @@ class HomeFragment : Fragment() {
                     "initiateMember" -> startActivity(Intent(requireContext(), InitiateMemberActivity::class.java))
                     "addMeal" -> startActivity(Intent(requireContext(), AddMealActivity::class.java))
                     "addPurchase" -> startActivity(Intent(requireContext(), AddPurchaseActivity::class.java)
-                        .putExtra(Constant.PURCHASE_TYPE, PurchaseType.PURCHASE.name))
+                        .putExtra(Constant.PURCHASE_TYPE, PurchaseType.MEAL.name))
                     "addFund" -> startActivity(Intent(requireContext(), FundActivity::class.java))
                     "purchaseRequest" -> startActivity(Intent(requireContext(),
                         PurchaseRequestActivity::class.java)
-                        .putExtra(Constant.PURCHASE_TYPE, PurchaseType.PURCHASE.name))
+                        .putExtra(Constant.PURCHASE_TYPE, PurchaseType.MEAL.name))
                     "summary" -> startActivity(Intent(requireContext(), SummaryActivity::class.java))
                     "oldData" -> startActivity(Intent(requireContext(), PreviousMonthActivity::class.java))
                 }

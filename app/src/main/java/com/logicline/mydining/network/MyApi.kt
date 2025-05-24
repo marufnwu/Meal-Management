@@ -138,7 +138,7 @@ interface MyApi {
     fun getPurchases(
         @Header("Month-ID") monthId: Int? = null,
         @Path("type") type: String
-    ): Call<ServerResponse<PurchaseListResponse>>
+    ): Call<ServerResponse<PurchaseListResponse<Purchase>>>
 
 
     @FormUrlEncoded
@@ -257,14 +257,15 @@ interface MyApi {
 
 
     @FormUrlEncoded
-    @POST("api/purchase.requestListPurchase.php")
-    fun requestListPurchase(
-        @Field("productJson") productJson: String,
+    @POST("api/purchase-request/add")
+    fun addPurchaseRequest(
+        @Field("product") product: String?,
+        @Field("product_json") productJson: String?,
         @Field("date") date: String,
         @Field("price") price: Float,
-        @Field("isDepositToAcc") isDepositToAcc: Int,
-        @Field("purchaseType") purchaseType: Int,
-    ): Call<GenericRespose>
+        @Field("deposit_request") isDepositToAcc: Int,
+        @Field("purchase_type") purchaseType: String,
+    ): Call<ServerResponse<PurchaseRequest>>
 
     @FormUrlEncoded
     @POST("api/purchase.requestSinglePurchase.php")
@@ -273,9 +274,15 @@ interface MyApi {
         @Field("date") date: String,
         @Field("price") price: Float,
         @Field("isDepositToAcc") isDepositToAcc: Int,
-        @Field("purchaseType") purchaseType: Int,
+        @Field("purchaseType") purchaseType: String,
 
         ): Call<GenericRespose>
+
+    @GET("api/purchase-request")
+    fun getPurchaseRequests(
+        @Query("month-id") monthId: Int? = null,
+        @Query("status") status: Int,
+    ): Call<ServerResponse<PurchaseListResponse<PurchaseRequest>>>
 
 
     @Multipart
@@ -284,13 +291,7 @@ interface MyApi {
         @Part pdfFile: MultipartBody.Part,
     ): Response<GenericRespose>
 
-    @FormUrlEncoded
-    @POST("api/purchase.getPurchaseRequestManager.php")
-    fun getPurchaseRequestManager(
-        @Field("year") year: String,
-        @Field("month") month: String,
-        @Field("status") status: Int,
-    ): Call<ServerResponse<List<PurchaseRequest>>>
+
 
 
     @FormUrlEncoded
