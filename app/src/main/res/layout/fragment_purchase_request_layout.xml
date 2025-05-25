@@ -8,13 +8,10 @@
 
     <!-- Content Area -->
     <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Material3.CardView.Filled"
         android:id="@+id/cardContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/_1sdp"
-        app:strokeColor="?attr/colorOutline"
-        app:strokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,13 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <!-- RecyclerView for list -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewRequest"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:padding="@dimen/_8sdp"/>
+                android:padding="@dimen/_8sdp" />
 
+            <!-- Empty State Layout -->
             <LinearLayout
                 android:id="@+id/layoutEmpty"
                 android:layout_width="wrap_content"
@@ -38,46 +37,38 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone"
-                tools:visibility="visible">
+                tools:visibility="visible"
+                android:paddingHorizontal="@dimen/_16sdp"
+                android:gravity="center_horizontal">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:layout_gravity="center"
-                    android:alpha="0.6"
-                    android:src="@drawable/empty" />
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:alpha="0.7"
+                    android:src="@drawable/empty"
+                    android:contentDescription="Empty state illustration" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:text="No Requests Found"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:contentDescription="No requests found message" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:gravity="center"
-                    android:text="Requests for this month will appear here"
+                    android:text="Requests for this month will appear here once added"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:contentDescription="Empty state description" />
             </LinearLayout>
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Optional: Add a floating action button for adding new requests -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddRequest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        android:contentDescription="Add new request"
-        app:srcCompat="@drawable/baseline_add_circle_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

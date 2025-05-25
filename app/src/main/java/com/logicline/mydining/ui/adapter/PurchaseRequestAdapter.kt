@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.R
 import com.logicline.mydining.data.enums.PurchaseRequestStatus
+import com.logicline.mydining.data.enums.PurchaseType
 import com.logicline.mydining.data.models.PurchaseRequest
 import com.logicline.mydining.databinding.LayoutPurchaseRequestItemBinding
 
@@ -21,7 +22,7 @@ class PurchaseRequestAdapter(
     private var onItemClick: ((PurchaseRequest) -> Unit)? = null
 
     interface OnActionClick {
-        fun onAccept(requestId: Int, isDeposit: Int, purchaseType: Int, position: Int)
+        fun onAccept(requestId: Int, isDeposit: Int, purchaseType: PurchaseType, position: Int)
         fun onReject(requestId: Int, position: Int)
     }
 
@@ -63,7 +64,7 @@ class PurchaseRequestAdapter(
 
         fun bind(request: PurchaseRequest) {
             binding.txtDate.text = request.date
-            binding.txtName.text = request.name
+            binding.txtName.text = request.messUser.user?.name
             binding.txtTotalPrice.text = String.format("$%.2f", request.price)
 
             val s = PurchaseRequestStatus.fromValue(request.status)

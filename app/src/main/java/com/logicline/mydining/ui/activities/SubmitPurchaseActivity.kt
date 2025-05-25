@@ -25,12 +25,13 @@ import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.core.text.isDigitsOnly
 
 class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener {
     lateinit var selectedDate : String
     private var isListItem = true
     private var isDepositToAcc = false
-    private val purchaseProducts : MutableList<PurchaseProduct> = mutableListOf()
+    private val purchaseProducts : MutableList<PurchaseRequest.ProductItem> = mutableListOf()
     lateinit var purchaseProductFieldAdapter: PurchaseProductFieldAdapter
     lateinit var binding: ActivitySubmitPurchaseBinding
 
@@ -151,7 +152,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
                 val priceString = binding.edtPrice.text.toString()
                 var price = 0f
-                if(TextUtils.isDigitsOnly(priceString) && !priceString.isEmpty()){
+                if(priceString.isDigitsOnly() && !priceString.isEmpty()){
                     price = priceString.toFloat()
                 }else{
                     Toast.makeText(this, "price is not valid", Toast.LENGTH_SHORT).show()
@@ -184,8 +185,8 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                                 shortToast(response.body()!!.msg)
 
                                 if(!response.body()!!.error){
-                                    binding.edtPrice.text.clear()
-                                    binding.edtDesc.text.clear()
+                                    binding.edtPrice.clear()
+                                    binding.edtDesc.clear()
                                 }
                             }
 
@@ -211,7 +212,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
     }
 
     private fun addPurchaseItem(name: String, toFloat: Float) {
-        purchaseProducts.add(PurchaseProduct(name, toFloat))
+        purchaseProducts.add(PurchaseRequest.ProductItem(name,1, toFloat))
         totalPurchase+=toFloat
         binding.txtTotalPurchase.setText("Total Purchase amount ${totalPurchase}")
         binding.recyProducts.visibility = View.VISIBLE
@@ -242,7 +243,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                 if(position<=purchaseProducts.size){
                     Log.d("PricePosition", position.toString())
 
-                    purchaseProducts.get(position).price  = price
+                    purchaseProducts.get(position).unitPrice  = price
                 }
             }
 
@@ -251,23 +252,6 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
     }
 
-    private fun addField(){
-
-        val lastField  = purchaseProducts.get(purchaseProducts.size-1)
-
-        if(lastField.name!!.isNotEmpty() && lastField.price!! >0){
-            purchaseProducts.add(PurchaseProduct("", 0f))
-            purchaseProductFieldAdapter.notifyItemChanged(purchaseProducts.size-1)
-
-        }else{
-            shortToast("Please insert last field first")
-        }
-        purchaseProductFieldAdapter.notifyDataSetChanged()
-        Log.d("adad", Gson().toJson(purchaseProducts))
-
-
-
-    }
 
     private fun setLayoutType(b: Boolean) {
 

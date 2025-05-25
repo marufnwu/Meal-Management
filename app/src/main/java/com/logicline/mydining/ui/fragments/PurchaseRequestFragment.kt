@@ -23,11 +23,14 @@ import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.data.enums.MessPermission
+import com.logicline.mydining.data.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.data.enums.PurchaseRequestStatus
 import com.logicline.mydining.data.enums.PurchaseType
 import com.logicline.mydining.data.models.response.PurchaseListResponse
 import com.logicline.mydining.databinding.DialogPurchaseRequestDetailsBinding
 import com.logicline.mydining.ui.adapter.PurchaseDetailAdapter
+import com.logicline.mydining.utils.AppPrefs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,7 +56,11 @@ class PurchaseRequestFragment : Fragment() {
 
     lateinit var layoutEmpty: LinearLayout
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         loadingDialog = LoadingDialog(requireActivity())
 
         month = Constant.getCurrentMonthNumber()
@@ -71,7 +78,8 @@ class PurchaseRequestFragment : Fragment() {
 
         // Inside PurchaseRequestFragment, to get the status:
         val statusValue = arguments?.getInt("Type")
-        status = statusValue?.let { PurchaseRequestStatus.fromValue(it) } ?: PurchaseRequestStatus.PENDING
+        status = statusValue?.let { PurchaseRequestStatus.fromValue(it) }
+            ?: PurchaseRequestStatus.PENDING
 
         adapter = PurchaseRequestAdapter(requireContext(), requestItems, status)
 
@@ -85,7 +93,12 @@ class PurchaseRequestFragment : Fragment() {
 
         // Set action listener for dialog actions
         adapter.setOnActionClickListener(object : PurchaseRequestAdapter.OnActionClick {
-            override fun onAccept(requestId: Int, isDeposit: Int, purchaseType: Int, position: Int) {
+            override fun onAccept(
+                requestId: Int,
+                isDeposit: Int,
+                purchaseType: PurchaseType,
+                position: Int
+            ) {
                 acceptRequest(requestId, isDeposit, purchaseType, position)
             }
 
@@ -104,8 +117,13 @@ class PurchaseRequestFragment : Fragment() {
     private fun showDetailsDialog(request: PurchaseRequest) {
         val dialog = PurchaseRequestDetailsDialog.newInstance(request)
 
-        dialog.setOnRequestActionListener(object : PurchaseRequestDetailsDialog.OnRequestActionListener {
-            override fun onAcceptRequest(requestId: Int, isDeposit: Int, purchaseType: Int) {
+        dialog.setOnRequestActionListener(object :
+            PurchaseRequestDetailsDialog.OnRequestActionListener {
+            override fun onAcceptRequest(
+                requestId: Int,
+                isDeposit: Int,
+                purchaseType: PurchaseType
+            ) {
                 val position = requestItems.indexOfFirst { it.id == requestId }
                 if (position != -1) {
                     acceptRequest(requestId, isDeposit, purchaseType, position)
@@ -118,7 +136,34 @@ class PurchaseRequestFragment : Fragment() {
                     rejectRequest(requestId, position)
                 }
             }
+
+            override fun onDeleteRequest(requestId: Int) {
+                val position = requestItems.indexOfFirst { it.id == requestId }
+                if (position != -1) {
+                    deleteRequest(requestId, position)
+                }
+            }
         })
+
+        dialog.setOnRequestActionListener(
+            object : PurchaseRequestDetailsDialog.OnRequestActionListener {
+                override fun onAcceptRequest(
+                    requestId: Int,
+                    isDeposit: Int,
+                    purchaseType: PurchaseType
+                ) {
+                    acceptRequest(requestId, isDeposit, purchaseType, requestItems.indexOf(request))
+                }
+
+                override fun onRejectRequest(requestId: Int) {
+                    rejectRequest(requestId, requestItems.indexOf(request))
+                }
+
+                override fun onDeleteRequest(requestId: Int) {
+                    deleteRequest(requestId, requestItems.indexOf(request))
+                }
+            }
+        )
 
         dialog.show(childFragmentManager, "request_details")
     }
@@ -127,12 +172,15 @@ class PurchaseRequestFragment : Fragment() {
         loadingDialog.show()
         (activity?.applicationContext as MyApplication)
             .myApi.rejectPurchaseRequest(requestId)
-            .enqueue(object : Callback<GenericRespose> {
-                override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
+            .enqueue(object : Callback<ServerResponse<Void>> {
+                override fun onResponse(
+                    call: Call<ServerResponse<Void>>,
+                    response: Response<ServerResponse<Void>>
+                ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null) {
-                        if(!response.body()!!.error) {
-                            if(requestItems.size > position) {
+                    if (response.isSuccessful && response.body() != null) {
+                        if (!response.body()!!.error) {
+                            if (requestItems.size > position) {
                                 requestItems.removeAt(position)
                                 adapter.notifyItemRemoved(position)
                                 checkListEmpty()
@@ -141,7 +189,34 @@ class PurchaseRequestFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Void>>, t: Throwable) {
+                    loadingDialog.hide()
+                }
+            })
+    }
+
+    private fun deleteRequest(requestId: Int, position: Int) {
+        loadingDialog.show()
+        (activity?.applicationContext as MyApplication)
+            .myApi.deletePurchaseRequest(requestId)
+            .enqueue(object : Callback<ServerResponse<Void>> {
+                override fun onResponse(
+                    call: Call<ServerResponse<Void>>,
+                    response: Response<ServerResponse<Void>>
+                ) {
+                    loadingDialog.hide()
+                    if (response.isSuccessful && response.body() != null) {
+                        if (!response.body()!!.error) {
+                            if (requestItems.size > position) {
+                                requestItems.removeAt(position)
+                                adapter.notifyItemRemoved(position)
+                                checkListEmpty()
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ServerResponse<Void>>, t: Throwable) {
                     loadingDialog.hide()
                 }
             })
@@ -159,11 +234,11 @@ class PurchaseRequestFragment : Fragment() {
                     response: Response<ServerResponse<PurchaseListResponse<PurchaseRequest>>>
                 ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null) {
-                        if(!response.body()!!.error) {
+                    if (response.isSuccessful && response.body() != null) {
+                        if (!response.body()!!.error) {
                             requestItems.clear()
                             response.body()!!.data?.let {
-                                if(it.purchases.isNotEmpty()) {
+                                if (it.purchases.isNotEmpty()) {
                                     requestItems.addAll(it.purchases)
                                 }
                                 checkListEmpty()
@@ -173,7 +248,10 @@ class PurchaseRequestFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<ServerResponse<PurchaseListResponse<PurchaseRequest>>>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<ServerResponse<PurchaseListResponse<PurchaseRequest>>>,
+                    t: Throwable
+                ) {
                     loadingDialog.hide()
                 }
             })
@@ -189,19 +267,24 @@ class PurchaseRequestFragment : Fragment() {
         }
     }
 
-    private fun acceptRequest(requestId: Int, deposit: Int, purchaseType: Int, position: Int) {
+    private fun acceptRequest(
+        requestId: Int,
+        deposit: Int,
+        purchaseType: PurchaseType,
+        position: Int
+    ) {
         loadingDialog.show()
         (activity?.applicationContext as MyApplication)
-            .myApi.acceptPurchaseRequest(requestId, deposit, purchaseType)
-            .enqueue(object : Callback<GenericRespose> {
+            .myApi.acceptPurchaseRequest(requestId, deposit, purchaseType.value)
+            .enqueue(object : Callback<ServerResponse<Void>> {
                 override fun onResponse(
-                    call: Call<GenericRespose>,
-                    response: Response<GenericRespose>
+                    call: Call<ServerResponse<Void>>,
+                    response: Response<ServerResponse<Void>>
                 ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null) {
-                        if(!response.body()!!.error) {
-                            if(requestItems.size > position) {
+                    if (response.isSuccessful && response.body() != null) {
+                        if (!response.body()!!.error) {
+                            if (requestItems.size > position) {
                                 requestItems.removeAt(position)
                                 adapter.notifyItemRemoved(position)
                                 checkListEmpty()
@@ -210,7 +293,7 @@ class PurchaseRequestFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<Void>>, t: Throwable) {
                     loadingDialog.hide()
                 }
             })
@@ -223,15 +306,15 @@ class PurchaseRequestFragment : Fragment() {
         val mMonth = c.get(Calendar.MONTH)
         val mDay = c.get(Calendar.DAY_OF_MONTH)
 
-        val datePickerDialog = DatePickerDialog(requireContext(), {
-                view, year, monthOfYear, dayOfMonth ->
-            val date = year.toString()+"-"+(monthOfYear+1)+"-"+dayOfMonth
+        val datePickerDialog =
+            DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
+                val date = year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth
 
-            this.year = Constant.getYear(date)
-            this.month = Constant.getMonthNumber(date)
+                this.year = Constant.getYear(date)
+                this.month = Constant.getMonthNumber(date)
 
-            getRequestList()
-        }, mYear, mMonth, mDay)
+                getRequestList()
+            }, mYear, mMonth, mDay)
 
         datePickerDialog.show()
     }
@@ -258,8 +341,9 @@ class PurchaseRequestDetailsDialog : DialogFragment() {
     private var onActionListener: OnRequestActionListener? = null
 
     interface OnRequestActionListener {
-        fun onAcceptRequest(requestId: Int, isDeposit: Int, purchaseType: Int)
+        fun onAcceptRequest(requestId: Int, isDeposit: Int, purchaseType: PurchaseType)
         fun onRejectRequest(requestId: Int)
+        fun onDeleteRequest(requestId: Int)
     }
 
     companion object {
@@ -279,7 +363,11 @@ class PurchaseRequestDetailsDialog : DialogFragment() {
         purchaseRequest = arguments?.getParcelable(ARG_REQUEST)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = DialogPurchaseRequestDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -313,28 +401,31 @@ class PurchaseRequestDetailsDialog : DialogFragment() {
     private fun bindData() {
         purchaseRequest?.let { request ->
             // Set header info
-            binding.txtDialogName.text = request.name
+            binding.txtDialogName.text = request.messUser.user?.name
             binding.txtDialogDate.text = request.date
             binding.txtDialogAmount.text = String.format("$%.2f", request.price)
 
             // Set product list
             request.productJson?.let { products ->
                 productAdapter?.submitList(products)
-                binding.rvDialogProducts.visibility = if (products.isEmpty()) View.GONE else View.VISIBLE
-                binding.labelProducts.visibility = if (products.isEmpty()) View.GONE else View.VISIBLE
+                binding.rvDialogProducts.visibility =
+                    if (products.isEmpty()) View.GONE else View.VISIBLE
+                binding.labelProducts.visibility =
+                    if (products.isEmpty()) View.GONE else View.VISIBLE
             } ?: run {
                 binding.rvDialogProducts.visibility = View.GONE
                 binding.labelProducts.visibility = View.GONE
             }
 
+
             // Set deposit info
+
+            binding.checkBoxDialogDeposit.isChecked = request.depositRequest
+            binding.txtDialogIsDeposit.visibility = View.VISIBLE
+
             if (request.depositRequest) {
-                binding.txtDialogIsDeposit.visibility = View.VISIBLE
-                binding.txtDialogIsDeposit.text = "${request.name} requested to deposit money to their account"
-                binding.checkBoxDialogDeposit.isChecked = true
-            } else {
-                binding.txtDialogIsDeposit.visibility = View.GONE
-                binding.checkBoxDialogDeposit.isChecked = false
+                binding.txtDialogIsDeposit.text =
+                    "${request.messUser.user?.name} requested to deposit money to their account"
             }
 
             // Set purchase type
@@ -346,23 +437,36 @@ class PurchaseRequestDetailsDialog : DialogFragment() {
 
             // Set action buttons visibility based on permissions and status
             val isManagerOrAdmin = Constant.isManagerOrSuperUser()
-            binding.btnDialogReject.visibility = if (isManagerOrAdmin && request.status == 0) View.VISIBLE else View.GONE
-            binding.btnDialogAccept.visibility = if (isManagerOrAdmin && request.status == 0) View.VISIBLE else View.GONE
 
-            binding.checkBoxDialogDeposit.isEnabled = isManagerOrAdmin && request.status == 0
-            binding.rGroupDialogPurchaseType.isEnabled = isManagerOrAdmin && request.status == 0
+
+
+            if (AppPrefs.messUser.hasAnyPermission(MessPermission.PURCHASE_MANAGEMENT)) {
+                binding.btnDialogReject.visibility =
+                    if (request.status != PurchaseRequestStatus.APPROVED.value) View.VISIBLE else View.GONE
+                binding.btnDialogAccept.visibility =
+                    if (request.status != PurchaseRequestStatus.PENDING.value) View.VISIBLE else View.GONE
+
+
+                binding.checkBoxDialogDeposit.isEnabled = request.status == PurchaseRequestStatus.PENDING.value
+                binding.rGroupDialogPurchaseType.isEnabled = request.status == PurchaseRequestStatus.PENDING.value
+
+            }
+
+            binding.btnDialogAccept.visibility =
+                if (request.status == PurchaseRequestStatus.PENDING.value) View.VISIBLE else View.GONE
         }
     }
 
     private fun setupListeners() {
-        binding.btnDialogCancel.setOnClickListener {
-            dismiss()
-        }
+//        binding.btnDialogCancel.setOnClickListener {
+//            dismiss()
+//        }
 
         binding.btnDialogAccept.setOnClickListener {
             purchaseRequest?.let { request ->
                 val isDeposit = if (binding.checkBoxDialogDeposit.isChecked) 1 else 0
-                val purchaseType = if (binding.rGroupDialogPurchaseType.checkedRadioButtonId == R.id.rButtonDialogMealPurchase) 1 else 2
+                val purchaseType =
+                    if (binding.rGroupDialogPurchaseType.checkedRadioButtonId == R.id.rButtonDialogMealPurchase) PurchaseType.MEAL else PurchaseType.OTHER
                 onActionListener?.onAcceptRequest(request.id, isDeposit, purchaseType)
                 dismiss()
             }
@@ -371,6 +475,12 @@ class PurchaseRequestDetailsDialog : DialogFragment() {
         binding.btnDialogReject.setOnClickListener {
             purchaseRequest?.let { request ->
                 onActionListener?.onRejectRequest(request.id)
+                dismiss()
+            }
+        }
+        binding.btnDialogDelete.setOnClickListener {
+            purchaseRequest?.let { request ->
+                onActionListener?.onDeleteRequest(request.id)
                 dismiss()
             }
         }

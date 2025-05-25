@@ -3,6 +3,7 @@ package com.logicline.mydining.network
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.logicline.mydining.BuildConfig
+import com.logicline.mydining.data.enums.PurchaseRequestStatus
 import com.logicline.mydining.data.models.Ad
 import com.logicline.mydining.data.models.Banner
 import com.logicline.mydining.data.models.Country
@@ -284,29 +285,33 @@ interface MyApi {
         @Query("status") status: Int,
     ): Call<ServerResponse<PurchaseListResponse<PurchaseRequest>>>
 
+    @FormUrlEncoded
+    @PUT("api/purchase-request/{requestId}/update/status")
+    fun acceptPurchaseRequest(
+        @Path("requestId") requestId: Int,
+        @Field("is_deposit") isDeposit: Int,
+        @Field("purchase_type") purchaseType: String? = null,
+        @Field("status") status: Int = PurchaseRequestStatus.APPROVED.value,
+    ): Call<ServerResponse<Void>>
+
+    @FormUrlEncoded
+    @PUT("api/purchase-request/{requestId}/update/status")
+    fun rejectPurchaseRequest(
+        @Path("requestId") requestId: Int,
+        @Field("status") status: Int = PurchaseRequestStatus.REJECTED.value,
+    ): Call<ServerResponse<Void>>
+
+    @DELETE("api/purchase-request/{requestId}/delete")
+    fun deletePurchaseRequest(
+        @Path("requestId") requestId: Int,
+    ): Call<ServerResponse<Void>>
+
 
     @Multipart
     @POST("api/user.uploadProfileImg.php")
     suspend fun uploadProfileImage(
         @Part pdfFile: MultipartBody.Part,
     ): Response<GenericRespose>
-
-
-
-
-    @FormUrlEncoded
-    @POST("api/purchase.acceptPurchaseRequest.php")
-    fun acceptPurchaseRequest(
-        @Field("requestId") requestId: Int,
-        @Field("isDeposit") isDeposit: Int,
-        @Field("purchaseType") purchaseType: Int,
-    ): Call<GenericRespose>
-
-    @FormUrlEncoded
-    @POST("api/purchase.rejectPurchaseRequest.php")
-    fun rejectPurchaseRequest(
-        @Field("requestId") requestId: Int,
-    ): Call<GenericRespose>
 
 
     @GET("api/banner.get.php")
@@ -540,16 +545,16 @@ interface MyApi {
     @POST("api/mess/create")
     suspend fun createMess(
         @Field("mess_name") name: String,
-    ) : Response<ServerResponse<MessUser>>
+    ): Response<ServerResponse<MessUser>>
 
     @GET("api/mess/mess-user")
     suspend fun messUser(
-    ) : Response<ServerResponse<MessUser>>
+    ): Response<ServerResponse<MessUser>>
 
     @GET("api/mess/mess-user/{user}")
     suspend fun messUserById(
         @Path("user") userId: Int? = null,
-    ) : Response<ServerResponse<MessUser>>
+    ): Response<ServerResponse<MessUser>>
 
     @POST("api/month/create")
     suspend fun createMonth(
@@ -586,7 +591,6 @@ interface MyApi {
                     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 }
             }
-
 
 
             var cookieHandler: CookieHandler = CookieManager()
