@@ -17,6 +17,7 @@ import com.logicline.mydining.data.models.MessRequest
 import com.logicline.mydining.data.models.MessUser
 import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.data.models.MonthOfYear
+import com.logicline.mydining.data.models.MonthSummary
 import com.logicline.mydining.data.models.OtpRequest
 import com.logicline.mydining.data.models.Purchase
 import com.logicline.mydining.data.models.PurchaseRequest
@@ -122,12 +123,9 @@ interface MyApi {
         @Header("Month-ID") monthId: Int? = null
     ): Call<ServerResponse<MealsData>>
 
-    @FormUrlEncoded
-    @POST("api/summary.getMonthSummary.php")
+    @GET("api/summary/months/details")
     fun getMonthSummary(
-        @Field("year") year: String,
-        @Field("month") month: String,
-    ): Call<MonthlySummaryResponse>
+    ): Call<ServerResponse<MonthSummary>>
 
     @GET("api/meal/user/{messUserId}/by-date")
     fun getUserMealByDate(

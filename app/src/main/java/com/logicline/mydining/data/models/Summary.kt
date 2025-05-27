@@ -16,10 +16,10 @@ open class BaseSummary(
  * Month summary (minimal or detailed)
  */
 data class MonthSummary(
-    @SerializedName("month") override val month: Month,
-    @SerializedName("summary") override val summary: SummaryData,
-    @SerializedName("details") override val details: MonthDetails?
-) : BaseSummary(month, summary, details), Serializable
+    @SerializedName("month") val month: Month,
+    @SerializedName("summary") val summary: SummaryData,
+    @SerializedName("details") val details: MonthDetails?
+) :  Serializable
 
 /**
  * User summary (minimal or detailed)
