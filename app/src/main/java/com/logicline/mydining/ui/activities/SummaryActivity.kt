@@ -52,8 +52,8 @@ class SummaryActivity : BaseActivity() {
             }
         }
 
-        binding.recySummary.setHasFixedSize(true)
-        binding.recySummary.layoutManager = LinearLayoutManager(this)
+//        binding.recySummary.setHasFixedSize(true)
+//        binding.recySummary.layoutManager = LinearLayoutManager(this)
 
         getSummary()
     }
@@ -89,25 +89,25 @@ class SummaryActivity : BaseActivity() {
         val summary = monthSummary.summary
 
         // Set financial data
-        binding.totalPurchase.text = formatCurrency(summary.totalPurchase ?: 0f)
-        binding.totalDeposit.text = formatCurrency(summary.totalDeposit ?: 0f)
+        binding.tvTotalPurchase.text = formatCurrency(summary.totalPurchase ?: 0f)
+        binding.tvTotalDeposits.text = formatCurrency(summary.totalDeposit ?: 0f)
 
         // Set meal data
-        binding.totalMeal.text = decimalFormat.format(summary.totalMeal)
-        binding.mealCharge.text = formatCurrency(summary.mealCharge ?: 0f)
+        binding.tvTotalMealsValue.text = decimalFormat.format(summary.totalMeal)
+        binding.tvMealRateValue.text = formatCurrency(summary.mealCharge ?: 0f)
 
         // Set cost data
 //        binding.totalCost.text = formatCurrency(summary.totalCost)
-        binding.otherCost.text = formatCurrency(summary.totalOtherCost ?: 0f)
+        binding.tvTotalOtherCost.text = formatCurrency(summary.totalOtherCost ?: 0f)
 
         // Calculate meal cost (totalMeal * mealRate)
         val totalMealCost = summary.totalMeal * summary.mealRate
-        binding.totalMealCost.text = formatCurrency(totalMealCost)
+//        binding.totalMealCost.text = formatCurrency(totalMealCost)
 
         // Calculate reserved amount (totalDeposit - totalCost)
         val totalDeposit = summary.totalDeposit ?: 0f
         val inReserved = totalDeposit - summary.totalCost
-//        binding.inReserved.text = formatCurrency(inReserved)
+        binding.tvMessNetBalance.text = summary.status+" "+formatCurrency(inReserved)
 
         // Handle fund visibility (if needed)
         // Uncomment and adjust based on your requirements
@@ -128,18 +128,18 @@ class SummaryActivity : BaseActivity() {
 
     private fun setRecycler(usersSummary: List<UserSummaryItem>) {
         val adapter = UserSummaryAdapter(this, usersSummary)
-        binding.recySummary.adapter = adapter
+//        binding.recySummary.adapter = adapter
     }
 
     private fun setToDefault() {
-        binding.totalPurchase.text = formatCurrency(0f)
-        binding.totalMeal.text = "0"
+        binding.tvTotalPurchase.text = formatCurrency(0f)
+        binding.tvTotalMealsValue.text = "0"
 //        binding.totalCost.text = formatCurrency(0f)
-        binding.mealCharge.text = formatCurrency(0f)
-        binding.otherCost.text = formatCurrency(0f)
+        binding.tvMealRateValue.text = formatCurrency(0f)
+        binding.tvTotalOtherCost.text = formatCurrency(0f)
 //        binding.inReserved.text = formatCurrency(0f)
-        binding.totalDeposit.text = formatCurrency(0f)
-        binding.totalMealCost.text = formatCurrency(0f)
+        binding.tvTotalDeposits.text = formatCurrency(0f)
+//        binding.totalMealCost.text = formatCurrency(0f)
 
         setRecycler(emptyList())
     }
