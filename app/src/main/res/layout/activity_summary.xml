@@ -11,837 +11,400 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/_16sdp"
-        android:paddingBottom="@dimen/_80sdp"
-        android:paddingHorizontal="@dimen/_16sdp">
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_24sdp">
 
-
-
-        <!-- Hero Section Cards -->
+        <!-- Header Section with Month/Year Selection -->
         <LinearLayout
-            android:id="@+id/heroSection"
-            android:layout_width="match_parent"
+            android:id="@+id/headerSection"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/financialOverviewCard"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_weight="1"
-                app:cardCornerRadius="@dimen/_16sdp"
-                app:cardElevation="@dimen/_2sdp"
-                app:cardBackgroundColor="?attr/colorPrimaryContainer">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_12sdp">
-
-                    <ImageView
-                        android:id="@+id/financeIcon"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/baseline_wallet_24"
-                        app:tint="?attr/colorOnPrimaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvTotalDeposit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 12,500"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnPrimaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/financeIcon"
-                        android:layout_marginTop="@dimen/_8sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_deposit"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnPrimaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvTotalDeposit" />
-
-                    <!-- Trend indicator -->
-                    <ImageView
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/trending_up_24px"
-                        app:tint="?attr/colorOnPrimaryContainer"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/mealSummaryCard"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_weight="1"
-                app:cardCornerRadius="@dimen/_16sdp"
-                app:cardElevation="@dimen/_2sdp"
-                app:cardBackgroundColor="?attr/colorSecondaryContainer">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_12sdp">
-
-                    <ImageView
-                        android:id="@+id/mealIcon"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/skillet_24px"
-                        app:tint="?attr/colorOnSecondaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvTotalMeal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="85"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/mealIcon"
-                        android:layout_marginTop="@dimen/_8sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_meal"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvTotalMeal" />
-
-                    <!-- Progress ring -->
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:progress="75"
-                        app:indicatorColor="?attr/colorOnSecondaryContainer"
-                        app:trackColor="?attr/colorSecondary"
-                        app:indicatorSize="@dimen/_24sdp"
-                        app:trackThickness="@dimen/_2sdp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
-        <!-- Quick stats row -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/quickStatsCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="@dimen/_2sdp"
-            app:cardBackgroundColor="?attr/colorSurfaceVariant"
-            app:layout_constraintTop_toBottomOf="@id/heroSection">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/_12sdp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tvTotalSpent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 8,500"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Spent"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/_36sdp"
-                    android:background="?attr/colorOnSurfaceVariant"
-                    android:alpha="0.3" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tvRemaining"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 4,000"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Remaining"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Financial Overview Section -->
-        <LinearLayout
-            android:id="@+id/financialSectionHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@id/quickStatsCard">
-
-            <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:src="@drawable/trending_up_24px"
-                app:tint="?attr/colorPrimary"
-                android:layout_marginEnd="@dimen/_6sdp" />
-
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/financial_overview"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface" />
-
-            <TextView
-                android:id="@+id/tvViewDetails"
+                android:id="@+id/tvMonthYearTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View Details"
-                android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-                android:textColor="?attr/colorPrimary"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                android:drawableTint="?attr/colorPrimary"
-                android:drawablePadding="@dimen/_2sdp" />
+                android:text="Summary"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                android:textColor="?attr/colorOnSurface"
+                android:textStyle="bold" />
 
-        </LinearLayout>
-
-        <!-- Financial Cards Grid -->
-        <GridLayout
-            android:id="@+id/financialGrid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:rowCount="2"
-            android:layout_marginBottom="@dimen/_12sdp"
-            app:layout_constraintTop_toBottomOf="@id/financialSectionHeader">
-
-            <!-- Purchase Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_10sdp">
-
-                    <ImageView
-                        android:id="@+id/purchaseIcon"
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/shopping_bag_24px"
-                        app:tint="?attr/colorPrimary"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/totalPurchase"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 5,200"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/purchaseIcon"
-                        android:layout_marginTop="@dimen/_6sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_purchase"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/totalPurchase" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Fund Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_10sdp">
-
-                    <ImageView
-                        android:id="@+id/fundIcon"
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/fund"
-                        app:tint="?attr/colorSecondary"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/totalFund"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 7,300"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/fundIcon"
-                        android:layout_marginTop="@dimen/_6sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_fund_added"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/totalFund" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Deposit Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_10sdp">
-
-                    <ImageView
-                        android:id="@+id/depositIcon"
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/wallet"
-                        app:tint="?attr/colorTertiary"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/totalDeposit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 12,500"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/depositIcon"
-                        android:layout_marginTop="@dimen/_6sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/total_deposit"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/totalDeposit" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Balance Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/_4sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="?attr/colorTertiaryContainer">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_10sdp">
-
-                    <ImageView
-                        android:id="@+id/balanceIcon"
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/baseline_wallet_24"
-                        app:tint="?attr/colorOnTertiaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/currentBalance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 4,000"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnTertiaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/balanceIcon"
-                        android:layout_marginTop="@dimen/_6sdp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Current Balance"
-                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                        android:textColor="?attr/colorOnTertiaryContainer"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/currentBalance" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </GridLayout>
-
-        <!-- Meal Summary Section -->
-        <LinearLayout
-            android:id="@+id/mealSectionHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@id/financialGrid">
-
-            <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:src="@drawable/skillet_24px"
-                app:tint="?attr/colorSecondary"
-                android:layout_marginEnd="@dimen/_6sdp" />
-
-            <TextView
-                android:layout_width="0dp"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipMonthYear"
+                style="@style/Widget.Material3.Chip.Assist.Elevated"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/meal_summary"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface" />
-
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="May 2025"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                app:chipBackgroundColor="?attr/colorPrimaryContainer"
+                app:chipIconTint="?attr/colorPrimary" />
         </LinearLayout>
 
-        <!-- Meal Chart Card -->
+        <!-- Main Financial Overview Card -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mealChartCard"
+            android:id="@+id/financialOverviewCard"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginBottom="@dimen/_12sdp"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="?attr/colorSecondaryContainer"
-            app:layout_constraintTop_toBottomOf="@id/mealSectionHeader">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp"
+            app:layout_constraintTop_toBottomOf="@id/headerSection">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp">
 
-                <!-- Meal stats with better layout -->
+                <!-- Deposit vs Cost Section -->
                 <LinearLayout
+                    android:id="@+id/depositCostSection"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_16sdp">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_8sdp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical">
+                        android:padding="@dimen/_12sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_deposit"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="?attr/colorOnPrimary" />
+
+                        <TextView
+                            android:id="@+id/totalDeposit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="৳ 0.00"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textColor="?attr/colorOnPrimaryContainer"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_12sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_purchase"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="?attr/colorOnPrimaryContainer" />
+
+                        <TextView
+                            android:id="@+id/tvTotalPurchase"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="৳ 0.00"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textColor="?attr/colorOnPrimaryContainer"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/overviewDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="@dimen/_16sdp"
+                    android:alpha="0.2"
+                    app:dividerColor="?attr/colorOnPrimaryContainer"
+                    app:layout_constraintTop_toBottomOf="@id/depositCostSection" />
+
+                <!-- Balance Section -->
+                <TextView
+                    android:id="@+id/tvBalanceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_reserved"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/overviewDivider" />
+
+                <TextView
+                    android:id="@+id/inReserved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳ 0.00"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvBalanceLabel" />
+
+                <com.google.android.material.chip.Chip
+
+                    android:id="@+id/chipBalanceStatus"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Positive"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    app:chipBackgroundColor="@android:color/transparent"
+                    app:chipStrokeColor="?attr/colorOnPrimaryContainer"
+                    app:chipStrokeWidth="1dp"
+                    app:layout_constraintBottom_toBottomOf="@id/inReserved"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvBalanceLabel" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Meal Stats Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mealStatsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardBackgroundColor="?attr/colorSecondaryContainer"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/financialOverviewCard">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp">
+
+                <TextView
+                    android:id="@+id/tvMealStatsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meal_summary"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnSecondaryContainer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- Meal Rate & Count -->
+                <LinearLayout
+                    android:id="@+id/mealInfoContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tvMealStatsTitle">
+
+                    <!-- Meal Count -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:padding="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/total_meal"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
                             android:textColor="?attr/colorOnSecondaryContainer" />
 
                         <TextView
                             android:id="@+id/totalMeal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="85"
+                            android:text="0"
                             android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                             android:textColor="?attr/colorOnSecondaryContainer"
-                            android:textStyle="bold"
-                            android:layout_marginVertical="@dimen/_6sdp" />
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Meal Rate -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:padding="@dimen/_12sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="This Month"
+                            android:text="Meal Rate"
                             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
                             android:textColor="?attr/colorOnSecondaryContainer" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginTop="@dimen/_6sdp">
-
-                            <ImageView
-                                android:layout_width="@dimen/_14sdp"
-                                android:layout_height="@dimen/_14sdp"
-                                android:src="@drawable/trending_up_24px"
-                                app:tint="?attr/colorOnSecondaryContainer"
-                                android:layout_marginEnd="@dimen/_4sdp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="+12% from last month"
-                                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                                android:textColor="?attr/colorOnSecondaryContainer" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <!-- Enhanced progress indicator -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center">
-
-                        <com.google.android.material.progressindicator.CircularProgressIndicator
-                            android:id="@+id/mealProgress"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:progress="75"
-                            app:indicatorColor="?attr/colorOnSecondaryContainer"
-                            app:trackColor="?attr/colorSecondary"
-                            app:indicatorSize="100dp"
-                            app:trackThickness="@dimen/_6sdp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
                         <TextView
+                            android:id="@+id/mealRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="75%"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:text="৳ 0.00"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                             android:textColor="?attr/colorOnSecondaryContainer"
-                            android:textStyle="bold"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Meal cost breakdown with horizontal cards -->
-        <LinearLayout
-            android:id="@+id/mealCostBreakdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/_12sdp"
-            app:layout_constraintTop_toBottomOf="@id/mealChartCard">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="@dimen/_6sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/_10sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/dollar"
-                        app:tint="?attr/colorSecondary"
-                        android:layout_marginEnd="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/mealCharge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="₹ 45"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Per Meal"
-                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
-
+                            android:textStyle="bold" />
                     </LinearLayout>
-
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/_6sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="1dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant">
-
+                <!-- Meal Costs -->
                 <LinearLayout
+                    android:id="@+id/mealCostContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/_10sdp">
+                    app:layout_constraintTop_toBottomOf="@id/mealInfoContainer">
 
-                    <ImageView
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/chart"
-                        app:tint="?attr/colorTertiary"
-                        android:layout_marginEnd="@dimen/_10sdp" />
-
+                    <!-- Meal Cost -->
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:padding="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
                         android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Meal Cost"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="?attr/colorOnSecondaryContainer" />
 
                         <TextView
                             android:id="@+id/totalMealCost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₹ 3,825"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:text="৳ 0.00"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Meal Charge -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:padding="@dimen/_12sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Cost"
+                            android:text="Meal Charge"
                             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textColor="?attr/colorOnSecondaryContainer" />
 
+                        <TextView
+                            android:id="@+id/mealCharge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="৳ 0.00"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textStyle="bold" />
                     </LinearLayout>
-
                 </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-        <!-- Cost Summary Section -->
-        <LinearLayout
-            android:id="@+id/costSectionHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@id/mealCostBreakdown">
-
-            <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:src="@drawable/cost_24px"
-                app:tint="?attr/colorTertiary"
-                android:layout_marginEnd="@dimen/_6sdp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cost_summary"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface" />
-
-        </LinearLayout>
-
-        <!-- Cost Summary Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/costSummaryCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_12sdp"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="?attr/colorTertiaryContainer"
-            app:layout_constraintTop_toBottomOf="@id/costSectionHeader">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="@dimen/_16sdp">
-
-                <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/cost_24px"
-                    app:tint="?attr/colorOnTertiaryContainer"
-                    android:layout_marginEnd="@dimen/_12sdp"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/other_cost"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                        android:textColor="?attr/colorOnTertiaryContainer" />
-
-                    <TextView
-                        android:id="@+id/otherCost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹ 1,200"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textColor="?attr/colorOnTertiaryContainer"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="?attr/colorOnTertiaryContainer">
-
-                    <TextView
-                        android:id="@+id/costPercentage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="25%"
-                        android:textColor="?attr/colorTertiaryContainer"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                        android:textStyle="bold"/>
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Ad Container -->
+        <!-- Other Costs Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/otherCostsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:cardBackgroundColor="?attr/colorTertiaryContainer"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/mealStatsCard">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp">
+
+                <ImageView
+                    android:id="@+id/iconOtherCost"
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_28sdp"
+                    android:src="@drawable/cost_24px"
+                    app:tint="?attr/colorOnTertiaryContainer"
+                    android:contentDescription="@string/other_cost"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/labelOtherCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:text="@string/other_cost"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    app:layout_constraintStart_toEndOf="@id/iconOtherCost"
+                    app:layout_constraintTop_toTopOf="@id/iconOtherCost" />
+
+                <TextView
+                    android:id="@+id/otherCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳ 0.00"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/labelOtherCost"
+                    app:layout_constraintTop_toBottomOf="@id/labelOtherCost" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCostPercentage"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2%"
+                    android:textColor="?attr/colorTertiaryContainer"
+                    app:chipBackgroundColor="?attr/colorOnTertiaryContainer"
+                    app:chipStrokeWidth="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Advertisement Banner -->
         <com.logicline.mydining.utils.Ad.MyDiningNativeAd
             android:id="@+id/adContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/_12sdp"
-            app:layout_constraintTop_toBottomOf="@id/costSummaryCard" />
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@id/otherCostsCard" />
 
-        <!-- Users Summary Section -->
+        <!-- Users Section Header -->
         <LinearLayout
             android:id="@+id/usersSectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             app:layout_constraintTop_toBottomOf="@id/adContainer">
-
-            <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:src="@drawable/person_24px"
-                app:tint="?attr/colorPrimary"
-                android:layout_marginEnd="@dimen/_6sdp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -849,28 +412,29 @@
                 android:layout_weight="1"
                 android:text="@string/users_summary"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface" />
+                android:textColor="?attr/colorOnSurface"
+                android:textStyle="bold" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipUsersCount"
+                style="@style/Widget.Material3.Chip.Assist.Elevated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5 Active Users"
-                app:chipBackgroundColor="?attr/colorPrimaryContainer"
-                app:chipStrokeWidth="0dp"
-                android:textSize="11sp"
-                app:chipMinHeight="32dp"
-                style="@style/Widget.Material3.Chip.Assist" />
-
+                android:text="2 Users"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                app:chipBackgroundColor="?attr/colorSurfaceVariant"
+                app:chipStrokeWidth="0dp" />
         </LinearLayout>
 
+        <!-- Users List -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/userSummaryCard"
+            android:id="@+id/usersListCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="1dp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardElevation="1dp"
             app:layout_constraintTop_toBottomOf="@id/usersSectionHeader">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -878,10 +442,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
                 android:padding="@dimen/_12sdp"
-                android:nestedScrollingEnabled="false" />
-
+                tools:itemCount="2" />
         </com.google.android.material.card.MaterialCardView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
