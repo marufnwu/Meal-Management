@@ -112,7 +112,7 @@ data class HistoryData(
  * User summary item for month detail
  */
 data class UserSummaryItem(
-    @SerializedName("mess_user") val messUser: MessUserInfo,
+    @SerializedName("mess_user") val messUser: MessUser,
     @SerializedName("meals") val meals: MealSummaryItem,
     @SerializedName("deposit") val deposit: Float,
     @SerializedName("meal_charge") val mealCharge: Float,

@@ -101,54 +101,65 @@ class SummaryActivity : BaseActivity() {
 
     private fun setData(monthSummary: MonthSummary) {
         val summary = monthSummary.summary
+        val details = monthSummary.details
+
+        // Set month name in title if available
+        monthSummary.month?.name?.let { monthName ->
+            binding.chipMonthYear.text = "$monthName $year"
+        }
 
         // Set financial data
-        binding.tvTotalPurchase.text = formatCurrency(summary.totalPurchase ?: 0f)
+        binding.tvTotalPurchase.text = formatCurrency(summary.totalPurchase?.toFloat() ?: 0f)
         binding.totalDeposit.text = formatCurrency(summary.totalDeposit ?: 0f)
 
         // Set meal data
-        binding.totalMeal.text = decimalFormat.format(summary.totalMeal)
-        binding.mealCharge.text = formatCurrency(summary.mealCharge ?: 0f)
+        binding.totalMeal.text = summary.totalMeal.toString()
         binding.mealRate.text = formatCurrency(summary.mealRate)
+
+        // Set meal breakdown data
+        details?.mealSummary?.let { mealSummary ->
+            binding.chipBreakfastTotal.text = "Breakfast: ${mealSummary.breakfast}"
+            binding.chipLunchTotal.text = "Lunch: ${mealSummary.lunch}"
+            binding.chipDinnerTotal.text = "Dinner: ${mealSummary.dinner}"
+        }
 
         // Set other cost data
         binding.otherCost.text = formatCurrency(summary.totalOtherCost ?: 0f)
+        binding.chipCostPercentage.text = "৳${summary.otherCostShare}/user"
 
         // Calculate meal cost (totalMeal * mealRate)
         val totalMealCost = summary.totalMeal * summary.mealRate
         binding.totalMealCost.text = formatCurrency(totalMealCost)
+        binding.mealCharge.text = formatCurrency(totalMealCost)
 
-        // Calculate reserved amount (totalDeposit - totalCost)
+        // Calculate and set reserved amount and status
         val totalDeposit = summary.totalDeposit ?: 0f
         val inReserved = totalDeposit - summary.totalCost
         binding.inReserved.text = formatCurrency(inReserved)
+        setBalanceStatus(inReserved, summary.status)
 
-        // Set balance status
-        setBalanceStatus(inReserved)
-
-        // Set chip count
-        val userCount = monthSummary.details?.users?.size ?: 0
+        // Set users count
+        val userCount = details?.users?.size ?: 0
         binding.chipUsersCount.text = "$userCount ${if (userCount == 1) "User" else "Users"}"
 
         // Set users summary
-        monthSummary.details?.users?.let { users ->
+        details?.users?.let { users ->
             setRecycler(users)
         } ?: setRecycler(emptyList())
     }
 
-    private fun setBalanceStatus(balance: Float) {
-        if (balance >= 0) {
-            binding.chipBalanceStatus.text = "Positive"
-//            binding.chipBalanceStatus.chipBackgroundColor = ColorStateList.valueOf(
-//               ContextCompat.getColor(this, R.color.seed)
-//            )
-            binding.chipBalanceStatus.setTextColor(Color.WHITE)
-        } else {
-            binding.chipBalanceStatus.text = "Deficit"
-//            binding.chipBalanceStatus.chipBackgroundColor = ColorStateList.valueOf(
-//                ContextCompat.getColor(this, R.color.error_color)
-//            )
-            binding.chipBalanceStatus.setTextColor(Color.WHITE)
+    private fun setBalanceStatus(balance: Float, status: String?) {
+        val isDeficit = balance < 0 || status == "deficit"
+
+        binding.chipBalanceStatus.apply {
+            text = if (isDeficit) "Deficit" else "Positive"
+            chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    this@SummaryActivity,
+                    if (isDeficit) R.color.red_700 else R.color.green_700
+                )
+            )
+            setTextColor(Color.WHITE)
         }
     }
 
@@ -158,15 +169,37 @@ class SummaryActivity : BaseActivity() {
     }
 
     private fun setToDefault() {
+        // Reset financial data
         binding.tvTotalPurchase.text = formatCurrency(0f)
-        binding.totalMeal.text = "0"
-        binding.mealCharge.text = formatCurrency(0f)
-        binding.mealRate.text = formatCurrency(0f)
-        binding.otherCost.text = formatCurrency(0f)
-        binding.inReserved.text = formatCurrency(0f)
         binding.totalDeposit.text = formatCurrency(0f)
+        binding.inReserved.text = formatCurrency(0f)
+
+        // Reset meal data
+        binding.totalMeal.text = "0"
+        binding.mealRate.text = formatCurrency(0f)
         binding.totalMealCost.text = formatCurrency(0f)
+        binding.mealCharge.text = formatCurrency(0f)
+
+        // Reset meal breakdown
+        binding.chipBreakfastTotal.text = "Breakfast: 0"
+        binding.chipLunchTotal.text = "Lunch: 0"
+        binding.chipDinnerTotal.text = "Dinner: 0"
+
+        // Reset other cost
+        binding.otherCost.text = formatCurrency(0f)
+        binding.chipCostPercentage.text = "৳0/user"
+
+        // Reset users count
         binding.chipUsersCount.text = "0 Users"
+
+        // Reset balance status
+        binding.chipBalanceStatus.apply {
+            text = "Balanced"
+            chipBackgroundColor = ColorStateList.valueOf(
+                ContextCompat.getColor(this@SummaryActivity, R.color.gray_500)
+            )
+            setTextColor(Color.WHITE)
+        }
 
         setRecycler(emptyList())
     }

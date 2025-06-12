@@ -3,262 +3,233 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/_4sdp"
-    app:cardCornerRadius="@dimen/_12sdp"
-    app:cardElevation="@dimen/_2sdp"
-    app:strokeWidth="0dp"
-    style="@style/Widget.Material3.CardView.Outlined">
+    app:cardCornerRadius="2dp"
+    style="@style/Widget.Material3.CardView.Filled">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- User Name Header -->
+        <!-- User Header -->
         <LinearLayout
-            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimaryContainer"
-            android:gravity="center"
-            android:padding="@dimen/_8sdp">
+            android:background="?attr/colorSecondaryContainer"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_12sdp">
 
-            <TextView
-                android:id="@+id/name"
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:src="@drawable/person_24px"
+                android:padding="@dimen/_4sdp"
+                app:tint="?attr/colorOnSecondaryContainer" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+
+                <TextView
+                    android:id="@+id/tvUserStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active Member"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+            </LinearLayout>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTotalMeal"
+                style="@style/Widget.Material3.Chip.Assist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name of User"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnPrimaryContainer"
-                android:textStyle="bold" />
-
+                android:text="21 Meals"
+                app:chipStrokeColor="?attr/colorOnPrimaryContainer"
+                app:chipStrokeWidth="1dp" />
         </LinearLayout>
 
-        <!-- Content Container -->
+        <!-- Meal Breakdown Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:gravity="center">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBreakfast"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B: 1"
+                app:chipIcon="@drawable/skillet_24px"
+                android:layout_marginEnd="@dimen/_4sdp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLunch"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L: 0"
+                app:chipIcon="@drawable/skillet_24px"
+                android:layout_marginEnd="@dimen/_4sdp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDinner"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D: 20"
+                app:chipIcon="@drawable/skillet_24px" />
+        </LinearLayout>
+
+        <!-- Financial Details -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/_12sdp">
 
-            <!-- First Row: Meal, Meal Cost, Deposit -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_marginBottom="@dimen/_4sdp">
 
-                <!-- Meal Column -->
-                <LinearLayout
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="@dimen/_4sdp">
+                    android:text="Deposit"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSecondaryContainer"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/total_meal"
-                        android:textAppearance="?attr/textAppearanceLabelMedium"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/meal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="00"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <!-- Meal Cost Column -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvDeposit"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginHorizontal="@dimen/_2sdp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSecondaryContainer"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/meal_charge"
-                        android:textAppearance="?attr/textAppearanceLabelMedium"
-                        android:textColor="?attr/colorOnSecondaryContainer" />
-
-                    <TextView
-                        android:id="@+id/mealCost"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="00"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <!-- Deposit Column -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/_4sdp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSecondaryContainer"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/deposit"
-                        android:textAppearance="?attr/textAppearanceLabelMedium"
-                        android:textColor="?attr/colorOnSecondaryContainer" />
-
-                    <TextView
-                        android:id="@+id/deposit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="00"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
             </LinearLayout>
 
-            <!-- Spacing -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Meal Charge"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvMealCharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Other Cost"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvOtherCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_8sdp" />
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.12"
+                android:layout_marginVertical="@dimen/_8sdp" />
 
-            <!-- Second Row: Other Cost, Total Cost, Due -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
-                <!-- Other Cost Column -->
-                <LinearLayout
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="@dimen/_4sdp">
+                    android:text="Balance"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorTertiaryContainer"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/other_cost"
-                        android:textAppearance="?attr/textAppearanceLabelMedium"
-                        android:textColor="?attr/colorOnTertiaryContainer" />
-
-                    <TextView
-                        android:id="@+id/otherCost"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="00"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <!-- Total Cost Column -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvBalance"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginHorizontal="@dimen/_2sdp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorTertiaryContainer"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/total_cost"
-                        android:textAppearance="?attr/textAppearanceLabelMedium"
-                        android:textColor="?attr/colorOnTertiaryContainer" />
-
-                    <TextView
-                        android:id="@+id/totalCost"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="00"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <!-- Due Column -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/_4sdp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorErrorContainer"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/in_reserved"
-                        android:textAppearance="?attr/textAppearanceLabelMedium"
-                        android:textColor="?attr/colorOnErrorContainer" />
-
-                    <TextView
-                        android:id="@+id/due"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurfaceVariant"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="00"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_700" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/dueContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Due"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvDue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="@color/red_700" />
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

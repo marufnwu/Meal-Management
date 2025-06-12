@@ -1,9 +1,13 @@
 package com.logicline.mydining.ui.adapter
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.logicline.mydining.R
 import com.logicline.mydining.databinding.LayoutSummaryItemBinding
 import com.logicline.mydining.data.models.UserSummaryItem
 import java.text.DecimalFormat
@@ -35,44 +39,46 @@ class UserSummaryAdapter(
 
         fun bind(userSummary: UserSummaryItem) {
             with(binding) {
-                // Set user name (you might need to get this from a user repository)
-                name.text = "User ${userSummary.messUser.userId}" // Placeholder - replace with actual user name
+                // Set user info
+                tvName.text = userSummary.messUser.user?.name ?: "Unknown User"
+                tvUserStatus.text = when {
+                    userSummary.messUser.leftAt != null -> "Left Member"
+                    else -> "Active Member"
+                }
 
-                // Set meal data
-                meal.text = userSummary.meals.total.toString()
-                mealCost.text = formatCurrency(userSummary.mealCharge)
+                // Set meal breakdown
+                chipBreakfast.text = "B: ${userSummary.meals.breakfast}"
+                chipLunch.text = "L: ${userSummary.meals.lunch}"
+                chipDinner.text = "D: ${userSummary.meals.dinner}"
+                chipTotalMeal.text = "${userSummary.meals.total} Meals"
 
                 // Set financial data
-                deposit.text = formatCurrency(userSummary.deposit)
-                otherCost.text = formatCurrency(userSummary.otherCostShare)
-                totalCost.text = formatCurrency(userSummary.totalCost)
+                tvDeposit.text = formatCurrency(userSummary.deposit)
+                tvMealCharge.text = formatCurrency(userSummary.mealCharge)
+                tvOtherCost.text = formatCurrency(userSummary.otherCostShare)
+                tvBalance.text = formatCurrency(userSummary.balance)
+                tvDue.text = formatCurrency(userSummary.due)
 
-                // Set due/balance
-                val dueAmount = if (userSummary.due > 0) userSummary.due else 0f
-                due.text = formatCurrency(dueAmount)
-
-                // Set status color based on balance/due
-                setStatusColors(userSummary)
+                // Set colors based on status
+                updateStatusColors(userSummary)
             }
         }
 
-        private fun setStatusColors(userSummary: UserSummaryItem) {
+        private fun updateStatusColors(userSummary: UserSummaryItem) {
             with(binding) {
-                when {
-                    userSummary.balance > 0 -> {
-                        // User has positive balance (overpaid)
-                        due.setTextColor(context.getColor(android.R.color.holo_green_dark))
-                        name.setBackgroundResource(com.logicline.mydining.R.color.success_container)
-                    }
-                    userSummary.due > 0 -> {
-                        // User has due amount
-                        due.setTextColor(context.getColor(android.R.color.holo_red_dark))
-                        name.setBackgroundResource(com.logicline.mydining.R.color.error_container)
-                    }
-                    else -> {
-                        // User is balanced
-                        due.setTextColor(context.getColor(android.R.color.darker_gray))
-                    }
+                // User status colors
+                if (userSummary.messUser.leftAt != null == true) {
+                    tvUserStatus.setTextColor(ContextCompat.getColor(context, R.color.gray_500))
+                }
+
+                // Balance/Due colors and visibility
+                if (userSummary.balance >= 0) {
+                    tvBalance.setTextColor(ContextCompat.getColor(context, R.color.green_700))
+                    dueContainer.visibility = View.GONE
+                } else {
+                    tvBalance.setTextColor(ContextCompat.getColor(context, R.color.red_700))
+                    tvDue.setTextColor(ContextCompat.getColor(context, R.color.red_700))
+                    dueContainer.visibility = View.VISIBLE
                 }
             }
         }

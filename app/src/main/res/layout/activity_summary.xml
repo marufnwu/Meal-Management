@@ -160,9 +160,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Positive"
-                    android:textColor="?attr/colorOnPrimaryContainer"
-                    app:chipBackgroundColor="@android:color/transparent"
-                    app:chipStrokeColor="?attr/colorOnPrimaryContainer"
                     app:chipStrokeWidth="1dp"
                     app:layout_constraintBottom_toBottomOf="@id/inReserved"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -196,14 +193,68 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Meal Rate & Count -->
+                <!-- Meal Breakdown Section -->
+                <HorizontalScrollView
+                    android:id="@+id/mealBreakdownScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@id/tvMealStatsTitle">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipBreakfastTotal"
+                            style="@style/Widget.Material3.Chip.Assist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Breakfast: 0"
+                            app:chipIcon="@drawable/skillet_24px"
+                            app:chipIconTint="?attr/colorOnSecondary"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            app:chipBackgroundColor="?attr/colorSecondary"
+                            app:chipStrokeWidth="0dp"
+                            android:layout_marginEnd="@dimen/_4sdp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipLunchTotal"
+                            style="@style/Widget.Material3.Chip.Assist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lunch: 0"
+                            app:chipIcon="@drawable/skillet_24px"
+                            app:chipIconTint="?attr/colorOnSecondary"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            app:chipBackgroundColor="?attr/colorSecondary"
+                            app:chipStrokeWidth="0dp"
+                            android:layout_marginEnd="@dimen/_4sdp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipDinnerTotal"
+                            style="@style/Widget.Material3.Chip.Assist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dinner: 0"
+                            app:chipIcon="@drawable/skillet_24px"
+                            app:chipIconTint="?attr/colorOnSecondary"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            app:chipBackgroundColor="?attr/colorSecondary"
+                            app:chipStrokeWidth="0dp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Meal Info Container -->
                 <LinearLayout
                     android:id="@+id/mealInfoContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@id/tvMealStatsTitle">
+                    app:layout_constraintTop_toBottomOf="@id/mealBreakdownScroll">
 
                     <!-- Meal Count -->
                     <LinearLayout
@@ -448,3 +499,4 @@
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
+
