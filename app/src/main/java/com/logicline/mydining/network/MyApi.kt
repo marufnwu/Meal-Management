@@ -125,6 +125,7 @@ interface MyApi {
 
     @GET("api/summary/months/details")
     fun getMonthSummary(
+        @Query("month_id") monthId: Int? = null,
     ): Call<ServerResponse<MonthSummary>>
 
     @GET("api/meal/user/{messUserId}/by-date")

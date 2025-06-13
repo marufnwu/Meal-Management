@@ -34,9 +34,9 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                android:backgroundTint="@color/warning"
                 android:id="@+id/negative_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -44,7 +44,7 @@
                 tools:text="Cancel"
                 tools:visibility="visible"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/positive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
