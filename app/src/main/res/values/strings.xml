@@ -155,4 +155,12 @@
     <string name="share_summary">Share Summary</string>
 
 
+    <string name="month_name_placeholder">Lulu</string>
+    <string name="month_type_automatic">Automatic</string>
+    <string name="month_status_active">Active</string>
+    <string name="month_status_inactive">Inactive</string>
+    <string name="month_date_range_placeholder">May 1 - May 31, 2025</string>
+    <string name="content_desc_type_icon">Type Icon</string>
+    <string name="content_desc_calendar_icon">Calendar Icon</string>
+    <string name="content_desc_selection_icon">Selection Icon</string>
 </resources>

@@ -126,7 +126,7 @@ class MonthAdapter(
 
             // Show additional information when available
             statusChip?.apply {
-                text = if (month.isActive) "Active" else "Inactive"
+                text = if (month.isActive) itemView.context.getString(R.string.month_status_active) else itemView.context.getString(R.string.month_status_inactive)
                 chipBackgroundColor = ColorStateList.valueOf(
                     itemView.context.getColor(
                         if (month.isActive) R.color.active_bg_color
