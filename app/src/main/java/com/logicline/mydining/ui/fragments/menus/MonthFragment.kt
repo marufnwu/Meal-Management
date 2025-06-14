@@ -40,7 +40,7 @@ class MonthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setStatusBarColorWithLifecycle(android.R.color.transparent, true)
+        setStatusBarColorWithLifecycle(R.color.md_theme_primary, true)
 
         setupWindowInsets()
         initViews()

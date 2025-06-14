@@ -59,6 +59,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.math.abs
 
 private const val TAG = "HomeFragment"
@@ -88,6 +90,8 @@ class HomeFragment : Fragment() {
     private var rotationAngle = 0f
     private var isUserGuideExpand = false
     private var layoutRefresh: SwipeRefreshLayout? = null
+    private val inputDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    private val outputDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
     companion object {
         const val HOME_MAIN_BANNER: String = "homeMain"
@@ -111,30 +115,64 @@ class HomeFragment : Fragment() {
         setupWindowInsets()
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            AppPrefs.monthIdFlow.collect {
-                requireContext().shortToast("Selected: ${it}")
+            AppPrefs.monthFlow.collect {
+                // Update the month header UI
+                it?.let { month ->
+                    binding.txtMonthName?.text = month.name
+
+                    // Format the period (start date - end date)
+                    // Format and set the period dates
+                    val startDate = month.startAt.let { dateString ->
+                        try {
+                            inputDateFormat.parse(dateString)?.let { parsedDate -> outputDateFormat.format(parsedDate) }
+                        } catch (e: Exception) {
+                            android.util.Log.e("SummaryActivity", "Error formatting start date", e)
+                            null
+                        }
+                    } ?: "N/A"
+
+                    val endDate = month.endAt?.let { dateString ->
+                        try {
+                            inputDateFormat.parse(dateString)?.let { parsedDate -> outputDateFormat.format(parsedDate) }
+                        } catch (e: Exception) {
+                            android.util.Log.e("SummaryActivity", "Error formatting end date", e)
+                            null
+                        }
+                    } ?: "Ongoing"
+
+                    binding.txtMonthPeriod?.text = "$startDate - $endDate"
+
+                    // Update status indicator
+                    binding.txtMonthStatus?.text = if (month.isActive) "Active" else "Inactive"
+                    binding.txtMonthStatus?.setBackgroundResource(
+                        if (month.isActive) R.drawable.status_background
+                        else R.drawable.status_background_inactive
+                    )
+                }
+
+                userViewModel.loadUserMinimalMonthSummary()
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-           userViewModel.userMinimalSummaryState.collect {
-               it.handle(
-                     onLoading = {
-                          loadingDialog.show()
-                     },
-                     onSuccess = {
-                          loadingDialog.hide()
-                          Log.d(TAG, "onViewCreated: user summary " + Gson().toJson(it))
-                          binding.txtMealcharge.text = it?.summary?.mealCharge.toString()
-                          binding.txtTotalMeal.text = it?.summary?.totalMeal.toString()
-                          binding.txtBalance.text = it?.summary?.balance.toString()
-                     },
-                     onError = {msg ->
-                          loadingDialog.hide()
-                          requireContext().shortToast(msg)
-                     },
-               )
-           }
+            userViewModel.userMinimalSummaryState.collect {
+                it.handle(
+                    onLoading = {
+                        loadingDialog.show()
+                    },
+                    onSuccess = {
+                        loadingDialog.hide()
+                        Log.d(TAG, "onViewCreated: user summary " + Gson().toJson(it))
+                        binding.txtMealcharge.text = it?.summary?.mealCharge.toString()
+                        binding.txtTotalMeal.text = it?.summary?.totalMeal.toString()
+                        binding.txtBalance.text = it?.summary?.balance.toString()
+                    },
+                    onError = { msg ->
+                        loadingDialog.hide()
+                        requireContext().shortToast(msg)
+                    },
+                )
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -179,7 +217,7 @@ class HomeFragment : Fragment() {
                             // Find any permission related views and hide them
                         }
 
-                        userViewModel.userMinimalMonthSummary()
+                        userViewModel.loadUserMinimalMonthSummary()
 
                         askNotificationPermission()
                         setupClickListeners()
@@ -223,6 +261,7 @@ class HomeFragment : Fragment() {
 
         // Set initial state
         binding.headerBackground.setCardBackgroundColor(expandedColor)
+        activity?.window?.statusBarColor = expandedColorInt
 
         // Setup smooth scrolling behavior
         val params = binding.appBarLayout.layoutParams as CoordinatorLayout.LayoutParams
@@ -245,8 +284,6 @@ class HomeFragment : Fragment() {
 
         setupMenuGrid()
     }
-
-
 
     private fun setupWindowInsets() {
         // Store the original toolbar height
@@ -291,17 +328,25 @@ class HomeFragment : Fragment() {
         expandedColor: android.content.res.ColorStateList,
         collapsedColor: android.content.res.ColorStateList
     ) {
+        // Constants for transition thresholds
+        val MIN_THRESHOLD = 0.05f
+        val MAX_THRESHOLD = 0.95f
+
         when {
-            scrollRatio <= 0.05f -> {
+            scrollRatio <= MIN_THRESHOLD -> {
+                // Fully expanded
                 headerBackground.setCardBackgroundColor(expandedColor)
                 activity?.window?.statusBarColor = expandedColorInt
             }
-            scrollRatio >= 0.95f -> {
+            scrollRatio >= MAX_THRESHOLD -> {
+                // Fully collapsed
                 headerBackground.setCardBackgroundColor(collapsedColor)
                 activity?.window?.statusBarColor = collapsedColorInt
             }
             else -> {
-                val color = blendColors(expandedColorInt, collapsedColorInt, scrollRatio)
+                // Calculate normalized ratio for smoother transition
+                val normalizedRatio = (scrollRatio - MIN_THRESHOLD) / (MAX_THRESHOLD - MIN_THRESHOLD)
+                val color = blendColors(expandedColorInt, collapsedColorInt, normalizedRatio)
                 headerBackground.setCardBackgroundColor(android.content.res.ColorStateList.valueOf(color))
                 activity?.window?.statusBarColor = color
             }
@@ -309,16 +354,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun blendColors(color1: Int, color2: Int, ratio: Float): Int {
-        val evaluator = android.animation.ArgbEvaluator()
-        return evaluator.evaluate(ratio, color1, color2) as Int
+        // Using Android's ArgbEvaluator for efficient color blending
+        return android.animation.ArgbEvaluator().evaluate(ratio, color1, color2) as Int
     }
 
     private fun handleBannerVisibility(promoBanner: View, scrollRatio: Float) {
-        val visibilityThreshold = 0.3f
-        val shouldBeVisible = scrollRatio < visibilityThreshold
+        val VISIBILITY_THRESHOLD = 0.3f
+        val shouldBeVisible = scrollRatio < VISIBILITY_THRESHOLD
 
         if (shouldBeVisible != isBannerVisible) {
             isBannerVisible = shouldBeVisible
+
+            // Use property animator for better performance
+            promoBanner.animate().cancel() // Cancel any ongoing animations
 
             if (shouldBeVisible) {
                 promoBanner.visibility = View.VISIBLE
@@ -341,30 +389,40 @@ class HomeFragment : Fragment() {
                     .start()
             }
         } else if (shouldBeVisible && promoBanner.visibility != View.VISIBLE) {
+            // Ensure visibility is correct if state is unchanged but view is invisible
             promoBanner.visibility = View.VISIBLE
             promoBanner.translationY = 0f
         }
     }
 
     private fun handleLocationVisibility(locationLayout: LinearLayout?, scrollRatio: Float) {
-        val startFadeThreshold = 0.15f
-        val endFadeThreshold = 0.80f
+        // Constants for fade thresholds
+        val START_FADE = 0.15f
+        val END_FADE = 0.80f
 
-        when {
-            scrollRatio <= startFadeThreshold -> {
-                locationLayout?.alpha = 1f
-                locationLayout?.visibility = View.VISIBLE
-            }
-            scrollRatio >= endFadeThreshold -> {
-                locationLayout?.alpha = 0f
-                locationLayout?.visibility = View.INVISIBLE
-            }
-            else -> {
-                val fadeProgress = (scrollRatio - startFadeThreshold) / (endFadeThreshold - startFadeThreshold)
-                locationLayout?.alpha = 1f - fadeProgress
-                locationLayout?.visibility = View.VISIBLE
-                val slideDistance = locationLayout?.height?.times(0.2f)?.times(fadeProgress)
-                slideDistance?.let { locationLayout.translationY = -it }
+        locationLayout?.let { layout ->
+            when {
+                scrollRatio <= START_FADE -> {
+                    // Fully visible
+                    layout.alpha = 1f
+                    layout.visibility = View.VISIBLE
+                    layout.translationY = 0f
+                }
+                scrollRatio >= END_FADE -> {
+                    // Fully hidden
+                    layout.alpha = 0f
+                    layout.visibility = View.INVISIBLE
+                }
+                else -> {
+                    // Calculate fade progress
+                    val fadeProgress = (scrollRatio - START_FADE) / (END_FADE - START_FADE)
+                    layout.alpha = 1f - fadeProgress
+                    layout.visibility = View.VISIBLE
+
+                    // Slide up as we scroll
+                    val slideDistance = layout.height * 0.2f * fadeProgress
+                    layout.translationY = -slideDistance
+                }
             }
         }
     }
@@ -528,7 +586,8 @@ class HomeFragment : Fragment() {
                 fragmentManager = childFragmentManager, // or parentFragmentManager or activity's supportFragmentManager
                 preselectedMonthId = AppPrefs.monthId
             ) { month ->
-                AppPrefs.monthId = month.id
+
+                AppPrefs.month = month // Save selected month
                 // Update your UI here if needed
                 // For example, update a text view with the selected month name
             }
@@ -631,7 +690,7 @@ class HomeFragment : Fragment() {
 
     private fun refreshData() {
         // Reload all data
-        userViewModel.userMinimalMonthSummary()
+        userViewModel.loadUserMinimalMonthSummary()
         getInitialData()
         getHomeMainBanner()
         getSliderData()
@@ -751,3 +810,4 @@ class HomeFragment : Fragment() {
         }
     }
 }
+

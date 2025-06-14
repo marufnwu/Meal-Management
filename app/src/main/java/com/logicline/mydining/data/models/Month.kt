@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 
 
-data class Month(
+data class Month (
     @SerializedName("id")
     var id: Int,
     @SerializedName("mess_id")
@@ -24,4 +24,9 @@ data class Month(
     var updatedAt: String?,
     @SerializedName("is_active")
     var isActive: Boolean
-)
+) : java.io.Serializable {
+
+    override fun toString(): String {
+        return "Month(id=$id, messId=$messId, name='$name', type='$type', startAt='$startAt', endAt=$endAt, createdAt=$createdAt, updatedAt=$updatedAt, isActive=$isActive)"
+    }
+}
