@@ -1,116 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/themeColor</item>
-        <item name="colorPrimaryVariant">@color/themeColor</item>
-        <item name="colorOnPrimary">@color/White</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_700</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+    <!-- BASE THEME: With ActionBar by default -->
+    <style name="AppTheme.Base" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_error</item>
+        <item name="colorOnError">@color/md_theme_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="colorOnBackground">@color/md_theme_onBackground</item>
+        <item name="colorSurface">@color/md_theme_surface</item>
+        <item name="colorOnSurface">@color/md_theme_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_outlineVariant</item>
+        <item name="colorSurfaceInverse">@color/md_theme_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_inverseOnSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_inversePrimary</item>
+        <item name="colorPrimaryFixed">@color/md_theme_primaryFixed</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_onPrimaryFixed</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_primaryFixedDim</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_onPrimaryFixedVariant</item>
+        <item name="colorSecondaryFixed">@color/md_theme_secondaryFixed</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_onSecondaryFixed</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_secondaryFixedDim</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_onSecondaryFixedVariant</item>
+        <item name="colorTertiaryFixed">@color/md_theme_tertiaryFixed</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_onTertiaryFixed</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_tertiaryFixedDim</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_onTertiaryFixedVariant</item>
+        <item name="colorSurfaceDim">@color/md_theme_surfaceDim</item>
+        <item name="colorSurfaceBright">@color/md_theme_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
 
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="android:textColorPrimary">@color/Black</item>
+        <!-- Common text styling -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
 
-        <item name="actionBarTheme">@style/ThemeOverlay.Actionbar</item>
+        <!-- ActionBar styling -->
+        <item name="actionBarStyle">@style/Widget.App.ActionBar</item>
 
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="windowNoTitle">false</item>
-        <item name="windowActionBar">true</item>
-        <item name="android:windowLightStatusBar" >false</item>
-
-<!--        <item name="fontFamily">@font/app_font</item>-->
-
-        <item name="textOutlineColor">@color/Black</item>
-        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+        <!-- Status bar styling to match ActionBar -->
+        <item name="android:statusBarColor">@color/md_theme_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
-    <style name="ThemeOverlay.Actionbar" parent="Theme.MaterialComponents.Light.NoActionBar" >
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorPrimary">@color/themeColor</item>
-        <item name="colorPrimaryVariant">@color/themeColor</item>
-        <item name="android:textColorPrimary">@color/White</item>
-        <item name="colorOnPrimary">@color/White</item>
-        <item name="colorControlNormal">@color/White</item>
-
+    <!-- DEFAULT THEME (extends base with ActionBar) -->
+    <style name="AppTheme" parent="AppTheme.Base">
+        <!-- Inherits ActionBar from base -->
     </style>
 
-    <style name="ActionBarStyle" parent="Theme.AppCompat.Light.DarkActionBar" >
-        <item name="android:titleTextStyle">@style/ActionBarTitle</item>
+    <!-- NO TOOLBAR THEME with primary-colored status bar -->
+    <style name="AppTheme.NoToolbar" parent="AppTheme.Base">
+        <!-- Override to hide ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/md_theme_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
-    <style name="ActionBarTitle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="Theme.MealManagementNoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/White</item>
-        <item name="colorOnPrimary">@color/White</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/White</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    <!-- EDGE-TO-EDGE THEME with transparent status bar -->
+    <style name="AppTheme.EdgeToEdge" parent="AppTheme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
-
-<!--        <item name="fontFamily">@font/app_font</item>-->
-
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
     </style>
 
-    <style name="mySpinnerItemStyle" parent="@style/Widget.AppCompat.DropDownItem.Spinner">
-        <item name="android:textColor">@color/Black</item>
+    <!-- CONTENT-MATCHING THEME with surface-colored status bar -->
+    <style name="AppTheme.ContentMatching" parent="AppTheme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/md_theme_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="JDialog.PositiveButton" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">@dimen/_10sdp</item>
-        <item name="android:background">@drawable/round_background</item>
-        <item name="cornerRadius">@dimen/_10sdp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-
+    <!-- THEME WITH TRANSPARENT STATUS BAR -->
+    <style name="AppTheme.WithNoActionBar" parent="AppTheme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="DatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
-        <!-- just override the colors used in the default style -->
-        <item name="android:colorAccent">@color/colorPrimary</item>
-        <item name="titleTextColor">@color/Black</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@color/Black</item>
-        <item name="android:textColorPrimary">@color/Black</item>
+    <!-- Custom ActionBar style -->
+    <style name="Widget.App.ActionBar" parent="Widget.Material3.ActionBar.Solid">
+        <item name="background">@color/md_theme_primary</item>
+        <item name="titleTextStyle">@style/TextAppearance.App.TitleLarge</item>
     </style>
 
-    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/md_theme_onPrimary</item>
+    </style>
+
+    <!-- ActionBar overlay style -->
+    <style name="ThemeOverlay.ActionBar" parent="ThemeOverlay.Material3.ActionBar">
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorControlNormal">@color/md_theme_onPrimary</item>
+    </style>
+
+    <!-- DIALOG THEMES (all extend from base dialog styles) -->
+    <!-- Date Picker Dialog -->
+    <style name="DatePickerDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Material3.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Material3.Button.TextButton</item>
+    </style>
+
+    <!-- Bottom Sheet Dialog -->
+    <style name="CustomBottomSheetDialogTheme" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 
-    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <style name="CustomBottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.LargeComponent.Cutout</item>
     </style>
 
+    <!-- Shape styles -->
+    <style name="ShapeAppearance.App.LargeComponent.Cutout" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- Widget styles -->
+    <!-- Spinner style -->
+    <style name="mySpinnerItemStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+    </style>
+
+    <!-- Custom dialog button -->
+    <style name="JDialog.PositiveButton" parent="Widget.Material3.Button">
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent.Rounded</item>
+        <item name="cornerRadius">@dimen/_10sdp</item>
+        <item name="android:textColor">@color/md_theme_primary</item>
+        <item name="backgroundTint">?attr/colorSurface</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent.Rounded" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_10sdp</item>
+    </style>
+
+    <!-- Dialog animation -->
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <!-- Ad attribution style -->
     <style name="AppTheme.AdAttribution">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">left</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:text">@string/ad_attribution</item>
         <item name="android:background">#FFCC66</item>
         <item name="android:width">15dp</item>
         <item name="android:height">15dp</item>
     </style>
 
-    <string name="ad_attribution" translatable="false">Ad</string>
-
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.CircularImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="SummaryCardStyle" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+    </style>
+
+    <style name="SummaryCardStyle.UserItem" parent="Widget.Material3.CardView.Outlined">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">?attr/colorOutlineVariant</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+    </style>
+
+
+    <style name="CardContentLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="CardContentLayoutStyle.UserItem" parent="CardContentLayoutStyle">
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="CardTitleStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceTitleMedium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="CardMetricIconStyle">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:alpha">0.8</item>
+    </style>
+
+    <style name="CardMetricLabelStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="CardMetricValueStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceTitleMedium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CardMetricValueStyle.Large" parent="CardMetricValueStyle">
+        <item name="android:textAppearance">?attr/textAppearanceHeadlineSmall</item>
+    </style>
+
+    <style name="CardMetricDetailStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodySmall</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:layout_marginTop">2dp</item>
+    </style>
+
+    <style name="CardInnerDividerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?attr/colorOutlineVariant</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <!-- User Item Detail Styles -->
+    <style name="UserItemDetailContainerStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_gravity">fill_horizontal</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingVertical">2dp</item>
+    </style>
+    <style name="UserItemDetailLabelStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">?attr/textAppearanceBodySmall</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+    <style name="UserItemDetailValueStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

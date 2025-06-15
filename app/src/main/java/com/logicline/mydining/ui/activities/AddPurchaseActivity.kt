@@ -47,17 +47,17 @@ class AddPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener, A
         myFullScreenAd = MyFullScreenAd(this, true)
 
 
-        val type = intent.getStringExtra(Constant.PURCHASE_TYPE) ?: PurchaseType.PURCHASE.value
+        val type = intent.getStringExtra(Constant.PURCHASE_TYPE) ?: PurchaseType.MEAL.value
 
          purchaseType = PurchaseType.fromValue(type)
 
         when (purchaseType) {
-            PurchaseType.PURCHASE -> {
+            PurchaseType.MEAL -> {
                 supportActionBar?.title = getString(R.string.add_purchase)
                 binding.btnAddPurchase.text = getString(R.string.add_purchase)
                 binding.rGroupPurchaseType.check(R.id.rButtonMealPurchase)
             }
-            PurchaseType.OTHER_PURCHASE -> {
+            PurchaseType.OTHER -> {
                 supportActionBar?.title = getString(R.string.other_purchase)
                 binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
                 binding.rGroupPurchaseType.check(R.id.rButtonOtherPurchase)
@@ -81,9 +81,9 @@ class AddPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener, A
 
         binding.rGroupPurchaseType.setOnCheckedChangeListener { radioGroup, i ->
             if(i== R.id.rButtonMealPurchase){
-                purchaseType = PurchaseType.PURCHASE
+                purchaseType = PurchaseType.MEAL
             }else{
-                purchaseType = PurchaseType.OTHER_PURCHASE
+                purchaseType = PurchaseType.OTHER
             }
         }
 
@@ -196,7 +196,7 @@ class AddPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener, A
 
                         if(!response.body()!!.error){
                             binding.edtDesc.text.clear()
-                            binding.edtPrice.text.clear()
+                            binding.edtPrice.clear()
                         }
                     }
                 }

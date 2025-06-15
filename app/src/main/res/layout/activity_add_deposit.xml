@@ -1,110 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.activities.AddDepositActivity">
 
-
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_margin="@dimen/_8sdp"
-        android:background="@color/PowderBlue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-            android:id="@+id/txtDate"
-            android:textColor="@color/White"
-            android:background="@color/colorPrimaryTransparent"
-            android:padding="@dimen/_8sdp"
-            android:textSize="@dimen/_14sdp"
-            android:gravity="center"
-            android:text="2022-03-06 Wednesday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <!-- Date Selector Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="?attr/colorOutline"
+            app:strokeWidth="1dp">
 
             <LinearLayout
-                android:padding="@dimen/_8sdp"
-                android:layout_margin="@dimen/_8sdp"
-                android:background="@drawable/primary_color_transparent_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/Black"
-                    android:textSize="@dimen/_12sdp"
-                    android:gravity="center"
-                    android:text="@string/initiate_member_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_margin="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/spinner_bg"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerMember"
+                <TextView
+                    android:id="@+id/txtDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp" />
-            </RelativeLayout>
+                    android:background="?attr/colorPrimaryContainer"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                    android:drawableTint="?attr/colorOnPrimaryContainer"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="2022-03-06 Wednesday"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnPrimaryContainer" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-
+        <!-- Member Selection Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    app:cardBackgroundColor="?attr/colorErrorContainer"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/initiate_member_first"
+                        android:textColor="?attr/colorOnErrorContainer"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:strokeWidth="1dp"
+                    app:cardElevation="0dp">
+
+                    <Spinner
+                        android:id="@+id/spinnerMember"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_12sdp" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Deposit Amount Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
 
                 <EditText
-                    android:textColor="@color/Black"
                     android:id="@+id/edtAmount"
-                    android:textSize="@dimen/_14sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:background="@drawable/editext_bg"
                     android:hint="@string/amount"
                     android:inputType="numberDecimal"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/edittext_meal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-
+                    android:padding="@dimen/_12sdp"
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAddPurchase"
-                android:layout_gravity="center"
-                android:textColor="@color/White"
-                android:paddingEnd="@dimen/_20sdp"
-                android:paddingStart="@dimen/_20sdp"
-                android:background="@drawable/button_primary"
-                android:layout_margin="@dimen/_8sdp"
-                android:text="@string/add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        <!-- Action Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:paddingHorizontal="@dimen/_24sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:text="@string/add" />
 
-        </LinearLayout>
-
+        <!-- Ad Container -->
         <com.logicline.mydining.utils.Ad.MyDiningNativeAd
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
-
-
-
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

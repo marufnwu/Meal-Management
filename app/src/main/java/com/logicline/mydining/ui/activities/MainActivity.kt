@@ -33,6 +33,7 @@ import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.ui.viewmodels.UserViewModel
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.Ext.MyExtensions.handle
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import com.maruf.jdialog.JDialog
@@ -68,6 +69,11 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         mainBottomSheet = MainBottomSheet.Companion.newInstance()
 
+        lifecycleScope.launchWhenStarted {
+            AppPrefs.monthIdFlow.collect {
+                shortToast("Selected: ${it}")
+            }
+        }
 
         lifecycleScope.launchWhenStarted {
             userViewModel.observedUserData.collect { state ->
@@ -108,8 +114,8 @@ class MainActivity : BaseActivity() {
 
 
                         val month = Constant.getCurrentMonthName()+" "+ Constant.getCurrentYear()
-                        binding.txtCurrentMonth.text = month
-
+//                        binding.txtCurrentMonth.text = month
+//
                         if (!userData?.messUser.hasAnyPermission(MessPermission.MEAL_ADD, MessPermission.MEAL_MANAGEMENT)){
                             binding.addMeal.visibility = View.GONE
                         }
@@ -137,6 +143,8 @@ class MainActivity : BaseActivity() {
                     }
                 )
             }
+
+
         }
 
 
@@ -344,11 +352,11 @@ class MainActivity : BaseActivity() {
         }
 
         binding.purchases.setOnClickListener {
-            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, PurchaseType.PURCHASE.name))
+            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, PurchaseType.MEAL.name))
         }
 
         binding.otherCost.setOnClickListener {
-            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, PurchaseType.OTHER_PURCHASE.name))
+            startActivity(Intent(this, PurchasesActivity::class.java).putExtra(Constant.PURCHASE_TYPE, PurchaseType.OTHER.name))
         }
 
         binding.addMeal.setOnClickListener {

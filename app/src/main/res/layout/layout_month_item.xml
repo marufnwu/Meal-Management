@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="March 2023"
-        android:textColor="@color/themeColor"
+        android:textColor="?attr/colorPrimary"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold" />
 

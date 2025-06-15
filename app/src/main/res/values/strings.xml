@@ -144,6 +144,23 @@
     <string name="empty_state_message">"Not available "</string>
     <string name="error_state_message">Something went wrong!</string>
     <string name="info_state_message">Nothing found!</string>
+    <string name="balance">Balance</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="financial_overview">Financial Overview</string>
+    <string name="meal_summary">Meal Summary</string>
+    <string name="cost_summary">Cost Summary</string>
+    <string name="users_summary">Users Summary</string>
+    <string name="month_sumamry">Month Summary</string>
+    <string name="share_summary">Share Summary</string>
 
 
+    <string name="month_name_placeholder">Lulu</string>
+    <string name="month_type_automatic">Automatic</string>
+    <string name="month_status_active">Active</string>
+    <string name="month_status_inactive">Inactive</string>
+    <string name="month_date_range_placeholder">May 1 - May 31, 2025</string>
+    <string name="content_desc_type_icon">Type Icon</string>
+    <string name="content_desc_calendar_icon">Calendar Icon</string>
+    <string name="content_desc_selection_icon">Selection Icon</string>
 </resources>

@@ -47,15 +47,19 @@ class UserInitiateAdapter(val context: Context, val users: MutableList<MessUser>
             binding.txtName.text = messUser.user?.name
             if(type==Type.INITIATE){
                 if(messUser.status!="active"){
-                    binding.action.setImageResource(R.drawable.cross)
+                    binding.action.setImageResource(R.drawable.close_24px)
+                    binding.actionContainer.setCardBackgroundColor(context.getColor(R.color.error))
                 }else{
-                    binding.action.setImageResource(R.drawable.tick)
+                    binding.action.setImageResource(R.drawable.check_24px)
                 }
 
-//                binding.action.setImageResource(R.drawable.tick)
+                binding.action.setImageResource(R.drawable.check_24px)
+                binding.actionContainer.setCardBackgroundColor(context.getColor(R.color.md_theme_primaryContainer))
+
 
             }else{
-                binding.action.setImageResource(R.drawable.plus)
+                binding.actionContainer.setCardBackgroundColor(context.getColor(R.color.md_theme_primaryContainer))
+                binding.action.setImageResource(R.drawable.baseline_add_circle_24)
                 binding.action.setOnClickListener {
                     onActionClick?.onClick(messUser)
                 }

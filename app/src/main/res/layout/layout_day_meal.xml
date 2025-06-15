@@ -1,61 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/_8sdp"
-    app:cardCornerRadius="@dimen/_6sdp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_1sdp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header: date and day with a more modern, minimal look -->
         <LinearLayout
-            android:background="@color/colorPrimaryTransparent"
-            android:ellipsize="end"
-            android:padding="@dimen/_5sdp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="?attr/colorSurfaceContainer"
+            android:clipToPadding="false"
+            android:elevation="0dp">
+
             <TextView
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:id="@+id/txtDate"
-                android:layout_gravity="center"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="@color/AliceBlue"
-                android:text="07-03-2022"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="07-03-2022"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginEnd="12dp"/>
 
             <TextView
                 android:id="@+id/txtDay"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="@color/AliceBlue"
-                android:text="Monday"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Monday"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:alpha="0.85"/>
 
         </LinearLayout>
 
+        <!-- Content: member meal info and meals list -->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/transparent">
 
-            <include layout="@layout/layout_member_meal"/>
-            <View
-                android:background="@color/DarkSlateGray"
+            <LinearLayout
+                android:padding="@dimen/_4sdp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"/>
+                android:layout_height="wrap_content">
 
+                <!-- Name Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:padding="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="@string/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Breakfast Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/morning"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="@string/breakfast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Lunch Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lunch"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="@string/lunch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <!-- Dinner Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dinner"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="@string/dinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Action Column -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/action"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="Action"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!-- Meals list for the day -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyMealList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"/>
         </LinearLayout>
     </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -7,7 +7,7 @@
     tools:context=".ui.activities.MealRequestActivity">
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        app:backgroundTint="@color/themeColor"
+        app:backgroundTint="?attr/colorPrimary"
         android:layout_margin="@dimen/_8sdp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/menu_home"
+        android:title="Food" />
+    <item
+        android:id="@+id/nav_mess"
+        android:icon="@drawable/menu_mess"
+        android:title="Mess" />
+    <item
+        android:id="@+id/nav_month"
+        android:icon="@drawable/menu_month"
+        android:title="Month" />
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/man"
+        android:title="Account" />
+</menu>

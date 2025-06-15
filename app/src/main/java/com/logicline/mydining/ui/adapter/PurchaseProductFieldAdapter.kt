@@ -8,21 +8,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.logicline.mydining.databinding.LayoutProductFieldItemBinding
 import com.logicline.mydining.data.models.PurchaseProduct
+import com.logicline.mydining.data.models.PurchaseRequest
 
-class PurchaseProductFieldAdapter(val context: Context, val purchaseProducts : MutableList<PurchaseProduct>) : RecyclerView.Adapter<PurchaseProductFieldAdapter.MyViewHolder>() {
+class PurchaseProductFieldAdapter(
+    val context: Context,
+    val purchaseProducts: MutableList<PurchaseRequest.ProductItem>
+) : RecyclerView.Adapter<PurchaseProductFieldAdapter.MyViewHolder>() {
 
 
-    interface FieldChange{
-        fun onNameChange(name:String, position: Int)
-        fun onPriceChange(price:Float, position: Int)
+    interface FieldChange {
+        fun onNameChange(name: String, position: Int)
+        fun onPriceChange(price: Float, position: Int)
     }
 
-    public var fieldChange : FieldChange? = null
-
+    public var fieldChange: FieldChange? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutProductFieldItemBinding.inflate(LayoutInflater.from(context), parent, false))
+        return MyViewHolder(
+            LayoutProductFieldItemBinding.inflate(
+                LayoutInflater.from(context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -33,26 +42,25 @@ class PurchaseProductFieldAdapter(val context: Context, val purchaseProducts : M
         return purchaseProducts.size
     }
 
-    private fun addBlankField(){
-        purchaseProducts.add(PurchaseProduct())
+    private fun addBlankField() {
+        purchaseProducts.add(PurchaseRequest.ProductItem())
         notifyDataSetChanged()
     }
 
 
-    inner class MyViewHolder(val binding: LayoutProductFieldItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(purchaseProduct: PurchaseProduct, position: Int){
+    inner class MyViewHolder(val binding: LayoutProductFieldItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(purchaseProduct: PurchaseRequest.ProductItem, position: Int) {
 
             Log.d("fff", Gson().toJson(purchaseProduct))
 
-            if(!purchaseProduct.name.isNullOrEmpty()){
+            if (!purchaseProduct.name.isNullOrEmpty()) {
                 binding.txtName.setText(purchaseProduct.name)
             }
 
-            if(purchaseProduct.price!=null){
-                binding.txtPrice.setText(purchaseProduct.price.toString())
-            }
+            binding.txtPrice.setText(purchaseProduct.unitPrice.toString())
 
-            binding.txtSl.setText((adapterPosition+1).toString())
+            binding.txtSl.setText((adapterPosition + 1).toString())
 
         }
     }

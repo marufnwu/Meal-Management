@@ -194,7 +194,6 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
 
 
 
-        binding.txtMonthYear.text = Constant.getCurrentMonthName()+" "+Constant.getCurrentYear()
         binding.txtDate.text = Constant.getCurrentDate()+" "+Constant.getCurrentDayName()
         binding.spinnerMember.onItemSelectedListener = this
 
@@ -226,7 +225,6 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
 
             selectedDate = Constant.dateFormat(date)
             binding.txtDate.text = selectedDate+" "+Constant.getDayNameFromDate(selectedDate!!)
-            binding.txtMonthYear.text = Constant.getMonthName(date)+" "+Constant.getYear(date)
             getUsersList()
 
         }, mYear, mMonth, mDay)
@@ -320,7 +318,6 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
 
             selectedDate = Constant.dateFormat(date)
             binding.txtDate.text = selectedDate+" "+Constant.getDayNameFromDate(selectedDate!!)
-            binding.txtMonthYear.text = Constant.getMonthName(date)+" "+Constant.getYear(date)
             getUsersList()
 
         }, mYear, mMonth, mDay)

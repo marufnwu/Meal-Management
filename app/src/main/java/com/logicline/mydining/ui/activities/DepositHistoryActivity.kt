@@ -263,13 +263,12 @@ class DepositHistoryActivity : BaseActivity() {
 
                             res.data?.let {
                                 if(it.deposits.isNotEmpty()){
-                                    binding.layoutParent.visibility = View.VISIBLE
                                     deposits.clear()
                                     deposits.addAll(res.data!!.deposits)
                                     adapter.notifyDataSetChanged()
                                 }
 
-                                binding.txtTotal.text  = String.format(Locale.getDefault(), it.totalAmount.toString())
+//                                binding.txtTotal.text  = String.format(Locale.getDefault(), it.totalAmount.toString())
 
                             }
 

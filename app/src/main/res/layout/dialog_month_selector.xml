@@ -3,108 +3,150 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/headerLayout"
+    <RelativeLayout
+        android:background="?attr/colorSurface"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Month"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/bg_searchbox"
-            android:id="@+id/searchLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/titleText">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_add"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/searchBox"
-                android:layout_width="0dp"
+            <!-- Header with dismiss icon -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="?attr/colorSurfaceVariant"
+                android:id="@+id/headerLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:drawableStart="@drawable/baseline_search_24"
-                android:drawablePadding="8dp"
-                android:hint="Search months..."
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:padding="12dp"
-                app:layout_constraintEnd_toStartOf="@+id/clearSearchBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:paddingStart="@dimen/_16sdp"
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_12sdp"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/clearSearchBtn"
-                android:layout_width="48dp"
-                android:layout_height="0dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="12dp"
-                android:src="@drawable/ic_clear_black_24dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/searchBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/searchBox"
-                tools:visibility="visible" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/titleText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Select Month"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/filterContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/searchLayout">
 
-            <!-- Custom filter elements can be added here -->
+                <!-- Modern search box with rounded corners and elevation -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/searchLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:layout_constraintTop_toBottomOf="@id/titleText"
+                    app:strokeWidth="0dp">
 
-        </FrameLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_searchbox">
 
+                        <EditText
+                            android:id="@+id/searchBox"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:drawableStart="@drawable/baseline_search_24"
+                            android:drawablePadding="12dp"
+                            android:hint="Search months..."
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
+                            android:padding="16dp"
+                            app:layout_constraintEnd_toStartOf="@+id/clearSearchBtn"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/clearSearchBtn"
+                            android:layout_width="48dp"
+                            android:layout_height="0dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="12dp"
+                            android:src="@drawable/ic_clear_black_24dp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/searchBox"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/searchBox"
+                            tools:visibility="visible" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <FrameLayout
+                    android:id="@+id/filterContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/searchLayout">
+                    <!-- Custom filter elements can be added here -->
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Content Section with divider -->
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <!-- RecyclerView with improved spacing -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/monthRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_month" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/colorPrimary"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/emptyState"
+                layout="@layout/layout_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Modern floating action button style -->
         <com.google.android.material.button.MaterialButton
-            app:icon="@drawable/baseline_add_circle_24"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/btn_add"
-            android:text="Add New"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-            app:layout_constraintTop_toBottomOf="@id/filterContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/monthRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_month" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/emptyState"
-            layout="@layout/layout_empty_state"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-    </FrameLayout>
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:elevation="4dp"
+            android:letterSpacing="0"
+            android:text="Add New Month"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/baseline_add_circle_24"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconSize="24dp" />
+    </RelativeLayout>
 </merge>

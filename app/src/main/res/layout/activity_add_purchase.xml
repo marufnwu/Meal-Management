@@ -1,186 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.activities.AddPurchaseActivity">
 
-
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_margin="@dimen/_8sdp"
-        android:background="@color/PowderBlue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-            android:id="@+id/txtDate"
-            android:textColor="@color/White"
-            android:background="@color/colorPrimaryTransparent"
-            android:padding="@dimen/_8sdp"
-            android:textSize="@dimen/_14sdp"
-            android:gravity="center"
-            android:text="2022-03-06 Wednesday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
 
-        <LinearLayout
-            android:orientation="vertical"
+
+        <!-- Date Selector Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:strokeColor="?attr/colorOutline"
+            app:strokeWidth="1dp">
 
             <LinearLayout
-                android:padding="@dimen/_8sdp"
-                android:layout_margin="@dimen/_8sdp"
-                android:background="@drawable/primary_color_transparent_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/Black"
-                    android:textSize="@dimen/_12sdp"
-                    android:gravity="center"
-                    android:text="@string/initiate_member_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_margin="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/spinner_bg"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/spinnerMember"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp" />
-            </RelativeLayout>
-
-
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:textColor="@color/Black"
-                    android:id="@+id/edtPrice"
-                    android:textSize="@dimen/_14sdp"
-                    android:hint="@string/price"
-                    android:inputType="numberDecimal"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/edittext_meal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <EditText
-                    android:textColor="@color/Black"
-                    android:id="@+id/edtDesc"
-                    android:minEms="@integer/material_motion_duration_medium_2"
-                    android:minLines="3"
-                    android:textSize="@dimen/_14sdp"
-                    android:hint="@string/product_description"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/edittext_meal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:background="@color/Bisque"
-                android:layout_margin="@dimen/_8sdp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_13sdp"
-                    android:layout_margin="@dimen/_4sdp"
-                    android:text="@string/purchase_type"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimaryContainer"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                    android:drawableTint="?attr/colorOnPrimaryContainer"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="2022-03-06 Wednesday"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnPrimaryContainer" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Member Selection Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    app:cardBackgroundColor="?attr/colorErrorContainer"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/initiate_member_first"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="?attr/colorOnErrorContainer" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.logicline.mydining.ui.custom.MaterialIconField
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="0dp"
+                    app:fieldIcon="@drawable/person_24px"
+                    app:strokeWidth="1dp">
+
+                    <Spinner
+                        android:id="@+id/spinnerMember"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_12sdp" />
+                </com.logicline.mydining.ui.custom.MaterialIconField>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Purchase Details Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <com.logicline.mydining.ui.custom.MaterialIconEditTextField
+                    app:fieldIcon="@drawable/paid_24px"
+                    android:id="@+id/edtPrice"
+                    android:hint="@string/amount"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <RadioGroup
-                    android:gravity="center"
-                    android:id="@+id/rGroupPurchaseType"
-                    android:orientation="horizontal"
+
+                <EditText
+                    android:id="@+id/edtDesc"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editext_bg"
+                    android:gravity="top|start"
+                    android:hint="Description"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Purchase Type Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Elevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_16sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:text="@string/purchase_type"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+
+                <RadioGroup
+                    android:id="@+id/rGroupPurchaseType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
                     <RadioButton
-                        android:textStyle="bold"
-                        android:layout_margin="@dimen/_4sdp"
                         android:id="@+id/rButtonMealPurchase"
-                        android:text="@string/meal_purchase"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:text="@string/meal_purchase"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textColor="?attr/colorOnSecondaryContainer" />
 
                     <RadioButton
-                        android:textStyle="bold"
-                        android:layout_margin="@dimen/_4sdp"
                         android:id="@+id/rButtonOtherPurchase"
-                        android:text="@string/other_purchase"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-
+                        android:layout_height="wrap_content"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:text="@string/other_purchase"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textColor="?attr/colorOnSecondaryContainer" />
                 </RadioGroup>
 
+                <CheckBox
+                    android:id="@+id/checkboxDeposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:buttonTint="?attr/colorPrimary"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="gone" />
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
+        <!-- Action Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddPurchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:paddingHorizontal="@dimen/_24sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:text="@string/add" />
 
-
-
-            <CheckBox
-                android:visibility="gone"
-                android:id="@+id/checkboxDeposit"
-                android:layout_margin="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:background="@color/Bisque"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAddPurchase"
-                android:layout_gravity="center"
-                android:textColor="@color/White"
-                android:paddingEnd="@dimen/_20sdp"
-                android:paddingStart="@dimen/_20sdp"
-                android:background="@drawable/button_primary"
-                android:layout_margin="@dimen/_8sdp"
-                android:text="@string/add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
+        <!-- Ad Container -->
         <com.logicline.mydining.utils.Ad.MyDiningNativeAd
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
-
-
-
-
-
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

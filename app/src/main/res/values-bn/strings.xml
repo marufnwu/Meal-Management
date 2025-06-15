@@ -125,5 +125,12 @@
     <string name="mess_status">মেসের অবস্থা</string>
     <string name="mess_info">মেসের তথ্য</string>
     <string name="contact_us_text">যেকোনো সমস্যার জন্য আমাদের সাথে যোগাযোগ করুন</string>
+    <string name="balance">Balance</string>
+    <string name="financial_overview">Financial Overview</string>
+    <string name="meal_summary">Meal Summary</string>
+    <string name="cost_summary">Cost Summary</string>
+    <string name="users_summary">Users Summary</string>
+    <string name="month_sumamry">Month Summary</string>
+    <string name="share_summary">Share Summary</string>
 
 </resources>

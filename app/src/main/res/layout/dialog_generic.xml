@@ -28,7 +28,7 @@
                 android:layout_centerHorizontal="true"
                 app:cardCornerRadius="@dimen/_28sdp"
                 app:cardElevation="@dimen/_4sdp"
-                app:cardBackgroundColor="@color/colorPrimary">
+                app:cardBackgroundColor="?attr/colorPrimary">
 
                 <ImageView
                     android:id="@+id/imgIcon"
@@ -103,9 +103,9 @@
                 android:text="Cancel"
                 android:textAllCaps="false"
                 android:textSize="@dimen/_14sdp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 app:cornerRadius="@dimen/_24sdp"
-                app:strokeColor="@color/colorPrimary"
+                app:strokeColor="?attr/colorPrimary"
                 app:strokeWidth="@dimen/_1sdp" />
 
             <com.google.android.material.button.MaterialButton
@@ -118,7 +118,7 @@
                 android:textAllCaps="false"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="?attr/colorPrimary"
                 app:cornerRadius="@dimen/_24sdp" />
         </LinearLayout>
     </LinearLayout>

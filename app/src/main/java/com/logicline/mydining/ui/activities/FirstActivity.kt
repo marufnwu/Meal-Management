@@ -47,6 +47,8 @@ class FirstActivity : AppCompatActivity() {
         checkReferrerClient()
         appUpdate = AppUpdateManagerFactory.create(this)
 
+
+
         listenFLow()
     }
 
@@ -126,7 +128,9 @@ class FirstActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        checkUpdate()
+        startActivity(Intent(this@FirstActivity, DemoActivity::class.java))
+        finish()
+//        checkUpdate()
     }
 
     private fun checkUpdate() {
@@ -217,7 +221,8 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun gotoMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
+//        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, DemoActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         finish()

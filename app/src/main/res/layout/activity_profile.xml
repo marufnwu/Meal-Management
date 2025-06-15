@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/profile"
-            android:textColor="@color/themeColor"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold" />
 

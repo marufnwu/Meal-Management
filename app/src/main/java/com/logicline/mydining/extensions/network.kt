@@ -38,6 +38,7 @@ suspend fun <T> safeApiCall(apiCall: suspend () -> Response<ServerResponse<T>>):
             )
         }
     } catch (e: Exception) {
+        e.printStackTrace()
         DataState.Error(
             message = e.localizedMessage ?: "Unknown error occurred"
         )

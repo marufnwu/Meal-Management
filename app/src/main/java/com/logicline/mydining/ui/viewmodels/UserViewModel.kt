@@ -8,20 +8,16 @@ import com.logicline.mydining.data.DataState
 import com.logicline.mydining.data.local.relations.toDomainModel
 import com.logicline.mydining.data.models.MessUser
 import com.logicline.mydining.data.models.UserData
+import com.logicline.mydining.data.models.UserSummary
 import com.logicline.mydining.data.models.toRelation
 import com.logicline.mydining.data.repository.Repository
 import com.logicline.mydining.extensions.safeApiCall
 import com.logicline.mydining.utils.AppPrefs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,21 +35,16 @@ class UserViewModel @Inject constructor(
     private val _loginState = MutableStateFlow<DataState<UserData?>>(DataState.Idle())
     val loginState: StateFlow<DataState<UserData?>> = _loginState.asStateFlow()
 
+    private val _userMinimalSummaryState = MutableStateFlow<DataState<UserSummary?>>(DataState.Idle())
+    val userMinimalSummaryState: StateFlow<DataState<UserSummary?>> = _userMinimalSummaryState.asStateFlow()
 
-    val observedUserData: StateFlow<DataState<UserData?>> = flow {
-        emit(DataState.Loading())
-        try {
-            repository.observedUserData().collect { userWithRelations ->
-                emit(DataState.Success(userWithRelations?.toDomainModel()))
-            }
-        } catch (e: Exception) {
-            emit(DataState.Exception(exception = e, message = e.localizedMessage))
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(0),
-        initialValue = DataState.Idle()
-    )
+
+    val observedUserData = repository.observedUserData()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(0),
+            initialValue = DataState.Idle()
+        )
 
 
     init {
@@ -121,8 +112,6 @@ class UserViewModel @Inject constructor(
     }
 
     suspend fun saveUserDataLocally(userData: UserData?) {
-        Log.d("insertMessUserWithRelations: view model saveMessUserLocally", Gson().toJson(userData))
-
         userData?.let {
             AppPrefs.accessToken = userData.token
             AppPrefs.user = userData.user
@@ -131,4 +120,14 @@ class UserViewModel @Inject constructor(
         }
         repository.saveUserDataLocally(userData?.toRelation())
     }
+
+    fun loadUserMinimalMonthSummary() {
+        viewModelScope.launch {
+            _userMinimalSummaryState.value = DataState.Loading()
+            _userMinimalSummaryState.value = repository.userMinimalMonthSummary()
+        }
+    }
+
+
+
 }

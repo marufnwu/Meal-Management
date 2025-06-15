@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
-                        app:cardBackgroundColor="@color/themeColor"
+                        app:cardBackgroundColor="?attr/colorPrimary"
                         android:elevation="@dimen/_8sdp"
                         app:cardCornerRadius="@dimen/_8sdp"
                         android:layout_width="wrap_content"

@@ -18,6 +18,9 @@ class MonthViewModel(
     private val _state = MutableStateFlow<DataState<List<Month>>>(DataState.Loading())
     val state: StateFlow<DataState<List<Month>>> = _state.asStateFlow()
 
+    private val _createMonthState = MutableStateFlow<DataState<Month?>>(DataState.Idle())
+    val createMonthState: StateFlow<DataState<Month?>> = _createMonthState.asStateFlow()
+
     init {
         fetchMonths()
     }
@@ -31,6 +34,34 @@ class MonthViewModel(
                 if(months.isNullOrEmpty()) months!!.toList() else emptyList()
             }
 
+        }
+    }
+
+    fun createMonth(
+        name: String?,
+        type: String,
+        month: Int?,
+        year: Int?,
+        startAt: String?,
+        forceCloseOther: Boolean
+    ) {
+        viewModelScope.launch {
+            _createMonthState.value = DataState.Loading()
+            _createMonthState.value = safeApiCall {
+                monthRepository.createMonth(
+                    name = name,
+                    type = type,
+                    month = month,
+                    year = year,
+                    startAt = startAt,
+                    forceCloseOther = forceCloseOther
+                )
+            }
+
+            // If creation was successful, refresh the months list
+            if (_createMonthState.value is DataState.Success) {
+                fetchMonths()
+            }
         }
     }
 

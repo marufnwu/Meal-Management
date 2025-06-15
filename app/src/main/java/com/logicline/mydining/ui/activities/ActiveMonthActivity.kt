@@ -49,13 +49,14 @@ class ActiveMonthActivity : BaseActivity() {
     }
 
     private fun initViews() {
-       binding.monthPicker.initialize(MonthRepository((application as MyApplication).myApi)){month->
+       binding.monthPicker.initialize{month->
            shortToast("Selected: ${month.name}")
            AppPrefs.monthId = month.id
        }
 
        lifecycleScope.launchWhenStarted {
            AppPrefs.monthIdFlow.collect {
+               shortToast("Selected: ${it}")
                 binding.monthPicker.setSelectedMonthId(it)
            }
        }

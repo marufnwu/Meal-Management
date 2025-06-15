@@ -44,7 +44,6 @@ class InitiateMemberActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        binding.txtMonthYear.text = Constant.getCurrentMonthName()+" "+ Constant.getCurrentYear()
 
         binding.recyInitiate.layoutManager = LinearLayoutManager(this)
         binding.recyInitiate.setHasFixedSize(true)

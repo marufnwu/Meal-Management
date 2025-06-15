@@ -1,238 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:fillViewport="true"
     android:scrollbars="none"
     tools:context=".ui.activities.AddMealActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:padding="@dimen/_10sdp"
-            android:background="@drawable/bottom_curve"
-            android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_12sdp">
+
+        <!-- Main Content Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/txtMonthYear"
-                android:layout_gravity="center"
-                android:fontFamily="@font/hubballi"
-                android:textSize="@dimen/_15sdp"
-                android:textColor="@color/LightBlue"
-                android:text="March 2022"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
-                android:layout_marginStart="@dimen/_50sdp"
-                android:background="@drawable/curve_line_white"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_3sdp"/>
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_6sdp"
+            app:cardElevation="@dimen/_2sdp">
 
             <LinearLayout
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:weightSum="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_margin="@dimen/_8sdp"
-            android:background="@color/PowderBlue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txtDate"
-                android:textColor="@color/White"
-                android:background="@color/colorPrimaryTransparent"
-                android:padding="@dimen/_8sdp"
-                android:textSize="@dimen/_14sdp"
-                android:gravity="center"
-                android:text="2022-03-06 Wednesday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:padding="@dimen/_8sdp"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/primary_color_transparent_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/txtInstruction"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_12sdp"
-                        android:gravity="center"
-                        android:text="@string/initiate_member_first"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_margin="@dimen/_5sdp"
-                    android:padding="@dimen/_3sdp"
+                <!-- Header Date Section -->
+                <TextView
+                    android:id="@+id/txtDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_bg"
-                    android:orientation="horizontal">
+                    android:background="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="2022-03-06 Wednesday"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="@color/White" />
 
-                    <Spinner
-                        android:id="@+id/spinnerMember"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorSurfaceVariant"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_16sdp">
+
+                    <!-- Instructions Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        app:cardBackgroundColor="?attr/colorErrorContainer"
+                        app:cardCornerRadius="@dimen/_12sdp"
+                        app:cardElevation="0dp">
+
+                        <TextView
+                            android:id="@+id/txtInstruction"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="@dimen/_12sdp"
+                            android:text="@string/initiate_member_first"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textColor="?attr/colorOnErrorContainer" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+                        app:cardCornerRadius="@dimen/_12sdp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="?attr/colorOutlineVariant">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="@dimen/_24sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:layout_margin="@dimen/_8sdp"
+                                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                                app:cardCornerRadius="@dimen/_8sdp"
+                                app:cardElevation="0dp">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_16sdp"
+                                    android:layout_height="@dimen/_16sdp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/wc_24px"
+                                    app:tint="?attr/colorOnPrimary" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <Spinner
+                                android:id="@+id/spinnerMember"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/_6sdp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_16sdp"
+                        android:weightSum="3">
+
+                        <!-- Breakfast Section -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/DarkSeaGreen"
+                            app:cardCornerRadius="@dimen/_12sdp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_8sdp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_8sdp"
+                                    android:text="@string/breakfast"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                    android:textColor="@color/White" />
+
+                                <EditText
+                                    android:id="@+id/edtBreakfast"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/editext_bg"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:padding="@dimen/_8sdp"
+                                    android:text="0"
+                                    android:textColor="@color/Black" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Lunch Section -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/LightSalmon"
+                            app:cardCornerRadius="@dimen/_12sdp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_8sdp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_8sdp"
+                                    android:text="@string/lunch"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                    android:textColor="@color/White" />
+
+                                <EditText
+                                    android:id="@+id/edtLunch"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/editext_bg"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:padding="@dimen/_8sdp"
+                                    android:text="0"
+                                    android:textColor="@color/Black" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Dinner Section -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_4sdp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/LightSeaGreen"
+                            app:cardCornerRadius="@dimen/_12sdp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_8sdp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_8sdp"
+                                    android:text="@string/dinner"
+                                    android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                                    android:textColor="@color/White" />
+
+                                <EditText
+                                    android:id="@+id/edtDinner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/editext_bg"
+                                    android:gravity="center"
+                                    android:inputType="numberDecimal"
+                                    android:padding="@dimen/_8sdp"
+                                    android:text="0"
+                                    android:textColor="@color/Black" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <!-- Add Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAddMeal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_8sdp" />
-                </RelativeLayout>
-
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:weightSum="3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-
-                        <LinearLayout
-                            android:padding="@dimen/_4sdp"
-                            android:background="@color/DarkSeaGreen"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:textColor="@color/White"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:textSize="@dimen/_14sdp"
-                                android:text="@string/breakfast"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <EditText
-                                android:textColor="@color/Black"
-                                android:id="@+id/edtBreakfast"
-                                android:inputType="numberDecimal"
-                                android:background="@drawable/edittext_meal"
-                                android:gravity="center"
-                                android:text="0"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:padding="@dimen/_4sdp"
-                            android:background="@color/LightSalmon"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:textColor="@color/White"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:textSize="@dimen/_14sdp"
-                                android:text="@string/lunch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <EditText
-                                android:textColor="@color/Black"
-                                android:id="@+id/edtLunch"
-                                android:inputType="numberDecimal"
-                                android:background="@drawable/edittext_meal"
-                                android:gravity="center"
-                                android:text="0"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:padding="@dimen/_4sdp"
-                            android:background="@color/LightSeaGreen"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:textColor="@color/White"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:textSize="@dimen/_14sdp"
-                                android:text="@string/dinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <EditText
-                                android:textColor="@color/Black"
-                                android:id="@+id/edtDinner"
-                                android:inputType="numberDecimal"
-                                android:background="@drawable/edittext_meal"
-                                android:gravity="center"
-                                android:text="0"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
+                        android:paddingHorizontal="@dimen/_24sdp"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:text="@string/add_meal"
+                        android:textSize="@dimen/_14sdp"
+                        app:cornerRadius="@dimen/_24sdp" />
                 </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnAddMeal"
-                    android:layout_gravity="center"
-                    android:textColor="@color/White"
-                    android:paddingEnd="@dimen/_20sdp"
-                    android:paddingStart="@dimen/_20sdp"
-                    android:background="@drawable/button_primary"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:text="@string/add_meal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
             </LinearLayout>
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-
+        <!-- Ad Container -->
         <com.logicline.mydining.utils.Ad.MyDiningNativeAd
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_20sdp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp" />
     </LinearLayout>
-
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -9,6 +9,7 @@ import com.logicline.mydining.databinding.LayoutDepositHistoryItemBinding
 import com.logicline.mydining.data.enums.MessPermission
 import com.logicline.mydining.data.enums.MessPermission.Companion.hasAnyPermission
 import com.logicline.mydining.data.models.Deposit
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
@@ -26,13 +27,13 @@ class DepositHistoryAdapter(val context: Context, val depositHistoryList: Mutabl
             binding.txtDate.text = item.date
             binding.txtAmount.text = item.amount.toString()
 
-            if(!LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.DEPOSIT_MANAGEMENT)){
-                binding.imgEdit.setImageResource(R.drawable.cross)
+            if(!AppPrefs.messUser.hasAnyPermission(MessPermission.DEPOSIT_MANAGEMENT)){
+                binding.imgEdit.isEnabled = false
             }
 
             binding.imgEdit.setOnClickListener {
 
-                if(LocalDB.getUserData()?.messUser.hasAnyPermission(MessPermission.DEPOSIT_MANAGEMENT)){
+                if(AppPrefs.messUser.hasAnyPermission(MessPermission.DEPOSIT_MANAGEMENT)){
                     onItemAction?.onEdit(item, absoluteAdapterPosition)
                 }else{
                     context.shortToast("You don't have access to edit or delete any data")

@@ -75,14 +75,12 @@ class MessInfoActivity : BaseActivity() {
     }
 
     private fun initViews() {
-        binding.statusView.setPositiveButton(listener = object : StatusView.OnPositiveButtonClickListener{
-            override fun onPositiveButtonClick() {
-                showCreateMessDialog()
-            }
-
-
-
-        })
+        binding.statusView.setPositiveButton(
+            text = "Create Mess",
+            isVisible = true
+        ) {
+            showCreateMessDialog()
+        }
 
         binding.btnRefresh.setOnClickListener {
             viewModel.syncCurrentMessUser()

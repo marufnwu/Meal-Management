@@ -1,8 +1,8 @@
 package com.logicline.mydining.data.enums
 
 enum class PurchaseType(val value: String) {
-    PURCHASE("purchase"),
-    OTHER_PURCHASE("other-cost");
+    MEAL("meal"),
+    OTHER("other");
 
     companion object {
         fun fromValue(value: String): PurchaseType? {

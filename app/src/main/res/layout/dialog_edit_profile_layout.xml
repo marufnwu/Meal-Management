@@ -20,7 +20,7 @@
                 android:layout_margin="@dimen/_10sdp"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:textColor="@color/themeColor"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/_15sdp"
                 android:text="@string/edit_profile"
                 android:layout_width="wrap_content"
@@ -207,7 +207,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUpdate"
                     android:textColor="@color/White"
-                    android:background="@color/themeColor"
+                    android:background="?attr/colorPrimary"
                     android:text="@string/update"
                     android:layout_margin="@dimen/_8sdp"
                     android:layout_weight="1"

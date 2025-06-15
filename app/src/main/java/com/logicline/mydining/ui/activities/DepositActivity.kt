@@ -20,6 +20,7 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
@@ -29,10 +30,10 @@ import retrofit2.Response
 
 class DepositActivity : BaseActivity() {
     lateinit var myFullScreenAd: MyFullScreenAd
-    lateinit var binding : ActivityDepositBinding
+    lateinit var binding: ActivityDepositBinding
 
-    private var month : String = Constant.getCurrentMonthNumber()
-    private var year : String = Constant.getCurrentYear()
+    private var month: String = Constant.getCurrentMonthNumber()
+    private var year: String = Constant.getCurrentYear()
 
     lateinit var loadingDialog: LoadingDialog
 
@@ -51,7 +52,7 @@ class DepositActivity : BaseActivity() {
 
         loadingDialog = LoadingDialog(this)
 
-        if(!LocalDB.getUserData()?.messUser?.hasAnyPermission(
+        if (!AppPrefs.messUser?.hasAnyPermission(
                 MessPermission.DEPOSIT_MANAGEMENT, MessPermission.DEPOSIT_ADD
             )!!
         ) binding.btnAddDeposit.visibility = View.GONE
@@ -77,17 +78,7 @@ class DepositActivity : BaseActivity() {
             startActivity(Intent(this, AddDepositActivity::class.java))
         }
 
-        binding.monthPicker
-            .builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1  ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
-            override fun date(date: Int, month: Int, year: Int) {
-                setDate(year.toString(), month.toString())
-            }
 
-            override fun dateString(date: String) {
-
-            }
-
-        }
 
 
     }
@@ -103,24 +94,28 @@ class DepositActivity : BaseActivity() {
         (application as MyApplication)
             .myApi
             .getDeposit()
-            .enqueue(object: Callback<ServerResponse<DepositsSumResponse>> {
+            .enqueue(object : Callback<ServerResponse<DepositsSumResponse>> {
                 override fun onResponse(
                     call: Call<ServerResponse<DepositsSumResponse>>,
                     response: Response<ServerResponse<DepositsSumResponse>>
                 ) {
                     loadingDialog.hide()
-                    if(response.isSuccessful && response.body()!=null){
+                    if (response.isSuccessful && response.body() != null) {
                         val depositsResponse = response.body()!!
-                        if(!depositsResponse.error){
-                            depositsResponse.data.let { data->
-                                binding.txtPageTitle.text = "Total Deposit ".plus(data?.totalDeposit)
+                        if (!depositsResponse.error) {
+                            depositsResponse.data.let { data ->
+                                binding.txtPageTitle.text =
+                                    "Total Deposit ".plus(data?.totalDeposit)
                                 setDepositsToRecyclerView(data?.deposits!!)
                             }
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<ServerResponse<DepositsSumResponse>>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<ServerResponse<DepositsSumResponse>>,
+                    t: Throwable
+                ) {
                     loadingDialog.hide()
                     shortToast(t.message)
                 }
@@ -132,7 +127,7 @@ class DepositActivity : BaseActivity() {
         val adpter = DepositListAdapter(this, listOfDeposit.toMutableList())
 
         adpter.onItemClickListener = (object : DepositListAdapter.OnItemClickListener {
-            override fun onClick(depositSum : DepositSum, ) {
+            override fun onClick(depositSum: DepositSum) {
                 showUserDepositHistory(depositSum)
             }
 
@@ -141,14 +136,16 @@ class DepositActivity : BaseActivity() {
     }
 
     private fun showUserDepositHistory(depositSum: DepositSum) {
-        startActivity(Intent(this, DepositHistoryActivity::class.java)
-            .putExtra(Constant.MESS_USER_ID, depositSum.messUserId)
-            .putExtra(Constant.HISTORY_TYPE, DepositHistoryActivity.Type.SINGLE_USER.name))
+        startActivity(
+            Intent(this, DepositHistoryActivity::class.java)
+                .putExtra(Constant.MESS_USER_ID, depositSum.messUserId)
+                .putExtra(Constant.HISTORY_TYPE, DepositHistoryActivity.Type.SINGLE_USER.name)
+        )
     }
 
 
     @SuppressLint("SetTextI18n")
-    private fun setDate(year:String, month:String) {
+    private fun setDate(year: String, month: String) {
         this.year = year
         this.month = month
         getDeposits()
@@ -161,7 +158,7 @@ class DepositActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId==android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             onBackPressed()
             return true
         }

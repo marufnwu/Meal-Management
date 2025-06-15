@@ -25,6 +25,10 @@
     <attr name="searchHint" format="string" />
     <attr name="maxSelectionCount" format="integer" />
 
+    <attr name="fieldIcon" format="reference" />
+    <attr name="fieldIconTint" format="color" />
+
+
     <!-- Then use them inside styleables -->
     <declare-styleable name="BannerView">
         <attr name="banner" />
@@ -57,4 +61,27 @@
         </attr>
         <attr name="gridLayout" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="MaterialIconEditTextField">
+        <!-- EditText attributes -->
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+        <attr name="android:text" />
+        <attr name="android:maxLines" />
+        <attr name="android:maxLength" />
+        <attr name="android:digits" />
+        <attr name="android:imeOptions" />
+
+        <!-- Custom attributes -->
+        <attr name="fieldIcon" />
+        <attr name="fieldIconTint" />
+    </declare-styleable>
+
+    <declare-styleable name="MaterialIconField">
+        <attr name="fieldIcon" />
+        <attr name="fieldIconTint"  />
+        <attr name="iconBackgroundColor" format="color" />
+    </declare-styleable>
+
+
 </resources>

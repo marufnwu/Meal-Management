@@ -7,7 +7,9 @@ import android.view.View
 import android.view.View.OnClickListener
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityPreviousMonthBinding
+import com.logicline.mydining.ui.custom.monthpicker.MonthPickerDialog
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
@@ -64,6 +66,14 @@ class PreviousMonthActivity : BaseActivity(), OnClickListener {
             }.setNegativeButton {
                 it.dismiss()
             }.show()
+        }
+
+        MonthPickerDialog.show(
+            this,
+            AppPrefs.monthId
+        ) { month ->
+            AppPrefs.monthId = month.id
+
         }
 
 

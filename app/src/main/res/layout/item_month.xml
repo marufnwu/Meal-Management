@@ -1,120 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/_4sdp"
-    android:layout_marginVertical="@dimen/_4sdp"
-    android:clickable="true"
-    android:focusable="true"
-    android:stateListAnimator="@animator/card_elevation_animator"
-    app:cardCornerRadius="@dimen/_6sdp"
-    app:rippleColor="?attr/colorControlHighlight"
-    app:cardElevation="0dp"
-    app:strokeWidth="0dp">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <!-- Changed to MaterialCardView for better UI -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/content_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_gradient_background">
+        app:cardElevation="@dimen/_4sdp"
+        app:cardCornerRadius="@dimen/_1sdp"
+        app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
+        app:strokeWidth="1dp">
 
-        <!-- Left side content container -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/content_container"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_16sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/status_indicator"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:padding="@dimen/_14sdp">
 
             <!-- Name with custom background accent -->
             <TextView
                 android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/chip_status"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:letterSpacing="0.02"
                 android:maxLines="1"
-                android:text="Lulu"
+                android:text="@string/month_name_placeholder"
                 android:textColor="?attr/colorOnSurface"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
 
             <!-- Type with Icon -->
             <ImageView
                 android:id="@+id/iv_type_icon"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@drawable/informing"
                 app:layout_constraintBottom_toBottomOf="@id/tv_type"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_type" />
+                app:layout_constraintTop_toTopOf="@id/tv_type"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/start_24px"
+                app:tint="?attr/colorOnSurfaceVariant"
+                android:contentDescription="@string/content_desc_type_icon" />
 
             <TextView
                 android:id="@+id/tv_type"
+                app:layout_constraintStart_toEndOf="@id/iv_type_icon"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:text="Automatic"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@id/iv_type_icon"
-                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+                android:text="@string/month_type_automatic"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="@dimen/_11sdp" />
 
             <!-- Status with Chip -->
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:text="Active"
-                android:textColor="@color/active_text_color"
-                android:textSize="12sp"
                 app:chipBackgroundColor="@color/active_bg_color"
                 app:chipMinHeight="24dp"
                 app:chipMinTouchTargetSize="24dp"
                 app:ensureMinTouchTargetSize="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_name"
                 app:layout_constraintBottom_toBottomOf="@id/tv_name"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_name" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/month_status_active"
+                android:textColor="@color/active_text_color"
+                android:textSize="12sp" />
 
             <!-- Date Range with Calendar Icon -->
             <ImageView
                 android:id="@+id/iv_calendar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_type"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:src="@drawable/calendar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_type" />
+                android:layout_marginTop="@dimen/_8sdp"
+                android:src="@drawable/calendar_view_month_24px"
+                app:tint="?attr/colorOnSurfaceVariant"
+                android:contentDescription="@string/content_desc_calendar_icon" />
 
             <TextView
                 android:id="@+id/tv_date_range"
+                app:layout_constraintBottom_toBottomOf="@id/iv_calendar"
+                app:layout_constraintStart_toEndOf="@id/iv_calendar"
+                app:layout_constraintTop_toTopOf="@id/iv_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_6sdp"
-                android:text="May 1 - May 31, 2025"
-                android:textSize="13sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_calendar"
-                app:layout_constraintStart_toEndOf="@id/iv_calendar"
-                app:layout_constraintTop_toTopOf="@id/iv_calendar" />
-
+                android:text="@string/month_date_range_placeholder"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="@dimen/_11sdp" />
 
 
             <!-- Selection Icon with circular background -->
             <FrameLayout
                 android:id="@+id/selection_container"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/chip_status"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_margin="@dimen/_8sdp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chip_status">
+                android:layout_marginTop="@dimen/_8sdp"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/iv_selected"
@@ -122,22 +123,8 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@drawable/check"
-                    />
+                    android:contentDescription="@string/content_desc_selection_icon" />
             </FrameLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Right side colored status indicator -->
-        <View
-            android:id="@+id/status_indicator"
-            android:layout_width="@dimen/_6sdp"
-            android:layout_height="0dp"
-            android:background="@drawable/status_indicator_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

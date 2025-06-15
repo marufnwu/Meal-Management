@@ -1,27 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Primary colors - Green theme -->
+    <color name="md_theme_primary">#25A56A</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#1D9159</color>
+    <color name="md_theme_onPrimaryContainer">#FFFFFF</color>
+    <color name="md_theme_secondary">#4CAF86</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#B8E5CF</color>
+    <color name="md_theme_onSecondaryContainer">#0D5D3B</color>
+    <color name="md_theme_tertiary">#2E7D67</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#3C8D75</color>
+    <color name="md_theme_onTertiaryContainer">#FFFFFF</color>
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#93000A</color>
+    <color name="md_theme_background">#FFFFFF</color>
+    <color name="md_theme_onBackground">#1B211D</color>
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_onSurface">#1B211D</color>
+    <color name="md_theme_surfaceVariant">#EDF5F0</color>
+    <color name="md_theme_onSurfaceVariant">#404943</color>
+    <color name="md_theme_outline">#707973</color>
+    <color name="md_theme_outlineVariant">#C0C9C4</color>
+    <color name="md_theme_scrim">#000000</color>
+    <color name="md_theme_inverseSurface">#2C332E</color>
+    <color name="md_theme_inverseOnSurface">#F0F5F2</color>
+    <color name="md_theme_inversePrimary">#7BDAA6</color>
+    <color name="md_theme_primaryFixed">#D6F5E6</color>
+    <color name="md_theme_onPrimaryFixed">#00391F</color>
+    <color name="md_theme_primaryFixedDim">#7BDAA6</color>
+    <color name="md_theme_onPrimaryFixedVariant">#007744</color>
+    <color name="md_theme_secondaryFixed">#D6F5E6</color>
+    <color name="md_theme_onSecondaryFixed">#00391F</color>
+    <color name="md_theme_secondaryFixedDim">#7BDAA6</color>
+    <color name="md_theme_onSecondaryFixedVariant">#007744</color>
+    <color name="md_theme_tertiaryFixed">#D6F5EB</color>
+    <color name="md_theme_onTertiaryFixed">#003828</color>
+    <color name="md_theme_tertiaryFixedDim">#79DBC0</color>
+    <color name="md_theme_onTertiaryFixedVariant">#006C4F</color>
+    <color name="md_theme_surfaceDim">#DDE7E1</color>
+    <color name="md_theme_surfaceBright">#FFFFFF</color>
+    <color name="md_theme_surfaceContainerLowest">#FFFFFF</color>
+    <color name="md_theme_surfaceContainerLow">#F7FAF8</color>
+    <color name="md_theme_surfaceContainer">#F0F5F2</color>
+    <color name="md_theme_surfaceContainerHigh">#EAF0EC</color>
+    <color name="md_theme_surfaceContainerHighest">#E4EAE6</color>
+
+    <!-- Medium and high contrast variants -->
+    <color name="md_theme_primary_mediumContrast">#006934</color>
+    <color name="md_theme_onPrimary_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_primaryContainer_mediumContrast">#058950</color>
+    <color name="md_theme_onPrimaryContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_secondary_mediumContrast">#005D3B</color>
+    <color name="md_theme_onSecondary_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer_mediumContrast">#2C7C59</color>
+    <color name="md_theme_onSecondaryContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_tertiary_mediumContrast">#00513A</color>
+    <color name="md_theme_onTertiary_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer_mediumContrast">#1A725B</color>
+    <color name="md_theme_onTertiaryContainer_mediumContrast">#FFFFFF</color>
+
+    <!-- Other contrast variants remain the same, updating just key colors -->
+    <color name="md_theme_error_mediumContrast">#740006</color>
+    <color name="md_theme_onError_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_errorContainer_mediumContrast">#CF2C27</color>
+    <color name="md_theme_onErrorContainer_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_background_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_onBackground_mediumContrast">#1B211D</color>
+    <color name="md_theme_surface_mediumContrast">#FFFFFF</color>
+    <color name="md_theme_onSurface_mediumContrast">#0A0F0C</color>
+
+    <!-- High contrast variants -->
+    <color name="md_theme_primary_highContrast">#004D24</color>
+    <color name="md_theme_onPrimary_highContrast">#FFFFFF</color>
+    <color name="md_theme_primaryContainer_highContrast">#005D2C</color>
+    <color name="md_theme_onPrimaryContainer_highContrast">#FFFFFF</color>
+
+    <!-- Button colors - Green theme with coral accent -->
+    <color name="buttonPrimary">#25A56A</color>
+    <color name="buttonPrimaryPressed">#1A8654</color>
+    <color name="buttonPrimaryDisabled">#A8E5C7</color>
+    <color name="buttonSecondary">#4CAF86</color>
+    <color name="buttonSecondaryPressed">#3A8C6B</color>
+    <color name="buttonSecondaryDisabled">#D7EFE4</color>
+    <color name="buttonDanger">#FF5B5B</color>
+    <color name="buttonDangerPressed">#E83A3A</color>
+    <color name="buttonDangerDisabled">#FFD6D6</color>
+    <color name="buttonAccent">#FF5B5B</color>
+    <color name="buttonAccentPressed">#E83A3A</color>
+    <color name="buttonAccentDisabled">#FFD6D6</color>
+    <color name="buttonTextLight">#FFFFFF</color>
+    <color name="buttonTextDark">#1B211D</color>
+    <color name="buttonTextDisabled">#9E9E9E</color>
+
+    <!-- Text colors - Organic contrast for banking app -->
+    <color name="text_primary">#1B211D</color>
+    <color name="text_secondary">#4A524D</color>
+    <color name="text_tertiary">#6F7772</color>
+    <color name="divider_color">#E0E5E2</color>
+
+    <!-- Banking app specific colors -->
+    <color name="bankCard">#25A56A</color>
+    <color name="bankCardSecondary">#1D9159</color>
+    <color name="bankCardText">#FFFFFF</color>
+    <color name="chartLine">#25A56A</color>
+    <color name="chartBackground">#E8F5EE</color>
+    <color name="removeButtonBackground">#FF5B5B</color>
+    <color name="removeButtonText">#FFFFFF</color>
+    <color name="selectButtonBackground">#25A56A</color>
+    <color name="selectButtonText">#FFFFFF</color>
 
 
-    <color name="colorPrimary">#073570</color>
-    <color name="colorPrimaryDark">#FFFF</color>
+    <!-- Status colors - for feedback and states -->
+    <color name="success">#0B6E4F</color>
+    <color name="success_light">#E3F6ED</color>
+    <color name="success_container">#8DD9B9</color>
+    <color name="warning">#E6841C</color>
+    <color name="warning_light">#FFF2E4</color>
+    <color name="warning_container">#FFDBB0</color>
+    <color name="error">#B3261E</color>
+    <color name="error_light">#F9DEDC</color>
+    <color name="error_container">#F9DEDC</color>
+    <color name="info">#0B57D0</color>
+    <color name="info_light">#D8E2FF</color>
+    <color name="info_container">#D8E2FF</color>
 
-    <color name="colorPrimaryTransparent">#CE06264E</color>
+    <!-- Status chip colors - enhanced for better visibility -->
+    <color name="active_bg_color">#E3F6ED</color>
+    <color name="active_text_color">#0B6E4F</color>
+    <color name="inactive_bg_color">#F9DEDC</color>
+    <color name="inactive_text_color">#B3261E</color>
+    <color name="pending_bg_color">#FFF2E4</color>
+    <color name="pending_text_color">#E6841C</color>
 
-    <color name="themeColor">#073570</color>
-    <color name="mainButtonTextColor">#073570</color>
-
-    <color name="colorPrimaryTransparent1">#FFAB40</color>
-    <color name="colorAccent">#FF1744</color>
-
-
-    <color name="jdialog_button_color">?android:colorAccent</color>
-    <color name="jdialog_body_text_color">#000000</color>
-
+    <!-- Your existing color palette -->
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>
@@ -163,51 +278,8 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
 
-
-    <!-- Button colors -->
-    <color name="buttonPrimary">#1976D2</color>
-    <color name="buttonPrimaryPressed">#0D47A1</color>
-    <color name="buttonPrimaryDisabled">#B3E5FC</color>
-
-    <color name="buttonSecondary">#757575</color>
-    <color name="buttonSecondaryPressed">#424242</color>
-    <color name="buttonSecondaryDisabled">#E0E0E0</color>
-
-    <color name="buttonDanger">#D32F2F</color>
-    <color name="buttonDangerPressed">#B71C1C</color>
-    <color name="buttonDangerDisabled">#FFCDD2</color>
-
-    <color name="buttonTextLight">#FFFFFF</color>
-    <color name="buttonTextDark">#212121</color>
-    <color name="buttonTextDisabled">#9E9E9E</color>
-
-
-    <!-- Add these color values to your colors.xml -->
-    <color name="success">#4CAF50</color>
-    <color name="success_light">#E8F5E9</color>
-    <color name="warning">#FFC107</color>
-    <color name="warning_light">#FFF8E1</color>
-    <color name="error">#F44336</color>
-    <color name="error_light">#FFEBEE</color>
-    <color name="info">#2196F3</color>
-    <color name="info_light">#E3F2FD</color>
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="divider_color">#EEEEEE</color>
-
-
-
-    <!-- Colors for active status chip -->
-    <color name="active_bg_color">#E0F2F1</color>
-    <color name="active_text_color">#00796B</color>
-
-    <!-- Colors for inactive status if needed -->
-    <color name="inactive_bg_color">#FFEBEE</color>
-    <color name="inactive_text_color">#C62828</color>
-
-    <!-- Colors for pending status if needed -->
-    <color name="pending_bg_color">#FFF8E1</color>
-    <color name="pending_text_color">#FF8F00</color>
-
-
+    <!-- Material Design Standard Colors -->
+    <color name="gray_500">#9E9E9E</color>
+    <color name="green_700">#388E3C</color>
+    <color name="red_700">#D32F2F</color>
 </resources>

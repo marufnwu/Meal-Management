@@ -3,14 +3,14 @@ package com.logicline.mydining.ui.custom.monthpicker
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import com.logicline.mydining.R
 import com.logicline.mydining.data.models.Month
-import com.logicline.mydining.data.repository.MonthRepository
+import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 
 class MonthPickerDialog private constructor(
     context: Context,
-    private val monthRepository: MonthRepository,
     private val preselectedMonthId: Int? = null,
     private val onMonthSelected: (Month) -> Unit
 ) : Dialog(context) {
@@ -29,16 +29,23 @@ class MonthPickerDialog private constructor(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-//        val pickerView = findViewById<MonthPickerView>(R.id.monthPickerView)
-//        pickerView?.initialize(
-//            monthRepository = monthRepository,
-//            preselectedId = preselectedMonthId,
-//            onSelected = {
-//                onMonthSelected(it)
-//                dismiss()
-//                dialogInstance = null
-//            }
-//        )
+        val pickerView = findViewById<MonthPickerView>(R.id.monthPickerView)
+        Log.d("MonthPickerDialog", "MonthPickerView found: ${pickerView != null}")
+
+        pickerView?.initialize(
+            preselectedIds = preselectedMonthId?.let { listOf(it) },
+            config = {
+                showSearch = true
+                showTitle = true
+                title = "Select Month"
+            },
+            onSelected = { month ->
+                Log.d("MonthPickerDialog", "Month selected: ${month.name}")
+                onMonthSelected(month)
+                dismiss()
+                dialogInstance = null
+            }
+        )
     }
 
     companion object {
@@ -46,15 +53,19 @@ class MonthPickerDialog private constructor(
 
         fun show(
             context: Context,
-            monthRepository: MonthRepository,
             preselectedMonthId: Int? = null,
             onMonthSelected: (Month) -> Unit
         ) {
-            if (dialogInstance?.isShowing == true) return
+            context.shortToast("Opening month picker dialog")
+            Log.d("MonthPickerDialog", "Show dialog called")
+
+            if (dialogInstance?.isShowing == true) {
+                Log.d("MonthPickerDialog", "Dialog already showing")
+                return
+            }
 
             dialogInstance = MonthPickerDialog(
                 context = context,
-                monthRepository = monthRepository,
                 preselectedMonthId = preselectedMonthId,
                 onMonthSelected = onMonthSelected
             )
@@ -64,7 +75,7 @@ class MonthPickerDialog private constructor(
 
     override fun dismiss() {
         super.dismiss()
+        Log.d("MonthPickerDialog", "Dialog dismissed")
         dialogInstance = null
     }
 }
-

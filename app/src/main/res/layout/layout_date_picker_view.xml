@@ -42,7 +42,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Previous"
-                    android:textColor="@color/themeColor" />
+                    android:textColor="?attr/colorPrimary" />
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/themeColor"
+                    android:textColor="?attr/colorPrimary"
                     android:padding="@dimen/_6sdp"
                     android:layout_gravity="center"
                     android:id="@+id/txtDate"
@@ -80,7 +80,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Next"
-                    android:textColor="@color/themeColor"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/_10sdp" />
                 <ImageView
                     android:layout_alignParentEnd="true"

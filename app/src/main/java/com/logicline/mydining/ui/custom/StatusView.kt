@@ -32,13 +32,8 @@ class StatusView @JvmOverloads constructor(
         fun onPositiveButtonClick()
     }
 
-    interface OnNegativeButtonClickListener {
-        fun onNegativeButtonClick()
-    }
-
     // Listeners that can be set by the client
     private var positiveButtonClickListener: OnPositiveButtonClickListener? = null
-    private var negativeButtonClickListener: OnNegativeButtonClickListener? = null
 
     // Enum for different states
     enum class StatusType {
@@ -64,7 +59,7 @@ class StatusView @JvmOverloads constructor(
         }
 
         negativeButton.setOnClickListener {
-            negativeButtonClickListener?.onNegativeButtonClick()
+            // No-op, handled in setNegativeButton
         }
 
         // Parse custom attributes if available
@@ -105,7 +100,7 @@ class StatusView @JvmOverloads constructor(
      * @param type The status type to display
      * @param message Optional custom message to display
      */
-    fun setStatus(type: StatusType, message: String? = null) {
+    fun setStatus(type: StatusType, message: String? = null) : StatusView {
         val imageResId = when (type) {
             StatusType.EMPTY -> R.drawable.empty
             StatusType.ERROR -> R.drawable.warning
@@ -120,6 +115,8 @@ class StatusView @JvmOverloads constructor(
 
         statusImage.setImageResource(imageResId)
         statusMessage.text = message ?: defaultMessage
+
+        return this
     }
 
     /**
@@ -144,36 +141,54 @@ class StatusView @JvmOverloads constructor(
      * Configure the positive action button.
      *
      * @param text The button text
-     * @param listener Click listener for the button
      * @param isVisible Whether the button should be visible
+     * @param onClick Lambda function that will be called when the button is clicked
      */
     fun setPositiveButton(
         text: String? = null,
         isVisible: Boolean = true,
-        listener: OnPositiveButtonClickListener? = null,
-        ) {
+        onClick: (() -> Unit)? = null
+    ) : StatusView {
         text?.let {
             positiveButton.text = it
         }
-        positiveButtonClickListener = listener
         positiveButton.visibility = if (isVisible) View.VISIBLE else View.GONE
+
+        // If a click listener was provided, set it directly on the button
+        if (onClick != null) {
+            positiveButton.setOnClickListener { onClick() }
+        } else {
+            positiveButton.setOnClickListener(null)
+        }
+
+        return this
     }
 
     /**
      * Configure the negative action button.
      *
      * @param text The button text
-     * @param listener Click listener for the button
      * @param isVisible Whether the button should be visible
+     * @param onClick Lambda function that will be called when the button is clicked
      */
     fun setNegativeButton(
-        text: String,
-        listener: OnNegativeButtonClickListener? = null,
-        isVisible: Boolean = true
-    ) {
-        negativeButton.text = text
-        negativeButtonClickListener = listener
+        text: String? = null,
+        isVisible: Boolean = true,
+        onClick: (() -> Unit)? = null
+    ) : StatusView {
+        text?.let {
+            negativeButton.text = it
+        }
         negativeButton.visibility = if (isVisible) View.VISIBLE else View.GONE
+
+        // If a click listener was provided, set it directly on the button
+        if (onClick != null) {
+            negativeButton.setOnClickListener { onClick() }
+        } else {
+            negativeButton.setOnClickListener(null)
+        }
+
+        return this
     }
 
     /**
@@ -197,7 +212,7 @@ class StatusView @JvmOverloads constructor(
      *
      * @param isVisible true to show the status view, false to hide it
      */
-    fun setStatusViewVisible(isVisible: Boolean) {
+    fun setStatusViewVisible(isVisible: Boolean) : StatusView {
         if (isVisible) {
             findViewById<View>(R.id.status_container).visibility = View.VISIBLE
             // Hide all content views
@@ -217,6 +232,7 @@ class StatusView @JvmOverloads constructor(
                 }
             }
         }
+        return this
     }
 
     /**

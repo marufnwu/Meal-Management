@@ -1,205 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/Azure"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    style="@style/Widget.Material3.CardView.Filled">
 
     <LinearLayout
-        android:padding="@dimen/_5sdp"
-        android:gravity="center"
-        android:background="@color/colorPrimaryTransparent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/name"
-            android:fontFamily="@font/hubballi"
-            android:textColor="@color/White"
-            android:textSize="@dimen/_15sdp"
-            android:text="Name of User"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- User Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondaryContainer"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_12sdp">
+
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:src="@drawable/person_24px"
+                android:padding="@dimen/_4sdp"
+                app:tint="?attr/colorOnSecondaryContainer" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+
+                <TextView
+                    android:id="@+id/tvUserStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Active Member"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorOnSecondaryContainer" />
+            </LinearLayout>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTotalMeal"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21 Meals"
+                app:chipStrokeColor="?attr/colorOnPrimaryContainer"
+                app:chipStrokeWidth="1dp" />
+        </LinearLayout>
+
+        <!-- Meal Breakdown Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:gravity="center">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBreakfast"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B: 1"
+                app:chipIcon="@drawable/skillet_24px"
+                android:layout_marginEnd="@dimen/_4sdp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLunch"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L: 0"
+                app:chipIcon="@drawable/skillet_24px"
+                android:layout_marginEnd="@dimen/_4sdp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDinner"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D: 20"
+                app:chipIcon="@drawable/skillet_24px" />
+        </LinearLayout>
+
+        <!-- Financial Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_12sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Deposit"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvDeposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Meal Charge"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvMealCharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Other Cost"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvOtherCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.12"
+                android:layout_marginVertical="@dimen/_8sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Balance"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="@color/green_700" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dueContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Due"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tvDue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="৳0.00"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textStyle="bold"
+                    android:textColor="@color/red_700" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/Black"
-                android:background="@color/NavajoWhite"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="Meal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/meal"
-                android:background="@color/Beige"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/Black"
-                android:background="@color/NavajoWhite"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="Meal Cost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/mealCost"
-                android:background="@color/Beige"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/Black"
-                android:background="@color/NavajoWhite"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="Deposit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/deposit"
-                android:background="@color/Beige"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/Black"
-                android:background="@color/NavajoWhite"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="Other Cost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/otherCost"
-                android:background="@color/Beige"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/Black"
-                android:background="@color/NavajoWhite"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="Total Cost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/totalCost"
-                android:background="@color/Beige"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/Black"
-                android:background="@color/NavajoWhite"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="Due"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/due"
-                android:background="@color/Beige"
-                android:textSize="@dimen/_13sdp"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-                android:text="00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_8sdp"/>
-
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

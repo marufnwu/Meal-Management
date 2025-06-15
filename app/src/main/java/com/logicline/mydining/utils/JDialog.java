@@ -223,8 +223,8 @@ public class JDialog {
         if (iconType != null) {
             // Set appropriate icon and background color
             int iconResId = R.drawable.success;
-            int backgroundColor = context.getResources().getColor(R.color.colorPrimary);
-            int iconTint = context.getResources().getColor(R.color.colorPrimary);
+            int backgroundColor = context.getResources().getColor(R.color.md_theme_primary);
+            int iconTint = context.getResources().getColor(R.color.md_theme_primary);
 
             switch (iconType) {
                 case SUCCESS:

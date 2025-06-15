@@ -7,9 +7,13 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import com.logicline.mydining.R
+import com.logicline.mydining.ui.viewmodels.MonthViewModel
+import com.logicline.mydining.ui.viewmodels.UserViewModel
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.MyDatePicker
+import kotlin.getValue
 
 class MonthPickerView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     public var onDateSelectListener: MyDatePicker.OnDateSelectListener? = null

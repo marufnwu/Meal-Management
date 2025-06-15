@@ -17,17 +17,21 @@ import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
+import com.logicline.mydining.data.enums.PurchaseType
+import com.logicline.mydining.data.models.PurchaseRequest
+import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.utils.MyDatePicker
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.core.text.isDigitsOnly
 
 class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener {
     lateinit var selectedDate : String
     private var isListItem = true
     private var isDepositToAcc = false
-    private val purchaseProducts : MutableList<PurchaseProduct> = mutableListOf()
+    private val purchaseProducts : MutableList<PurchaseRequest.ProductItem> = mutableListOf()
     lateinit var purchaseProductFieldAdapter: PurchaseProductFieldAdapter
     lateinit var binding: ActivitySubmitPurchaseBinding
 
@@ -35,7 +39,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
     var totalPurchase = 0f
     var isDeposit = 0
 
-    var purchaseType = 1
+    var purchaseType = PurchaseType.MEAL
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,9 +90,9 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
         binding.radioGroupPurchaseType.setOnCheckedChangeListener { radioGroup, i ->
 
             purchaseType = if(i == R.id.radioBtnMealPurchase){
-                1
+                PurchaseType.MEAL
             }else{
-                2
+                PurchaseType.OTHER
             }
 
         }
@@ -118,9 +122,9 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
                 loadingDialog.show()
                 (application as MyApplication)
-                    .myApi.requestListPurchase(productJson, selectedDate, totalPurchase, isDeposit, purchaseType)
-                    .enqueue(object : Callback<GenericRespose> {
-                        override fun onResponse(call: Call<GenericRespose>, response: Response<GenericRespose>) {
+                    .myApi.addPurchaseRequest(null, productJson, selectedDate, totalPurchase, isDeposit, purchaseType.value)
+                    .enqueue(object : Callback<ServerResponse<PurchaseRequest>> {
+                        override fun onResponse(call: Call<ServerResponse<PurchaseRequest>>, response: Response<ServerResponse<PurchaseRequest>>) {
                             loadingDialog.hide()
 
                             if(response.isSuccessful && response.body()!=null){
@@ -135,7 +139,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                             }
                         }
 
-                        override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                        override fun onFailure(call: Call<ServerResponse<PurchaseRequest>>, t: Throwable) {
                             loadingDialog.hide()
                         }
 
@@ -148,7 +152,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
                 val priceString = binding.edtPrice.text.toString()
                 var price = 0f
-                if(TextUtils.isDigitsOnly(priceString) && !priceString.isEmpty()){
+                if(priceString.isDigitsOnly() && !priceString.isEmpty()){
                     price = priceString.toFloat()
                 }else{
                     Toast.makeText(this, "price is not valid", Toast.LENGTH_SHORT).show()
@@ -169,7 +173,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                 loadingDialog.show()
                 (application as MyApplication)
                     .myApi
-                    .requestSinglePurchase(productDesc, selectedDate, price, isDeposit, purchaseType)
+                    .requestSinglePurchase(productDesc, selectedDate, price, isDeposit, purchaseType.value)
                     .enqueue(object : Callback<GenericRespose> {
                         override fun onResponse(
                             call: Call<GenericRespose>, response: Response<GenericRespose>) {
@@ -181,8 +185,8 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                                 shortToast(response.body()!!.msg)
 
                                 if(!response.body()!!.error){
-                                    binding.edtPrice.text.clear()
-                                    binding.edtDesc.text.clear()
+                                    binding.edtPrice.clear()
+                                    binding.edtDesc.clear()
                                 }
                             }
 
@@ -208,7 +212,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
     }
 
     private fun addPurchaseItem(name: String, toFloat: Float) {
-        purchaseProducts.add(PurchaseProduct(name, toFloat))
+        purchaseProducts.add(PurchaseRequest.ProductItem(name,1, toFloat))
         totalPurchase+=toFloat
         binding.txtTotalPurchase.setText("Total Purchase amount ${totalPurchase}")
         binding.recyProducts.visibility = View.VISIBLE
@@ -239,7 +243,7 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
                 if(position<=purchaseProducts.size){
                     Log.d("PricePosition", position.toString())
 
-                    purchaseProducts.get(position).price  = price
+                    purchaseProducts.get(position).unitPrice  = price
                 }
             }
 
@@ -248,23 +252,6 @@ class SubmitPurchaseActivity : BaseActivity(), MyDatePicker.OnDateSelectListener
 
     }
 
-    private fun addField(){
-
-        val lastField  = purchaseProducts.get(purchaseProducts.size-1)
-
-        if(lastField.name!!.isNotEmpty() && lastField.price!! >0){
-            purchaseProducts.add(PurchaseProduct("", 0f))
-            purchaseProductFieldAdapter.notifyItemChanged(purchaseProducts.size-1)
-
-        }else{
-            shortToast("Please insert last field first")
-        }
-        purchaseProductFieldAdapter.notifyDataSetChanged()
-        Log.d("adad", Gson().toJson(purchaseProducts))
-
-
-
-    }
 
     private fun setLayoutType(b: Boolean) {
 
