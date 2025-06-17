@@ -38,6 +38,9 @@ import com.logicline.mydining.data.models.response.InitialDataResponse
 import com.logicline.mydining.data.models.response.MonthlySummaryResponse
 import com.logicline.mydining.data.models.response.Paging
 import com.logicline.mydining.data.models.response.UserListResponse
+import com.logicline.mydining.data.models.response.ProfileResponse
+import com.logicline.mydining.data.models.response.ProfileUpdateRequest
+import com.logicline.mydining.data.models.response.AvatarUploadResponse
 import com.logicline.mydining.data.requests.MonthCreateRequest
 import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LocalDB
@@ -570,6 +573,23 @@ interface MyApi {
         @Query("mess_user_id") messUserId: Int? = null
     ): Response<ServerResponse<UserSummary>>
 
+    // Profile Management APIs
+    @GET("api/profile")
+    suspend fun getProfile(): Response<ServerResponse<ProfileResponse>>
+
+    @PUT("api/profile")
+    suspend fun updateProfile(
+        @Body profileUpdate: ProfileUpdateRequest
+    ): Response<ServerResponse<User>>
+
+    @Multipart
+    @POST("api/profile/avatar")
+    suspend fun uploadAvatar(
+        @Part avatar: MultipartBody.Part
+    ): Response<ServerResponse<AvatarUploadResponse>>
+
+    @DELETE("api/profile/avatar")
+    suspend fun removeAvatar(): Response<ServerResponse<Nothing>>
 
     companion object {
         @Volatile

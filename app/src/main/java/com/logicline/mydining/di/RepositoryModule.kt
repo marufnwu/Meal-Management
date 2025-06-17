@@ -2,6 +2,7 @@ package com.logicline.mydining.di
 
 import com.logicline.mydining.data.local.dao.MyDao
 import com.logicline.mydining.data.repository.MonthRepository
+import com.logicline.mydining.data.repository.ProfileRepository
 import com.logicline.mydining.data.repository.Repository
 import com.logicline.mydining.data.repository.RepositoryImpl
 import com.logicline.mydining.network.MyApi
@@ -19,6 +20,12 @@ object RepositoryModule {
     @Singleton
     fun provideMonthRepository(myApi: MyApi): MonthRepository {
         return MonthRepository(myApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(myApi: MyApi): ProfileRepository {
+        return ProfileRepository(myApi)
     }
 
     @Provides

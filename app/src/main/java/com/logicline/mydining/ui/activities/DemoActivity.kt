@@ -1,6 +1,6 @@
 package com.logicline.mydining.ui.activities
 
-import android.content.Intent // Import Intent
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +9,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.logicline.mydining.R
 import com.logicline.mydining.ui.custom.monthpicker.MonthPickerDialog
 import com.logicline.mydining.ui.fragments.menus.HomeFragment
-// Remove MessFragment import if it's no longer needed elsewhere
-// import com.logicline.mydining.ui.fragments.menus.MessFragment
 import com.logicline.mydining.ui.fragments.menus.MonthFragment
+import com.logicline.mydining.ui.fragments.menus.ProfileFragment
 import com.logicline.mydining.utils.AppPrefs
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -81,9 +80,7 @@ class DemoActivity : AppCompatActivity() {
                 true
             }
         }
-    }
-
-    private fun getOrCreateFragmentById(fragmentId: Int): Fragment {
+    }    private fun getOrCreateFragmentById(fragmentId: Int): Fragment {
         // Get existing fragment or create a new one
         return fragmentMap.getOrPut(fragmentId) {
             when (fragmentId) {
@@ -94,6 +91,7 @@ class DemoActivity : AppCompatActivity() {
                 // For clarity, it's better to remove it if nav_mess always opens an activity.
                 // R.id.nav_mess -> MessFragment()
                 R.id.nav_month -> MonthFragment()
+                R.id.nav_account -> ProfileFragment()
                 else -> HomeFragment() // Default fragment
             }
         }
