@@ -58,9 +58,42 @@ class RepositoryImpl @Inject constructor(
         return  safeApiCall {
             myApi.userMinimalMonthSummary()
         }
-    }
-
-    override suspend fun userDetailsMonthSummary(): DataState<UserSummary?> {
+    }    override suspend fun userDetailsMonthSummary(): DataState<UserSummary?> {
         TODO("Not yet implemented")
     }
+
+    // Mess Management Implementations
+    override suspend fun getCurrentMessInfo() = myApi.getCurrentMessInfo()
+    
+    override suspend fun leaveMess() = myApi.leaveMess()
+    
+    override suspend fun closeMess() = myApi.closeMess()
+    
+    override suspend fun getAvailableMesses(search: String?, limit: Int?) = 
+        myApi.getAvailableMesses(search, limit)
+    
+    override suspend fun sendJoinRequest(messId: Int, message: String?) = 
+        myApi.sendJoinRequest(messId, message)
+    
+    override suspend fun getUserJoinRequests(status: String?, limit: Int?) = 
+        myApi.getUserJoinRequests(status, limit)
+    
+    override suspend fun cancelJoinRequest(requestId: Int) = 
+        myApi.cancelJoinRequest(requestId)
+    
+    override suspend fun getMessJoinRequests(status: String?, limit: Int?) = 
+        myApi.getMessJoinRequests(status, limit)
+    
+    override suspend fun acceptJoinRequest(
+        requestId: Int,
+        welcomeMessage: String?,
+        assignRole: String?,
+        initiateForCurrentMonth: Boolean?
+    ) = myApi.acceptJoinRequest(requestId, welcomeMessage, assignRole, initiateForCurrentMonth)
+    
+    override suspend fun rejectJoinRequest(
+        requestId: Int,
+        reason: String?,
+        allowFutureRequests: Boolean?
+    ) = myApi.rejectJoinRequest(requestId, reason, allowFutureRequests)
 }

@@ -41,6 +41,7 @@ import com.logicline.mydining.data.models.response.UserListResponse
 import com.logicline.mydining.data.models.response.ProfileResponse
 import com.logicline.mydining.data.models.response.ProfileUpdateRequest
 import com.logicline.mydining.data.models.response.AvatarUploadResponse
+import com.logicline.mydining.data.models.response.*
 import com.logicline.mydining.data.requests.MonthCreateRequest
 import com.logicline.mydining.utils.AppPrefs
 import com.logicline.mydining.utils.LocalDB
@@ -586,10 +587,69 @@ interface MyApi {
     @POST("api/profile/avatar")
     suspend fun uploadAvatar(
         @Part avatar: MultipartBody.Part
-    ): Response<ServerResponse<AvatarUploadResponse>>
-
-    @DELETE("api/profile/avatar")
+    ): Response<ServerResponse<AvatarUploadResponse>>    @DELETE("api/profile/avatar")
     suspend fun removeAvatar(): Response<ServerResponse<Nothing>>
+
+    // Mess Management APIs
+    @GET("api/mess-management/info")
+    suspend fun getCurrentMessInfo(): Response<ServerResponse<MessInfoResponse>>
+
+    @POST("api/mess-management/leave")
+    suspend fun leaveMess(): Response<ServerResponse<Nothing>>
+
+    @FormUrlEncoded
+    @POST("api/mess-management/close")
+    suspend fun closeMess(
+        @Field("confirmation") confirmation: Boolean = true,
+        @Field("reason") reason: String? = null
+    ): Response<ServerResponse<Nothing>>
+
+    @GET("api/mess-management/available")
+    suspend fun getAvailableMesses(
+        @Query("search") search: String? = null,
+        @Query("limit") limit: Int? = null
+    ): Response<ServerResponse<AvailableMessesResponse>>
+
+    @FormUrlEncoded
+    @POST("api/mess-management/join-request/{mess}")
+    suspend fun sendJoinRequest(
+        @Path("mess") messId: Int,
+        @Field("message") message: String? = null
+    ): Response<ServerResponse<JoinRequestResponse>>
+
+    @GET("api/mess-management/join-requests")
+    suspend fun getUserJoinRequests(
+        @Query("status") status: String? = null,
+        @Query("limit") limit: Int? = null
+    ): Response<ServerResponse<UserJoinRequestsResponse>>
+
+    @DELETE("api/mess-management/join-requests/{request}")
+    suspend fun cancelJoinRequest(
+        @Path("request") requestId: Int
+    ): Response<ServerResponse<Nothing>>
+
+    @GET("api/mess-management/incoming-requests")
+    suspend fun getMessJoinRequests(
+        @Query("status") status: String? = null,
+        @Query("limit") limit: Int? = null
+    ): Response<ServerResponse<IncomingJoinRequestsResponse>>
+
+    @FormUrlEncoded
+    @POST("api/mess-management/incoming-requests/{request}/accept")
+    suspend fun acceptJoinRequest(
+        @Path("request") requestId: Int,
+        @Field("welcome_message") welcomeMessage: String? = null,
+        @Field("assign_role") assignRole: String? = null,
+        @Field("initiate_for_current_month") initiateForCurrentMonth: Boolean? = null
+    ): Response<ServerResponse<AcceptJoinRequestResponse>>
+
+    @FormUrlEncoded
+    @POST("api/mess-management/incoming-requests/{request}/reject")
+    suspend fun rejectJoinRequest(
+        @Path("request") requestId: Int,
+        @Field("reason") reason: String? = null,
+        @Field("allow_future_requests") allowFutureRequests: Boolean? = null
+    ): Response<ServerResponse<RejectJoinRequestResponse>>
 
     companion object {
         @Volatile

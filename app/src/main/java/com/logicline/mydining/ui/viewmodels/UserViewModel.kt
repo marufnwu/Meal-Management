@@ -119,14 +119,47 @@ class UserViewModel @Inject constructor(
             AppPrefs.userId = userData.user?.id
         }
         repository.saveUserDataLocally(userData?.toRelation())
-    }
-
-    fun loadUserMinimalMonthSummary() {
+    }    fun loadUserMinimalMonthSummary() {
         viewModelScope.launch {
             _userMinimalSummaryState.value = DataState.Loading()
             _userMinimalSummaryState.value = repository.userMinimalMonthSummary()
         }
     }
+
+    // Mess Management Methods
+    suspend fun getCurrentMessInfo() = repository.getCurrentMessInfo()
+    
+    suspend fun leaveMess() = repository.leaveMess()
+    
+    suspend fun closeMess() = repository.closeMess()
+    
+    suspend fun getAvailableMesses(search: String? = null, limit: Int? = null) = 
+        repository.getAvailableMesses(search, limit)
+    
+    suspend fun sendJoinRequest(messId: Int, message: String? = null) = 
+        repository.sendJoinRequest(messId, message)
+    
+    suspend fun getUserJoinRequests(status: String? = null, limit: Int? = null) = 
+        repository.getUserJoinRequests(status, limit)
+    
+    suspend fun cancelJoinRequest(requestId: Int) = 
+        repository.cancelJoinRequest(requestId)
+    
+    suspend fun getMessJoinRequests(status: String? = null, limit: Int? = null) = 
+        repository.getMessJoinRequests(status, limit)
+    
+    suspend fun acceptJoinRequest(
+        requestId: Int, 
+        welcomeMessage: String? = null, 
+        assignRole: String? = null, 
+        initiateForCurrentMonth: Boolean? = null
+    ) = repository.acceptJoinRequest(requestId, welcomeMessage, assignRole, initiateForCurrentMonth)
+    
+    suspend fun rejectJoinRequest(
+        requestId: Int, 
+        reason: String? = null, 
+        allowFutureRequests: Boolean? = null
+    ) = repository.rejectJoinRequest(requestId, reason, allowFutureRequests)
 
 
 

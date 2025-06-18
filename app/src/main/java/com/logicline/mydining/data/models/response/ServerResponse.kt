@@ -7,4 +7,10 @@ class ServerResponse<T> (
     @SerializedName("message") var msg: String = "",
     @SerializedName("data") var data: T? = null,
     @SerializedName("errors") var errors: List<String> ? = null,
- )
+) {
+    val success: Boolean
+        get() = !error
+    
+    val message: String
+        get() = msg
+}

@@ -206,6 +206,13 @@ class GenericDialog private constructor(
         }
 
         /**
+         * Sets the dialog body text (alias for setMessage)
+         */
+        fun setBodyText(bodyText: String): Builder {
+            return setMessage(bodyText)
+        }
+
+        /**
          * Sets a custom layout for the dialog content area
          */
         fun setContentView(@LayoutRes layoutResId: Int): Builder {

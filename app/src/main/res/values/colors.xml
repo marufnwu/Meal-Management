@@ -276,10 +276,16 @@
     <color name="MediumBlue">#0000CD</color>
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
-    <color name="Black">#000000</color>
-
-    <!-- Material Design Standard Colors -->
+    <color name="Black">#000000</color>    <!-- Material Design Standard Colors -->
     <color name="gray_500">#9E9E9E</color>
     <color name="green_700">#388E3C</color>
     <color name="red_700">#D32F2F</color>
+
+    <!-- Lowercase color references for compatibility -->
+    <color name="orange">#FFA500</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#00FF00</color>
+    <color name="purple">#800080</color>
+    <color name="gray">#808080</color>
 </resources>

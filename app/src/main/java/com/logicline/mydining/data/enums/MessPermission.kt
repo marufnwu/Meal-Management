@@ -23,11 +23,14 @@ enum class MessPermission(val value: String) {
     PURCHASE_EDIT("purchase_edit"),
     PURCHASE_DELETE("purchase_delete"),
     DEPOSIT_ADD("deposit_add"),
-    DEPOSIT_REMOVE("deposit_remove"),
-    DEPOSIT_DELETE("deposit_delete"),
+    DEPOSIT_REMOVE("deposit_remove"),    DEPOSIT_DELETE("deposit_delete"),
     GENERATE_REPORT("generate_report"),
     SEND_NOTIFICATION("send_notification"),
-    NOTICE_ADD("notice_add");
+    NOTICE_ADD("notice_add"),
+    
+    // Mess management permissions
+    MESS_CLOSE("mess_close"),
+    JOIN_REQUEST_MANAGEMENT("join_request_management");
 
 
 

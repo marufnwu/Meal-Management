@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_16sdp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Optional Message"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/_8sdp" />
+
+    <EditText
+        android:id="@+id/et_message"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp"
+        android:hint="Write a message to introduce yourself (optional)"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:background="@drawable/edittext_background"
+        android:padding="@dimen/_8sdp" />
+
+</LinearLayout>
