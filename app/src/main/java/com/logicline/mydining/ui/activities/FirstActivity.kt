@@ -117,9 +117,7 @@ class FirstActivity : AppCompatActivity() {
 
                     }
                 }
-            }
-
-            override fun onInstallReferrerServiceDisconnected() {
+            }            override fun onInstallReferrerServiceDisconnected() {
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
             }
@@ -128,9 +126,16 @@ class FirstActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        startActivity(Intent(this@FirstActivity, DemoActivity::class.java))
-        finish()
-//        checkUpdate()
+        // Check if user is already logged in locally before proceeding
+        if (MyApplication.isLogged()) {
+            // User is already logged in, proceed to main app flow
+            Log.d("FirstActivity", "User already logged in locally, proceeding to app")
+            checkAccessToken() // This will validate the token and proceed to appropriate activity
+        } else {
+            // User not logged in, start normal flow with update check
+            Log.d("FirstActivity", "User not logged in locally, starting login flow")
+            checkUpdate()
+        }
     }
 
     private fun checkUpdate() {

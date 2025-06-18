@@ -85,11 +85,11 @@ class ProfileFragment : Fragment() {
         binding.apply {
             // Edit button click
             btnEdit.setOnClickListener {
-                toggleEditMode()
+                toggleEditMode(true)
             }
             
             // Avatar change
-            fabChangeAvatar.setOnClickListener {
+            btnChangeAvatar.setOnClickListener {
                 showImagePickerDialog()
             }
             
@@ -106,9 +106,6 @@ class ProfileFragment : Fragment() {
             
             // Setup gender dropdown
             setupGenderDropdown()
-            
-            // Load profile data
-            profileViewModel.getProfile()
         }
     }
 
@@ -151,25 +148,24 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-        
-        viewLifecycleOwner.lifecycleScope.launch {
+          viewLifecycleOwner.lifecycleScope.launch {
             // Observe avatar upload state
             profileViewModel.avatarUploadState.collect { state ->
                 when (state) {
                     is DataState.Loading -> {
-                        binding.avatarProgressBar.visibility = View.VISIBLE
+                        binding.loadingOverlay.visibility = View.VISIBLE
                     }
                     is DataState.Success -> {
-                        binding.avatarProgressBar.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                         Toast.makeText(context, "Avatar uploaded successfully", Toast.LENGTH_SHORT).show()
                         profileViewModel.getProfile() // Refresh profile
                     }
                     is DataState.Error -> {
-                        binding.avatarProgressBar.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                         Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        binding.avatarProgressBar.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                     }
                 }
             }
@@ -180,19 +176,19 @@ class ProfileFragment : Fragment() {
             profileViewModel.avatarRemoveState.collect { state ->
                 when (state) {
                     is DataState.Loading -> {
-                        binding.avatarProgressBar.visibility = View.VISIBLE
+                        binding.loadingOverlay.visibility = View.VISIBLE
                     }
                     is DataState.Success -> {
-                        binding.avatarProgressBar.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                         Toast.makeText(context, "Avatar removed successfully", Toast.LENGTH_SHORT).show()
                         profileViewModel.getProfile() // Refresh profile
                     }
                     is DataState.Error -> {
-                        binding.avatarProgressBar.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                         Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        binding.avatarProgressBar.visibility = View.GONE
+                        binding.loadingOverlay.visibility = View.GONE
                     }
                 }
             }
@@ -201,42 +197,42 @@ class ProfileFragment : Fragment() {
         currentUser = profileResponse.user
         
         binding.apply {
-            // Header display
-            tvDisplayName.text = profileResponse.user.name
-            tvDisplayEmail.text = profileResponse.user.email
-            
             // View mode information
             tvName.text = profileResponse.user.name
             tvEmail.text = profileResponse.user.email
             tvPhone.text = profileResponse.user.phone ?: "Not provided"
             tvGender.text = profileResponse.user.gender?.replaceFirstChar { it.uppercase() } ?: "Not specified"
-            tvAddress.text = profileResponse.user.city ?: "Not provided"
+            tvCity.text = profileResponse.user.city ?: "Not provided"
             
             // Load current data into edit fields
             loadCurrentProfileData()
             
             // Load avatar
             if (profileResponse.user.photoUrl.isNullOrEmpty()) {
-                profileImage.setImageResource(R.drawable.man)
+                ivProfilePicture.setImageResource(R.drawable.person_24px)
             } else {
                 Glide.with(this@ProfileFragment)
                     .load(profileResponse.user.photoUrl)
                     .transform(CircleCrop())
-                    .placeholder(R.drawable.man)
-                    .error(R.drawable.man)
-                    .into(profileImage)
+                    .placeholder(R.drawable.person_24px)
+                    .error(R.drawable.person_24px)
+                    .into(ivProfilePicture)
             }
         }
-    }
-
-    private fun showImagePickerDialog() {
-        val options = arrayOf("Camera", "Gallery")
+    }    private fun showImagePickerDialog() {
+        val options = if (!currentUser?.photoUrl.isNullOrEmpty()) {
+            arrayOf("Camera", "Gallery", "Remove Avatar")
+        } else {
+            arrayOf("Camera", "Gallery")
+        }
+        
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Select Image")
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> checkCameraPermission()
                     1 -> openGallery()
+                    2 -> showRemoveAvatarDialog()
                 }
             }
             .show()
@@ -298,28 +294,30 @@ class ProfileFragment : Fragment() {
         )
         binding.actvGender.setAdapter(adapter)
     }
-    
-    private fun toggleEditMode(editMode: Boolean = true) {
+      private fun toggleEditMode(editMode: Boolean = true) {
         binding.apply {
             if (editMode) {
-                layoutViewMode.visibility = View.GONE
-                layoutEditMode.visibility = View.VISIBLE
-                btnEdit.text = "Cancel"
+                viewModeContainer.visibility = View.GONE
+                editModeContainer.visibility = View.VISIBLE
+                btnEdit.visibility = View.GONE
+                btnSave.visibility = View.VISIBLE
+                btnCancel.visibility = View.VISIBLE
             } else {
-                layoutViewMode.visibility = View.VISIBLE
-                layoutEditMode.visibility = View.GONE
-                btnEdit.text = "Edit"
+                viewModeContainer.visibility = View.VISIBLE
+                editModeContainer.visibility = View.GONE
+                btnEdit.visibility = View.VISIBLE
+                btnSave.visibility = View.GONE
+                btnCancel.visibility = View.GONE
             }
         }
-    }
-      private fun saveProfile() {
+    }    private fun saveProfile() {
         binding.apply {
-            val name = etName.text.toString().trim()
+            val name = etName.text
             val gender = actvGender.text.toString().trim()
-            val city = etAddress.text.toString().trim()
+            val city = etAddress.text
             
             if (name.isEmpty()) {
-                etName.error = "Name is required"
+                Toast.makeText(context, "Name is required", Toast.LENGTH_SHORT).show()
                 return
             }
             
@@ -328,15 +326,14 @@ class ProfileFragment : Fragment() {
             toggleEditMode(false)
         }
     }
-    
-    private fun loadCurrentProfileData() {
+      private fun loadCurrentProfileData() {
         currentUser?.let { user ->
             binding.apply {
-                etName.setText(user.name)
-                etEmail.setText(user.email)
-                etPhone.setText(user.phone)
-                actvGender.setText(user.gender?.replaceFirstChar { it.uppercase() }, false)
-                etAddress.setText(user.city ?: "")
+                etName.text = user.name ?: ""
+                etEmail.text = user.email ?: ""
+                etPhone.text = user.phone ?: ""
+                actvGender.setText(user.gender?.replaceFirstChar { it.uppercase() } ?: "", false)
+                etAddress.text = user.city ?: ""
             }
         }
     }
