@@ -32,16 +32,16 @@ class AvailableMessesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAvailableMessesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Available Messes"
-        
+
         loadingDialog = LoadingDialog(this)
         setupRecyclerView()
-        
+
         // Initially hide status view to show recycler view
         binding.statusView.hideStatusView()
-        
+
         loadAvailableMesses()
     }
 
@@ -53,24 +53,27 @@ class AvailableMessesActivity : BaseActivity() {
                 showJoinRequestDialog(mess)
             }
         }
-        
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
     }
 
     private fun loadAvailableMesses() {
         lifecycleScope.launch {
-            try {                loadingDialog.show()
+                loadingDialog.show()
                 val response = viewModel.getAvailableMesses()
                 loadingDialog.hide()
-                
+
                 if (response.isSuccessful && response.body()?.success == true) {
                     val data = response.body()?.data
                     if (data != null) {
                         adapter.submitList(data.messes)
-                        
+
                         if (data.messes.isEmpty()) {
-                            binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No available messes found")
+                            binding.statusView.setStatus(
+                                StatusView.StatusType.EMPTY,
+                                "No available messes found"
+                            )
                                 .setPositiveButton("Create New Mess") {
                                     // Navigate to create mess or handle action
                                     shortToast("Create new mess feature")
@@ -79,24 +82,22 @@ class AvailableMessesActivity : BaseActivity() {
                         } else {
                             binding.statusView.hideStatusView()
                         }
-                    }                } else {
-                    binding.statusView.setStatus(StatusView.StatusType.ERROR, response.body()?.message ?: "Failed to load available messes")
+                    }
+                } else {
+                    binding.statusView.setStatus(
+                        StatusView.StatusType.ERROR,
+                        response.body()?.message ?: "Failed to load available messes"
+                    )
                         .setPositiveButton("Retry") {
                             loadAvailableMesses()
                         }
                         .showStatusView()
                 }
-            } catch (e: Exception) {
-                loadingDialog.hide()
-                Log.e("AvailableMessesActivity", "Error loading messes", e)
-                binding.statusView.setStatus(StatusView.StatusType.ERROR, "Error: ${e.message}")
-                    .setPositiveButton("Retry") {
-                        loadAvailableMesses()
-                    }
-                    .showStatusView()
-            }
+
         }
-    }    private fun showJoinRequestDialog(mess: AvailableMess) {
+    }
+
+    private fun showJoinRequestDialog(mess: AvailableMess) {
         GenericDialog.Builder(this)
             .setIcon(R.drawable.ic_group)
             .setTitle("Join ${mess.name}")

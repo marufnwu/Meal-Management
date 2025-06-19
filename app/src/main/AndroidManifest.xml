@@ -170,9 +170,17 @@
             android:exported="false"
             android:label="Members" />
         <activity
+            android:name=".ui.activities.AvailableMessesActivity"
+            android:exported="false"
+            android:label="Available Messes" />
+        <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.ContentMatching" />
+        <activity
+            android:name=".ui.activities.MyJoinRequestsActivity"
+            android:exported="false"
+            android:label="My Join Requests" />
 
         <service
             android:name=".notification.NotificationService"

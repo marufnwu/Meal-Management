@@ -145,10 +145,12 @@ class MessInfoActivity : BaseActivity() {
         if (messInfo != null) {
             // Basic Mess Info
             binding.txtMessName.text = messInfo.mess.name
+            binding.txtMessId.text = messInfo.mess.id.toString()
+            binding.txtMessCreated.text = formatDate(messInfo.mess.createdAt, "MMM dd, yyyy")
+            setStatusWithColor(messInfo.mess.status)
             
             // Mock Month Data - in a real scenario you'd get this from an API
-            setMonthData()
-            
+
             binding.statusView.hideStatusView()
             binding.layoutMessActions.visibility = android.view.View.VISIBLE
             
@@ -156,14 +158,13 @@ class MessInfoActivity : BaseActivity() {
         } else {
             showNoMessState()
         }
-    }
-
-    private fun setData(data: Mess?) {
+    }    private fun setData(data: Mess?) {
         if (data != null) {
             binding.txtMessName.text = data.name
-            
-            // Mock Month Data - in a real scenario you'd get this from an API
-            setMonthData()
+            binding.txtMessId.text = data.id.toString()
+            binding.txtMessCreated.text = formatDate(data.createdAt, "MMM dd, yyyy")
+            setStatusWithColor(data.status)
+
             
             binding.statusView.hideStatusView()
             binding.layoutMessActions.visibility = android.view.View.VISIBLE
@@ -181,36 +182,24 @@ class MessInfoActivity : BaseActivity() {
      * Sets the month data in the UI based on the Month model.
      * In a production app, this would use real data from the API.
      */
-    private fun setMonthData() {
-        // Month Name and Type
-        binding.txtMonthName.text = "June 2025"
-        binding.txtMonthType.text = "AUTOMATIC"
-  // Date Range
-        binding.txtStartDate.text = "Jun 01"
-        binding.txtEndDate.text = "Jun 30"
-        
-        // Stats Counters
-        binding.txtMealsCount.text = "124"
-        binding.txtDepositsCount.text = "8"
-        binding.txtPurchasesCount.text = "12"
-        binding.txtCostsCount.text = "3"
-    }
-    
-    /**
+
+      /**
      * Format a date string for display
+     * @param dateString The date string to format
+     * @param pattern The output date pattern (default: "MMM dd")
      */
-    private fun formatDate(dateString: String?): String {
+    private fun formatDate(dateString: String?, pattern: String = "MMM dd"): String {
         if (dateString.isNullOrEmpty()) return "N/A"
         
         try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat(pattern, Locale.getDefault())
             val date = inputFormat.parse(dateString)
             return outputFormat.format(date ?: Date())
         } catch (e: Exception) {
             return "N/A"
         }
-    }    private fun showNoMessState() {
+    }private fun showNoMessState() {
         binding.statusView.setStatus(
             StatusView.StatusType.EMPTY,
             "No Mess Found! Please create a mess or join existing mess."
@@ -340,5 +329,20 @@ class MessInfoActivity : BaseActivity() {
     private fun openIncomingJoinRequests() {
         val intent = Intent(this, IncomingJoinRequestsActivity::class.java)
         startActivity(intent)
+    }
+    
+    /**
+     * Sets the status text with appropriate color based on the status value
+     */
+    private fun setStatusWithColor(status: String) {
+        binding.txtStatus.text = status.uppercase()
+        
+        // Set color based on status
+        when (status.lowercase()) {
+            "active" -> binding.txtStatus.setTextColor(getColor(R.color.green_600))
+            "inactive", "closed" -> binding.txtStatus.setTextColor(getColor(R.color.error_color))
+            "pending" -> binding.txtStatus.setTextColor(getColor(R.color.orange_600))
+            else -> binding.txtStatus.setTextColor(getColor(R.color.gray_600))
+        }
     }
 }

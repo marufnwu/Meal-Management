@@ -12,11 +12,16 @@
     <color name="md_theme_tertiary">#2E7D67</color>
     <color name="md_theme_onTertiary">#FFFFFF</color>
     <color name="md_theme_tertiaryContainer">#3C8D75</color>
-    <color name="md_theme_onTertiaryContainer">#FFFFFF</color>
-    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onTertiaryContainer">#FFFFFF</color>    <color name="md_theme_error">#BA1A1A</color>
     <color name="md_theme_onError">#FFFFFF</color>
     <color name="md_theme_errorContainer">#FFDAD6</color>
     <color name="md_theme_onErrorContainer">#93000A</color>
+    
+    <!-- Status colors -->
+    <color name="green_600">#0B6E4F</color>
+    <color name="error_color">#B3261E</color>
+    <color name="orange_600">#E6841C</color>
+    <color name="gray_600">#666666</color>
     <color name="md_theme_background">#FFFFFF</color>
     <color name="md_theme_onBackground">#1B211D</color>
     <color name="md_theme_surface">#FFFFFF</color>
