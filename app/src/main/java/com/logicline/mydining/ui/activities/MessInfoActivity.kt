@@ -26,6 +26,9 @@ import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 import com.logicline.mydining.utils.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class MessInfoActivity : BaseActivity() {
@@ -49,14 +52,14 @@ class MessInfoActivity : BaseActivity() {
         initViews()
         setCollectors()
         loadMessInfo()
-    }
-
-    private fun setCollectors() {
+    }    private fun setCollectors() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.messUserState.collectState(
                     lifecycleOwner = this@MessInfoActivity,
-                    onLoading = { loadingDialog.show() },
+                    onLoading = { 
+                        loadingDialog.show() 
+                    },
                     onSuccess = {
                         loadingDialog.hide()
                         messCreateDialog?.dismiss()
@@ -70,9 +73,7 @@ class MessInfoActivity : BaseActivity() {
                 )
             }
         }
-    }
-
-    private fun initViews() {
+    }private fun initViews() {
         binding.statusView.setPositiveButton(
             text = "Create Mess",
             isVisible = true
@@ -85,12 +86,7 @@ class MessInfoActivity : BaseActivity() {
             isVisible = true
         ) {
             openAvailableMesses()
-        }
-
-        binding.btnRefresh.setOnClickListener {
-            viewModel.syncCurrentMessUser()
-            loadMessInfo()
-        }
+        }        // Refresh button removed as requested
 
         // Mess Management Actions
         binding.btnLeaveMess.setOnClickListener {
@@ -112,13 +108,13 @@ class MessInfoActivity : BaseActivity() {
         binding.btnMyJoinRequests.setOnClickListener {
             openMyJoinRequests()
         }
-    }
-
-    private fun loadMessInfo() {
+    }    private fun loadMessInfo() {
         lifecycleScope.launch {
             try {
                 loadingDialog.show()
+                
                 val response = viewModel.getCurrentMessInfo()
+                
                 loadingDialog.hide()
                 
                 if (response.isSuccessful && response.body()?.success == true) {
@@ -145,14 +141,13 @@ class MessInfoActivity : BaseActivity() {
                 }
             }
         }
-    }
-
-    private fun setDetailedData(messInfo: MessInfoResponse?) {
+    }    private fun setDetailedData(messInfo: MessInfoResponse?) {
         if (messInfo != null) {
+            // Basic Mess Info
             binding.txtMessName.text = messInfo.mess.name
-            binding.txtMessId.text = messInfo.mess.id.toString()
-            binding.txtMessCreated.text = messInfo.mess.createdAt.toString()
-            binding.txtStatus.text = MessStatus.fromValue(messInfo.mess.status)?.value ?: "Active"
+            
+            // Mock Month Data - in a real scenario you'd get this from an API
+            setMonthData()
             
             binding.statusView.hideStatusView()
             binding.layoutMessActions.visibility = android.view.View.VISIBLE
@@ -166,9 +161,9 @@ class MessInfoActivity : BaseActivity() {
     private fun setData(data: Mess?) {
         if (data != null) {
             binding.txtMessName.text = data.name
-            binding.txtMessId.text = data.id.toString()
-            binding.txtMessCreated.text = data.createdAt.toString()
-            binding.txtStatus.text = MessStatus.fromValue(data.status)?.value ?: "Active"
+            
+            // Mock Month Data - in a real scenario you'd get this from an API
+            setMonthData()
             
             binding.statusView.hideStatusView()
             binding.layoutMessActions.visibility = android.view.View.VISIBLE
@@ -181,27 +176,62 @@ class MessInfoActivity : BaseActivity() {
             showNoMessState()
         }
     }
-
-    private fun showNoMessState() {
+    
+    /**
+     * Sets the month data in the UI based on the Month model.
+     * In a production app, this would use real data from the API.
+     */
+    private fun setMonthData() {
+        // Month Name and Type
+        binding.txtMonthName.text = "June 2025"
+        binding.txtMonthType.text = "AUTOMATIC"
+  // Date Range
+        binding.txtStartDate.text = "Jun 01"
+        binding.txtEndDate.text = "Jun 30"
+        
+        // Stats Counters
+        binding.txtMealsCount.text = "124"
+        binding.txtDepositsCount.text = "8"
+        binding.txtPurchasesCount.text = "12"
+        binding.txtCostsCount.text = "3"
+    }
+    
+    /**
+     * Format a date string for display
+     */
+    private fun formatDate(dateString: String?): String {
+        if (dateString.isNullOrEmpty()) return "N/A"
+        
+        try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            return outputFormat.format(date ?: Date())
+        } catch (e: Exception) {
+            return "N/A"
+        }
+    }    private fun showNoMessState() {
         binding.statusView.setStatus(
             StatusView.StatusType.EMPTY,
             "No Mess Found! Please create a mess or join existing mess."
         )
         binding.statusView.showStatusView()
         binding.layoutMessActions.visibility = android.view.View.GONE
-    }
-
-    private fun setupPermissionBasedUI(permissions: List<String>) {
+    }    private fun setupPermissionBasedUI(permissions: List<String>) {
         val messUser = AppPrefs.messUser
         
         // Show/hide Close Mess button based on permission
         if (messUser.hasAnyPermission(MessPermission.MESS_CLOSE)) {
             binding.btnCloseMess.visibility = android.view.View.VISIBLE
+        } else {
+            binding.btnCloseMess.visibility = android.view.View.GONE
         }
 
         // Show/hide Manage Join Requests button based on permission
         if (messUser.hasAnyPermission(MessPermission.JOIN_REQUEST_MANAGEMENT)) {
             binding.btnJoinRequests.visibility = android.view.View.VISIBLE
+        } else {
+            binding.btnJoinRequests.visibility = android.view.View.GONE
         }
     }
 

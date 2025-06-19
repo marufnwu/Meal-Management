@@ -288,4 +288,9 @@
     <color name="green">#00FF00</color>
     <color name="purple">#800080</color>
     <color name="gray">#808080</color>
+
+    <!-- Transparent colors for modern design -->
+    <color name="white_alpha_20">#33FFFFFF</color>
+    <color name="black_alpha_10">#1A000000</color>
+    <color name="black_alpha_20">#33000000</color>
 </resources>
