@@ -36,39 +36,29 @@ class IncomingJoinRequestsAdapter(
             binding.apply {
                 txtUserName.text = request.user.name
                 txtUserEmail.text = request.user.email
-                txtUserPhone.text = request.user.phone ?: "Phone not provided"
-                txtUserCity.text = request.user.city ?: "City not provided"
+                
+                // Phone and city may not be in the API response anymore
+                // Consider hiding these fields if not available
+                txtUserPhone.visibility = android.view.View.GONE
+                txtUserCity.visibility = android.view.View.GONE
+                
+                // Message field from join request
                 txtMessage.text = request.message ?: "No message provided"
                 
                 // Format date
                 try {
-                    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
                     val outputFormat = SimpleDateFormat("MMM dd, yyyy 'at' HH:mm", Locale.getDefault())
-                    val date = inputFormat.parse(request.requested_at)
+                    val date = inputFormat.parse(request.created_at)
                     txtRequestDate.text = "Requested: ${outputFormat.format(date!!)}"
                 } catch (e: Exception) {
-                    txtRequestDate.text = "Requested: ${request.requested_at}"
+                    txtRequestDate.text = "Requested: ${request.created_at}"
                 }
 
-                // Show user background if available
-                request.user_background?.let { background ->
-                    if (background.previous_mess_experience == true) {
-                        txtExperience.text = "Has previous mess experience"
-                        txtExperience.visibility = android.view.View.VISIBLE
-                    } else {
-                        txtExperience.visibility = android.view.View.GONE
-                    }
-                    
-                    if (!background.dietary_restrictions.isNullOrBlank()) {
-                        txtDietaryRestrictions.text = "Dietary: ${background.dietary_restrictions}"
-                        txtDietaryRestrictions.visibility = android.view.View.VISIBLE
-                    } else {
-                        txtDietaryRestrictions.visibility = android.view.View.GONE
-                    }
-                } ?: run {
-                    txtExperience.visibility = android.view.View.GONE
-                    txtDietaryRestrictions.visibility = android.view.View.GONE
-                }
+                // User background information is not in the API anymore
+                // Hide these fields
+                txtExperience.visibility = android.view.View.GONE
+                txtDietaryRestrictions.visibility = android.view.View.GONE
 
                 // Only show action buttons for pending requests
                 if (request.status.lowercase() == "pending") {
@@ -94,7 +84,7 @@ class IncomingJoinRequestsAdapter(
         }
 
         override fun areContentsTheSame(oldItem: IncomingJoinRequest, newItem: IncomingJoinRequest): Boolean {
-            return oldItem == newItem
+            return oldItem.status == newItem.status
         }
     }
 }

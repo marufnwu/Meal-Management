@@ -60,53 +60,79 @@ class AvailableMessesActivity : BaseActivity() {
 
     private fun loadAvailableMesses() {
         lifecycleScope.launch {
+            try {
                 loadingDialog.show()
                 val response = viewModel.getAvailableMesses()
                 loadingDialog.hide()
 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    val data = response.body()?.data
-                    if (data != null) {
-                        adapter.submitList(data.messes)
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        val data = apiResponse.data
+                        if (data != null) {
+                            adapter.submitList(data.messes)
 
-                        if (data.messes.isEmpty()) {
-                            binding.statusView.setStatus(
-                                StatusView.StatusType.EMPTY,
-                                "No available messes found"
-                            )
-                                .setPositiveButton("Create New Mess") {
-                                    // Navigate to create mess or handle action
-                                    shortToast("Create new mess feature")
-                                }
-                                .showStatusView()
-                        } else {
-                            binding.statusView.hideStatusView()
+                            if (data.messes.isEmpty()) {
+                                binding.statusView.setStatus(
+                                    StatusView.StatusType.EMPTY,
+                                    "No available messes found"
+                                )
+                                    .setPositiveButton("Create New Mess") {
+                                        // Navigate to create mess or handle action
+                                        shortToast("Create new mess feature")
+                                    }
+                                    .showStatusView()
+                            } else {
+                                binding.statusView.hideStatusView()
+                            }
                         }
+                    } else {
+                        // API returned an error
+                        binding.statusView.setStatus(
+                            StatusView.StatusType.ERROR,
+                            apiResponse.message
+                        )
+                            .setPositiveButton("Retry") {
+                                loadAvailableMesses()
+                            }
+                            .showStatusView()
                     }
                 } else {
+                    // HTTP error
                     binding.statusView.setStatus(
                         StatusView.StatusType.ERROR,
-                        response.body()?.message ?: "Failed to load available messes"
+                        "Failed to load available messes: ${response.message()}"
                     )
                         .setPositiveButton("Retry") {
                             loadAvailableMesses()
                         }
                         .showStatusView()
                 }
-
+            } catch (e: Exception) {
+                loadingDialog.hide()
+                Log.e("AvailableMessesActivity", "Error loading available messes", e)
+                binding.statusView.setStatus(
+                    StatusView.StatusType.ERROR,
+                    "Error: ${e.message}"
+                )
+                    .setPositiveButton("Retry") {
+                        loadAvailableMesses()
+                    }
+                    .showStatusView()
+            }
         }
     }
 
     private fun showJoinRequestDialog(mess: AvailableMess) {
         GenericDialog.Builder(this)
             .setIcon(R.drawable.ic_group)
-            .setTitle("Join ${mess.name}")
+            .setTitle("Join ${mess.mess.name}")
             .setContentView(R.layout.layout_join_request_dialog)
             .setPositiveButton("Send Request", object : GenericDialog.OnClickListener {
                 override fun onClick(genericDialog: GenericDialog) {
                     val messageEditText = genericDialog.findViewById<EditText>(R.id.et_message)
                     val message = messageEditText?.text.toString().takeIf { it.isNotBlank() }
-                    sendJoinRequest(mess.id, message)
+                    sendJoinRequest(mess.mess.id, message)
                     genericDialog.dismiss()
                 }
             })
@@ -121,12 +147,19 @@ class AvailableMessesActivity : BaseActivity() {
                 val response = viewModel.sendJoinRequest(messId, message)
                 loadingDialog.hide()
 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    shortToast("Join request sent successfully!")
-                    // Refresh the list to update the join request status
-                    loadAvailableMesses()
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        shortToast(apiResponse.message)
+                        // Refresh the list to update the join request status
+                        loadAvailableMesses()
+                    } else {
+                        // API returned an error
+                        shortToast(apiResponse.message)
+                    }
                 } else {
-                    shortToast(response.body()?.message ?: "Failed to send join request")
+                    // HTTP error
+                    shortToast("Failed to send join request: ${response.message()}")
                 }
             } catch (e: Exception) {
                 loadingDialog.hide()

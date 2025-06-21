@@ -1,20 +1,36 @@
 package com.logicline.mydining.data.models.response
 
+import com.google.gson.annotations.SerializedName
 import com.logicline.mydining.data.models.Mess
 import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.data.models.MessUser
 
 data class MessInfoResponse(
-    val mess: Mess,
+    val mess: MessDetail,
     val user_role: MessUserRole,
-    val member_count: Int,
-    val active_month: Month?,
-    val recent_activities: List<RecentActivity>?
+    val permissions: List<String>,
+    val is_admin: Boolean,
+    val joined_at: String,
+    val status: String
+)
+
+data class MessDetail(
+    val id: Int,
+    val name: String,
+    val status: String,
+    val ad_free: Boolean,
+    val all_user_add_meal: Boolean,
+    val fund_add_enabled: Boolean,
+    val created_at: String,
+    val updated_at: String,
+    val is_accepting_members: Boolean,
+    val active_month: Month? = null
 )
 
 data class MessUserRole(
     val id: Int,
     val role: String,
+    val is_admin: Boolean,
     val permissions: List<String>
 )
 
@@ -25,18 +41,12 @@ data class RecentActivity(
 )
 
 data class AvailableMessesResponse(
-    val messes: List<AvailableMess>,
-    val total: Int,
-    val current_user_mess_status: String
+    val messes: List<AvailableMess>
 )
 
 data class AvailableMess(
-    val id: Int,
-    val name: String,
+    val mess: Mess,
     val member_count: Int,
-    val created_at: String,
-    val location: String?,
-    val description: String?,
     val is_accepting_members: Boolean,
     val join_request_exists: Boolean
 )
@@ -56,84 +66,65 @@ data class JoinRequest(
 )
 
 data class UserJoinRequestsResponse(
-    val join_requests: List<UserJoinRequest>,
-    val total: Int,
-    val pending_count: Int
+    val join_requests: List<UserJoinRequest>
 )
 
 data class UserJoinRequest(
     val id: Int,
-    val mess: MessInfo,
+    val old_user_id: Int,
+    val new_mess_id: Int,
     val status: String,
-    val message: String?,
-    val requested_at: String,
-    val updated_at: String,
     val rejection_reason: String?,
-    val can_cancel: Boolean
+    val created_at: String,
+    val updated_at: String,
+    val mess: MessInfo
 )
 
 data class MessInfo(
     val id: Int,
-    val name: String,
-    val member_count: Int
+    val name: String
 )
 
 data class IncomingJoinRequestsResponse(
-    val join_requests: List<IncomingJoinRequest>,
-    val total: Int,
-    val pending_count: Int
+    val join_requests: List<IncomingJoinRequest>
 )
 
 data class IncomingJoinRequest(
     val id: Int,
-    val user: JoinRequestUser,
+    val old_user_id: Int,
+    val new_mess_id: Int,
     val status: String,
-    val message: String?,
-    val requested_at: String,
-    val user_background: UserBackground?
+    val rejection_reason: String?,
+    val created_at: String,
+    val updated_at: String,
+    val user: JoinRequestUser
 )
 
 data class JoinRequestUser(
     val id: Int,
     val name: String,
     val email: String,
-    val phone: String?,
-    val city: String?
-)
-
-data class UserBackground(
-    val previous_mess_experience: Boolean?,
-    val dietary_restrictions: String?
+    val avatar: String?
 )
 
 data class AcceptJoinRequestResponse(
-    val accepted_request: AcceptedRequest,
-    val new_member: NewMember,
-    val welcome_message: String?
-)
-
-data class AcceptedRequest(
     val id: Int,
-    val user: JoinRequestUser,
-    val accepted_at: String,
-    val accepted_by: String
+    val status: String,
+    val mess_user: MessUserDetail
 )
 
-data class NewMember(
-    val mess_user_id: Int,
-    val role: String,
-    val status: String,
-    val initiated_for_current_month: Boolean
+data class MessUserDetail(
+    val id: Int,
+    val user_id: Int,
+    val mess_id: Int,
+    val mess_role_id: Int,
+    val joined_at: String,
+    val left_at: String?,
+    val status: String
 )
 
 data class RejectJoinRequestResponse(
-    val rejected_request: RejectedRequest
-)
-
-data class RejectedRequest(
     val id: Int,
-    val user: JoinRequestUser,
-    val rejected_at: String,
-    val rejected_by: String,
-    val reason: String?
+    val status: String,
+    val rejection_reason: String?
 )

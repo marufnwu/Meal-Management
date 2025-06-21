@@ -117,11 +117,26 @@ class MessInfoActivity : BaseActivity() {
                 
                 loadingDialog.hide()
                 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    currentMessInfo = response.body()?.data
-                    setDetailedData(currentMessInfo)
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        currentMessInfo = apiResponse.data
+                        setDetailedData(currentMessInfo)
+                    } else {
+                        // Error response from API
+                        shortToast(apiResponse.message)
+                        // Fallback to basic mess data
+                        val messUser = AppPrefs.messUser
+                        if (messUser?.mess != null) {
+                            setData(messUser.mess)
+                        } else {
+                            showNoMessState()
+                        }
+                    }
                 } else {
-                    // If detailed mess info fails, just show basic mess data
+                    // HTTP error
+                    shortToast("Failed to load mess info: ${response.message()}")
+                    // Fallback to basic mess data
                     val messUser = AppPrefs.messUser
                     if (messUser?.mess != null) {
                         setData(messUser.mess)
@@ -146,26 +161,48 @@ class MessInfoActivity : BaseActivity() {
             // Basic Mess Info
             binding.txtMessName.text = messInfo.mess.name
             binding.txtMessId.text = messInfo.mess.id.toString()
-            binding.txtMessCreated.text = formatDate(messInfo.mess.createdAt, "MMM dd, yyyy")
+            binding.txtMessCreated.text = formatDate(messInfo.mess.created_at, "MMM dd, yyyy")
             setStatusWithColor(messInfo.mess.status)
             
-            // Mock Month Data - in a real scenario you'd get this from an API
+            // Active Month Info
+            if (messInfo.mess.active_month != null) {
+                binding.txtActiveMonth.text = messInfo.mess.active_month.name
+                // Set other active month details as needed
+            } else {
+                binding.txtActiveMonth.text = "N/A"
+            }
 
             binding.statusView.hideStatusView()
             binding.layoutMessActions.visibility = android.view.View.VISIBLE
             
-            setupPermissionBasedUI(messInfo.user_role.permissions)
+            // Display membership status
+            binding.txtMemberSince.text = formatDate(messInfo.joined_at, "MMM dd, yyyy")
+            binding.txtMemberStatus.text = messInfo.status.uppercase()
+            
+            // Show/hide buttons based on permissions
+            setupPermissionBasedUI(messInfo.permissions)
+            
+            // Set accepting new members status
+            val acceptingMembers = messInfo.mess.is_accepting_members
+            binding.txtAcceptingMembers.text = if (acceptingMembers) "Yes" else "No"
+            binding.txtAcceptingMembers.setTextColor(
+                getColor(if (acceptingMembers) R.color.green_600 else R.color.error_color)
+            )
         } else {
             showNoMessState()
         }
     }    private fun setData(data: Mess?) {
         if (data != null) {
+            // Basic Mess Info
             binding.txtMessName.text = data.name
             binding.txtMessId.text = data.id.toString()
             binding.txtMessCreated.text = formatDate(data.createdAt, "MMM dd, yyyy")
             setStatusWithColor(data.status)
 
-            
+            // Set active month if available
+            binding.txtActiveMonth.text = "N/A"  // Default when we don't have active month data
+
+            // Hide status view and show mess actions
             binding.statusView.hideStatusView()
             binding.layoutMessActions.visibility = android.view.View.VISIBLE
             
@@ -173,6 +210,17 @@ class MessInfoActivity : BaseActivity() {
             val messUser = AppPrefs.messUser
             val permissions = messUser?.role?.permissions?.map { it.permission } ?: emptyList()
             setupPermissionBasedUI(permissions)
+
+            // Set member since date from local data if possible
+            binding.txtMemberSince.text = formatDate(messUser?.joinedAt, "MMM dd, yyyy")
+            binding.txtMemberStatus.text = (messUser?.status ?: "UNKNOWN").uppercase()
+
+            // Set accepting status based on available info (fallback to "Unknown")
+            val acceptingMembers = data.isAcceptingMembers
+            binding.txtAcceptingMembers.text = if (acceptingMembers) "Yes" else "No"
+            binding.txtAcceptingMembers.setTextColor(
+                getColor(if (acceptingMembers) R.color.green_600 else R.color.error_color)
+            )
         } else {
             showNoMessState()
         }
@@ -275,14 +323,20 @@ class MessInfoActivity : BaseActivity() {
                 val response = viewModel.leaveMess()
                 loadingDialog.hide()
                 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    shortToast("Successfully left the mess")
-                    // Refresh user data and return to main screen
-                    viewModel.syncCurrentMessUser()
-                    finish()
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        shortToast(apiResponse.message)
+                        // Refresh user data and return to main screen
+                        viewModel.syncCurrentMessUser()
+                        finish()
+                    } else {
+                        // API returned an error
+                        shortToast(apiResponse.message)
+                    }
                 } else {
-                    val errorMessage = response.body()?.message ?: "Failed to leave mess"
-                    shortToast(errorMessage)
+                    // HTTP error
+                    shortToast("Failed to leave mess: ${response.message()}")
                 }
             } catch (e: Exception) {
                 loadingDialog.hide()
@@ -299,14 +353,25 @@ class MessInfoActivity : BaseActivity() {
                 val response = viewModel.closeMess()
                 loadingDialog.hide()
                 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    shortToast("Mess closed successfully")
-                    // Refresh user data and return to main screen
-                    viewModel.syncCurrentMessUser()
-                    finish()
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        shortToast(apiResponse.message)
+                        
+                        // If needed, we can access the updated status from the response
+                        // val deactivatedStatus = apiResponse.data?.status
+                        // val isAcceptingMembers = apiResponse.data?.is_accepting_members
+                        
+                        // Refresh user data and return to main screen
+                        viewModel.syncCurrentMessUser()
+                        finish()
+                    } else {
+                        // API returned an error
+                        shortToast(apiResponse.message)
+                    }
                 } else {
-                    val errorMessage = response.body()?.message ?: "Failed to close mess"
-                    shortToast(errorMessage)
+                    // HTTP error
+                    shortToast("Failed to close mess: ${response.message()}")
                 }
             } catch (e: Exception) {
                 loadingDialog.hide()

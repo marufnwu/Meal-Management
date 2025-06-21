@@ -65,24 +65,41 @@ class IncomingJoinRequestsActivity : BaseActivity() {
                 val response = viewModel.getMessJoinRequests()
                 loadingDialog.hide()
 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    val data = response.body()?.data
-                    if (data != null) {
-                        adapter.submitList(data.join_requests)
-                        
-                        if (data.join_requests.isEmpty()) {
-                            binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No incoming join requests")
-                                .setPositiveButton("Invite Members") {
-                                    // Navigate to invite members or handle action
-                                    shortToast("Invite members feature")
-                                }
-                                .showStatusView()
-                        } else {
-                            binding.statusView.hideStatusView()
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        val data = apiResponse.data
+                        if (data != null) {
+                            adapter.submitList(data.join_requests)
+                            
+                            if (data.join_requests.isEmpty()) {
+                                binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No incoming join requests")
+                                    .setPositiveButton("Invite Members") {
+                                        // Navigate to invite members or handle action
+                                        shortToast("Invite members feature")
+                                    }
+                                    .showStatusView()
+                            } else {
+                                binding.statusView.hideStatusView()
+                            }
                         }
+                    } else {
+                        // API returned an error
+                        binding.statusView.setStatus(
+                            StatusView.StatusType.ERROR,
+                            apiResponse.message
+                        )
+                            .setPositiveButton("Retry") {
+                                loadIncomingRequests()
+                            }
+                            .showStatusView()
                     }
                 } else {
-                    binding.statusView.setStatus(StatusView.StatusType.ERROR, response.body()?.message ?: "Failed to load incoming requests")
+                    // HTTP error
+                    binding.statusView.setStatus(
+                        StatusView.StatusType.ERROR,
+                        "Failed to load incoming requests: ${response.message()}"
+                    )
                         .setPositiveButton("Retry") {
                             loadIncomingRequests()
                         }
@@ -137,17 +154,22 @@ class IncomingJoinRequestsActivity : BaseActivity() {
                 loadingDialog.show()
                 val response = viewModel.acceptJoinRequest(
                     requestId = requestId,
-                    welcomeMessage = welcomeMessage,
-                    assignRole = "member",
-                    initiateForCurrentMonth = true
+                    welcomeMessage = welcomeMessage
                 )
                 loadingDialog.hide()
 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    shortToast("Join request accepted successfully!")
-                    loadIncomingRequests() // Refresh the list
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        shortToast(apiResponse.message)
+                        loadIncomingRequests() // Refresh the list
+                    } else {
+                        // API returned an error
+                        shortToast(apiResponse.message)
+                    }
                 } else {
-                    shortToast(response.body()?.message ?: "Failed to accept join request")
+                    // HTTP error
+                    shortToast("Failed to accept join request: ${response.message()}")
                 }
             } catch (e: Exception) {
                 loadingDialog.hide()
@@ -163,16 +185,22 @@ class IncomingJoinRequestsActivity : BaseActivity() {
                 loadingDialog.show()
                 val response = viewModel.rejectJoinRequest(
                     requestId = requestId,
-                    reason = reason,
-                    allowFutureRequests = true
+                    reason = reason
                 )
                 loadingDialog.hide()
 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    shortToast("Join request rejected")
-                    loadIncomingRequests() // Refresh the list
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        shortToast(apiResponse.message)
+                        loadIncomingRequests() // Refresh the list
+                    } else {
+                        // API returned an error
+                        shortToast(apiResponse.message)
+                    }
                 } else {
-                    shortToast(response.body()?.message ?: "Failed to reject join request")
+                    // HTTP error
+                    shortToast("Failed to reject join request: ${response.message()}")
                 }
             } catch (e: Exception) {
                 loadingDialog.hide()

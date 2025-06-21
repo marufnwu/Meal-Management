@@ -6,7 +6,7 @@ import com.logicline.mydining.data.models.Mess
 
 @Entity(tableName = "mess")
 data class MessEntity(
-    @PrimaryKey val id: Long,
+    @PrimaryKey val id: Int,
     val name: String,
     val status: String,
     val adFree: Boolean,
@@ -17,7 +17,7 @@ data class MessEntity(
 )
 
 fun MessEntity.toDomainModel(): Mess? {
-    return com.logicline.mydining.data.models.Mess(
+    return Mess(
         id = id,
         name = name,
         status = status,

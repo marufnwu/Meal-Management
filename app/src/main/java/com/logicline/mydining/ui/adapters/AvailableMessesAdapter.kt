@@ -29,20 +29,27 @@ class AvailableMessesAdapter(
         private val binding: ItemAvailableMessBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(mess: AvailableMess) {
+        fun bind(messItem: AvailableMess) {
             binding.apply {
+                val mess = messItem.mess
+                
                 txtMessName.text = mess.name
-                txtMemberCount.text = "${mess.member_count} members"
-                txtLocation.text = mess.location ?: "Location not specified"
-                txtDescription.text = mess.description ?: "No description available"
+                txtMemberCount.text = "${messItem.member_count} members"
+                txtCreatedAt.text = "Created: ${formatDate(mess.created_at)}"
+                
+                // Note: Location and description are no longer in the API response
+                // If you want to keep showing these fields, you'll need to update your API
+                // or hide these fields from the UI
+                txtLocation.text = "Location not specified"
+                txtDescription.text = "No description available"
                 
                 when {
-                    mess.join_request_exists -> {
+                    messItem.join_request_exists -> {
                         btnJoinMess.text = "Request Pending"
                         btnJoinMess.isEnabled = false
                         btnJoinMess.alpha = 0.6f
                     }
-                    mess.is_accepting_members -> {
+                    messItem.is_accepting_members -> {
                         btnJoinMess.text = "Send Join Request"
                         btnJoinMess.isEnabled = true
                         btnJoinMess.alpha = 1.0f
@@ -55,15 +62,20 @@ class AvailableMessesAdapter(
                 }
 
                 btnJoinMess.setOnClickListener {
-                    onMessClick(mess)
+                    onMessClick(messItem)
                 }
             }
+        }
+        
+        private fun formatDate(dateStr: String): String {
+            // Simple date formatting function - you can use your existing formatDate logic
+            return dateStr.split("T").firstOrNull() ?: dateStr
         }
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<AvailableMess>() {
         override fun areItemsTheSame(oldItem: AvailableMess, newItem: AvailableMess): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.mess.id == newItem.mess.id
         }
 
         override fun areContentsTheSame(oldItem: AvailableMess, newItem: AvailableMess): Boolean {

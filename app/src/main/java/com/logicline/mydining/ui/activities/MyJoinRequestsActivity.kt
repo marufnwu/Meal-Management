@@ -60,24 +60,41 @@ class MyJoinRequestsActivity : BaseActivity() {
                 val response = viewModel.getUserJoinRequests()
                 loadingDialog.hide()
                 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    val data = response.body()?.data
-                    if (data != null) {
-                        adapter.submitList(data.join_requests)
-                        
-                        if (data.join_requests.isEmpty()) {
-                            binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No join requests found")
-                                .setPositiveButton("Browse Available Messes") {
-                                    // Navigate to available messes
-                                    finish()
-                                }
-                                .showStatusView()
-                        } else {
-                            binding.statusView.hideStatusView()
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        val data = apiResponse.data
+                        if (data != null) {
+                            adapter.submitList(data.join_requests)
+                            
+                            if (data.join_requests.isEmpty()) {
+                                binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No join requests found")
+                                    .setPositiveButton("Browse Available Messes") {
+                                        // Navigate to available messes
+                                        finish()
+                                    }
+                                    .showStatusView()
+                            } else {
+                                binding.statusView.hideStatusView()
+                            }
                         }
+                    } else {
+                        // API returned an error
+                        binding.statusView.setStatus(
+                            StatusView.StatusType.ERROR, 
+                            apiResponse.message
+                        )
+                            .setPositiveButton("Retry") {
+                                loadJoinRequests()
+                            }
+                            .showStatusView()
                     }
                 } else {
-                    binding.statusView.setStatus(StatusView.StatusType.ERROR, response.body()?.message ?: "Failed to load join requests")
+                    // HTTP error
+                    binding.statusView.setStatus(
+                        StatusView.StatusType.ERROR, 
+                        "Failed to load join requests: ${response.message()}"
+                    )
                         .setPositiveButton("Retry") {
                             loadJoinRequests()
                         }
@@ -113,11 +130,18 @@ class MyJoinRequestsActivity : BaseActivity() {
                 val response = viewModel.cancelJoinRequest(requestId)
                 loadingDialog.hide()
 
-                if (response.isSuccessful && response.body()?.success == true) {
-                    shortToast("Join request cancelled successfully")
-                    loadJoinRequests() // Refresh the list
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    if (!apiResponse?.error!!) {
+                        shortToast(apiResponse.message)
+                        loadJoinRequests() // Refresh the list
+                    } else {
+                        // API returned an error
+                        shortToast(apiResponse.message)
+                    }
                 } else {
-                    shortToast(response.body()?.message ?: "Failed to cancel join request")
+                    // HTTP error
+                    shortToast("Failed to cancel join request: ${response.message()}")
                 }
             } catch (e: Exception) {
                 loadingDialog.hide()
