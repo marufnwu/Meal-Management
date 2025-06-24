@@ -3,6 +3,7 @@ package com.logicline.mydining.extensions
 import com.logicline.mydining.data.DataState
 import com.logicline.mydining.data.models.response.ServerResponse
 import retrofit2.Response
+import kotlin.collections.*
 
 suspend fun <T> safeApiCall(apiCall: suspend () -> Response<ServerResponse<T>>): DataState<T?> {
     return try {

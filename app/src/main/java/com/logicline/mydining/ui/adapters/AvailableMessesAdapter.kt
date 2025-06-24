@@ -35,7 +35,7 @@ class AvailableMessesAdapter(
                 
                 txtMessName.text = mess.name
                 txtMemberCount.text = "${messItem.member_count} members"
-                txtCreatedAt.text = "Created: ${formatDate(mess.created_at)}"
+                //txtCreatedAt.text = "Created: ${formatDate(mess.created_at)}"
                 
                 // Note: Location and description are no longer in the API response
                 // If you want to keep showing these fields, you'll need to update your API
