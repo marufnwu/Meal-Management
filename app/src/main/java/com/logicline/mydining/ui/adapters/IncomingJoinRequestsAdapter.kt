@@ -1,6 +1,7 @@
 package com.logicline.mydining.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -39,11 +40,12 @@ class IncomingJoinRequestsAdapter(
                 
                 // Phone and city may not be in the API response anymore
                 // Consider hiding these fields if not available
-                txtUserPhone.visibility = android.view.View.GONE
-                txtUserCity.visibility = android.view.View.GONE
+                txtUserPhone.visibility = View.GONE
+                txtUserCity.visibility = View.GONE
                 
-                // Message field from join request
-                txtMessage.text = request.message ?: "No message provided"
+                // Message field - IncomingJoinRequest doesn't have message field
+                // Hide message field for now
+                txtMessage.visibility = View.GONE
                 
                 // Format date
                 try {
@@ -57,12 +59,12 @@ class IncomingJoinRequestsAdapter(
 
                 // User background information is not in the API anymore
                 // Hide these fields
-                txtExperience.visibility = android.view.View.GONE
-                txtDietaryRestrictions.visibility = android.view.View.GONE
+                txtExperience.visibility = View.GONE
+                txtDietaryRestrictions.visibility = View.GONE
 
                 // Only show action buttons for pending requests
                 if (request.status.lowercase() == "pending") {
-                    layoutActions.visibility = android.view.View.VISIBLE
+                    layoutActions.visibility = View.VISIBLE
                     
                     btnAccept.setOnClickListener {
                         onAcceptClick(request)
@@ -72,7 +74,7 @@ class IncomingJoinRequestsAdapter(
                         onRejectClick(request)
                     }
                 } else {
-                    layoutActions.visibility = android.view.View.GONE
+                    layoutActions.visibility = View.GONE
                 }
             }
         }

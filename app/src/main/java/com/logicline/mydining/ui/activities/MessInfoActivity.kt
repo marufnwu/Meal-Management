@@ -17,6 +17,7 @@ import com.logicline.mydining.data.models.Mess
 import com.logicline.mydining.data.models.response.MessInfoResponse
 import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.ui.custom.GenericDialog
+import com.logicline.mydining.ui.custom.MaterialIconEditTextField
 import com.logicline.mydining.ui.custom.StatusView
 import com.logicline.mydining.ui.viewmodels.UserViewModel
 import com.logicline.mydining.utils.AppPrefs
@@ -52,7 +53,9 @@ class MessInfoActivity : BaseActivity() {
         initViews()
         setCollectors()
         loadMessInfo()
-    }    private fun setCollectors() {
+    }
+
+    private fun setCollectors() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.messUserState.collectState(
@@ -73,21 +76,9 @@ class MessInfoActivity : BaseActivity() {
                 )
             }
         }
-    }private fun initViews() {
-        binding.statusView.setPositiveButton(
-            text = "Create Mess",
-            isVisible = true
-        ) {
-            showCreateMessDialog()
-        }
+    }
 
-        binding.statusView.setNegativeButton(
-            text = "Join Existing Mess",
-            isVisible = true
-        ) {
-            openAvailableMesses()
-        }        // Refresh button removed as requested
-
+    private fun initViews() {
         // Mess Management Actions
         binding.btnLeaveMess.setOnClickListener {
             showLeaveMessConfirmation()
@@ -108,14 +99,14 @@ class MessInfoActivity : BaseActivity() {
         binding.btnMyJoinRequests.setOnClickListener {
             openMyJoinRequests()
         }
-    }    private fun loadMessInfo() {
+    }
+
+    private fun loadMessInfo() {
         lifecycleScope.launch {
             try {
-                loadingDialog.show()
+                showLoadingState()
                 
                 val response = viewModel.getCurrentMessInfo()
-                
-                loadingDialog.hide()
                 
                 if (response.isSuccessful) {
                     val apiResponse = response.body()
@@ -135,29 +126,20 @@ class MessInfoActivity : BaseActivity() {
                     }
                 } else {
                     // HTTP error
-                    shortToast("Failed to load mess info: ${response.message()}")
-                    // Fallback to basic mess data
-                    val messUser = AppPrefs.messUser
-                    if (messUser?.mess != null) {
-                        setData(messUser.mess)
-                    } else {
-                        showNoMessState()
-                    }
+                    showErrorState("Failed to load mess info: ${response.message()}")
                 }
             } catch (e: Exception) {
-                loadingDialog.hide()
                 Log.e("MessInfoActivity", "Error loading mess info", e)
-                // Fallback to basic mess data
-                val messUser = AppPrefs.messUser
-                if (messUser?.mess != null) {
-                    setData(messUser.mess)
-                } else {
-                    showNoMessState()
-                }
+                showErrorState("Error: ${e.message}")
             }
         }
-    }    private fun setDetailedData(messInfo: MessInfoResponse?) {
+    }
+
+    private fun setDetailedData(messInfo: MessInfoResponse?) {
         if (messInfo != null) {
+            // Show content inside StatusView
+            showContent()
+            
             // Basic Mess Info
             binding.txtMessName.text = messInfo.mess.name
             binding.txtMessId.text = messInfo.mess.id.toString()
@@ -171,9 +153,6 @@ class MessInfoActivity : BaseActivity() {
             } else {
                 binding.txtActiveMonth.text = "N/A"
             }
-
-            binding.statusView.hideStatusView()
-            binding.layoutMessActions.visibility = android.view.View.VISIBLE
             
             // Display membership status
             binding.txtMemberSince.text = formatDate(messInfo.joined_at, "MMM dd, yyyy")
@@ -191,8 +170,13 @@ class MessInfoActivity : BaseActivity() {
         } else {
             showNoMessState()
         }
-    }    private fun setData(data: Mess?) {
+    }
+
+    private fun setData(data: Mess?) {
         if (data != null) {
+            // Show content inside StatusView
+            showContent()
+            
             // Basic Mess Info
             binding.txtMessName.text = data.name
             binding.txtMessId.text = data.id.toString()
@@ -201,10 +185,6 @@ class MessInfoActivity : BaseActivity() {
 
             // Set active month if available
             binding.txtActiveMonth.text = "N/A"  // Default when we don't have active month data
-
-            // Hide status view and show mess actions
-            binding.statusView.hideStatusView()
-            binding.layoutMessActions.visibility = android.view.View.VISIBLE
             
             // Use current user permissions for basic setup
             val messUser = AppPrefs.messUser
@@ -227,11 +207,6 @@ class MessInfoActivity : BaseActivity() {
     }
     
     /**
-     * Sets the month data in the UI based on the Month model.
-     * In a production app, this would use real data from the API.
-     */
-
-      /**
      * Format a date string for display
      * @param dateString The date string to format
      * @param pattern The output date pattern (default: "MMM dd")
@@ -247,14 +222,58 @@ class MessInfoActivity : BaseActivity() {
         } catch (e: Exception) {
             return "N/A"
         }
-    }private fun showNoMessState() {
+    }
+
+    private fun showNoMessState() {
+        // Hide content first
+        binding.layoutContent.visibility = android.view.View.GONE
+        binding.layoutMessActions.visibility = android.view.View.GONE
+        
         binding.statusView.setStatus(
             StatusView.StatusType.EMPTY,
-            "No Mess Found! Please create a mess or join existing mess."
+            "No mess found. Create a new mess to get started."
         )
-        binding.statusView.showStatusView()
+        .setPositiveButton("Create New Mess") {
+            showCreateMessDialog()
+        }
+        .setNegativeButton("Join Existing Mess") {
+            openAvailableMesses()
+        }
+        .showStatusView()
+    }
+
+    private fun showContent() {
+        // Hide status view and show content containers
+        binding.statusView.hideStatusView()
+        binding.layoutContent.visibility = android.view.View.VISIBLE
+        binding.layoutMessActions.visibility = android.view.View.VISIBLE
+    }
+
+    private fun showLoadingState() {
+        // Hide content first
+        binding.layoutContent.visibility = android.view.View.GONE
         binding.layoutMessActions.visibility = android.view.View.GONE
-    }    private fun setupPermissionBasedUI(permissions: List<String>) {
+        
+        binding.statusView.setStatus(
+            StatusView.StatusType.INFO,
+            "Loading mess information..."
+        ).showStatusView()
+    }
+
+    private fun showErrorState(message: String) {
+        // Hide content first
+        binding.layoutContent.visibility = android.view.View.GONE
+        binding.layoutMessActions.visibility = android.view.View.GONE
+        
+        binding.statusView.setStatus(
+            StatusView.StatusType.ERROR,
+            message
+        ).setPositiveButton("Retry") {
+            loadMessInfo()
+        }.showStatusView()
+    }
+
+    private fun setupPermissionBasedUI(permissions: List<String>) {
         val messUser = AppPrefs.messUser
         
         // Show/hide Close Mess button based on permission
@@ -274,13 +293,15 @@ class MessInfoActivity : BaseActivity() {
 
     private fun createMess(name: String) {
         viewModel.createMess(name)
-    }    private fun showCreateMessDialog() {
+    }
+
+    private fun showCreateMessDialog() {
         messCreateDialog = GenericDialog.Builder(this)
             .setIcon(R.drawable.add)
             .setTitle("Create Mess!")
             .setPositiveButton("Create Mess", object : GenericDialog.OnClickListener {
                 override fun onClick(genericDialog: GenericDialog) {
-                    val name = genericDialog.findViewById<EditText>(R.id.ev_mess_name)
+                    val name = genericDialog.findViewById<MaterialIconEditTextField>(R.id.ev_mess_name)
                     createMess(name?.text?.toString() ?: "")
                 }
             })
@@ -288,7 +309,9 @@ class MessInfoActivity : BaseActivity() {
             .setAutoDismiss(false)
             .setContentView(R.layout.layout_create_mess)
             .show()
-    }    private fun showLeaveMessConfirmation() {
+    }
+
+    private fun showLeaveMessConfirmation() {
         GenericDialog.Builder(this)
             .setIcon(R.drawable.ic_warning)
             .setTitle("Leave Mess")
@@ -380,7 +403,6 @@ class MessInfoActivity : BaseActivity() {
             }
         }
     }
-
     private fun openAvailableMesses() {
         val intent = Intent(this, AvailableMessesActivity::class.java)
         startActivity(intent)
@@ -401,7 +423,7 @@ class MessInfoActivity : BaseActivity() {
      */
     private fun setStatusWithColor(status: String) {
         binding.txtStatus.text = status.uppercase()
-        
+
         // Set color based on status
         when (status.lowercase()) {
             "active" -> binding.txtStatus.setTextColor(getColor(R.color.green_600))
