@@ -70,9 +70,11 @@ class AvailableMessesActivity : BaseActivity() {
                     if (!apiResponse?.error!!) {
                         val data = apiResponse.data
                         if (data != null) {
-                            adapter.submitList(data.messes)
+                            // Flatten the list of AvailableMessesResponse into a single list of AvailableMess
+                            val allMesses = data.flatMap { it.messes }
+                            adapter.submitList(allMesses)
 
-                            if (data.messes.isEmpty()) {
+                            if (allMesses.isEmpty()) {
                                 binding.statusView.setStatus(
                                     StatusView.StatusType.EMPTY,
                                     "No available messes found"

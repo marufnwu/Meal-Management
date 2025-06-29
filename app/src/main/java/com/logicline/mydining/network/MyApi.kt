@@ -608,7 +608,7 @@ interface MyApi {
     suspend fun getAvailableMesses(
         @Query("search") search: String? = null,
         @Query("limit") limit: Int? = null
-    ): Response<ServerResponse<AvailableMessesResponse>>
+    ): Response<ServerResponse<List<AvailableMessesResponse>>>
 
     @FormUrlEncoded
     @POST("api/mess-management/join-request/{mess}")

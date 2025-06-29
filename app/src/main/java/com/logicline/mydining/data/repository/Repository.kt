@@ -27,7 +27,7 @@ interface Repository {
     suspend fun getCurrentMessInfo(): Response<ServerResponse<MessInfoResponse>>
     suspend fun leaveMess(): Response<ServerResponse<Nothing>>
     suspend fun closeMess(): Response<ServerResponse<Nothing>>
-    suspend fun getAvailableMesses(search: String? = null, limit: Int? = null): Response<ServerResponse<AvailableMessesResponse>>
+    suspend fun getAvailableMesses(search: String? = null, limit: Int? = null): Response<ServerResponse<List<AvailableMessesResponse>>>
     suspend fun sendJoinRequest(messId: Int, message: String? = null): Response<ServerResponse<JoinRequestResponse>>
     suspend fun getUserJoinRequests(status: String? = null, limit: Int? = null): Response<ServerResponse<UserJoinRequestsResponse>>
     suspend fun cancelJoinRequest(requestId: Int): Response<ServerResponse<Nothing>>
