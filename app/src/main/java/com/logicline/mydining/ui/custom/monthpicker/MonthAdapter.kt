@@ -13,6 +13,7 @@ import com.google.android.material.chip.Chip
 import com.logicline.mydining.R
 import com.logicline.mydining.data.models.Month
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class MonthAdapter(
@@ -141,7 +142,7 @@ class MonthAdapter(
             }
 
             // Show date range when available
-            dateRange?.text = formatDateRange(month.startAt, month.endAt)
+            dateRange?.text = formatDateRange(month.startAt.toDate()!!, month.endAt?.toDate())
 
             // Show type information
             typeText?.text = month.type
@@ -157,27 +158,8 @@ class MonthAdapter(
             }
         }
 
-        private fun formatDateRange(start: String, end: String?): String {
+        private fun formatDateRange(startDate: Date, endDate: Date?): String {
             // Format date range string from ISO dates
-            val startDate = try {
-                SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(start)?.let {
-                    SimpleDateFormat("MMM d", Locale.getDefault()).format(it)
-                } ?: start
-            } catch (e: Exception) {
-                start
-            }
-
-            val endDate = if (end.isNullOrEmpty()) {
-                "Present"
-            } else {
-                try {
-                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(end)?.let {
-                        SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(it)
-                    } ?: end
-                } catch (e: Exception) {
-                    end
-                }
-            }
 
             return "$startDate - $endDate"
         }

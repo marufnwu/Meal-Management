@@ -65,9 +65,9 @@ class MyJoinRequestsActivity : BaseActivity() {
                     if (!apiResponse?.error!!) {
                         val data = apiResponse.data
                         if (data != null) {
-                            adapter.submitList(data.join_requests)
+                            adapter.submitList(data)
                             
-                            if (data.join_requests.isEmpty()) {
+                            if (data.isEmpty()) {
                                 binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No join requests found")
                                     .setPositiveButton("Browse Available Messes") {
                                         // Navigate to available messes
@@ -113,7 +113,7 @@ class MyJoinRequestsActivity : BaseActivity() {
     }    private fun showCancelConfirmation(request: UserJoinRequest) {
         GenericDialog.Builder(this)
             .setTitle("Cancel Join Request")
-            .setBodyText("Are you sure you want to cancel your join request to ${request.mess.name}?")
+            .setBodyText("Are you sure you want to cancel your join request to ${request.new_mess.name}?")
             .setPositiveButton("Cancel Request", object : GenericDialog.OnClickListener {
                 override fun onClick(genericDialog: GenericDialog) {
                     cancelJoinRequest(request.id)

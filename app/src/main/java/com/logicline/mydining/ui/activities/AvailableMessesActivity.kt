@@ -1,5 +1,6 @@
 package com.logicline.mydining.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAvailableMessesBinding
 import com.logicline.mydining.data.models.response.AvailableMess
-import com.logicline.mydining.data.models.response.AvailableMessesResponse
 import com.logicline.mydining.ui.adapters.AvailableMessesAdapter
 import com.logicline.mydining.ui.custom.GenericDialog
 import com.logicline.mydining.ui.custom.StatusView
@@ -46,13 +46,20 @@ class AvailableMessesActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = AvailableMessesAdapter { mess ->
-            if (mess.join_request_exists) {
-                shortToast("You already have a pending request for this mess")
-            } else {
-                showJoinRequestDialog(mess)
+        adapter = AvailableMessesAdapter(
+            onMessClick = { mess ->
+                if (mess.join_request_exists) {
+                    shortToast("You already have a pending request for this mess")
+                } else {
+                    showJoinRequestDialog(mess)
+                }
+            },
+            onCancelRequest = { mess ->
+                // Navigate to MyJoinRequestsActivity to manage join requests
+                val intent = Intent(this, MyJoinRequestsActivity::class.java)
+                startActivity(intent)
             }
-        }
+        )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -67,32 +74,29 @@ class AvailableMessesActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     val apiResponse = response.body()
-                    if (!apiResponse?.error!!) {
-                        val data = apiResponse.data
-                        if (data != null) {
-                            // Flatten the list of AvailableMessesResponse into a single list of AvailableMess
-                            val allMesses = data.flatMap { it.messes }
-                            adapter.submitList(allMesses)
+                    if (apiResponse != null && !apiResponse.error) {
+                        val allMesses: List<AvailableMess> = response.body()?.data ?: emptyList()
+                        adapter.submitList(allMesses)
 
-                            if (allMesses.isEmpty()) {
-                                binding.statusView.setStatus(
-                                    StatusView.StatusType.EMPTY,
-                                    "No available messes found"
-                                )
-                                    .setPositiveButton("Create New Mess") {
-                                        // Navigate to create mess or handle action
-                                        shortToast("Create new mess feature")
-                                    }
-                                    .showStatusView()
-                            } else {
-                                binding.statusView.hideStatusView()
-                            }
+                        if (allMesses.isEmpty()) {
+                            binding.statusView.setStatus(
+                                StatusView.StatusType.EMPTY,
+                                "No available messes found"
+                            )
+                                .setPositiveButton("Create New Mess") {
+                                    // Navigate to create mess or handle action
+                                    shortToast("Create new mess feature")
+                                }
+                                .showStatusView()
+                        } else {
+                            binding.statusView.hideStatusView()
                         }
                     } else {
                         // API returned an error
+                        val errorMessage = apiResponse?.message ?: "Unknown error occurred"
                         binding.statusView.setStatus(
                             StatusView.StatusType.ERROR,
-                            apiResponse.message
+                            errorMessage
                         )
                             .setPositiveButton("Retry") {
                                 loadAvailableMesses()
@@ -151,13 +155,14 @@ class AvailableMessesActivity : BaseActivity() {
 
                 if (response.isSuccessful) {
                     val apiResponse = response.body()
-                    if (!apiResponse?.error!!) {
+                    if (apiResponse != null && !apiResponse.error) {
                         shortToast(apiResponse.message)
                         // Refresh the list to update the join request status
                         loadAvailableMesses()
                     } else {
                         // API returned an error
-                        shortToast(apiResponse.message)
+                        val errorMessage = apiResponse?.message ?: "Failed to send join request"
+                        shortToast(errorMessage)
                     }
                 } else {
                     // HTTP error

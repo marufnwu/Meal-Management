@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.ui.adapter.UserListAdapter
+import com.logicline.mydining.ui.adapter.GroupedMembersAdapter
 import com.logicline.mydining.databinding.ActivityMembersBinding
 import com.logicline.mydining.databinding.DialogAddNewMemberBinding
 import com.logicline.mydining.data.enums.MessPermission
@@ -20,6 +21,7 @@ import com.logicline.mydining.data.models.MessUser
 import com.logicline.mydining.data.models.UserData
 import com.logicline.mydining.data.models.response.GenericRespose
 import com.logicline.mydining.data.models.response.ServerResponse
+import com.logicline.mydining.data.models.response.AllMembersResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
@@ -34,10 +36,10 @@ import retrofit2.Response
 import java.util.Locale
 
 class MembersActivity : BaseActivity() {
-    lateinit var adapter: UserListAdapter
+    lateinit var groupedAdapter: GroupedMembersAdapter
     lateinit var binding : ActivityMembersBinding
     lateinit var loadingDialog: LoadingDialog
-    private var userList: MutableList<MessUser> = mutableListOf()
+    private var groupedMembersList: MutableList<AllMembersResponse> = mutableListOf()
     lateinit var myFullScreenAd: MyFullScreenAd
     var countries : MutableList<Country> = mutableListOf()
 
@@ -60,15 +62,10 @@ class MembersActivity : BaseActivity() {
         binding.recyMembers.setHasFixedSize(true)
         binding.recyMembers.layoutManager = LinearLayoutManager(this@MembersActivity)
 
-        adapter = UserListAdapter(this, userList)
-
-        adapter.onAction = object : UserListAdapter.OnAction {
-            override fun onDeleteClick(messUser: MessUser) {
-                userDeleteCheck(messUser)
-            }
-
+        groupedAdapter = GroupedMembersAdapter(this, groupedMembersList) { messUser ->
+            userDeleteCheck(messUser)
         }
-        binding.recyMembers.adapter = adapter
+        binding.recyMembers.adapter = groupedAdapter
 
         binding.fab.setOnClickListener {
             showAddMemberDialog()
@@ -176,10 +173,10 @@ class MembersActivity : BaseActivity() {
     private fun getUsersList() {
         loadingDialog.show()
         (application as MyApplication)
-            .myApi.getUsers(1)
-            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
+            .myApi.getUsers()
+            .enqueue(object: Callback<ServerResponse<List<AllMembersResponse>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
+                override fun onResponse(call: Call<ServerResponse<List<AllMembersResponse>>>, response: Response<ServerResponse<List<AllMembersResponse>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
@@ -191,19 +188,21 @@ class MembersActivity : BaseActivity() {
                         }
                     }
                 }
-                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<AllMembersResponse>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 
             })
     }
 
-    private fun setUsers(list: List<MessUser>) {
-        userList.clear()
-        userList.addAll(list)
-        adapter.notifyDataSetChanged()
+    private fun setUsers(list: List<AllMembersResponse>) {
+        groupedMembersList.clear()
+        groupedMembersList.addAll(list)
+        groupedAdapter.notifyDataSetChanged()
 
-        binding.txtMember.text = list.size.toString()
+        // Calculate total members across all groups
+//        val totalMembers = list.sumOf { it.users.size }
+//        binding.txtMember.text = totalMembers.toString()
     }
 
     private fun showAddMemberDialog() {

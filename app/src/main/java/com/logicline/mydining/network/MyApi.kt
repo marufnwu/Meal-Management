@@ -44,6 +44,7 @@ import com.logicline.mydining.data.models.response.AvatarUploadResponse
 import com.logicline.mydining.data.models.response.*
 import com.logicline.mydining.data.requests.MonthCreateRequest
 import com.logicline.mydining.utils.AppPrefs
+import com.logicline.mydining.utils.CarbonDateAdapter
 import com.logicline.mydining.utils.LocalDB
 
 import okhttp3.Interceptor
@@ -83,8 +84,7 @@ interface MyApi {
 
     @GET("api/member/list")
     fun getUsers(
-        @Query("active") active: Int
-    ): Call<ServerResponse<List<MessUser>>>
+    ): Call<ServerResponse<List<AllMembersResponse>>>
 
     @FormUrlEncoded
     @POST("api/auth/login")
@@ -608,12 +608,12 @@ interface MyApi {
     suspend fun getAvailableMesses(
         @Query("search") search: String? = null,
         @Query("limit") limit: Int? = null
-    ): Response<ServerResponse<List<AvailableMessesResponse>>>
+    ): Response<ServerResponse<List<AvailableMess>>>
 
     @FormUrlEncoded
-    @POST("api/mess-management/join-request/{mess}")
+    @POST("api/mess-management/join-request")
     suspend fun sendJoinRequest(
-        @Path("mess") messId: Int,
+        @Field("mess_id") messId: Int,
         @Field("message") message: String? = null
     ): Response<ServerResponse<JoinRequestResponse>>
 
@@ -621,7 +621,7 @@ interface MyApi {
     suspend fun getUserJoinRequests(
         @Query("status") status: String? = null,
         @Query("limit") limit: Int? = null
-    ): Response<ServerResponse<UserJoinRequestsResponse>>
+    ): Response<ServerResponse<List<UserJoinRequest>>>
 
     @DELETE("api/mess-management/join-requests/{request}")
     suspend fun cancelJoinRequest(
@@ -632,7 +632,7 @@ interface MyApi {
     suspend fun getMessJoinRequests(
         @Query("status") status: String? = null,
         @Query("limit") limit: Int? = null
-    ): Response<ServerResponse<IncomingJoinRequestsResponse>>
+    ): Response<ServerResponse<List<UserJoinRequest>>>
 
     @FormUrlEncoded
     @POST("api/mess-management/incoming-requests/{request}/accept")
@@ -720,6 +720,7 @@ interface MyApi {
 
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setLenient()
+            gsonBuilder.registerTypeAdapter(com.logicline.mydining.utils.CarbonDate::class.java, CarbonDateAdapter())
             val gson = gsonBuilder.create()
 
             return Retrofit.Builder()

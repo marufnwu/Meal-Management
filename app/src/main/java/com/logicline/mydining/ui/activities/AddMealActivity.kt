@@ -284,9 +284,9 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
 
                             if(dayMealResponse.data!=null){
                                 val meal = dayMealResponse.data!!
-                                binding.edtDinner.setText(meal.dinner)
-                                binding.edtLunch.setText(meal.lunch)
-                                binding.edtBreakfast.setText(meal.breakfast)
+                                binding.edtDinner.setText(meal.dinner.toString())
+                                binding.edtLunch.setText(meal.lunch.toString())
+                                binding.edtBreakfast.setText(meal.breakfast.toString())
                             }
 
                         }
@@ -364,9 +364,9 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
 
                                 if(dayMealResponse.data!=null){
                                     val meal = dayMealResponse.data!!
-                                    binding.edtDinner.setText(meal.dinner)
-                                    binding.edtLunch.setText(meal.lunch)
-                                    binding.edtBreakfast.setText(meal.breakfast)
+                                    binding.edtDinner.setText(meal.dinner.toString())
+                                    binding.edtLunch.setText(meal.lunch.toString())
+                                    binding.edtBreakfast.setText(meal.breakfast.toString())
                                 }else{
                                     binding.edtDinner.setText("0")
                                     binding.edtLunch.setText("0")

@@ -12,11 +12,13 @@ import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
 class MonthPickerDialog private constructor(
     context: Context,
     private val preselectedMonthId: Int? = null,
-    private val onMonthSelected: (Month) -> Unit
+    cancelable: Boolean = true,
+    private val onMonthSelected: (Month) -> Unit,
+
 ) : Dialog(context) {
 
     init {
-        setCancelable(true)
+        setCancelable(cancelable)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +53,17 @@ class MonthPickerDialog private constructor(
     companion object {
         private var dialogInstance: MonthPickerDialog? = null
 
+        val isShowing: Boolean
+            get() = dialogInstance?.isShowing == true
+
+        fun hide() {
+            dialogInstance?.dismiss()
+        }
+
         fun show(
             context: Context,
             preselectedMonthId: Int? = null,
+            cancelable: Boolean = true,
             onMonthSelected: (Month) -> Unit
         ) {
             context.shortToast("Opening month picker dialog")

@@ -9,7 +9,8 @@
         android:maxSdkVersion="32" /> <!-- For Android 13+ consider granular media permissions -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" /> <!-- For scoped storage, this is not needed for app-specific dirs on API 29+ -->
+        android:maxSdkVersion="28" /> <!-- For scoped storage, this is not needed for app-specific
+    dirs on API 29+ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
@@ -93,6 +94,7 @@
                 android:value="" />
         </activity>
 
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -102,6 +104,11 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="My Dining" />
+
+        <activity
+            android:name=".ui.activities.IncomingJoinRequestsActivity"
+            android:exported="false"
+            android:label="Incoming Join Requests" />
 
         <activity
             android:name=".ui.activities.InitiateMemberActivity"
@@ -181,6 +188,10 @@
             android:name=".ui.activities.MyJoinRequestsActivity"
             android:exported="false"
             android:label="My Join Requests" />
+        <activity
+            android:name=".ui.activities.IncomingJoinRequestsActivity"
+            android:exported="false"
+            android:label="Incoming Join Requests" />
 
         <service
             android:name=".notification.NotificationService"

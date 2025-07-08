@@ -180,7 +180,7 @@ class MessInfoActivity : BaseActivity() {
             // Basic Mess Info
             binding.txtMessName.text = data.name
             binding.txtMessId.text = data.id.toString()
-            binding.txtMessCreated.text = formatDate(data.createdAt, "MMM dd, yyyy")
+            binding.txtMessCreated.text = data.createdAt?.toDisplayDate()
             setStatusWithColor(data.status)
 
             // Set active month if available

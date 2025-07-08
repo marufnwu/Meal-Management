@@ -2,15 +2,19 @@ package com.logicline.mydining.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.logicline.mydining.databinding.ItemAvailableMessBinding
 import com.logicline.mydining.data.models.response.AvailableMess
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AvailableMessesAdapter(
-    private val onMessClick: (AvailableMess) -> Unit
-) : ListAdapter<AvailableMess, AvailableMessesAdapter.ViewHolder>(DiffCallback()) {
+    private val onMessClick: (AvailableMess) -> Unit,
+    private val onCancelRequest: (AvailableMess) -> Unit
+) : RecyclerView.Adapter<AvailableMessesAdapter.ViewHolder>() {
+
+    private var messList: List<AvailableMess> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemAvailableMessBinding.inflate(
@@ -22,7 +26,14 @@ class AvailableMessesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(messList[position])
+    }
+
+    override fun getItemCount(): Int = messList.size
+
+    fun submitList(newList: List<AvailableMess>) {
+        messList = newList
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(
@@ -32,54 +43,83 @@ class AvailableMessesAdapter(
         fun bind(messItem: AvailableMess) {
             binding.apply {
                 val mess = messItem.mess
-                
+
                 txtMessName.text = mess.name
                 txtMemberCount.text = "${messItem.member_count} members"
-                //txtCreatedAt.text = "Created: ${formatDate(mess.created_at)}"
                 
-                // Note: Location and description are no longer in the API response
-                // If you want to keep showing these fields, you'll need to update your API
-                // or hide these fields from the UI
-                txtLocation.text = "Location not specified"
-                txtDescription.text = "No description available"
-                
+                // Format and display creation date if available
+                if (mess.createdAt != null) {
+                    txtLocation.text = "Created: ${mess.createdAt.toDisplayDate()}"
+                } else {
+                    txtLocation.text = "Recently created"
+                }
+
+                // Show mess status and accepting members info
+                val statusText = when {
+                    mess.status.equals("active", ignoreCase = true) && messItem.is_accepting_members -> 
+                        "Active • Accepting new members"
+                    mess.status.equals("active", ignoreCase = true) -> 
+                        "Active • Not accepting members"
+                    else -> 
+                        "Status: ${mess.status.replaceFirstChar { it.uppercase() }}"
+                }
+                txtDescription.text = statusText
+
+                // Handle button state based on mess status and join request
                 when {
                     messItem.join_request_exists -> {
-                        btnJoinMess.text = "Request Pending"
-                        btnJoinMess.isEnabled = false
-                        btnJoinMess.alpha = 0.6f
-                    }
-                    messItem.is_accepting_members -> {
-                        btnJoinMess.text = "Send Join Request"
+                        btnJoinMess.text = "Cancel Request"
                         btnJoinMess.isEnabled = true
                         btnJoinMess.alpha = 1.0f
                     }
-                    else -> {
+                    !messItem.is_accepting_members -> {
                         btnJoinMess.text = "Not Accepting Members"
                         btnJoinMess.isEnabled = false
                         btnJoinMess.alpha = 0.6f
                     }
+                    !mess.status.equals("active", ignoreCase = true) -> {
+                        btnJoinMess.text = "Mess Inactive"
+                        btnJoinMess.isEnabled = false
+                        btnJoinMess.alpha = 0.6f
+                    }
+                    else -> {
+                        btnJoinMess.text = "Send Join Request"
+                        btnJoinMess.isEnabled = true
+                        btnJoinMess.alpha = 1.0f
+                    }
                 }
 
                 btnJoinMess.setOnClickListener {
-                    onMessClick(messItem)
+                    if (btnJoinMess.isEnabled) {
+                        if (messItem.join_request_exists) {
+                            onCancelRequest(messItem)
+                        } else {
+                            onMessClick(messItem)
+                        }
+                    }
                 }
             }
         }
-        
+
         private fun formatDate(dateStr: String): String {
-            // Simple date formatting function - you can use your existing formatDate logic
-            return dateStr.split("T").firstOrNull() ?: dateStr
-        }
-    }
-
-    private class DiffCallback : DiffUtil.ItemCallback<AvailableMess>() {
-        override fun areItemsTheSame(oldItem: AvailableMess, newItem: AvailableMess): Boolean {
-            return oldItem.mess.id == newItem.mess.id
-        }
-
-        override fun areContentsTheSame(oldItem: AvailableMess, newItem: AvailableMess): Boolean {
-            return oldItem == newItem
+            return try {
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+                val date = inputFormat.parse(dateStr)
+                outputFormat.format(date ?: Date())
+            } catch (e: Exception) {
+                // If parsing fails, try to extract just the date part
+                dateStr.split("T").firstOrNull()?.let { datePart ->
+                    try {
+                        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val outputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+                        val date = inputFormat.parse(datePart)
+                        outputFormat.format(date ?: Date())
+                    } catch (e2: Exception) {
+                        datePart
+                    }
+                } ?: dateStr
+            }
         }
     }
 }

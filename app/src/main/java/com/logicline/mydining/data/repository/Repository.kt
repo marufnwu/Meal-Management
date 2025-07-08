@@ -20,18 +20,19 @@ interface Repository {
     suspend fun checkLogin(): Response<ServerResponse<UserData>>
     suspend fun getMessUser() : Response<ServerResponse<MessUser>>
     suspend fun saveUserDataLocally(userData: UserDataWithRelations?)
-    fun observedUserData() : Flow<DataState<UserData?>>    suspend fun userMinimalMonthSummary() : DataState<UserSummary?>
+    fun observedUserData() : Flow<DataState<UserData?>>
+    suspend fun userMinimalMonthSummary() : DataState<UserSummary?>
     suspend fun userDetailsMonthSummary() : DataState<UserSummary?>
 
     // Mess Management Methods
     suspend fun getCurrentMessInfo(): Response<ServerResponse<MessInfoResponse>>
     suspend fun leaveMess(): Response<ServerResponse<Nothing>>
     suspend fun closeMess(): Response<ServerResponse<Nothing>>
-    suspend fun getAvailableMesses(search: String? = null, limit: Int? = null): Response<ServerResponse<List<AvailableMessesResponse>>>
+    suspend fun getAvailableMesses(search: String? = null, limit: Int? = null): Response<ServerResponse<List<AvailableMess>>>
     suspend fun sendJoinRequest(messId: Int, message: String? = null): Response<ServerResponse<JoinRequestResponse>>
-    suspend fun getUserJoinRequests(status: String? = null, limit: Int? = null): Response<ServerResponse<UserJoinRequestsResponse>>
+    suspend fun getUserJoinRequests(status: String? = null, limit: Int? = null): Response<ServerResponse<List<UserJoinRequest>>>
     suspend fun cancelJoinRequest(requestId: Int): Response<ServerResponse<Nothing>>
-    suspend fun getMessJoinRequests(status: String? = null, limit: Int? = null): Response<ServerResponse<IncomingJoinRequestsResponse>>
+    suspend fun getMessJoinRequests(status: String? = null, limit: Int? = null): Response<ServerResponse<List<UserJoinRequest>>>
     suspend fun acceptJoinRequest(
         requestId: Int,
         welcomeMessage: String? = null,

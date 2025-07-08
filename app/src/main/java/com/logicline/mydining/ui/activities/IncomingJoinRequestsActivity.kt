@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityIncomingJoinRequestsBinding
 import com.logicline.mydining.data.models.response.IncomingJoinRequest
+import com.logicline.mydining.data.models.response.UserJoinRequest
 import com.logicline.mydining.ui.adapters.IncomingJoinRequestsAdapter
 import com.logicline.mydining.ui.custom.GenericDialog
 import com.logicline.mydining.ui.custom.StatusView
@@ -70,9 +71,9 @@ class IncomingJoinRequestsActivity : BaseActivity() {
                     if (!apiResponse?.error!!) {
                         val data = apiResponse.data
                         if (data != null) {
-                            adapter.submitList(data.join_requests)
+                            adapter.submitList(data)
                             
-                            if (data.join_requests.isEmpty()) {
+                            if (data.isEmpty()) {
                                 binding.statusView.setStatus(StatusView.StatusType.EMPTY, "No incoming join requests")
                                     .setPositiveButton("Invite Members") {
                                         // Navigate to invite members or handle action
@@ -116,7 +117,7 @@ class IncomingJoinRequestsActivity : BaseActivity() {
         }
     }
 
-    private fun showAcceptDialog(request: IncomingJoinRequest) {
+    private fun showAcceptDialog(request: UserJoinRequest) {
         GenericDialog.Builder(this)
             .setIcon(R.drawable.ic_check)
             .setTitle("Accept Join Request")
@@ -131,7 +132,7 @@ class IncomingJoinRequestsActivity : BaseActivity() {
             })
             .setNegativeButton("Cancel")
             .show()
-    }    private fun showRejectDialog(request: IncomingJoinRequest) {
+    }    private fun showRejectDialog(request: UserJoinRequest) {
         GenericDialog.Builder(this)
             .setIcon(R.drawable.ic_close)
             .setTitle("Reject Join Request")

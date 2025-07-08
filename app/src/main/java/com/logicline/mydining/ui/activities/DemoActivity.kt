@@ -12,13 +12,16 @@ import com.logicline.mydining.ui.fragments.menus.HomeFragment
 import com.logicline.mydining.ui.fragments.menus.MonthFragment
 import com.logicline.mydining.ui.fragments.menus.ProfileFragment
 import com.logicline.mydining.utils.AppPrefs
+import com.logicline.mydining.utils.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "DemoActivity"
 private const val KEY_SELECTED_TAB = "selected_tab"
 
 @AndroidEntryPoint
-class DemoActivity : AppCompatActivity() {
+class DemoActivity : BaseActivity() {
+
+    override val checkMonthSelection: Boolean = true
 
     private lateinit var bottomNav: BottomNavigationView
     private var currentFragmentId = R.id.nav_home
@@ -32,6 +35,15 @@ class DemoActivity : AppCompatActivity() {
 
         bottomNav = findViewById(R.id.bottomNavigationView)
         setupBottomNavigation()
+
+        // Restore fragments from FragmentManager to prevent duplicate fragment addition
+        supportFragmentManager.fragments.forEach { fragment ->
+            when (fragment) {
+                is HomeFragment -> fragmentMap[R.id.nav_home] = fragment
+                is MonthFragment -> fragmentMap[R.id.nav_month] = fragment
+                is ProfileFragment -> fragmentMap[R.id.nav_account] = fragment
+            }
+        }
 
         // Restore selected tab or use default
         if (savedInstanceState != null) {

@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import com.logicline.mydining.data.models.Mess
 import com.logicline.mydining.data.models.Month
 import com.logicline.mydining.data.models.MessUser
+import com.logicline.mydining.data.models.User
+import com.logicline.mydining.utils.CarbonDate
 
 data class MessInfoResponse(
     val mess: MessDetail,
@@ -34,15 +36,6 @@ data class MessUserRole(
     val permissions: List<String>
 )
 
-data class RecentActivity(
-    val type: String,
-    val user: String,
-    val date: String
-)
-
-data class AvailableMessesResponse(
-    val messes: List<AvailableMess>
-)
 
 data class AvailableMess(
     val mess: Mess,
@@ -65,25 +58,31 @@ data class JoinRequest(
     val requested_at: String
 )
 
-data class UserJoinRequestsResponse(
-    val join_requests: List<UserJoinRequest>
-)
 
 data class UserJoinRequest(
     val id: Int,
-    val old_user_id: Int,
+    val user_name: String,
+    val user_id: Int,
+    val old_mess_user_id: Int?,
+    val new_mess_user_id: Int?,
+    val request_date: CarbonDate,
+    val accept_date: CarbonDate?,
+    val old_mess_id: Int?,
     val new_mess_id: Int,
-    val status: String,
-    val rejection_reason: String?,
-    val created_at: String,
-    val updated_at: String,
-    val mess: MessInfo
+    val accept_by: Int?,
+    val status: Int,
+    val created_at: CarbonDate,
+    val updated_at: CarbonDate,
+    val model_name: String,
+    val new_mess: Mess,
+    val old_mess: Mess?,
+    val old_mess_user: MessUser?,
+    val new_mess_user: MessUser?,
+    val accepted_by: User?,
+    val user: User?
 )
 
-data class MessInfo(
-    val id: Int,
-    val name: String
-)
+
 
 data class IncomingJoinRequestsResponse(
     val join_requests: List<IncomingJoinRequest>

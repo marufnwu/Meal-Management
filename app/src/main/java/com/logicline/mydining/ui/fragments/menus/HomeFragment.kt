@@ -121,24 +121,8 @@ class HomeFragment : Fragment() {
                     binding.txtMonthName?.text = month.name
 
                     // Format the period (start date - end date)
-                    // Format and set the period dates
-                    val startDate = month.startAt.let { dateString ->
-                        try {
-                            inputDateFormat.parse(dateString)?.let { parsedDate -> outputDateFormat.format(parsedDate) }
-                        } catch (e: Exception) {
-                            android.util.Log.e("SummaryActivity", "Error formatting start date", e)
-                            null
-                        }
-                    } ?: "N/A"
-
-                    val endDate = month.endAt?.let { dateString ->
-                        try {
-                            inputDateFormat.parse(dateString)?.let { parsedDate -> outputDateFormat.format(parsedDate) }
-                        } catch (e: Exception) {
-                            android.util.Log.e("SummaryActivity", "Error formatting end date", e)
-                            null
-                        }
-                    } ?: "Ongoing"
+                    val startDate = month.startAt.toDisplayDate()
+                    val endDate = month.endAt?.toDisplayDate() ?: "Ongoing"
 
                     binding.txtMonthPeriod?.text = "$startDate - $endDate"
 
@@ -148,6 +132,12 @@ class HomeFragment : Fragment() {
                         if (month.isActive) R.drawable.status_background
                         else R.drawable.status_background_inactive
                     )
+                } ?: run {
+                    // Show placeholder when month is null
+                    binding.txtMonthName?.text = "No month selected"
+                    binding.txtMonthPeriod?.text = "Select a month to view details"
+                    binding.txtMonthStatus?.text = "Inactive"
+                    binding.txtMonthStatus?.setBackgroundResource(R.drawable.status_background_inactive)
                 }
 
                 userViewModel.loadUserMinimalMonthSummary()

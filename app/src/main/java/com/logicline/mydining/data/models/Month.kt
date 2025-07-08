@@ -2,7 +2,7 @@ package com.logicline.mydining.data.models
 
 import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
-
+import com.logicline.mydining.utils.CarbonDate
 
 
 data class Month (
@@ -15,9 +15,9 @@ data class Month (
     @SerializedName("type")
     var type: String,
     @SerializedName("start_at")
-    var startAt: String,
+    var startAt: CarbonDate,
     @SerializedName("end_at")
-    var endAt: String?,
+    var endAt: CarbonDate?,
     @SerializedName("created_at")
     var createdAt: String?,
     @SerializedName("updated_at")

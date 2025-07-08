@@ -14,57 +14,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:background="@drawable/bottom_curve"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:weightSum="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textSize="@dimen/_15sdp"
-                            android:textColor="?attr/colorOnSecondary"
-                            android:text="@string/total_member"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:id="@+id/txtMember"
-                            android:textSize="@dimen/_15sdp"
-                            android:textColor="?attr/colorOnSecondary"
-                            android:text="4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <View
-                            android:layout_marginEnd="@dimen/_30sdp"
-                            android:layout_marginStart="@dimen/_30sdp"
-                            android:background="@drawable/curve_line_white"
-                            android:layout_width="@dimen/_50sdp"
-                            android:layout_height="@dimen/_3sdp"/>
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyMembers"

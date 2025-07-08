@@ -5,19 +5,28 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.R
 import com.logicline.mydining.data.models.response.GenericRespose
+import com.logicline.mydining.ui.custom.monthpicker.MonthPickerDialog
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 open class BaseActivity : AppCompatActivity() {
     protected open val checkUserInitiate: Boolean = false
+    protected open val checkMonthSelection: Boolean = false
+    protected open val monthDialogCancelable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (checkMonthSelection) {
+            startMonthFlowListener()
+        }
     }
     override fun attachBaseContext(newBase: Context?) {
         if (newBase!=null) {
@@ -76,6 +85,29 @@ open class BaseActivity : AppCompatActivity() {
                             }
 
                         }).build().showDialog()
+                }
+            }
+        }
+    }
+
+    private fun startMonthFlowListener() {
+        lifecycleScope.launch {
+            // Listen to month changes reactively
+            AppPrefs.monthFlow.collectLatest { month ->
+                if (month == null) {
+                    // No month selected, show month picker dialog
+                    MonthPickerDialog.show(
+                        context = this@BaseActivity,
+                        preselectedMonthId = null,
+                        onMonthSelected = { selectedMonth ->
+                            // Month selected, save it to preferences
+                            AppPrefs.month = selectedMonth
+                            shortToast("Month selected: ${selectedMonth.name}")
+                        },
+                        cancelable = monthDialogCancelable
+                    )
+                }else {
+                    if (MonthPickerDialog.isShowing) MonthPickerDialog.hide()
                 }
             }
         }

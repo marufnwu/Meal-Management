@@ -74,9 +74,9 @@ class SummaryActivity : BaseActivity() {
             context = this@SummaryActivity,
             preselectedMonthId = currentMonthApiId,
             onMonthSelected = { selectedMonthData -> // selectedMonthData is of type com.logicline.mydining.data.models.Month
-                selectedMonthData.startAt.let { startAtString ->
+                selectedMonthData.startAt.let {
                     try {
-                        val parsedDate = inputDateFormat.parse(startAtString)
+                        val parsedDate = it.toDate()
                         if (parsedDate != null) {
                             val cal = Calendar.getInstance()
                             cal.time = parsedDate
@@ -85,10 +85,9 @@ class SummaryActivity : BaseActivity() {
                             setDate(newYear, newMonth)
                         } else {
                             // Log error or show a toast if date parsing fails
-                            android.util.Log.e("SummaryActivity", "Failed to parse date from selected month: $startAtString")
+                            android.util.Log.e("SummaryActivity", "Failed to parse date from selected month: ${it.toDisplayDate()}")
                         }
                     } catch (e: java.text.ParseException) {
-                        android.util.Log.e("SummaryActivity", "ParseException for date: $startAtString", e)
                         // Optionally, show a toast to the user
                     }
 
@@ -207,14 +206,13 @@ class SummaryActivity : BaseActivity() {
         // Set month information
         monthInfo.let { info ->
             val monthDisplayName = info.name
-            val yearDisplayName = info.startAt.let { startDateString ->
+            val yearDisplayName = info.startAt.let {
                 try {
-                    inputDateFormat.parse(startDateString)?.let { parsedDate ->
+                   it.toDate()?.let { parsedDate ->
                         // Use SimpleDateFormat to format just the year
                         SimpleDateFormat("yyyy", Locale.getDefault()).format(parsedDate)
                     } ?: year // Fallback to activity's year if parsing returns null
                 } catch (e: Exception) { // Catch all exceptions for date parsing
-                    android.util.Log.e("SummaryActivity", "Error parsing startAt date: $startDateString", e)
                     year // Fallback to activity's year on any exception
                 }
             }
@@ -227,7 +225,7 @@ class SummaryActivity : BaseActivity() {
             // Format and set the period dates
             val startDate = info.startAt.let { dateString ->
                 try {
-                    inputDateFormat.parse(dateString)?.let { parsedDate -> outputDateFormat.format(parsedDate) }
+                    dateString.toDate()?.let { parsedDate -> outputDateFormat.format(parsedDate) }
                 } catch (e: Exception) {
                     android.util.Log.e("SummaryActivity", "Error formatting start date", e)
                     null
@@ -236,7 +234,7 @@ class SummaryActivity : BaseActivity() {
 
             val endDate = info.endAt?.let { dateString ->
                 try {
-                    inputDateFormat.parse(dateString)?.let { parsedDate -> outputDateFormat.format(parsedDate) }
+                    dateString.let { parsedDate -> outputDateFormat.format(parsedDate) }
                 } catch (e: Exception) {
                     android.util.Log.e("SummaryActivity", "Error formatting end date", e)
                     null

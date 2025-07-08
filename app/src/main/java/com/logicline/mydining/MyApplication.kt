@@ -56,7 +56,7 @@ class MyApplication : Application() {
         AppPrefs.init(this)
         Paper.init(this)
         FirebaseApp.initializeApp(applicationContext)
-        MobileAds.initialize(this) {}
+        //MobileAds.initialize(this) {}
         // Please make sure to set the mediation provider value to "max" to ensure proper functionality.
         AppLovinSdk.getInstance( applicationContext ).mediationProvider = "max"
         AppLovinSdk.getInstance( applicationContext ).initializeSdk {}

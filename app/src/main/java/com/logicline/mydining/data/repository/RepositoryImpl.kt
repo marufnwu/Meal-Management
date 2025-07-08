@@ -9,6 +9,7 @@ import com.logicline.mydining.data.local.relations.UserDataWithRelations
 import com.logicline.mydining.data.local.relations.toDomainModel
 import com.logicline.mydining.data.models.UserData
 import com.logicline.mydining.data.models.UserSummary
+import com.logicline.mydining.data.models.response.AvailableMess
 import com.logicline.mydining.data.models.response.ServerResponse
 import com.logicline.mydining.extensions.map
 import com.logicline.mydining.extensions.safeApiCall
@@ -69,7 +70,7 @@ class RepositoryImpl @Inject constructor(
     
     override suspend fun closeMess() = myApi.closeMess()
     
-    override suspend fun getAvailableMesses(search: String?, limit: Int?) = 
+    override suspend fun getAvailableMesses(search: String?, limit: Int?): Response<ServerResponse<List<AvailableMess>>> =
         myApi.getAvailableMesses(search, limit)
     
     override suspend fun sendJoinRequest(messId: Int, message: String?) = 

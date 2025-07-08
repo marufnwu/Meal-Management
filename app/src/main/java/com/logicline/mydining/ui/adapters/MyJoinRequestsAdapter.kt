@@ -35,52 +35,39 @@ class MyJoinRequestsAdapter(
 
         fun bind(request: UserJoinRequest) {
             binding.apply {
-                txtMessName.text = request.mess.name
+                txtMessName.text = request.new_mess.name
                 
                 // Message field may not exist in API so use a placeholder
                 txtMessage.text = "Join request" // Or hide this field if not needed
                 
-                // Format date
-                try {
-                    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-                    val outputFormat = SimpleDateFormat("MMM dd, yyyy 'at' HH:mm", Locale.getDefault())
-                    val date = inputFormat.parse(request.created_at)
-                    txtRequestDate.text = "Requested: ${outputFormat.format(date!!)}"
-                } catch (e: Exception) {
-                    txtRequestDate.text = "Requested: ${request.created_at}"
-                }
+                // Format date using CarbonDate
+                txtRequestDate.text = "Requested: ${request.request_date.toDisplayDateTime()}"
 
-                // Set status and color
-                when (request.status.lowercase()) {
-                    "pending" -> {
+                // Set status and color based on integer status
+                when (request.status) {
+                    0 -> { // Pending
                         txtStatus.text = "PENDING"
                         txtStatus.setTextColor(Color.parseColor("#FF9800")) // Orange
                         btnCancel.visibility = android.view.View.VISIBLE
                     }
-                    "accepted" -> {
+                    1 -> { // Accepted
                         txtStatus.text = "ACCEPTED"
                         txtStatus.setTextColor(Color.parseColor("#4CAF50")) // Green
                         btnCancel.visibility = android.view.View.GONE
                     }
-                    "rejected" -> {
+                    2 -> { // Rejected
                         txtStatus.text = "REJECTED"
                         txtStatus.setTextColor(Color.parseColor("#F44336")) // Red
                         btnCancel.visibility = android.view.View.GONE
-                        
-                        if (!request.rejection_reason.isNullOrBlank()) {
-                            txtRejectionReason.text = "Reason: ${request.rejection_reason}"
-                            txtRejectionReason.visibility = android.view.View.VISIBLE
-                        } else {
-                            txtRejectionReason.visibility = android.view.View.GONE
-                        }
+                        txtRejectionReason.visibility = android.view.View.GONE
                     }
-                    "cancelled" -> {
+                    3 -> { // Cancelled
                         txtStatus.text = "CANCELLED"
                         txtStatus.setTextColor(Color.parseColor("#757575")) // Gray
                         btnCancel.visibility = android.view.View.GONE
                     }
                     else -> {
-                        txtStatus.text = request.status.uppercase()
+                        txtStatus.text = "UNKNOWN"
                         txtStatus.setTextColor(Color.parseColor("#757575")) // Gray
                         btnCancel.visibility = android.view.View.GONE
                     }
@@ -100,7 +87,7 @@ class MyJoinRequestsAdapter(
 
         override fun areContentsTheSame(oldItem: UserJoinRequest, newItem: UserJoinRequest): Boolean {
             return oldItem.status == newItem.status &&
-                   oldItem.rejection_reason == newItem.rejection_reason
+                   oldItem.updated_at == newItem.updated_at
         }
     }
 }

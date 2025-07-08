@@ -12,6 +12,7 @@ import com.logicline.mydining.databinding.ActivityCahngeSuperuserBinding
 import com.logicline.mydining.data.models.MessUser
 import com.logicline.mydining.data.models.response.GenericRespose
 import com.logicline.mydining.data.models.response.ServerResponse
+import com.logicline.mydining.data.models.response.AllMembersResponse
 import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
@@ -111,16 +112,18 @@ class ChangeSuperuserActivity : BaseActivity() {
     private fun getUsersList() {
         loadingDialog.show()
         (application as MyApplication)
-            .myApi.getUsers(1)
-            .enqueue(object: Callback<ServerResponse<List<MessUser>>> {
+            .myApi.getUsers()
+            .enqueue(object: Callback<ServerResponse<List<AllMembersResponse>>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<ServerResponse<List<MessUser>>>, response: Response<ServerResponse<List<MessUser>>>) {
+                override fun onResponse(call: Call<ServerResponse<List<AllMembersResponse>>>, response: Response<ServerResponse<List<AllMembersResponse>>>) {
 
                     loadingDialog.hide()
                     if (response.isSuccessful && response.body()!=null){
                         val userListResponse = response.body()!!
                         if(!userListResponse.error){
-                            userList  = userListResponse.data!!
+                            // Flatten all users from all groups into a single list
+                            val allUsers = userListResponse.data!!.flatMap { it.users }
+                            userList = allUsers
                             setUsersToSpinner(userList)
 
                         }else{
@@ -128,7 +131,7 @@ class ChangeSuperuserActivity : BaseActivity() {
                         }
                     }
                 }
-                override fun onFailure(call: Call<ServerResponse<List<MessUser>>>, t: Throwable) {
+                override fun onFailure(call: Call<ServerResponse<List<AllMembersResponse>>>, t: Throwable) {
                     loadingDialog.hide()
                 }
 

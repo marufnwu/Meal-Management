@@ -43,6 +43,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class MonthPickerView @JvmOverloads constructor(
@@ -246,8 +247,8 @@ class MonthPickerView @JvmOverloads constructor(
     private fun applySorting(months: List<Month>): List<Month> {
         return when (monthsSortingStrategy) {
             SortingStrategy.ALPHABETICAL -> months.sortedBy { it.name }
-            SortingStrategy.NEWEST_FIRST -> months.sortedByDescending { it.startAt }
-            SortingStrategy.OLDEST_FIRST -> months.sortedBy { it.startAt }
+            SortingStrategy.NEWEST_FIRST -> months.sortedWith(compareByDescending { it.startAt.toDate() ?: Date(0) })
+            SortingStrategy.OLDEST_FIRST -> months.sortedWith(compareBy { it.startAt.toDate() ?: Date(0) })
             is SortingStrategy.CUSTOM -> (monthsSortingStrategy as SortingStrategy.CUSTOM).sort(months)
         }
     }
