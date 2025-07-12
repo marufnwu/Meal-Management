@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- API 23+ specific theme overrides for better status bar control -->
+    
+    <!-- NO TOOLBAR THEME with primary-colored status bar (API 23+) -->
+    <style name="AppTheme.NoToolbar" parent="AppTheme.Base">
+        <!-- Override to hide ActionBar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/md_theme_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Additional flag for API 23+ to ensure proper behavior -->
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+    <!-- EDGE-TO-EDGE THEME with transparent status bar (API 23+) -->
+    <style name="AppTheme.EdgeToEdge" parent="AppTheme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <!-- CONTENT-MATCHING THEME with surface-colored status bar (API 23+) -->
+    <style name="AppTheme.ContentMatching" parent="AppTheme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/md_theme_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+</resources>

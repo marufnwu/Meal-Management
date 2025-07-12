@@ -1,0 +1,8 @@
+# Copy this file to local.properties and fill in your values
+BASE_URL="http://your-local-server/"
+USER_NAME="your_username"
+USER_PASSWORD="your_password"
+KEYSTORE_PATH="path/to/your/keystore.jks"
+KEYSTORE_PASSWORD="your_keystore_password"
+KEY_ALIAS="your_key_alias"
+KEY_PASSWORD="your_key_password"
