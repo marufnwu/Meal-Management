@@ -32,7 +32,7 @@ abstract class EnhancedBaseActivity : AppCompatActivity() {
     
     protected val userViewModel: UserViewModel by viewModels()
     protected var userData: UserData? = null
-    protected lateinit var loadingDialog: LoadingDialog
+    protected open lateinit var loadingDialog: LoadingDialog
 
     // Override these in child activities
     protected open val requiredPermissions: List<MessPermission> = emptyList()

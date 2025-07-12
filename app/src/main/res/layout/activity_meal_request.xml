@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MealRequestActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyDayList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="vertical" />
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         app:backgroundTint="?attr/colorPrimary"
         android:layout_margin="@dimen/_8sdp"

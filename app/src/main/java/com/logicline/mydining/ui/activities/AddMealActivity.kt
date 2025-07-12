@@ -279,7 +279,7 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
                     loadingDialog.hide()
                     if(response.isSuccessful && response.body()!=null){
                         val dayMealResponse = response.body()!!
-                        Toast.makeText(this@AddMealActivity, dayMealResponse.msg, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddMealActivity, dayMealResponse.getStatusMessage(), Toast.LENGTH_SHORT).show()
                         if(!dayMealResponse.error){
 
                             if(dayMealResponse.data!=null){
