@@ -1,3 +1,23 @@
+// Load local properties if they exist
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+// Set project properties from local.properties with fallbacks
+ext {
+    BASE_URL = localProperties.getProperty('BASE_URL', project.findProperty('BASE_URL') ?: '"http://192.168.0.90/"')
+    userName = localProperties.getProperty('USER_NAME', project.findProperty('userName') ?: '"lmp_video"')
+    userPassword = localProperties.getProperty('USER_PASSWORD', project.findProperty('userPassword') ?: '"6278374886"')
+    KEYSTORE_PATH = localProperties.getProperty('KEYSTORE_PATH', 'mydining.jks')
+    KEYSTORE_PASSWORD = localProperties.getProperty('KEYSTORE_PASSWORD', '1M@ruf21')
+    KEY_ALIAS = localProperties.getProperty('KEY_ALIAS', 'maruf')
+    KEY_PASSWORD = localProperties.getProperty('KEY_PASSWORD', '1M@ruf21')
+}
+
 buildscript {
     ext.kotlin_version = '2.1.0' // Define this first
 

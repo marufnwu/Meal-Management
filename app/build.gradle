@@ -10,14 +10,14 @@ plugins {
 }
 
 android {
-//    signingConfigs {
-//        release {
-//            storeFile file('F:\\Android Projects\\MealManagement\\mydining.jks')
-//            storePassword '1M@ruf21'
-//            keyAlias 'maruf'
-//            keyPassword '1M@ruf21'
-//        }
-//    }
+    signingConfigs {
+        release {
+            storeFile file(rootProject.ext.KEYSTORE_PATH)
+            storePassword rootProject.ext.KEYSTORE_PASSWORD
+            keyAlias rootProject.ext.KEY_ALIAS
+            keyPassword rootProject.ext.KEY_PASSWORD
+        }
+    }
     compileSdk 35
 
     defaultConfig {
@@ -35,7 +35,7 @@ android {
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
 
         debug {
@@ -44,9 +44,9 @@ android {
         }
 
         buildTypes.each {
-            it.buildConfigField 'String', 'BASE_URL', BASE_URL
-            it.buildConfigField 'String', 'USER_NAME', userName
-            it.buildConfigField 'String', 'USER_PASSWORD', userPassword
+            it.buildConfigField 'String', 'BASE_URL', rootProject.ext.BASE_URL
+            it.buildConfigField 'String', 'USER_NAME', rootProject.ext.userName
+            it.buildConfigField 'String', 'USER_PASSWORD', rootProject.ext.userPassword
 
 
         }
