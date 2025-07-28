@@ -24,3 +24,30 @@
 -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
 -keep class * implements java.io.Serializable { *; }
 -keep class com.logicline.mydining.models.** { *; }
+
+# Please add these rules to your existing keep rules in order to suppress warnings.
+# This is generated automatically by the Android Gradle plugin.
+-dontwarn com.facebook.infer.annotation.Nullsafe$Mode
+-dontwarn com.facebook.infer.annotation.Nullsafe
+-dontwarn com.google.firebase.messaging.TopicOperation$TopicOperations
+-dontwarn com.unity3d.ads.IUnityAdsInitializationListener
+-dontwarn com.unity3d.ads.IUnityAdsLoadListener
+-dontwarn com.unity3d.ads.IUnityAdsShowListener
+-dontwarn com.unity3d.ads.UnityAds
+-dontwarn com.unity3d.ads.UnityAdsLoadOptions
+-dontwarn com.unity3d.ads.UnityAdsShowOptions
+-dontwarn com.unity3d.ads.metadata.MediationMetaData
+-dontwarn com.unity3d.ads.metadata.MetaData
+-dontwarn com.unity3d.services.banners.BannerView$IListener
+-dontwarn com.unity3d.services.banners.BannerView$Listener
+-dontwarn com.unity3d.services.banners.BannerView
+-dontwarn com.unity3d.services.banners.UnityBannerSize
+-dontwarn org.bouncycastle.jsse.BCSSLParameters
+-dontwarn org.bouncycastle.jsse.BCSSLSocket
+-dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
+-dontwarn org.conscrypt.Conscrypt$Version
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
+-dontwarn org.openjsse.javax.net.ssl.SSLParameters
+-dontwarn org.openjsse.javax.net.ssl.SSLSocket
+-dontwarn org.openjsse.net.ssl.OpenJSSE

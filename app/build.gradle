@@ -17,22 +17,22 @@ android {
             keyPassword '1M@ruf21'
         }
     }
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.logicline.mydining"
         minSdk 24
-        targetSdk 34
-        versionCode 117
-        versionName "1.1.7"
+        targetSdk 35
+        versionCode 121
+        versionName "1.2.1"
         setProperty("archivesBaseName", "Meal_Management"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -110,10 +110,10 @@ dependencies {
 
     implementation 'com.hbb20:ccp:2.7.0'
 
-    implementation 'com.google.android.play:app-update:2.0.1'
+    implementation 'com.google.android.play:app-update:2.1.0'
 
     // For Kotlin users also add the Kotlin extensions library for Play In-App Update:
-    implementation 'com.google.android.play:app-update-ktx:2.0.1'
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
 
     implementation 'com.github.marufnwu:JDialog:1.0.4'
