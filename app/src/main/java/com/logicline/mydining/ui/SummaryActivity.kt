@@ -6,26 +6,29 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.logicline.mydining.R
 import com.logicline.mydining.adapter.UserSummaryAdapter
 import com.logicline.mydining.databinding.ActivitySummaryBinding
 import com.logicline.mydining.models.response.MonthlySummaryResponse
 import com.logicline.mydining.models.response.UsersSummary
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.LocalDB
 import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyDatePicker
+import com.logicline.mydining.utils.MyExtensions.shortToast
 
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SummaryActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
+class SummaryActivity : BaseActivity(){
     private lateinit var myFullScreenAd: MyFullScreenAd
     lateinit var binding : ActivitySummaryBinding
-    lateinit var month : String
-    lateinit var year : String
+    private var month : String = Constant.getCurrentMonthNumber()
+    private var year : String = Constant.getCurrentYear()
     lateinit var loadingDialog: LoadingDialog
     var userSummary : List<UsersSummary> = arrayListOf()
 
@@ -35,14 +38,33 @@ class SummaryActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
         binding = ActivitySummaryBinding.inflate(layoutInflater)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.monthly_summary)
 
         setContentView(binding.root)
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)
-        setDate(Constant.getCurrentDate())
 
-        binding.txtMonthYear.setOnClickListener {
-            showDateTimePicker()
+        intent?.let {
+            it.getStringExtra(Constant.YEAR)?.let {
+                year = it
+            }
+
+            it.getStringExtra(Constant.MONTH)?.let {
+                month = it
+
+            }
+        }
+
+
+        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int, month: Int, year: Int) {
+                setDate(year.toString(), month.toString())
+            }
+
+            override fun dateString(date: String) {
+
+            }
+
         }
 
         binding.recySummary.setHasFixedSize(true)
@@ -118,27 +140,13 @@ class SummaryActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
 
     }
 
-    @SuppressLint("SetTextI18n")
-    fun showDateTimePicker() {
-        MyDatePicker(this, this)
-            .create()
-            .show()
-
-    }
 
     @SuppressLint("SetTextI18n")
-    private fun setDate(date: String) {
-        month = Constant.getMonthNumber(date)
-        year = Constant.getYear(date)
-        binding.txtMonthYear.text = Constant.getYear(date)+" "+Constant.getMonthName(date)
+    private fun setDate(year: String, month:String) {
+        this.month = month
+        this.year = year
+
         getSummary()
-    }
-
-    override fun date(date: Int, month: Int, year: Int) {
-    }
-
-    override fun dateString(date: String) {
-        setDate(date)
     }
 
     override fun onBackPressed() {
@@ -147,7 +155,7 @@ class SummaryActivity : AppCompatActivity(), MyDatePicker.OnDateSelectListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId==android.R.id.home){
-            finish()
+            onBackPressed()
             return true
         }
         return false

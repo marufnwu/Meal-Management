@@ -1,6 +1,7 @@
 package com.logicline.mydining.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,17 +10,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
 import com.logicline.mydining.BuildConfig
+import com.logicline.mydining.adapter.MainSliderAdapter
 import com.logicline.mydining.databinding.ActivityMainBinding
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Support
 import com.logicline.mydining.models.User
+import com.logicline.mydining.models.UserGuide
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.InitialDataResponse
+import com.logicline.mydining.models.response.Paging
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.*
 import com.logicline.mydining.utils.MyExtensions.shortToast
@@ -29,7 +34,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
 
     companion object {
@@ -113,6 +118,41 @@ class MainActivity : AppCompatActivity() {
         registerFcm()
         updateFcmToken()
 
+        getSliderData()
+
+    }
+
+    private fun getSliderData() {
+        (application as MyApplication)
+            .myApi
+            .getMainSlider()
+            .enqueue(object : Callback<ServerResponse<MutableList<UserGuide>>> {
+                override fun onResponse(
+                    call: Call<ServerResponse<MutableList<UserGuide>>>,
+                    response: Response<ServerResponse<MutableList<UserGuide>>>
+                ) {
+                    response.body()?.let {
+                        if (!it.error){
+                            it.data?.let {
+                                if(it.size>0){
+                                    binding.slider.visibility = View.VISIBLE
+                                    val sliderAdapter = MainSliderAdapter(this@MainActivity, it)
+                                    binding.slider.setSliderAdapter(sliderAdapter)
+                                    binding.slider.isAutoCycle = true
+                                }
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ServerResponse<MutableList<UserGuide>>>,
+                    t: Throwable
+                ) {
+
+                }
+
+            })
     }
 
     private fun getHomeMainBanner(){
@@ -180,8 +220,7 @@ class MainActivity : AppCompatActivity() {
             .enqueue(object : Callback<InitialDataResponse> {
                 override fun onResponse(
                     call: Call<InitialDataResponse>,
-                    response: Response<InitialDataResponse>
-                ) {
+                    response: Response<InitialDataResponse>) {
                     loadingDialog.hide()
                     if(response.isSuccessful){
                         response.body()?.let { initialDataResponse ->
@@ -193,9 +232,6 @@ class MainActivity : AppCompatActivity() {
                                     LocalDB.saveInitialData(it)
 
                                     setCustomerSupport(it.support)
-
-
-
                                 }
                             }
                         }
@@ -249,6 +285,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
+
+
+        binding.layoutRefresh.setOnRefreshListener {
+            startActivity(intent)
+            finish()
+        }
 
         userGuideBanner.observe(this){
             if(it!=null){
@@ -315,6 +357,11 @@ class MainActivity : AppCompatActivity() {
         binding.purchaseRequest.setOnClickListener {
             startActivity(Intent(this, PurchaseRequestActivity::class.java))
         }
+
+        binding.oldData.setOnClickListener {
+            startActivity(Intent(this, ActiveMonthActivity::class.java))
+        }
+
 
         binding.imgDrawer.setOnClickListener {
             if(supportFragmentManager.findFragmentByTag("MainBottomSheet")==null){
@@ -404,6 +451,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun attachBaseContext(newBase: Context?) {
+        if (newBase!=null) {
+            super.attachBaseContext(LangUtils.applyLanguage(newBase))
+        } else {
+            super.attachBaseContext(newBase)
+        }
+    }
 
 
 

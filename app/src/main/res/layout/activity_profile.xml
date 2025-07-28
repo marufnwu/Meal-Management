@@ -19,13 +19,13 @@
             android:layout_height="match_parent"/>
 
         <TextView
-            android:textColor="@color/themeColor"
-            android:textStyle="bold"
-            android:textSize="@dimen/_14sdp"
-            android:layout_centerInParent="true"
-            android:text="Profile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/profile"
+            android:textColor="@color/themeColor"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
 
         <ImageView
             android:padding="@dimen/_3sdp"
@@ -176,11 +176,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"/>
 
-                        <androidx.appcompat.widget.SwitchCompat
+                        <Switch
                             android:id="@+id/switchManager"
                             android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -208,7 +209,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="@dimen/_14sdp"
-                            android:text="Username"
+                            android:text="@string/user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -232,7 +233,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="@dimen/_14sdp"
-                            android:text="User Role"
+                            android:text="@string/user_role"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -257,7 +258,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="@dimen/_14sdp"
-                            android:text="Gender"
+                            android:text="@string/gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -282,7 +283,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="@dimen/_14sdp"
-                            android:text="Country"
+                            android:text="@string/country"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -307,7 +308,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="@dimen/_14sdp"
-                            android:text="City"
+                            android:text="@string/city"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -332,7 +333,7 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="@dimen/_14sdp"
-                            android:text="Account Created"
+                            android:text="@string/account_created"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -374,7 +375,7 @@
                         android:layout_marginStart="@dimen/_20sdp"
                         android:textSize="@dimen/_15sdp"
                         android:layout_weight="3"
-                        android:text="Change Password"
+                        android:text="@string/change_password"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
 
@@ -400,7 +401,7 @@
                         android:layout_marginStart="@dimen/_20sdp"
                         android:textSize="@dimen/_15sdp"
                         android:layout_weight="3"
-                        android:text="Logout"
+                        android:text="@string/logout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
 

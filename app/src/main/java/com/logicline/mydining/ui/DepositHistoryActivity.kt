@@ -20,6 +20,7 @@ import com.logicline.mydining.models.response.DepositHistoryResponse
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
@@ -29,7 +30,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DepositHistoryActivity : AppCompatActivity() {
+class DepositHistoryActivity : BaseActivity() {
     lateinit var myFullScreenAd: MyFullScreenAd
     enum class Type{
         MESS,
@@ -48,7 +49,7 @@ class DepositHistoryActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = "Deposit History"
+        supportActionBar?.title = getString(R.string.deposit_history)
 
         setContentView(binding.root)
         myFullScreenAd = MyFullScreenAd(this, true)

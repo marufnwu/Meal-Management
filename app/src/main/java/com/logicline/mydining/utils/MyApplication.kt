@@ -3,8 +3,10 @@ package com.logicline.mydining.utils
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
+import android.util.Log
 import com.applovin.sdk.AppLovinSdk
 import com.applovin.sdk.AppLovinSdkConfiguration
 import com.facebook.ads.AdSettings
@@ -54,13 +56,33 @@ class MyApplication : Application() {
 
         // OneSignal Initialization
         OneSignal.initWithContext(this);
-        OneSignal.setAppId(ONESIGNAL_APP_ID);
+        OneSignal.setAppId(ONESIGNAL_APP_ID)
 
     }
 
+    private fun Context.setAppLocale(language: String): Context {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+        return createConfigurationContext(config)
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
-        newConfig.setLocale(Locale("en"))
+        Log.d("AppLanguage", "${LocalDB.getAppLanguage()}")
+        val locale = Locale(LocalDB.getAppLanguage())
+        Locale.setDefault(locale)
+        newConfig.setLocale(locale)
         super.onConfigurationChanged(newConfig)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        if (base!=null) {
+            super.attachBaseContext(LangUtils.applyLanguage(base))
+        } else {
+            super.attachBaseContext(base)
+        }
     }
 
 

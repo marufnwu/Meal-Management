@@ -10,6 +10,7 @@ import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.logicline.mydining.R
 import com.logicline.mydining.adapter.FundAdapter
 import com.logicline.mydining.databinding.ActivityFundBinding
 import com.logicline.mydining.databinding.DialogEditPurchaseLayoutBinding
@@ -41,7 +42,8 @@ class FundActivity : BaseActivity(false) {
 
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Added Funds"
+        supportActionBar?.title = getString(R.string.fund)
+
 
         setContentView(binding.root)
         loadingDialog = LoadingDialog(this)

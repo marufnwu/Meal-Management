@@ -21,11 +21,8 @@ class ReportAdapter(val context:Context, val items: MutableList<Report>) : Recyc
 
     var isAnimate = false
 
-    public interface OnAction {
-        fun onDownload(report: Report)
-    }
 
-    var onAction: OnAction? = null
+    var onAction: ((report:Report)->Unit)? = null
 
 
     inner class MyViewHolder(val binding: LayoutReportItemBinding) : RecyclerView.ViewHolder(binding.root){
@@ -38,7 +35,7 @@ class ReportAdapter(val context:Context, val items: MutableList<Report>) : Recyc
               binding.txtYear.text  =report.year.toString()
 
               binding.imgDownload.setOnClickListener {
-                  MyDownloadManager.download(BuildConfig.BASE_URL+report.pdf, report.pdf,  context)
+                  onAction?.invoke(report)
               }
           }
     }

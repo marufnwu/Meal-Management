@@ -1,5 +1,6 @@
 package com.logicline.mydining.utils
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +11,26 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.logicline.mydining.R
+import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.ui.InitiateMemberActivity
+import com.logicline.mydining.utils.MyExtensions.shortToast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-open class BaseActivity(private val checkUserInitiate: Boolean = true) : AppCompatActivity() {
+open class BaseActivity(private val checkUserInitiate: Boolean = false) : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
+    override fun attachBaseContext(newBase: Context?) {
+        if (newBase!=null) {
+            super.attachBaseContext(LangUtils.applyLanguage(newBase))
+        } else {
+            super.attachBaseContext(newBase)
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -48,11 +66,11 @@ open class BaseActivity(private val checkUserInitiate: Boolean = true) : AppComp
                         .setIconType(JDialog.IconType.WARNING)
                         .setShowNegativeButton(true)
                         .setShowPositiveButton(true)
-                        .setPositiveButtonText("Add Now")
+                        .setPositiveButtonText(getString(R.string.start_new_month))
+                        .setNegativeButtonText(getString(R.string.cancel))
                         .setOnGenericDialogListener(object : JDialog.OnGenericDialogListener {
                             override fun onPositiveButtonClick(dialog: JDialog?) {
-                                dialog?.hideDialog()
-                                startActivity(Intent(this@BaseActivity, InitiateMemberActivity::class.java))
+                                startCurrentMonth(dialog)
                             }
 
                             override fun onNegativeButtonClick(dialog: JDialog?) {
@@ -66,5 +84,36 @@ open class BaseActivity(private val checkUserInitiate: Boolean = true) : AppComp
                 }
             }
         }
+    }
+
+    private fun startCurrentMonth(dialog:JDialog?){
+        var progressDialog: LoadingDialog = LoadingDialog(this)
+
+        progressDialog.show()
+        (application as MyApplication)
+            .myApi
+            .initiateAllUser(Constant.getCurrentYear(), Constant.getCurrentMonthNumber())
+            .enqueue(object : Callback<GenericRespose> {
+                override fun onResponse(
+                    call: Call<GenericRespose>,
+                    response: Response<GenericRespose>
+                ) {
+                    progressDialog.hide()
+                    if(response.isSuccessful && response.body()!=null){
+                        if(!response.body()!!.error){
+                            dialog?.hideDialog()
+                            finish()
+                            startActivity(intent)
+                        }
+
+                        shortToast(response.body()!!.msg)
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericRespose>, t: Throwable) {
+                    progressDialog.hide()
+                }
+
+            })
     }
 }

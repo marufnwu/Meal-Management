@@ -33,7 +33,7 @@
         android:layout_marginEnd="@dimen/_4sdp"
         android:layout_marginBottom="@dimen/_4sdp"
         android:background="@drawable/button_primary"
-        android:text="Submit Purchase Request"
+        android:text="@string/submit_purchase_request"
         android:textColor="@color/White" />
 
 </RelativeLayout>

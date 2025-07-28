@@ -14,6 +14,8 @@ import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.common.internal.service.Common
+import com.logicline.mydining.R
 import com.logicline.mydining.adapter.PurchaseListAdapter
 import com.logicline.mydining.databinding.ActivityPurchasesBinding
 import com.logicline.mydining.databinding.DialogEditPurchaseLayoutBinding
@@ -21,6 +23,7 @@ import com.logicline.mydining.models.Purchase
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.PurchaseListResponse
 import com.logicline.mydining.utils.Ad.MyFullScreenAd
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
@@ -32,13 +35,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class PurchasesActivity : AppCompatActivity() {
+class PurchasesActivity : BaseActivity() {
     lateinit var myFullScreenAd: MyFullScreenAd
     private var purchaseList : MutableList<Purchase> = mutableListOf()
     lateinit var adpter: PurchaseListAdapter
     lateinit var binding : ActivityPurchasesBinding
-    lateinit var month : String
-    lateinit var year : String
+    var month : String = Constant.getCurrentMonthNumber()
+    var year : String = Constant.getCurrentYear()
     lateinit var loadingDialog: LoadingDialog
     var type = 0
     @SuppressLint("SetTextI18n")
@@ -53,15 +56,31 @@ class PurchasesActivity : AppCompatActivity() {
 
         loadingDialog = LoadingDialog(this)
 
-        if(type<=0){
-            type =  intent.getIntExtra(Constant.PURCHASE_TYPE, 0)
+        intent?.let {
+            if(type<=0){
+                type =  it.getIntExtra(Constant.PURCHASE_TYPE, 0)
+            }
+
+            it.getStringExtra(Constant.YEAR)?.let {
+                year = it
+            }
+
+            it.getStringExtra(Constant.MONTH)?.let {
+                month = it
+
+            }
         }
 
 
+
         if(type==1){
-            binding.btnAddPurchase.text = "Add Purchase"
-        }else{
-            binding.btnAddPurchase.text = "Add Others Cost"
+            supportActionBar?.title = getString(R.string.purchases)
+
+            binding.btnAddPurchase.text = getString(R.string.add_purchase)
+        }else if(type==2){
+            supportActionBar?.title = getString(R.string.other_purchase)
+
+            binding.btnAddPurchase.text = getString(R.string.add_other_purchase)
         }
 
         if(Constant.isManagerOrSuperUser()){
@@ -74,15 +93,6 @@ class PurchasesActivity : AppCompatActivity() {
         binding.recyPurchase.setHasFixedSize(true)
         binding.recyPurchase.layoutManager = LinearLayoutManager(this)
 
-
-        binding.txtMonthYear.text = Constant.getCurrentMonthName()+" "+Constant.getCurrentYear()
-
-        month = Constant.getCurrentMonthNumber()
-        year = Constant.getCurrentYear()
-
-        binding.txtMonthYear.setOnClickListener {
-            showDateTimePicker()
-        }
 
         //admin add purchase
         binding.btnAddPurchase.setOnClickListener {
@@ -100,6 +110,23 @@ class PurchasesActivity : AppCompatActivity() {
 
         binding.recyPurchase.adapter = adpter
 
+        binding.monthPicker.builder(null, mYear = year.toInt(), mMonth = month.toInt(), mDay = 1 ).onDateSelectListener = object : MyDatePicker.OnDateSelectListener {
+            override fun date(date: Int, month: Int, year: Int) {
+
+                setDate(year.toString(), month.toString())
+            }
+
+            override fun dateString(date: String) {
+            }
+
+        }
+
+    }
+
+    private fun setDate(year:String, month:String){
+        this.year = year
+        this.month = month
+        getPurchaseList()
     }
 
     private fun showEditDialog(purchase: Purchase, position: Int) {
@@ -311,33 +338,6 @@ class PurchasesActivity : AppCompatActivity() {
                 }
 
             })
-    }
-
-    @SuppressLint("SetTextI18n")
-    public fun showDateTimePicker() {
-        // Get Current Date
-        // Get Current Date
-        val c: Calendar = Calendar.getInstance()
-        val mYear = c.get(Calendar.YEAR)
-        val mMonth = c.get(Calendar.MONTH)
-        val mDay = c.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(this, {
-                view, year, monthOfYear, dayOfMonth ->
-            val date = year.toString()+"-"+(monthOfYear+1)+"-"+dayOfMonth
-
-            this.year = Constant.getYear(date)
-            this.month = Constant.getMonthNumber(date)
-
-            binding.txtMonthYear.text = Constant.getMonthNumber(date)+" "+Constant.getYear(date)
-            binding.txtMonthYear.text = Constant.getMonthName(date)+" "+Constant.getYear(date)
-
-            getPurchaseList()
-
-        }, mYear, mMonth, mDay)
-
-        datePickerDialog.show()
-
     }
 
     override fun onBackPressed() {

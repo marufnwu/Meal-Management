@@ -19,7 +19,7 @@ object SharedPreUtils {
     }
 
 
-    suspend fun setStringToStorage(context: Context,key: String, value: String) {
+     fun setStringToStorage(context: Context,key: String, value: String) {
         val editor: SharedPreferences.Editor=initSharedPref(context).edit()
         editor.putString(key,value)
         editor.apply()

@@ -17,7 +17,7 @@
             android:textStyle="bold"
             android:textColor="@color/themeColor"
             android:padding="@dimen/_8sdp"
-            android:text="Edit Meal"
+            android:text="@string/edit_meal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -42,7 +42,7 @@
                 <TextView
                     android:padding="-10dp"
                     android:textSize="@dimen/_12sdp"
-                    android:text="User Name"
+                    android:text="@string/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -78,7 +78,7 @@
                 <TextView
                     android:padding="-10dp"
                     android:textSize="@dimen/_12sdp"
-                    android:text="Meal Date"
+                    android:text="@string/meal_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -118,7 +118,7 @@
                         android:textColor="@color/White"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:textSize="@dimen/_14sdp"
-                        android:text="Breakfast"
+                        android:text="@string/breakfast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -146,7 +146,7 @@
                         android:textColor="@color/White"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:textSize="@dimen/_14sdp"
-                        android:text="Lunch"
+                        android:text="@string/lunch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -174,7 +174,7 @@
                         android:textColor="@color/White"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:textSize="@dimen/_14sdp"
-                        android:text="Dinner"
+                        android:text="@string/dinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -208,7 +208,7 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -217,7 +217,7 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -226,7 +226,7 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:text="Update"
+                android:text="@string/update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

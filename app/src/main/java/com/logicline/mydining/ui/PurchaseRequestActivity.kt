@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityPurchaseRequestBinding
 import com.logicline.mydining.models.PurchaseRequest
 import com.logicline.mydining.models.response.ServerResponse
 import com.logicline.mydining.ui.fragments.PurchaseRequestFragment
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.utils.MyApplication
@@ -23,7 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class PurchaseRequestActivity : AppCompatActivity() {
+class PurchaseRequestActivity : BaseActivity() {
     lateinit var binding : ActivityPurchaseRequestBinding
 
     lateinit var month : String
@@ -41,6 +43,10 @@ class PurchaseRequestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPurchaseRequestBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = getString(R.string.purchase_request)
+
 
         binding.btnSubmitPurchase.setOnClickListener {
             startActivity(Intent(this, SubmitPurchaseActivity::class.java))

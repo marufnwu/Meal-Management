@@ -33,7 +33,7 @@
                 android:fontFamily="@font/hubballi"
                 android:textSize="@dimen/_15sdp"
                 android:textColor="@color/themeColor"
-                android:text="Login"
+                android:text="@string/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -63,7 +63,7 @@
                 android:inputType="text"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:id="@+id/edtUerName"
-                android:hint="Username"
+                android:hint="@string/user_name"
                 android:background="@drawable/editext_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -73,7 +73,7 @@
                 android:textSize="@dimen/_13sdp"
                 android:inputType="textPassword"
                 android:id="@+id/edtPassword"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:background="@drawable/editext_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -89,7 +89,7 @@
                     android:layout_marginTop="@dimen/_12sdp"
                     android:gravity="center"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Forgot login password?"
+                    android:text="@string/forgot_login_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -111,7 +111,7 @@
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/Black"
                     android:gravity="center"
-                    android:text="Continue with My Dining app you must agree to My Dining privacy pilicy"
+                    android:text="@string/accept_privacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -120,7 +120,7 @@
             <Button
                 android:id="@+id/btnLogin"
                 android:textSize="@dimen/_16sdp"
-                android:text="L o g i n"
+                android:text="@string/l_o_g_i_n"
                 android:background="@drawable/button_primary"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
@@ -129,11 +129,23 @@
             <Button
                 android:id="@+id/btnNewMess"
                 android:textSize="@dimen/_16sdp"
-                android:text="Create New Mess"
+                android:text="@string/create_new_mess"
                 android:background="@drawable/button_primary"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+
+            <com.logicline.mydining.ui.custom_views.LanguageView
+                android:drawablePadding="@dimen/_4sdp"
+                android:id="@+id/txtLang"
+                android:text=""
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawableLeftCompat="@drawable/translate" />
 
             <com.logicline.mydining.ui.custom_views.BannerView
                 app:banner="loginActivity"
@@ -174,7 +186,7 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/_12sdp"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:text="For Any Issues/Query Contact With Us"
+                        android:text="@string/contact_us_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

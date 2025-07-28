@@ -70,7 +70,7 @@
                         android:textColor="@color/Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Privacy Policy" />
+                        android:text="@string/privacy_policy" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -93,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Terms and Condition" />
+                        android:text="@string/terms_and_condition" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,10 +115,15 @@
                         android:textColor="@color/Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Contact Us" />
+                        android:text="@string/contact_us" />
                 </LinearLayout>
 
             </LinearLayout>
+
+            <com.logicline.mydining.ui.custom_views.LanguageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

@@ -15,6 +15,7 @@ import com.logicline.mydining.databinding.ActivityCreateMessBinding
 import com.logicline.mydining.models.response.CheckLoginResponse
 import com.logicline.mydining.models.response.GenericRespose
 import com.logicline.mydining.models.response.ServerResponse
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.Coroutines
 import com.logicline.mydining.utils.LoadingDialog
@@ -29,7 +30,7 @@ import retrofit2.Response
 import kotlin.random.Random
 
 
-class CreateMessActivity : AppCompatActivity() {
+class CreateMessActivity : BaseActivity() {
     lateinit var loadingDialog: LoadingDialog
     private var userNameChecking = false
     lateinit var binding : ActivityCreateMessBinding
@@ -45,11 +46,6 @@ class CreateMessActivity : AppCompatActivity() {
 
     private  fun initViews() {
         loadingDialog = LoadingDialog(this)
-        binding.btnGenPass.setOnClickListener {
-            val pass = Random.nextInt(111111, 999999).toString()
-            binding.edtPass.setText(pass)
-        }
-
 
 
         binding.ccp.setAutoDetectedCountry(true)

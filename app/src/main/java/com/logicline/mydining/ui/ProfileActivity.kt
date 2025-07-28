@@ -57,7 +57,7 @@ import java.io.FileOutputStream
 import java.util.Locale
 
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
     lateinit var managerChangerListener: CompoundButton.OnCheckedChangeListener
     lateinit var binding : ActivityProfileBinding
     lateinit var loadingDialog: LoadingDialog
@@ -71,6 +71,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.profile)
 
         userProfile = intent.getParcelableExtra<User>("profile")
         loggedUser = LocalDB.getUser()

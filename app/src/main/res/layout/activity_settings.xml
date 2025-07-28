@@ -30,7 +30,7 @@
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
-                    android:text="User Guide"
+                    android:text="@string/user_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -60,7 +60,7 @@
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Generate Report"
+                    android:text="@string/generate_report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -73,6 +73,102 @@
             </RelativeLayout>
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:background="@drawable/editext_bg"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:id="@+id/cardMessInfo"
+            app:cardBackgroundColor="@color/AliceBlue"
+            app:cardCornerRadius="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/Black"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/mess_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/editext_bg"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:id="@+id/cardSwitchMess"
+            app:cardBackgroundColor="@color/AliceBlue"
+            app:cardCornerRadius="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/Black"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/switch_mess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:background="@drawable/editext_bg"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:id="@+id/cardMemberRequest"
+            app:cardBackgroundColor="@color/AliceBlue"
+            app:cardCornerRadius="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/Black"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/memeber_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <LinearLayout
             android:background="@drawable/editext_bg"
             android:layout_marginBottom="@dimen/_8sdp"
@@ -90,7 +186,7 @@
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Change Superuser"
+                    android:text="@string/change_superuser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -121,7 +217,7 @@
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Allow fund add"
+                    android:text="@string/allow_fund_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -153,7 +249,7 @@
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Allow other user to add meal"
+                    android:text="@string/allow_other_user_to_add_meal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -164,6 +260,61 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_24sdp"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:id="@+id/cardChangeLanguage"
+            android:background="@drawable/editext_bg"
+            app:cardCornerRadius="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/Black"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/change_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:id="@+id/cardResetMonth"
+            android:background="@drawable/editext_bg"
+            app:cardCornerRadius="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/Black"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
+                    android:text="@string/reset_single_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"/>
             </RelativeLayout>
 
         </LinearLayout>
@@ -184,7 +335,7 @@
                     android:layout_centerVertical="true"
                     android:textStyle="bold"
                     android:textSize="@dimen/_14sdp"
-                    android:text="Reset Mess"
+                    android:text="@string/reset_mess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

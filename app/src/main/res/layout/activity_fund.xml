@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:textSize="@dimen/_25sdp"
             android:textColor="@color/White"
-            android:text="Total Fund Added "
+            android:text="@string/total_fund_added"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -76,7 +76,7 @@
             android:id="@+id/btnAddFund"
             android:layout_alignParentBottom="true"
             android:textColor="@color/White"
-            android:text="Add Fund"
+            android:text="@string/add_fund"
             android:background="@drawable/button_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -20,7 +20,7 @@ class MyFullScreenAd(val context: Context, val isFinishActivity: Boolean = false
         ADD_UNIT = if (BuildConfig.DEBUG){
             "ca-app-pub-3940256099942544/1033173712" //test
         }else{
-            "ca-app-pub-5848923401370877/7561987130" //real
+            "ca-app-pub-5848923401370877/3523974080" //real
         }
     }
     companion object{

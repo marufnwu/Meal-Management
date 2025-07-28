@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.logicline.mydining.R
 import com.logicline.mydining.adapter.UserInitiateAdapter
 import com.logicline.mydining.databinding.ActivityInitiateMemberBinding
 import com.logicline.mydining.models.User
+import com.logicline.mydining.utils.BaseActivity
 import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.Coroutines
 import com.logicline.mydining.utils.LoadingDialog
@@ -15,7 +17,7 @@ import com.logicline.mydining.utils.MyApplication
 import com.logicline.mydining.utils.MyExtensions.shortToast
 
 
-class InitiateMemberActivity : AppCompatActivity() {
+class InitiateMemberActivity : BaseActivity() {
     lateinit var binding : ActivityInitiateMemberBinding
     lateinit var initiateUserAdapter: UserInitiateAdapter
     lateinit var notInitiateUserAdapter: UserInitiateAdapter
@@ -33,6 +35,7 @@ class InitiateMemberActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = getString(R.string.initiate_members)
 
         loadingDialog = LoadingDialog(this)
 

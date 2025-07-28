@@ -25,7 +25,7 @@
                 android:id="@+id/txtDate"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@color/White"
-                android:text="Date"
+                android:text="@string/date"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
@@ -40,7 +40,7 @@
                 android:id="@+id/txtProduct"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@color/White"
-                android:text="Amount"
+                android:text="@string/amount"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
@@ -54,7 +54,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@color/White"
-                android:text="Edit"
+                android:text="@string/edit"
                 android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
@@ -82,7 +82,7 @@
                 android:padding="@dimen/_4sdp"
                 android:textSize="@dimen/_14sdp"
                 android:textColor="@color/Black"
-                android:text="Total"
+                android:text="@string/total"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.util.Pair
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.logicline.mydining.R
 import com.logicline.mydining.databinding.ActivityAddMealBinding
 import com.logicline.mydining.models.User
 import com.logicline.mydining.models.response.UserDayMealResponse
@@ -30,7 +31,7 @@ import retrofit2.Response
 import java.util.*
 
 
-class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
+class AddMealActivity : BaseActivity(true) , AdapterView.OnItemSelectedListener {
 
     private lateinit var myFullScreenAd: MyFullScreenAd
 
@@ -48,6 +49,7 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = getString(R.string.add_meal)
 
         myFullScreenAd = MyFullScreenAd(this, true)
         loadingDialog = LoadingDialog(this)

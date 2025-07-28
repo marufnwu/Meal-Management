@@ -13,6 +13,22 @@ object LocalDB {
 
     private const val KEY_AD_SETTINGS = "ad_settings"
     private const val KEY_INITIAL_DATA = "KEY_INITIAL_DATA"
+    private const val KEY_APP_LANG = "appLanguage"
+
+    fun getAppLanguage() :String{
+        val lang =  Paper.book().read<String>(KEY_APP_LANG)
+
+        if(lang!=null){
+            return lang
+        }
+
+        return Constant.LANGUAGE.en_US.name
+
+    }
+
+    fun saveAppLanguage(lang: Constant.LANGUAGE){
+        Paper.book().write(KEY_APP_LANG, lang.name)
+    }
 
 
     fun saveInitialData(initialData: InitialData){

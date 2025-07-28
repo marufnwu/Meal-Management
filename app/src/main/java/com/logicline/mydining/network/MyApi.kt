@@ -8,6 +8,9 @@ import com.logicline.mydining.models.Ad
 import com.logicline.mydining.models.Banner
 import com.logicline.mydining.models.Fund
 import com.logicline.mydining.models.InitiateUser
+import com.logicline.mydining.models.Mess
+import com.logicline.mydining.models.MessRequest
+import com.logicline.mydining.models.MonthOfYear
 import com.logicline.mydining.models.OtpRequest
 import com.logicline.mydining.models.PurchaseRequest
 import com.logicline.mydining.models.Report
@@ -217,6 +220,13 @@ interface MyApi {
     ): Response<GenericRespose>
 
     @FormUrlEncoded
+    @POST("api/mess.initiateAllUser.php")
+    fun initiateAllUser(
+        @Field("year") year :String,
+        @Field("month") month :String,
+    ): Call<GenericRespose>
+
+    @FormUrlEncoded
     @POST("api/user.updadeFcmToken.php")
      fun updadeFcmToken(
         @Field("token") token :String,
@@ -395,6 +405,8 @@ interface MyApi {
         @Query("currPage") currPage:Int,
         @Query("totalPage") totalPage:Int
     ) : Call<ServerResponse<Paging<UserGuide>>>
+    @GET("api/slider.get.php")
+    fun getMainSlider() : Call<ServerResponse<MutableList<UserGuide>>>
 
     @GET("api/settings.getInitialData.php")
     fun getInitialData(
@@ -460,7 +472,41 @@ interface MyApi {
         @Query("year") year:Int,
         @Query("month") month:Int,
     ) : Call<ServerResponse<Report>>
+    @FormUrlEncoded
+    @POST("api/mess.resetByMonth.php")
+    fun resetByMonth(
+        @Field("year") year:Int,
+        @Field("month") month:Int,
+    ) : Call<GenericRespose>
+    @FormUrlEncoded
+    @POST("api/switchmess.accept.php")
+    fun acceptMessMemberJoinRequest(
+        @Field("requestId") year:Int,
+    ) : Call<GenericRespose>
 
+    @FormUrlEncoded
+    @POST("api/switchmess.cancel.php")
+    fun cancelMessMemberJoinRequest(
+        @Field("requestId") requestId:Int,
+    ) : Call<GenericRespose>
+
+    @FormUrlEncoded
+    @POST("api/switchmess.request.php")
+    fun messSwitchRequest(
+        @Field("messId") messId:String,
+    ) : Call<GenericRespose>
+
+    @GET("api/switchmess.userJoinHistory.php")
+    fun userJoinHistory() : Call<ServerResponse<MutableList<MessRequest>>>
+
+    @GET("api/switchmess.messJoinRequest.php")
+    fun messJoinRequest() : Call<ServerResponse<MutableList<MessRequest>>>
+
+    @GET("api/mess.getActiveMonthList.php")
+    fun getActiveMonthList() : Call<ServerResponse<MutableList<MonthOfYear>>>
+
+    @GET("api/mess.info.php")
+    fun getMessInfo() : Call<ServerResponse<Mess>>
 
     companion object {
         @Volatile

@@ -18,7 +18,7 @@
             android:textStyle="bold"
             android:textColor="@color/themeColor"
             android:padding="@dimen/_8sdp"
-            android:text="Edit Deposit"
+            android:text="@string/edit_deposit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -43,7 +43,7 @@
                 <TextView
                     android:padding="-10dp"
                     android:textSize="@dimen/_12sdp"
-                    android:text="User Name"
+                    android:text="@string/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -79,7 +79,7 @@
                 <TextView
                     android:padding="-10dp"
                     android:textSize="@dimen/_12sdp"
-                    android:text="Deposited Date"
+                    android:text="@string/deposited_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -114,7 +114,7 @@
                 <TextView
                     android:padding="-10dp"
                     android:textSize="@dimen/_12sdp"
-                    android:text="Deposited Amount"
+                    android:text="@string/deposited_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -149,7 +149,7 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -158,7 +158,7 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
@@ -167,7 +167,7 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:text="Update"
+                android:text="@string/update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

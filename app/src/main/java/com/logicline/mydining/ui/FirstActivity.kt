@@ -6,6 +6,9 @@ import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import com.android.installreferrer.api.ReferrerDetails
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.ActivityResult
@@ -27,10 +30,50 @@ class FirstActivity : AppCompatActivity() {
     private val REQUEST_CODE: Int = 6666
     lateinit var appUpdate: AppUpdateManager
 
+    private lateinit var referrerClient: InstallReferrerClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        checkReferrerClient()
         appUpdate = AppUpdateManagerFactory.create(this)
+    }
+
+    private fun checkReferrerClient() {
+        referrerClient = InstallReferrerClient.newBuilder(this).build()
+        referrerClient.startConnection(object : InstallReferrerStateListener {
+
+            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                when (responseCode) {
+                    InstallReferrerClient.InstallReferrerResponse.OK -> {
+                        // Connection established.
+
+                        val response: ReferrerDetails = referrerClient.installReferrer
+                        val referrerUrl: String = response.installReferrer
+                        val referrerClickTime: Long = response.referrerClickTimestampSeconds
+                        val appInstallTime: Long = response.installBeginTimestampSeconds
+                        val instantExperienceLaunched: Boolean = response.googlePlayInstantParam
+
+                        Log.d("InstallReferrerClient", "onInstallReferrerSetupFinished: "+referrerUrl)
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                        // API not available on the current Play Store app.
+                        Log.d("InstallReferrerClient", "FEATURE_NOT_SUPPORTED: ")
+
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                        // Connection couldn't be established.
+                        Log.d("InstallReferrerClient", "SERVICE_UNAVAILABLE: ")
+
+                    }
+                }
+            }
+
+            override fun onInstallReferrerServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+            }
+        })
     }
 
     override fun onResume() {
