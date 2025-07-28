@@ -94,7 +94,6 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.MealManagement" />
 
 
     <style name="AppTheme.AdAttribution">
