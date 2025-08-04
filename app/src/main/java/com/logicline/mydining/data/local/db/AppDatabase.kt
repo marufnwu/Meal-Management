@@ -20,7 +20,7 @@ import com.logicline.mydining.data.models.Month
         PermissionEntity::class,
         UserDataEntity::class,
     ],
-    version = 5
+    version = 6
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun messUserDao(): MyDao

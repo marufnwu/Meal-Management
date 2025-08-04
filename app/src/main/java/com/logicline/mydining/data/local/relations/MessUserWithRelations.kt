@@ -50,6 +50,7 @@ fun MessUserWithRelations.toDomainModel(): MessUser {
         status = messUser.status,
         createdAt = messUser.createdAt,
         updatedAt = messUser.updatedAt,
+        isUserLeftMess = messUser.isUserLeftMess,
         user = user?.toDomainModel(),
         mess = mess?.toDomainModel(),
         role = role?.toDomainModel()?.copy(

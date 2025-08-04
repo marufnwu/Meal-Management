@@ -23,6 +23,9 @@ import com.logicline.mydining.utils.Constant
 import com.logicline.mydining.utils.LoadingDialog
 import com.logicline.mydining.MyApplication
 import com.logicline.mydining.utils.Ext.MyExtensions.shortToast
+import com.logicline.mydining.ui.adapters.UserSpinnerAdapter
+import com.logicline.mydining.ui.adapters.UserSpinnerItem
+import com.logicline.mydining.ui.adapters.UserSpinnerHelper
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -167,23 +170,13 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
 
 
     private fun setUsersToSpinner(userList: List<MessUser>) {
-        val usersArray = arrayListOf<String?>()
-        usersArray.add("Select Uer")
-        userList.listIterator().forEach { member->
-            usersArray.add(member.user?.name)
-        }
+        // Use the helper to create user spinner items with business logic
+        val userSpinnerItems = UserSpinnerHelper.createUserSpinnerItems(userList, "Select User")
 
-        Log.d("Member", usersArray.size.toString())
+        Log.d("Member", userSpinnerItems.size.toString())
 
-
-        ArrayAdapter(this,  android.R.layout.simple_spinner_item, usersArray)
-            .also { adapter->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerMember.adapter = adapter
-
-
-            }
-
+        val userSpinnerAdapter = UserSpinnerAdapter(this, userSpinnerItems)
+        binding.spinnerMember.adapter = userSpinnerAdapter
     }
 
 
@@ -328,19 +321,26 @@ class AddMealActivity : BaseActivity() , AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-        if(p2>0){
-            userList?.let { userList->
-                selectedUser = userList[p2-1]
-
-                selectedUser?.let {
-                    getUserMealByDate()
-                }
+        Log.d("AddMealActivity", "onItemSelected called with position: $p2")
+        
+        val adapter = p0?.adapter as? UserSpinnerAdapter
+        adapter?.let { userSpinnerAdapter ->
+            val selectedItem = userSpinnerAdapter.getItem(p2)
+            Log.d("AddMealActivity", "Selected item: ${selectedItem.displayText}, isEnabled: ${selectedItem.isEnabled}, isHeader: ${selectedItem.isHeader}")
+            
+            val selectedMessUser = userSpinnerAdapter.getSelectedMessUser(p2)
+            
+            if (selectedMessUser != null) {
+                Log.d("AddMealActivity", "Valid user selected: ${selectedMessUser.user?.name}")
+                selectedUser = selectedMessUser
+                getUserMealByDate()
+            } else {
+                Log.d("AddMealActivity", "No valid user selected (header or disabled item)")
+                selectedUser = null
             }
-        }else{
-            selectedUser = null
+        } ?: run {
+            Log.e("AddMealActivity", "Adapter is not UserSpinnerAdapter")
         }
-
     }
 
     private fun getUserMealByDate() {

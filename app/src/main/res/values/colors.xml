@@ -298,4 +298,9 @@
     <color name="white_alpha_20">#33FFFFFF</color>
     <color name="black_alpha_10">#1A000000</color>
     <color name="black_alpha_20">#33000000</color>
+
+    <!-- Spinner specific colors -->
+    <color name="enabled_text_color">@color/md_theme_onSurface</color>
+    <color name="disabled_text_color">@color/md_theme_onSurfaceVariant</color>
+    <color name="colorPrimary">@color/md_theme_primary</color>
 </resources>

@@ -48,6 +48,7 @@
     <string name="total">Total</string>
     <string name="total_fund_added">Total Fund Added</string>
     <string name="add_fund">Add Fund</string>
+    <string name="user_icon">User Icon</string>
     <string name="already_initiated">Already Initiated</string>
     <string name="not_initiated">Not Initiated</string>
     <string name="login">Login</string>

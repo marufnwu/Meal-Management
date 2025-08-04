@@ -25,7 +25,9 @@ data class MessUser(
     @SerializedName("model_name") val modelName: String?,
     @SerializedName("user") val user: User?,
     @SerializedName("mess") val mess: Mess?,
-    @SerializedName("role") val role: Role?
+    @SerializedName("role") val role: Role?,
+    @SerializedName("is_user_left_mess") val isUserLeftMess: Boolean,
+
 ) : Parcelable
 
 
@@ -39,7 +41,8 @@ fun MessUser.toEntity(): MessUserEntity {
         leftAt = leftAt,
         status = status,
         createdAt = createdAt,
-        updatedAt = updatedAt
+        updatedAt = updatedAt,
+        isUserLeftMess = isUserLeftMess
     )
 }
 

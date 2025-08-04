@@ -15,5 +15,6 @@ data class MessUserEntity(
     val status: String,
     val createdAt: String?,
     val updatedAt: String?,
-    val isSynced: Boolean = false
+    val isSynced: Boolean = false,
+    val isUserLeftMess: Boolean = true
 )

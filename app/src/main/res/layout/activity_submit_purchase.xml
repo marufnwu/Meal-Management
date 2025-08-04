@@ -5,77 +5,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="?attr/colorSurface"
     tools:context=".ui.activities.SubmitPurchaseActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="@dimen/_6sdp"
-        android:background="?attr/colorSurface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- Main content card -->
-        <LinearLayout
-            android:layout_marginBottom="@dimen/_6sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnSubmitPurchase"
+        <!-- Main Content Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mainContentCard"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical">
-
-            <!-- Date selector -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="?attr/colorPrimary"
-                app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="0dp">
-
-                <TextView
-                    android:id="@+id/txtDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-                    android:drawableTint="?attr/colorOnPrimary"
-                    android:gravity="center"
-                    android:padding="@dimen/_12sdp"
-                    android:text="2022-03-06 Wednesday"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="?attr/colorOnPrimary" />
-            </com.google.android.material.card.MaterialCardView>
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginVertical="@dimen/_12sdp"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_marginTop="@dimen/_6sdp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingBottom="@dimen/_6sdp">
 
-                <!-- Product list option toggle -->
+                <!-- Date Selection Section -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Purchase Date"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                        android:drawableTint="?attr/colorOnPrimaryContainer"
+                        android:gravity="center"
+                        android:padding="@dimen/_8sdp"
+                        android:text="2022-03-06 Wednesday"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Input Method Selection -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Input Method"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnSurface" />
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/layoutCheckboxProductList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                    app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="0dp">
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/checkboxProductList"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:checked="true"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/using_product_list"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="?attr/colorOnSecondaryContainer" />
+                        android:orientation="vertical"
+                        android:padding="@dimen/_8sdp">
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/checkboxProductList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/using_product_list"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Main content area (product list or description) -->
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="@dimen/_12sdp"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_8sdp">
 
                     <!-- Description mode -->
                     <LinearLayout
@@ -85,88 +109,150 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-
-                        <com.logicline.mydining.ui.custom.MaterialIconEditTextField
-                            android:id="@+id/edtPrice"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/price"
-                            android:inputType="numberDecimal"
-                            app:fieldIcon="@drawable/paid_24px" />
+                            android:text="Purchase Details"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
 
-
-                        <com.logicline.mydining.ui.custom.MaterialIconEditTextField
-                            android:id="@+id/edtDesc"
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="top|start"
-                            android:hint="@string/product_description"
-                            android:inputType="textMultiLine"
-                            android:minLines="3"
-                            app:fieldIcon="@drawable/description_24px" />
+                            android:layout_marginTop="@dimen/_4sdp"
+                            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_8sdp">
+
+                                <com.logicline.mydining.ui.custom.MaterialIconEditTextField
+                                    android:id="@+id/edtPrice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:hint="@string/price"
+                                    android:inputType="numberDecimal"
+                                    app:fieldIcon="@drawable/paid_24px" />
+
+                                <com.logicline.mydining.ui.custom.MaterialIconEditTextField
+                                    android:id="@+id/edtDesc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="top|start"
+                                    android:hint="@string/product_description"
+                                    android:inputType="textMultiLine"
+                                    android:minLines="3"
+                                    app:fieldIcon="@drawable/description_24px" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
 
                     <!-- Product list mode -->
                     <LinearLayout
                         android:id="@+id/layoutList"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:visibility="visible">
 
-                        <!-- Products list card -->
-                        <com.google.android.material.card.MaterialCardView
+                        <!-- Products List Section -->
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginBottom="@dimen/_12sdp"
-                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/purchase_products"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <!-- Total Amount Display -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                            app:cardCornerRadius="@dimen/_8sdp"
                             app:cardElevation="0dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_8sdp">
 
-                                <!-- Header -->
+                                <TextView
+                                    android:text="@string/total_purchase"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                                    android:textColor="?attr/colorOnPrimaryContainer"
+                                    android:textStyle="bold" />
+
                                 <TextView
                                     android:id="@+id/txtTotalPurchase"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                                    android:textColor="?attr/colorOnPrimaryContainer"
+                                    />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Products list card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:minHeight="@dimen/_100sdp"
+                            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardElevation="0dp">
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="@dimen/_100sdp"
+                                android:padding="@dimen/_6sdp">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyProducts"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="?attr/colorPrimaryContainer"
-                                    android:gravity="center"
-                                    android:padding="@dimen/_8sdp"
-                                    android:text="@string/total_purchase"
-                                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                                    android:textColor="?attr/colorOnPrimaryContainer" />
+                                    android:clipToPadding="false"
+                                    android:maxHeight="@dimen/_150sdp"
+                                    android:visibility="gone" />
 
-                                <!-- Product list content -->
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:padding="@dimen/_8sdp">
-
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/recyProducts"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:visibility="gone" />
-
-                                    <TextView
-                                        android:id="@+id/txtEmpty"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:text="@string/no_purchase_item_added"
-                                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                                        android:textColor="?attr/colorOnSurfaceVariant" />
-                                </FrameLayout>
-                            </LinearLayout>
+                                <TextView
+                                    android:id="@+id/txtEmpty"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="@string/no_purchase_item_added"
+                                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                                    android:textColor="?attr/colorOnSurfaceVariant" />
+                            </FrameLayout>
                         </com.google.android.material.card.MaterialCardView>
 
                         <!-- Add item section -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Add New Item"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardElevation="0dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -175,27 +261,26 @@
                                 android:orientation="horizontal"
                                 android:padding="@dimen/_8sdp">
 
-
                                 <EditText
-                                    android:hint="@string/product_name"
-                                    android:layout_marginEnd="@dimen/_2sdp"
-                                    android:background="@drawable/editext_bg"
-                                    android:layout_weight="2"
                                     android:id="@+id/edtSingleName"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_6sdp"
+                                    android:layout_weight="2"
+                                    android:background="@drawable/editext_bg"
+                                    android:hint="@string/product_name"
                                     android:inputType="text"
                                     android:maxLines="1" />
 
-
                                 <EditText
-                                    android:hint="@string/price"
-                                    android:background="@drawable/editext_bg"
-                                    android:layout_weight="1"
                                     android:id="@+id/edtSinglePrice"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_6sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/editext_bg"
                                     android:gravity="center"
+                                    android:hint="@string/price"
                                     android:inputType="number"
                                     android:maxLines="1" />
 
@@ -210,18 +295,27 @@
                     </LinearLayout>
                 </FrameLayout>
 
-                <!-- Additional options section -->
+                <!-- Account Deposit Section -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Account Deposit"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnSurface" />
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/layoutCheckboxDepositToAcc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                    app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:orientation="vertical"
                         android:padding="@dimen/_8sdp">
 
@@ -229,66 +323,74 @@
                             android:id="@+id/checkboxDepositToAcc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_8sdp"
                             android:checked="false"
                             android:text="@string/request_deposit_to_your_account"
-                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                            android:textColor="?attr/colorOnSecondaryContainer" />
-
-                        <com.google.android.material.divider.MaterialDivider
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/_4sdp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/_4sdp"
-                            android:text="@string/purchase_type"
-                            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                            android:textColor="?attr/colorOnSecondaryContainer" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroupPurchaseType"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/radioBtnMealPurchase"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_16sdp"
-                                android:buttonTint="?attr/colorPrimary"
-                                android:checked="true"
-                                android:text="@string/meal_purchase"
-                                android:textColor="?attr/colorOnSecondaryContainer" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/radioBtnOtherPurchase"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTint="?attr/colorPrimary"
-                                android:text="@string/other_purchase"
-                                android:textColor="?attr/colorOnSecondaryContainer" />
-                        </RadioGroup>
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+
+                <!-- Purchase Type Section -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/purchase_type"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardElevation="0dp">
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupPurchaseType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_8sdp">
+
+                        <RadioButton
+                            android:id="@+id/radioBtnMealPurchase"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_4sdp"
+                            android:buttonTint="?attr/colorPrimary"
+                            android:checked="true"
+                            android:text="@string/meal_purchase"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                        <RadioButton
+                            android:id="@+id/radioBtnOtherPurchase"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="?attr/colorPrimary"
+                            android:text="@string/other_purchase"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                    </RadioGroup>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!-- Submit button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmitPurchase"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="@string/submit_your_purchase"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mainContentCard" />
+
+
             </LinearLayout>
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
-        <!-- Submit button -->
-        <com.google.android.material.button.MaterialButton
-            android:layout_marginVertical="@dimen/_12sdp"
-            android:id="@+id/btnSubmitPurchase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/submit_your_purchase"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.core.widget.NestedScrollView>
